@@ -1,6 +1,11 @@
-# Create T3 App
+# How to start
 
-This is a [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3-app`.
+After you installed pnpm (you can look here at the [installation guid](https://pnpm.io/installation)), you can run the following command:
+`pnpm install` <br>
+This will install all the dependencies for the project.
+<br> <br>
+After that you can run the following command, to look at the current state (with your own changes) of the project:
+`pnpm dev`
 
 ## What's next? How do I make an app with this?
 
@@ -23,6 +28,6 @@ To learn more about the [T3 Stack](https://create.t3.gg/), take a look at the fo
 
 You can check out the [create-t3-app GitHub repository](https://github.com/t3-oss/create-t3-app) — your feedback and contributions are welcome!
 
-## How do I deploy this?
+### Create T3 App
 
-Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/vercel), [Netlify](https://create.t3.gg/en/deployment/netlify) and [Docker](https://create.t3.gg/en/deployment/docker) for more information.
+This is a [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3-app`.
