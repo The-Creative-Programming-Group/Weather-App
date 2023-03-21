@@ -4,8 +4,7 @@ import { z } from "zod";
  * Specify your server-side environment variables schema here. This way you can ensure the app isn't
  * built with invalid env vars.
  */
-const server = z.object({
-  DATABASE_URL: z.string().url(),
+const server = z.object({OPEN_WEATHER_API_KEY: z.string(),
   NODE_ENV: z.enum(["development", "test", "production"]),
 });
 
@@ -40,7 +39,7 @@ const merged = server.merge(client);
 
 let env = /** @type {MergedOutput} */ (process.env);
 
-if (!!process.env.SKIP_ENV_VALIDATION == false) {
+if (!!process.env.SKIP_ENV_VALIDATION === false) {
   const isServer = typeof window === "undefined";
 
   const parsed = /** @type {MergedSafeParseReturn} */ (
