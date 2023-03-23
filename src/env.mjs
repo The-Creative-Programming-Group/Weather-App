@@ -4,7 +4,8 @@ import { z } from "zod";
  * Specify your server-side environment variables schema here. This way you can ensure the app isn't
  * built with invalid env vars.
  */
-const server = z.object({OPEN_WEATHER_API_KEY: z.string(),
+const server = z.object({
+  OPEN_WEATHER_API_KEY: z.string(),
   NODE_ENV: z.enum(["development", "test", "production"]),
 });
 
@@ -18,7 +19,7 @@ const client = z.object({
 
 /**
  * You can't destruct `process.env` as a regular object in the Next.js edge runtimes (e.g.
- * middlewares) or client-side so we need to destruct manually.
+ * middlewares) or client-side, so we need to destruct manually.
  *
  * @type {Record<keyof z.infer<typeof server> | keyof z.infer<typeof client>, string | undefined>}
  */
