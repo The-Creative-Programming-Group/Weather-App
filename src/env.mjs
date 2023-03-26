@@ -5,7 +5,6 @@ import { z } from "zod";
  * built with invalid env vars.
  */
 const server = z.object({
-  OPEN_WEATHER_API_KEY: z.string(),
   NODE_ENV: z.enum(["development", "test", "production"]),
 });
 
@@ -24,7 +23,6 @@ const client = z.object({
  * @type {Record<keyof z.infer<typeof server> | keyof z.infer<typeof client>, string | undefined>}
  */
 const processEnv = {
-  OPEN_WEATHER_API_KEY: process.env.OPEN_WEATHER_API_KEY,
   NODE_ENV: process.env.NODE_ENV,
   // NEXT_PUBLIC_CLIENTVAR: process.env.NEXT_PUBLIC_CLIENTVAR,
 };
