@@ -5,8 +5,8 @@ import { z } from 'zod'
  * built with invalid env vars.
  */
 const server = z.object({
-  NODE_ENV: z.enum(['development', 'test', 'production'])
-})
+  NODE_ENV: z.enum(["development", "test", "production"]),
+});
 
 /**
  * Specify your client-side environment variables schema here. This way you can ensure the app isn't
@@ -23,7 +23,7 @@ const client = z.object({
  * @type {Record<keyof z.infer<typeof server> | keyof z.infer<typeof client>, string | undefined>}
  */
 const processEnv = {
-  NODE_ENV: process.env.NODE_ENV
+  NODE_ENV: process.env.NODE_ENV,
   // NEXT_PUBLIC_CLIENTVAR: process.env.NEXT_PUBLIC_CLIENTVAR,
 }
 

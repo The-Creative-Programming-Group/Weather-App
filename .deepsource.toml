@@ -1,0 +1,19 @@
+version = 1
+
+[[analyzers]]
+name = "javascript"
+
+  [analyzers.meta]
+  plugins = ["react"]
+
+[[analyzers]]
+name = "secrets"
+
+[[analyzers]]
+name = "test-coverage"
+
+[[transformers]]
+name = "prettier"
+
+[[transformers]]
+name = "standardjs"
