@@ -3,12 +3,15 @@ import React from "react";
 const search = () => {
   return (
     <>
-        <img
-            src="assets/background.png"
-            alt="background"
-            className="absolute w-full h-full -z-10 object-cover"
-        />
-      <div id="styles-setup" className="mt-24 absolute w-full flex justify-center">
+      <img
+        src="assets/background.png"
+        alt="background"
+        className="absolute w-full h-full -z-10 object-cover"
+      />
+      <div
+        id="styles-setup"
+        className="mt-24 absolute w-full flex justify-center"
+      >
         <img
           className="h-14 bg-[#735858] border-solid border-[#ddc3c3] border-8 border-r-0 pt-0.5 pb-0.5"
           src="assets/search.png"
