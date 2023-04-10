@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Layout from "~/components/Layout";
 import Image from "next/image";
 
-const settings = () => {
+const Settings = () => {
   const doneImage = "/assets/done.png";
   const [temperatureUnit, setTemperatureUnit] = useState("Celsius");
   const [windSpeedUnit, setWindSpeedUnit] = useState("Miles per hour");
@@ -103,4 +103,4 @@ const settings = () => {
   );
 };
 
-export default settings;
+export default Settings;

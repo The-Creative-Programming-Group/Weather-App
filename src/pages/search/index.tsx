@@ -2,7 +2,7 @@ import React from "react";
 import Layout from "~/components/Layout";
 import Head from "next/head";
 
-const search = () => {
+const Search = () => {
   return (
     <>
       <Head>
@@ -44,4 +44,4 @@ const search = () => {
   );
 };
 
-export default search;
+export default Search;
