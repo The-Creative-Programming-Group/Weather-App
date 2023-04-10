@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Layout from "~/components/Layout";
 import Image from "next/image";
+import styles from "./settings.module.css"
 
 const Settings = () => {
   const doneImage = "/assets/done.png";
@@ -22,21 +23,21 @@ const Settings = () => {
           </h1>
           <hr className="w-3/12 h-1.5 bg-[#856868] mt-3 rounded" />
           <div className="flex flex-col justify-center m-5">
-            <h2 className="text-basic font-bold">Temperature Units</h2>
+            <h2 className="text-basic font-bold">Temperature units</h2>
             <button
-              className="bg-[#ddc3c3] flex flex-row justify-between items-center mt-3 w-96 h-10 text-left border-solid border-black"
+              className={`${styles.normalbutton} ${temperatureUnit === "Celsius" ? 'border-2' : ''}`}
               onClick={() => handleTemperatureUnitClick("Celsius")}
             >
-              <p className="ml-3 font-bold">Celsius (°C)</p>
+              <p className={styles.buttontext}>Celsius (°C)</p>
               {temperatureUnit === "Celsius" && (
                 <Image src={doneImage} alt="Checkmark" width={29} height={29} />
               )}
             </button>
             <button
-              className="bg-[#ddc3c3] flex flex-row justify-between items-center mt-3 w-96 h-10 text-left border-solid border-black"
+              className={`${styles.normalbutton} ${temperatureUnit === "Fahrenheit" ? 'border-2' : ''}`}
               onClick={() => handleTemperatureUnitClick("Fahrenheit")}
             >
-              <p className="ml-3 font-bold">Fahrenheit (°F)</p>
+              <p className={styles.buttontext}>Fahrenheit (°F)</p>
               {temperatureUnit === "Fahrenheit" && (
                 <Image src={doneImage} alt="Checkmark" width={29} height={29} />
               )}
@@ -44,48 +45,48 @@ const Settings = () => {
           </div>
 
           <div className="flex flex-col justify-center m-5">
-            <h2 className="text-basic font-bold">Wind speed Units</h2>
+            <h2 className="text-basic font-bold">Wind speed units</h2>
             <button
-              className="bg-[#ddc3c3] flex flex-row justify-between items-center mt-3 w-96 h-10 text-left border-solid border-black"
+              className={`${styles.normalbutton} ${windSpeedUnit === "Miles per hour" ? 'border-2' : ''}`}
               onClick={() => handleSpeedUnitClick("Miles per hour")}
             >
-              <p className="ml-3 font-bold">Miles per hour (mph)</p>
+              <p className={styles.buttontext}>Miles per hour (mph)</p>
               {windSpeedUnit === "Miles per hour" && (
                 <Image src={doneImage} alt="Checkmark" width={29} height={29} />
               )}
             </button>
             <button
-              className="bg-[#ddc3c3] flex flex-row justify-between items-center mt-3 w-96 h-10 text-left border-solid border-black"
+              className={`${styles.normalbutton} ${windSpeedUnit === "Kilometers per hour" ? 'border-2' : ''}`}
               onClick={() => handleSpeedUnitClick("Kilometers per hour")}
             >
-              <p className="ml-3 font-bold">Kilometers per hour(km/h)</p>
+              <p className={styles.buttontext}>Kilometers per hour (km/h)</p>
               {windSpeedUnit === "Kilometers per hour" && (
                 <Image src={doneImage} alt="Checkmark" width={29} height={29} />
               )}
             </button>
             <button
-              className="bg-[#ddc3c3] flex flex-row justify-between items-center mt-3 w-96 h-10 text-left border-solid border-black"
+              className={`${styles.normalbutton} ${windSpeedUnit === "Knots" ? 'border-2' : ''}`}
               onClick={() => handleSpeedUnitClick("Knots")}
             >
-              <p className="ml-3 font-bold">Knots</p>
+              <p className={styles.buttontext}>Knots</p>
               {windSpeedUnit === "Knots" && (
                 <Image src={doneImage} alt="Checkmark" width={29} height={29} />
               )}
             </button>
             <button
-              className="bg-[#ddc3c3] flex flex-row justify-between items-center mt-3 w-96 h-10 text-left border-solid border-black"
+              className={`${styles.normalbutton} ${windSpeedUnit === "Meters per second" ? 'border-2' : ''}`}
               onClick={() => handleSpeedUnitClick("Meters per second")}
             >
-              <p className="ml-3 font-bold">Meters per second(m/s)</p>
+              <p className={styles.buttontext}>Meters per second (m/s)</p>
               {windSpeedUnit === "Meters per second" && (
                 <Image src={doneImage} alt="Checkmark" width={29} height={29} />
               )}
             </button>
             <button
-              className="bg-[#ddc3c3] flex flex-row justify-between items-center mt-3 w-96 h-10 text-left border-solid border-black"
+              className={`${styles.normalbutton} ${windSpeedUnit === "Beaufort" ? 'border-2' : ''}`}
               onClick={() => handleSpeedUnitClick("Beaufort")}
             >
-              <p className="ml-3 font-bold">Beaufort</p>
+              <p className={styles.buttontext}>Beaufort</p>
               {windSpeedUnit === "Beaufort" && (
                 <Image src={doneImage} alt="Checkmark" width={29} height={29} />
               )}
