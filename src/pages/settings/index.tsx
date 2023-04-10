@@ -7,10 +7,10 @@ const settings = () => {
   const [temperatureUnit, setTemperatureUnit] = useState("Celsius");
   const [windSpeedUnit, setWindSpeedUnit] = useState("Miles per hour");
 
-  const handleTemperatureUnitClick = (unit: any) => {
+  const handleTemperatureUnitClick = (unit: string) => {
     setTemperatureUnit(unit);
   };
-  const handleSpeedUnitClick = (unit: any) => {
+  const handleSpeedUnitClick = (unit: string) => {
     setWindSpeedUnit(unit);
   };
   return (
