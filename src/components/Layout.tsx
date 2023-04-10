@@ -15,11 +15,19 @@ export default function Layout({ title, children }: LayoutProps) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <header className="bg-[#ddc3c3] p-2 flex justify-around items-center">
-        <a className="no-underline text-black text-xs md:text-base" href="#">Home</a>
-        <a className="no-underline text-black text-xs md:text-base">Location Settings</a>
-        <h1 className="text-base font-semibold md:font-normal md:text-4xl">Weather.io</h1>
+        <a className="no-underline text-black text-xs md:text-base" href="#">
+          Home
+        </a>
+        <a className="no-underline text-black text-xs md:text-base">
+          Location Settings
+        </a>
+        <h1 className="text-base font-semibold md:font-normal md:text-4xl">
+          Weather.io
+        </h1>
         <a className="no-underline text-black text-xs md:text-base">Settings</a>
-        <a className="no-underline text-black text-xs md:text-base">Contact Us</a>
+        <a className="no-underline text-black text-xs md:text-base">
+          Contact Us
+        </a>
       </header>
       <main className="bg-[#ffe5e5] min-h-screen">{children}</main>
       <footer className="absolute w-full pt-8 bg-[#ddc3c3]">
