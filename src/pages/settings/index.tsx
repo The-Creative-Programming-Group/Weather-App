@@ -15,7 +15,7 @@ const Settings = () => {
     setWindSpeedUnit(unit);
   };
 
-  const normalButtonClass = styles.normalbutton ? styles.normalbutton : '';
+  const normalButtonClass = styles.normalbutton ? styles.normalbutton : "";
 
   return (
     <>
