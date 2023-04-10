@@ -50,7 +50,7 @@ const settings = () => {
               onClick={() => handleSpeedUnitClick("Miles per hour")}
             >
               <p className="ml-3 font-bold">Miles per hour (mph)</p>
-              {temperatureUnit === "Miles per hour" && (
+              {windSpeedUnit === "Miles per hour" && (
                 <Image src={doneImage} alt="Checkmark" width={29} height={29} />
               )}
             </button>
@@ -59,7 +59,7 @@ const settings = () => {
               onClick={() => handleSpeedUnitClick("Kilometers per hour")}
             >
               <p className="ml-3 font-bold">Kilometers per hour(km/h)</p>
-              {temperatureUnit === "Kilometers per hour" && (
+              {windSpeedUnit === "Kilometers per hour" && (
                 <Image src={doneImage} alt="Checkmark" width={29} height={29} />
               )}
             </button>
@@ -68,7 +68,7 @@ const settings = () => {
               onClick={() => handleSpeedUnitClick("Knots")}
             >
               <p className="ml-3 font-bold">Knots</p>
-              {temperatureUnit === "Knots" && (
+              {windSpeedUnit === "Knots" && (
                 <Image src={doneImage} alt="Checkmark" width={29} height={29} />
               )}
             </button>
@@ -77,7 +77,7 @@ const settings = () => {
               onClick={() => handleSpeedUnitClick("Meters per second")}
             >
               <p className="ml-3 font-bold">Meters per second(m/s)</p>
-              {temperatureUnit === "Meters per second" && (
+              {windSpeedUnit === "Meters per second" && (
                 <Image src={doneImage} alt="Checkmark" width={29} height={29} />
               )}
             </button>
@@ -86,7 +86,7 @@ const settings = () => {
               onClick={() => handleSpeedUnitClick("Beaufort")}
             >
               <p className="ml-3 font-bold">Beaufort</p>
-              {temperatureUnit === "Beaufort" && (
+              {windSpeedUnit === "Beaufort" && (
                 <Image src={doneImage} alt="Checkmark" width={29} height={29} />
               )}
             </button>
