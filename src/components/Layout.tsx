@@ -1,6 +1,6 @@
 import React from "react";
 import Head from "next/head";
-import styles from "./styles-layout.module.css"
+import styles from "./styles-layout.module.css";
 
 interface LayoutProps {
   title: string;
@@ -19,13 +19,13 @@ export default function Layout({ title, children }: LayoutProps) {
         <a className={styles.navbarA} href="#">
           Home
         </a>
-        <a className={styles.navbarA}>
-          Location Settings
-        </a>
+        <a className={styles.navbarA}>Location Settings</a>
         <h1 className="text-base font-semibold md:font-normal md:text-4xl">
           Weather.io
         </h1>
-        <a className={styles.navbarA} href="/settings">Settings</a>
+        <a className={styles.navbarA} href="/settings">
+          Settings
+        </a>
         <a className={styles.navbarA}>Contact Us</a>
       </header>
       <main className="bg-[#ffe5e5] min-h-screen">{children}</main>
