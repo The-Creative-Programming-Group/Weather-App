@@ -5,8 +5,8 @@ import styles from "./settings.module.css";
 
 const Settings = () => {
   const doneImage = "/assets/done.png";
-  const [temperatureUnit, setTemperatureUnit] = useState("Celsius");
-  const [windSpeedUnit, setWindSpeedUnit] = useState("Miles per hour");
+  const [temperatureUnit, setTemperatureUnit] = useState<string>("Celsius");
+  const [windSpeedUnit, setWindSpeedUnit] = useState<string>("Miles per hour");
 
   const handleTemperatureUnitClick = (unit: string) => {
     setTemperatureUnit(unit);
@@ -14,6 +14,9 @@ const Settings = () => {
   const handleSpeedUnitClick = (unit: string) => {
     setWindSpeedUnit(unit);
   };
+
+  const normalButtonClass = styles.normalbutton ? styles.normalbutton : '';
+
   return (
     <>
       <Layout title={"Settings"}>
@@ -25,7 +28,7 @@ const Settings = () => {
           <div className="flex flex-col justify-center m-5">
             <h2 className="text-basic font-bold">Temperature units</h2>
             <button
-              className={`${styles.normalbutton} ${
+              className={`${normalButtonClass} ${
                 temperatureUnit === "Celsius" ? "border-2" : ""
               }`}
               onClick={() => handleTemperatureUnitClick("Celsius")}
@@ -36,7 +39,7 @@ const Settings = () => {
               )}
             </button>
             <button
-              className={`${styles.normalbutton} ${
+              className={`${normalButtonClass} ${
                 temperatureUnit === "Fahrenheit" ? "border-2" : ""
               }`}
               onClick={() => handleTemperatureUnitClick("Fahrenheit")}
@@ -51,7 +54,7 @@ const Settings = () => {
           <div className="flex flex-col justify-center m-5">
             <h2 className="text-basic font-bold">Wind speed units</h2>
             <button
-              className={`${styles.normalbutton} ${
+              className={`${normalButtonClass} ${
                 windSpeedUnit === "Miles per hour" ? "border-2" : ""
               }`}
               onClick={() => handleSpeedUnitClick("Miles per hour")}
@@ -62,7 +65,7 @@ const Settings = () => {
               )}
             </button>
             <button
-              className={`${styles.normalbutton} ${
+              className={`${normalButtonClass} ${
                 windSpeedUnit === "Kilometers per hour" ? "border-2" : ""
               }`}
               onClick={() => handleSpeedUnitClick("Kilometers per hour")}
@@ -73,7 +76,7 @@ const Settings = () => {
               )}
             </button>
             <button
-              className={`${styles.normalbutton} ${
+              className={`${normalButtonClass} ${
                 windSpeedUnit === "Knots" ? "border-2" : ""
               }`}
               onClick={() => handleSpeedUnitClick("Knots")}
@@ -84,7 +87,7 @@ const Settings = () => {
               )}
             </button>
             <button
-              className={`${styles.normalbutton} ${
+              className={`${normalButtonClass} ${
                 windSpeedUnit === "Meters per second" ? "border-2" : ""
               }`}
               onClick={() => handleSpeedUnitClick("Meters per second")}
@@ -95,7 +98,7 @@ const Settings = () => {
               )}
             </button>
             <button
-              className={`${styles.normalbutton} ${
+              className={`${normalButtonClass} ${
                 windSpeedUnit === "Beaufort" ? "border-2" : ""
               }`}
               onClick={() => handleSpeedUnitClick("Beaufort")}

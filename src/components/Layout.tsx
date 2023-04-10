@@ -1,6 +1,7 @@
 import React from "react";
 import Head from "next/head";
 import styles from "./styles-layout.module.css";
+import Link from "next/link";
 
 interface LayoutProps {
   title: string;
@@ -23,9 +24,9 @@ export default function Layout({ title, children }: LayoutProps) {
         <h1 className="text-base font-semibold md:font-normal md:text-4xl">
           Weather.io
         </h1>
-        <a className={styles.navbarA} href="/settings">
+        <Link className={styles.navbarA} href="/settings">
           Settings
-        </a>
+        </Link>
         <a className={styles.navbarA}>Contact Us</a>
       </header>
       <main className="bg-[#ffe5e5] min-h-screen">{children}</main>

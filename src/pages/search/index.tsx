@@ -1,5 +1,4 @@
 import React from "react";
-import Layout from "~/components/Layout";
 import Head from "next/head";
 
 const Search = () => {
@@ -20,12 +19,14 @@ const Search = () => {
         className="mt-32 absolute w-full flex justify-center"
       >
         <img
-          className="transform -scale-x-100 h-14 bg-[#735858] border-solid border-[#ddc3c3] border-8 border-l-0 pt-0.5 pb-0.5"
+          className="transform -scale-x-100 bg-[#735858] border-solid border-[#ddc3c3] border-8 border-l-0 pt-0.5 pb-0.5"
           src="assets/search.png"
           alt="search-icon"
+          width={56}
+          height={56}
         />
         <input
-          className="w-5/12 bg-[#735858] border-solid border-[#ddc3c3] border-8 border-l-0 pt-0.5 pb-0.5"
+          className="w-5/12 bg-[#735858] border-solid border-[#ddc3c3] border-8 border-l-0 pt-0.5 pb-0.5 outline-0"
           placeholder=" Search for your location"
           type="text"
         />
