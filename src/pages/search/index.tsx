@@ -1,10 +1,15 @@
 import React from "react";
 import Layout from "~/components/Layout";
+import Head from "next/head";
 
 const search = () => {
   return (
     <>
-      <Layout title="Search">
+        <Head>
+            <title>{"Search - Weather.io"}</title>
+            <meta name="description" content="An faboulus weather website" />
+            <link rel="icon" href="/favicon.ico" />
+        </Head>
         <img
           src="assets/background.png"
           alt="background"
@@ -12,7 +17,7 @@ const search = () => {
         />
         <div
           id="styles-setup"
-          className="mt-24 absolute w-full flex justify-center"
+          className="mt-32 absolute w-full flex justify-center"
         >
           <img
             className="transform -scale-x-100 h-14 bg-[#735858] border-solid border-[#ddc3c3] border-8 border-l-0 pt-0.5 pb-0.5"
@@ -35,7 +40,6 @@ const search = () => {
           referrerPolicy="no-referrer-when-downgrade"
           className="absolute mt-20 left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 w-3/5 h-4/6 border-solid border-[#ddc3c3] border-8"
         ></iframe>
-      </Layout>
     </>
   );
 };
