@@ -17,7 +17,7 @@ export default function Layout({ title, children }: LayoutProps) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <header className="bg-[#2d3142] p-2 flex justify-around items-center text-white">
-        <a className={styles.navbarA} href="#">
+        <a className={styles.navbarA} href="/">
           Home
         </a>
         <a className={styles.navbarA}>Location Settings</a>
@@ -27,7 +27,7 @@ export default function Layout({ title, children }: LayoutProps) {
         <Link className={styles.navbarA} href="/settings">
           Settings
         </Link>
-        <a className={styles.navbarA}>Contact Us</a>
+        <a className={styles.navbarA} href="/contactus">Contact Us</a>
       </header>
       <main className="min-h-screen">{children}</main>
       <footer className="absolute w-full pt-8 bg-[#2d3142] text-white text-2xl">
