@@ -27,7 +27,9 @@ export default function Layout({ title, children }: LayoutProps) {
         <Link className={styles.navbarA} href="/settings">
           Settings
         </Link>
-        <a className={styles.navbarA} href="/contactus">Contact Us</a>
+        <a className={styles.navbarA} href="/contactus">
+          Contact Us
+        </a>
       </header>
       <main className="min-h-screen">{children}</main>
       <footer className="absolute w-full pt-8 bg-[#2d3142] text-white text-2xl">
