@@ -22,7 +22,9 @@ export default function Layout({ title, children }: LayoutProps) {
         </a>
         <a className={styles.navbarA}>Location Settings</a>
         <h1 className="text-base font-semibold md:font-normal md:text-4xl">
-          Weather.io
+            <a href="/">
+                Weather.io
+            </a>
         </h1>
         <Link className={styles.navbarA} href="/settings">
           Settings
