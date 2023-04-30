@@ -20,11 +20,11 @@ export default function Layout({ title, children }: LayoutProps) {
         <Link className={styles.navbarA} href="/">
           Home
         </Link>
-        <Link className={styles.navbarA} href="">Location Settings</Link>
+        <Link className={styles.navbarA} href="">
+          Location Settings
+        </Link>
         <h1 className="text-base font-semibold md:font-normal md:text-4xl">
-            <Link href="/">
-                Weather.io
-            </Link>
+          <Link href="/">Weather.io</Link>
         </h1>
         <Link className={styles.navbarA} href="/settings">
           Settings
