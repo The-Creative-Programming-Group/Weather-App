@@ -17,19 +17,21 @@ export default function Layout({ title, children }: LayoutProps) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <header className="bg-[#2d3142] p-2 flex justify-around items-center text-white">
-        <a className={styles.navbarA} href="/">
+        <Link className={styles.navbarA} href="/">
           Home
-        </a>
-        <a className={styles.navbarA}>Location Settings</a>
+        </Link>
+        <Link className={styles.navbarA} href="">Location Settings</Link>
         <h1 className="text-base font-semibold md:font-normal md:text-4xl">
-          <a href="/">Weather.io</a>
+            <Link href="/">
+                Weather.io
+            </Link>
         </h1>
         <Link className={styles.navbarA} href="/settings">
           Settings
         </Link>
-        <a className={styles.navbarA} href="/contactus">
+        <Link className={styles.navbarA} href="/contactus">
           Contact Us
-        </a>
+        </Link>
       </header>
       <main className="min-h-screen">{children}</main>
       <footer className="absolute w-full pt-8 bg-[#2d3142] text-white text-2xl">
