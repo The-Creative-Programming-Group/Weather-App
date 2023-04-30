@@ -16,7 +16,7 @@ export default function Layout({ title, children }: LayoutProps) {
         <meta name="description" content="An faboulus weather website" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <header className="bg-[#ddc3c3] p-2 flex justify-around items-center">
+      <header className="bg-[#2d3142] p-2 flex justify-around items-center text-white">
         <a className={styles.navbarA} href="#">
           Home
         </a>
@@ -29,8 +29,8 @@ export default function Layout({ title, children }: LayoutProps) {
         </Link>
         <a className={styles.navbarA}>Contact Us</a>
       </header>
-      <main className="bg-[#ffe5e5] min-h-screen">{children}</main>
-      <footer className="absolute w-full pt-8 bg-[#ddc3c3]">
+      <main className="min-h-screen">{children}</main>
+      <footer className="absolute w-full pt-8 bg-[#2d3142] text-white text-2xl">
         <div className="mb-3 ml-3">© - Weather.io</div>
       </footer>
     </>

@@ -19,15 +19,15 @@ const Search = () => {
         className="mt-32 absolute w-full flex justify-center"
       >
         <img
-          className="transform -scale-x-100 bg-[#735858] border-solid border-[#ddc3c3] border-8 border-l-0 pt-0.5 pb-0.5"
+          className="transform -scale-x-100 bg-[#383b53] border-solid border-[#2d3142] border-8 border-l-0 pt-0.5 pb-0.5"
           src="assets/search.png"
           alt="search-icon"
           width={56}
           height={56}
         />
         <input
-          className="w-5/12 bg-[#735858] border-solid border-[#ddc3c3] border-8 border-l-0 pt-0.5 pb-0.5 outline-0"
-          placeholder=" Search for your location"
+          className="w-5/12 bg-[#383b53] border-solid border-[#2d3142] border-8 border-l-0 pt-0.5 pb-0.5 outline-0 text-xl pl-2 text-white"
+          placeholder="Search for your location"
           type="text"
         />
       </div>
@@ -39,7 +39,7 @@ const Search = () => {
         allowFullScreen={false}
         loading="lazy"
         referrerPolicy="no-referrer-when-downgrade"
-        className="absolute mt-20 left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 w-3/5 h-4/6 border-solid border-[#ddc3c3] border-8"
+        className="absolute mt-20 left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 w-3/5 h-4/6 border-solid border-[#2d3142] border-8"
       ></iframe>
     </>
   );

@@ -1,5 +1,5 @@
 .normalbutton {
-  @apply bg-[#ddc3c3] flex flex-row justify-between items-center mt-3 w-96 h-10 text-left border-solid border-gray-700;
+  @apply bg-[#d8d5db] flex flex-row justify-between items-center mt-3 w-96 h-10 text-left border-solid border-gray-700;
 }
 
 .buttontext {

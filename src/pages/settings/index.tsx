@@ -24,7 +24,7 @@ const Settings = () => {
           <h1 className="flex mt-10 justify-center text-3xl font-bold">
             Settings
           </h1>
-          <hr className="w-3/12 h-1.5 bg-[#856868] mt-3 rounded" />
+          <hr className="w-3/12 h-1.5 bg-[#2d3142] mt-3 rounded" />
           <div className="flex flex-col justify-center m-5">
             <h2 className="text-basic font-bold">Temperature units</h2>
             <button
@@ -111,7 +111,7 @@ const Settings = () => {
           </div>
 
           <div>
-            <button className="bg-[#ddc3c3] w-60 h-9 border-solid font-bold rounded">
+            <button className="bg-[#2d3142] w-60 h-9 border-solid font-bold rounded text-white">
               Save Changes
             </button>
           </div>
