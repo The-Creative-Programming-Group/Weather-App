@@ -19,14 +19,14 @@ const Search = () => {
         className="mt-32 absolute w-full flex justify-center"
       >
         <img
-          className="transform -scale-x-100 bg-[#383b53] border-solid border-[#2d3142] border-8 border-l-0 pt-0.5 pb-0.5"
+          className="transform bg-[#383b53] border-solid border-[#2d3142] border-8 border-r-0 pt-3 pb-3 pl-3 w-12"
           src="assets/search.png"
           alt="search-icon"
           width={56}
           height={56}
         />
         <input
-          className="w-5/12 bg-[#383b53] border-solid border-[#2d3142] border-8 border-l-0 pt-0.5 pb-0.5 outline-0 text-xl pl-2 text-white"
+          className="w-5/12 bg-[#383b53] border-solid border-[#2d3142] border-8 border-l-0 pt-0.5 pb-0.5 outline-0 text-xl pl-3 text-white"
           placeholder="Search for your location"
           type="text"
         />
