@@ -7,6 +7,7 @@ const Settings = () => {
   const doneImage = "/assets/done.png";
   const [temperatureUnit, setTemperatureUnit] = useState<string>("Celsius");
   const [windSpeedUnit, setWindSpeedUnit] = useState<string>("Miles per hour");
+  const [saved, setSaved] = useState(false);
 
   const handleTemperatureUnitClick = (unit: string) => {
     setTemperatureUnit(unit);
@@ -14,6 +15,12 @@ const Settings = () => {
   const handleSpeedUnitClick = (unit: string) => {
     setWindSpeedUnit(unit);
   };
+
+  const handleSaveClick = () => {
+    setSaved(true);
+    setTimeout(() => setSaved(false), 3000);
+  };
+
 
   const normalButtonClass = styles.normalbutton ? styles.normalbutton : "";
 
@@ -111,8 +118,11 @@ const Settings = () => {
           </div>
 
           <div>
-            <button className="bg-[#2d3142] w-60 h-9 border-solid font-bold rounded text-white">
-              Save Changes
+            <button
+                className="bg-[#2d3142] w-60 h-9 border-solid font-bold rounded text-white"
+                onClick={handleSaveClick}
+            >
+                {saved ? 'Saved' : 'Save Changes'}
             </button>
           </div>
         </div>
