@@ -21,7 +21,6 @@ const Settings = () => {
     setTimeout(() => setSaved(false), 3000);
   };
 
-
   const normalButtonClass = styles.normalbutton ? styles.normalbutton : "";
 
   return (
@@ -119,10 +118,10 @@ const Settings = () => {
 
           <div>
             <button
-                className="bg-[#2d3142] w-60 h-9 border-solid font-bold rounded text-white"
-                onClick={handleSaveClick}
+              className="bg-[#2d3142] w-60 h-9 border-solid font-bold rounded text-white"
+              onClick={handleSaveClick}
             >
-                {saved ? 'Saved' : 'Save Changes'}
+              {saved ? "Saved" : "Save Changes"}
             </button>
           </div>
         </div>
