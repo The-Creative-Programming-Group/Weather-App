@@ -4,7 +4,7 @@ import styles from "./styles-layout.module.css";
 import Link from "next/link";
 
 interface LayoutProps {
-  title: string;
+  title?: string;
   children: React.ReactNode;
 }
 
