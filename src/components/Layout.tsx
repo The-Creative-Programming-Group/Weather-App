@@ -9,7 +9,7 @@ interface LayoutProps {
   footer?: "white" | "normal";
 }
 
-const Layout: React.FC<LayoutProps> = ({ title, children, footer}) => {
+const Layout: React.FC<LayoutProps> = ({ title, children, footer }) => {
   return (
     <>
       <Head>
@@ -35,17 +35,17 @@ const Layout: React.FC<LayoutProps> = ({ title, children, footer}) => {
         </Link>
       </header>
       <main className="min-h-screen">{children}</main>
-        {footer == "white" ? (
-                <footer className="absolute w-full pt-8 bg-[#adacb5] text-black text-2xl">
-                    <div className="mb-3 ml-3">© - Weather.io</div>
-                </footer>
-            ) : (
-                <footer className="absolute w-full pt-8 bg-[#2d3142] text-white text-2xl">
-                    <div className="mb-3 ml-3">© - Weather.io</div>
-                </footer>
-        )}
+      {footer == "white" ? (
+        <footer className="absolute w-full pt-8 bg-[#adacb5] text-black text-2xl">
+          <div className="mb-3 ml-3">© - Weather.io</div>
+        </footer>
+      ) : (
+        <footer className="absolute w-full pt-8 bg-[#2d3142] text-white text-2xl">
+          <div className="mb-3 ml-3">© - Weather.io</div>
+        </footer>
+      )}
     </>
   );
-}
+};
 
 export default Layout;
