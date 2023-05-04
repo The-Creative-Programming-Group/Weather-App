@@ -22,7 +22,7 @@ const Layout: React.FC<LayoutProps> = ({ title, children, footer }) => {
           Home
         </Link>
         <Link className={styles.navbarA} href="">
-          Location Settings
+          Location settings
         </Link>
         <h1 className="text-base font-semibold md:font-normal md:text-4xl">
           <Link href="/">Weather.io</Link>
