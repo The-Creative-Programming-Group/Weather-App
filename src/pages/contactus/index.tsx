@@ -33,7 +33,7 @@ const ContactUs = () => {
           <h1 className="flex mt-24 justify-center text-3xl font-bold">
             Contact Us
           </h1>
-          <hr className="w-4/12 h-1.5 bg-[#2d3142] mt-3 rounded" />
+          <hr className="w-9/12 md:w-5/12 h-1.5 bg-[#2d3142] mt-3 rounded" />
           <div className="flex flex-col md:flex-row mt-5 ml-5 mr-5 mb-2 md:w-1/3">
             <div className="flex flex-col w-60 md:w-full md:mr-4 md:mb-0 mb-2">
               <label className="ml-2">First name</label>
