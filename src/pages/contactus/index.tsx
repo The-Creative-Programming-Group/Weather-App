@@ -6,6 +6,12 @@ const ContactUs = () => {
   const [sendButtonText, setSendButtonText] =
     React.useState<SendButtonTextType>("Send");
   const sendButtonTextRef = useRef<HTMLDivElement>(null);
+  const formFocusRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if (formFocusRef.current == undefined) return;
+    formFocusRef.current.focus();
+  }, []);
 
   useEffect(() => {
     if (sendButtonTextRef.current == undefined) return;
@@ -34,6 +40,7 @@ const ContactUs = () => {
               <input
                 className="bg-[#d7d5db] h-10 rounded-md w-full pl-2"
                 onChange={() => setSendButtonText("Send")}
+                ref={formFocusRef}
               />
             </div>
             <div className="flex flex-col w-60 md:w-full">
