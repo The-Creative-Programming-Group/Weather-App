@@ -1,13 +1,13 @@
-import React, {useEffect, useRef} from "react";
+import React, { useEffect, useRef } from "react";
 import Head from "next/head";
 
 const Search = () => {
-    const searchFocusRef = useRef<HTMLInputElement>(null);
+  const searchFocusRef = useRef<HTMLInputElement>(null);
 
-    useEffect(() => {
-        if (searchFocusRef.current == undefined) return;
-        searchFocusRef.current.focus();
-    }, []);
+  useEffect(() => {
+    if (searchFocusRef.current == undefined) return;
+    searchFocusRef.current.focus();
+  }, []);
 
   return (
     <>
