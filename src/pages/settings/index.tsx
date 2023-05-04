@@ -1,24 +1,37 @@
-import React, { useState } from "react";
+import React, {useEffect, useRef, useState} from "react";
 import Layout from "~/components/Layout";
 import Image from "next/image";
 import styles from "./settings.module.css";
 
 const Settings = () => {
+  type SaveButtonTextType = "Save changes" | "Saved";
+
   const doneImage = "/assets/done.png";
   const [temperatureUnit, setTemperatureUnit] = useState<string>("Celsius");
   const [windSpeedUnit, setWindSpeedUnit] = useState<string>("Miles per hour");
-  const [saved, setSaved] = useState(false);
+  const [saveButtonText, setSaveButtonText] = React.useState<SaveButtonTextType>("Save changes");
+  const saveButtonTextRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (saveButtonTextRef.current == undefined) return;
+    if (saveButtonText === "Save changes") return;
+    saveButtonTextRef.current.animate(
+        {
+          opacity: [0, 1],
+        },
+        {
+          duration: 500,
+        }
+    );
+  }, [saveButtonText]);
 
   const handleTemperatureUnitClick = (unit: string) => {
     setTemperatureUnit(unit);
+    setSaveButtonText("Save changes")
   };
   const handleSpeedUnitClick = (unit: string) => {
     setWindSpeedUnit(unit);
-  };
-
-  const handleSaveClick = () => {
-    setSaved(true);
-    setTimeout(() => setSaved(false), 3000);
+    setSaveButtonText("Save changes")
   };
 
   const normalButtonClass = styles.normalbutton ? styles.normalbutton : "";
@@ -118,10 +131,10 @@ const Settings = () => {
 
           <div>
             <button
-              className="bg-[#2d3142] w-60 h-9 border-solid font-bold rounded text-white"
-              onClick={handleSaveClick}
+              className={`bg-[#2d3142] w-60 h-9 border-solid font-bold rounded text-white`}
+              onClick={() => {setSaveButtonText("Saved")}}
             >
-              {saved ? "Saved" : "Save Changes"}
+              <div ref={saveButtonTextRef}>{saveButtonText}</div>
             </button>
           </div>
         </div>
