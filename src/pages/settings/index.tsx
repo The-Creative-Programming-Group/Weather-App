@@ -41,10 +41,10 @@ const Settings = () => {
     <>
       <Layout title={"Settings"}>
         <div className="flex flex-col items-center w-full">
-          <h1 className="flex mt-10 justify-center text-3xl font-bold">
+          <h1 className="flex mt-10 justify-center text-4xl font-bold">
             Settings
           </h1>
-          <hr className="w-4/12 h-1.5 bg-[#2d3142] mt-3 rounded" />
+          <hr className="w-4/12 h-1.5 bg-[#2d3142] mt-9 rounded" />
           <div className="flex flex-col justify-center m-5">
             <h2 className="text-basic font-bold">Temperature units</h2>
             <button
