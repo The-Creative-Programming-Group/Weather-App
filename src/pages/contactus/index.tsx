@@ -30,7 +30,7 @@ const ContactUs = () => {
     <>
       <Layout title={"Contact Us"}>
         <div className="flex flex-col items-center w-full">
-          <h1 className="flex mt-10 justify-center text-3xl font-bold">
+          <h1 className="flex mt-24 justify-center text-3xl font-bold">
             Contact Us
           </h1>
           <hr className="w-4/12 h-1.5 bg-[#2d3142] mt-3 rounded" />
