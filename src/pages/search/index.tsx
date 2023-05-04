@@ -1,7 +1,14 @@
-import React from "react";
+import React, {useEffect, useRef} from "react";
 import Head from "next/head";
 
 const Search = () => {
+    const searchFocusRef = useRef<HTMLInputElement>(null);
+
+    useEffect(() => {
+        if (searchFocusRef.current == undefined) return;
+        searchFocusRef.current.focus();
+    }, []);
+
   return (
     <>
       <Head>
@@ -20,7 +27,7 @@ const Search = () => {
       >
         <img
           className="transform bg-[#383b53] border-solid border-[#2d3142] border-8 border-r-0 pt-3 pb-3 pl-3 w-12"
-          src="assets/search.png"
+          src="assets/search1.png"
           alt="search-icon"
           width={56}
           height={56}
@@ -29,6 +36,7 @@ const Search = () => {
           className="w-5/12 bg-[#383b53] border-solid border-[#2d3142] border-8 border-l-0 pt-0.5 pb-0.5 outline-0 text-xl pl-3 text-white"
           placeholder="Search for your location"
           type="text"
+          ref={searchFocusRef}
         />
       </div>
       <iframe
