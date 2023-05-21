@@ -57,7 +57,7 @@ return (
       referrerPolicy="no-referrer-when-downgrade"
       className="w-full h-full"
     />
-    {searchInput.length > 0 ? (<button className="absolute z-30 bottom-14 right-16 w-40 h-10 text-white bg-[#2d3142] rounded text-2xl hover:shadow-2xl transition duration-500 ease-in-out"><Link href="/home">Continue -></Link></button>) : null}
+    {searchInput.length > 0 ? (<button className="absolute z-30 bottom-14 right-16 w-40 h-10 text-white bg-[#2d3142] rounded text-2xl hover:shadow-2xl transition duration-500 ease-in-out"><Link href="/home">{"Continue ->"}</Link></button>) : null}
     </div>
   </>
 );
