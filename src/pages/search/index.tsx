@@ -47,7 +47,7 @@ const Search = () => {
         allowFullScreen={false}
         loading="lazy"
         referrerPolicy="no-referrer-when-downgrade"
-        className="absolute mt-20 left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 w-3/5 h-4/6 border-solid border-[#2d3142] border-12"
+        className="absolute mt-20 left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 w-3/5 h-4/6 border-solid border-[#2d3142] border-8"
       ></iframe>
     </>
   );
