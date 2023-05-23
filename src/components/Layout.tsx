@@ -18,14 +18,14 @@ const Layout: React.FC<LayoutProps> = ({ title, children, footer }) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <header className="bg-[#2d3142] p-2 flex justify-around items-center text-white">
-        <Link className={styles.navbarA} href="/">
+        <Link className={styles.navbarA} href="/home">
           Home
         </Link>
         <Link className={styles.navbarA} href="/locationsettings">
           Location settings
         </Link>
         <h1 className="text-base font-semibold md:font-normal md:text-4xl">
-          <Link href="/">Weather.io</Link>
+          <Link href="/home">Weather.io</Link>
         </h1>
         <Link className={styles.navbarA} href="/settings">
           Settings
