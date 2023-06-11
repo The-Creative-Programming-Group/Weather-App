@@ -1,0 +1,75 @@
+.contentflex {
+    display: flex;
+    justify-content: center;
+}
+
+.contentblock {
+    display: block;
+}
+
+.headingtext {
+    color: rgb(0, 0, 0);
+    font-weight: bolder;
+    font-size: 49px;
+    margin-top: 30px;
+}
+
+.temperature {
+    color: rgb(88, 88, 88);
+    font-weight: bolder;
+    font-size: 43px;
+    margin-left: 33px;
+}
+
+.weather {
+    color: rgb(0, 0, 0);
+    font-weight: bolder;
+    font-size: 18px;
+    margin-left: 50px;
+}
+
+.daytemperature {
+    width: 68%;
+    background-color: rgb(194, 194, 194);
+    height: 120px;
+    border-radius: 10px;
+    margin-top: 30px;
+    margin-left: 18%;
+}
+
+.weektemperature {
+    width: 18.9%;
+    background-color: rgb(194, 194, 194);
+    height: 40vh;
+    border-radius: 10px;
+    margin-top: 30px;
+    margin-left: 18%;
+}
+
+.rain {
+    width: 28.8%;
+    background-color: rgb(194, 194, 194);
+    height: 120px;
+    border-radius: 10px;
+    margin-top: 30px;
+    margin-left: 30px;
+}
+
+.map {
+    width: 17%;
+    background-color: rgb(194, 194, 194);
+    height: 40vh;
+    border-radius: 10px;
+    margin-top: 30px;
+    margin-left: 30px;
+}
+
+.flex {
+    display: flex; 
+}
+
+@media screen and (max-width: 767px){
+    .headingtext {
+        font-size: 35px;
+    }
+}
