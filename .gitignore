@@ -54,3 +54,4 @@ yarn-error.log*
 .idea/ZeppelinRemoteNotebooks/
 # CodeStream ignored files
 /../../Weather-App\.idea/codestream.xml
+/.fleet
