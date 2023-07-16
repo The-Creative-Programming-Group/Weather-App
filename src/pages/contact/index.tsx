@@ -22,7 +22,7 @@ const ContactUs = () => {
       },
       {
         duration: 500,
-      }
+      },
     );
   }, [sendButtonText]);
 

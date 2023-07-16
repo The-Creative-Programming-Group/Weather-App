@@ -22,7 +22,7 @@ const Settings = () => {
       },
       {
         duration: 500,
-      }
+      },
     );
   }, [saveButtonText]);
 
