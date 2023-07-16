@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Head from "next/head";
 import Link from "next/link";
 
@@ -42,6 +42,7 @@ const Search = () => {
           className="w-5/12 bg-[#383b53] border-solid border-[#2d3142] border-8 border-l-0 pt-0.5 pb-0.5 outline-0 text-xl pl-3 text-white"
           placeholder="Search for your location"
           type="text"
+          // Autofocus didn't work, so I used useRef() to focus the input field
           ref={searchFocusRef}
           onChange={handleInputChange}
         />

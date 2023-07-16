@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { use, useEffect, useRef } from "react";
 import Layout from "~/components/Layout";
 
 const ContactUs = () => {
@@ -6,12 +6,12 @@ const ContactUs = () => {
   const [sendButtonText, setSendButtonText] =
     React.useState<SendButtonTextType>("Send");
   const sendButtonTextRef = useRef<HTMLDivElement>(null);
-  const formFocusRef = useRef<HTMLInputElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    if (formFocusRef.current == undefined) return;
-    formFocusRef.current.focus();
-  }, []);
+    if (inputRef.current == undefined) return;
+    inputRef.current.focus();
+  });
 
   useEffect(() => {
     if (sendButtonTextRef.current == undefined) return;
@@ -29,44 +29,46 @@ const ContactUs = () => {
   return (
     <>
       <Layout title={"Contact Us"}>
-        <div className="flex flex-col items-center w-full">
-          <h1 className="flex mt-24 justify-center text-3xl font-bold">
+        <div className="flex w-full flex-col items-center">
+          <h1 className="mt-24 flex justify-center text-3xl font-bold">
             Contact Us
           </h1>
-          <hr className="w-9/12 md:w-5/12 h-1.5 bg-[#2d3142] mt-3 rounded" />
-          <div className="flex flex-col md:flex-row mt-5 ml-5 mr-5 mb-2 md:w-1/3">
-            <div className="flex flex-col w-60 md:w-full md:mr-4 md:mb-0 mb-2">
+          <hr className="mt-3 h-1.5 w-9/12 rounded bg-[#2d3142] md:w-5/12" />
+          <div className="mt-5 ml-5 mr-5 mb-2 flex flex-col md:w-1/3 md:flex-row">
+            <div className="mb-2 flex w-60 flex-col md:mr-4 md:mb-0 md:w-full">
               <label className="ml-2">First name</label>
               <input
-                className="bg-[#d7d5db] h-10 rounded-md w-full pl-2"
+                className="h-10 w-full rounded-md bg-[#d7d5db] pl-2"
                 onChange={() => setSendButtonText("Send")}
-                ref={formFocusRef}
+                // Autofocus didn't work, so I used this instead
+                ref={inputRef}
+                title="Search"
               />
             </div>
-            <div className="flex flex-col w-60 md:w-full">
+            <div className="flex w-60 flex-col md:w-full">
               <label className="ml-2">Last name</label>
               <input
-                className="bg-[#d8d5db] h-10 rounded-md w-full pl-2"
+                className="h-10 w-full rounded-md bg-[#d8d5db] pl-2"
                 onChange={() => setSendButtonText("Send")}
               />
             </div>
           </div>
-          <div className="flex flex-col w-60 md:w-4/12 mb-2">
+          <div className="mb-2 flex w-60 flex-col md:w-4/12">
             <label className="ml-2">Email</label>
             <input
-              className="bg-[#d8d5db] h-10 rounded-md pl-2 w-full"
+              className="h-10 w-full rounded-md bg-[#d8d5db] pl-2"
               onChange={() => setSendButtonText("Send")}
             />
           </div>
-          <div className="flex flex-col w-60 md:w-4/12 mb-8">
+          <div className="mb-8 flex w-60 flex-col md:w-4/12">
             <label className="ml-2">Message</label>
             <textarea
-              className="bg-[#d8d5db] h-64 rounded-md w-full resize-none pl-2"
+              className="h-64 w-full resize-none rounded-md bg-[#d8d5db] pl-2"
               onChange={() => setSendButtonText("Send")}
             />
           </div>
           <button
-            className="bg-[#2d3142] w-60 h-9 border-solid rounded text-white"
+            className="h-9 w-60 rounded border-solid bg-[#2d3142] text-white"
             onClick={() => setSendButtonText("Sent")}
           >
             <div ref={sendButtonTextRef}>{sendButtonText}</div>
