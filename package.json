@@ -6,9 +6,11 @@
     "build": "next build",
     "dev": "next dev",
     "lint": "next lint",
-    "start": "next start"
+    "start": "next start",
+    "preinstall": "npx only-allow pnpm"
   },
   "dependencies": {
+    "@total-typescript/ts-reset": "^0.4.2",
     "next": "^13.4.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
