@@ -107,13 +107,17 @@ function calculateAirQualityIndex(pm10: number, pm25: number): number {
   const breakpoints = [0, 12, 35.4, 55.4, 150.4, 250.4, 350.4, 500.4];
 
   function calculateAqiConcentration(pm: number, index: number): number {
-
     const bpLow = breakpoints[index];
     const bpHigh = breakpoints[index + 1];
     const aqiLow = aqiValues[index];
     const aqiHigh = aqiValues[index + 1];
 
-    if (bpLow === undefined || bpHigh === undefined || aqiLow === undefined || aqiHigh === undefined) {
+    if (
+      bpLow === undefined ||
+      bpHigh === undefined ||
+      aqiLow === undefined ||
+      aqiHigh === undefined
+    ) {
       return 0;
     }
 
