@@ -7,6 +7,7 @@ const config = {
         12: '12px'
       },
       margin: {
+        0.2: '0.2rem',
         112: '28rem',
         116: '29rem',
         120: '30rem',
