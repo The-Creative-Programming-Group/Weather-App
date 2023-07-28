@@ -1,6 +1,8 @@
 import React from "react";
 import Head from "next/head";
 import { IoIosSettings, IoMdContact } from "react-icons/io";
+import { FaMapMarkedAlt } from "react-icons/fa";
+import { AiFillHome } from "react-icons/ai";
 import Link from "next/link";
 
 interface LayoutProps {
@@ -18,8 +20,14 @@ const Layout: React.FC<LayoutProps> = ({ title, children, footer }) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <header className="flex items-center justify-around bg-[#2d3142] p-2 text-white">
-        <Link href="/home">Home</Link>
-        <Link href="/locationsettings">Location settings</Link>
+        <Link href="/home" className={"flex"}>
+          <AiFillHome className="mr-1.5 mt-0.5 md:text-2xl" />
+          <p className={"mt-0.2"}>Home</p>
+        </Link>
+        <Link href="/locationsettings" className={"flex"}>
+          <FaMapMarkedAlt className="mr-1.5 mt-0.5 md:text-2xl" />
+          <p className={"mt-0.2"}>Location settings</p>
+        </Link>
         <h1 className="text-base font-semibold md:text-4xl md:font-normal">
           <Link href="/home">Weather.io</Link>
         </h1>

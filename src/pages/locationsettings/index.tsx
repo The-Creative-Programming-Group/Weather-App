@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef, ChangeEvent } from "react";
 import Layout from "~/components/Layout";
+import { ToastContainer, toast } from "react-toastify";
 
 const index = () => {
   interface IStadt {
@@ -7,7 +8,7 @@ const index = () => {
     population: number;
   }
 
-  const städte = [
+  const cities = [
     { name: "Berlin", population: 1000000 },
     { name: "Dresden", population: 510000 },
     { name: "Dortmund", population: 200000 },
@@ -15,15 +16,35 @@ const index = () => {
     { name: "Döbeln", population: 50000 },
     { name: "Delb", population: 20000 },
   ];
+
   const [searchValue, setSearchValue] = useState("");
   const [searchValue2, setSearchValue2] = useState("");
-  const [activeInput, setActiveInput] = useState(null);
+  const [activeInput, setActiveInput] = useState<string | null>(null);
+  const firstInputRef = useRef(null);
+  const [activeStadt, setActiveStadt] = useState("");
+  const [buttonName, setButtonName] = useState("Change Location");
+  const saveButtonTextRef = useRef<HTMLButtonElement>(null);
+  const [activeCity, setActiveCity] = useState(false);
 
-  const handleChange = (event) => {
+  useEffect(() => {
+    if (saveButtonTextRef.current == undefined) return;
+    if (buttonName === "Save changes") return;
+    saveButtonTextRef.current.animate(
+      {
+        opacity: [0, 1],
+      },
+      {
+        duration: 500,
+      }
+    );
+  }, [buttonName]);
+
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setButtonName("Change Location");
     setSearchValue(event.target.value);
   };
 
-  const handleInputFocus = (inputName) => {
+  const handleInputFocus = (inputName: string) => {
     setActiveInput(inputName);
   };
 
@@ -31,12 +52,53 @@ const index = () => {
     setActiveInput(null);
   };
 
-  const handleChange2 = (event) => {
+  const handleChange2 = (event: ChangeEvent<HTMLInputElement>) => {
     setSearchValue2(event.target.value);
   };
 
+  const handleChangeclick = () => {
+    if (searchValue === "") {
+      if (firstInputRef.current) {
+        firstInputRef.current.focus();
+      }
+    }
+  };
+
+  const checkCity = () => {
+    cities.map(
+      (stadt) => {
+        if (stadt.name.toLowerCase() === searchValue.toLowerCase()) {
+          changed(stadt.name);
+        }
+      },
+      [searchValue]
+    );
+  };
+
+  const changed = (stadt: string) => {
+    setActiveStadt(stadt);
+    console.log(stadt);
+    setButtonName("Changed");
+    setSearchValue("");
+    setActiveCity(false);
+  };
+
+  const handleChangedown = () => {
+    if (searchValue !== "" && activeCity === true) {
+      changed(searchValue);
+    } else {
+      checkCity();
+    }
+  };
+
+  const handleStadtclick = (name: string) => {
+    setSearchValue(name);
+    setActiveCity(true);
+    console.log(activeCity);
+  };
+
   let anzahl = 0;
-  städte.sort((stadtA, stadtB) => stadtB.population - stadtA.population);
+  cities.sort((stadtA, stadtB) => stadtB.population - stadtA.population);
 
   return (
     <>
@@ -60,6 +122,7 @@ const index = () => {
                 height={56}
               />
               <input
+                ref={firstInputRef}
                 className="w-4/12 border-b-2 border-black bg-[#d8d5db] pt-0.5 pb-0.5 pl-3 text-xl font-bold text-black outline-0"
                 placeholder="Search for your location"
                 type="text"
@@ -69,7 +132,7 @@ const index = () => {
                 onBlur={handleInputBlur}
               />
             </div>
-            {städte.map((stadt) => {
+            {cities.map((stadt) => {
               if (
                 searchValue !== "" &&
                 stadt.name.toLowerCase().startsWith(searchValue.toLowerCase())
@@ -85,6 +148,7 @@ const index = () => {
                           : "h-auto w-4/12+12px border-b-2 border-gray-400 bg-[#d8d5db] p-5"
                       }
                       key={stadt.name}
+                      onMouseDown={() => handleStadtclick(stadt.name)}
                     >
                       <p>
                         {stadt.name
@@ -106,6 +170,14 @@ const index = () => {
                 }
               }
             })}
+            <button
+              onClick={handleChangeclick}
+              onMouseDown={handleChangedown}
+              className="mt-2.5 rounded border-solid bg-[#2d3142] p-2 font-bold text-white"
+              ref={saveButtonTextRef}
+            >
+              {buttonName}
+            </button>
             <div />
 
             <div
@@ -132,7 +204,7 @@ const index = () => {
                 />
               </div>{" "}
             </div>
-            {städte.map((stadt) => {
+            {cities.map((stadt) => {
               if (
                 searchValue2 !== "" &&
                 stadt.name.toLowerCase().startsWith(searchValue2.toLowerCase())
