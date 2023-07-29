@@ -77,7 +77,7 @@ const LocationSettings = () => {
   };
 
   const changed = (stadt: string) => {
-    activeCity$.set({ name: stadt });
+    activeCity$.set(stadt);
     setButtonName("Changed");
     setSearchValue("");
     setIsLocationSelected(false);
