@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef, type ChangeEvent } from "react";
 import Layout from "~/components/Layout";
 import { ToastContainer, toast } from "react-toastify";
+import { activeCity$ } from "~/states";
 
 const LocationSettings = () => {
   interface ICity {
@@ -22,10 +23,9 @@ const LocationSettings = () => {
   const [searchValue2, setSearchValue2] = useState("");
   const [activeInput, setActiveInput] = useState<string | null>(null);
   const firstInputRef = useRef<HTMLInputElement>(null);
-  const [activeStadt, setActiveStadt] = useState("");
   const [buttonName, setButtonName] = useState("Change Location");
   const saveButtonTextRef = useRef<HTMLButtonElement>(null);
-  const [activeCity, setActiveCity] = useState(false);
+  const [isLocationSelected, setIsLocationSelected] = useState(false);
 
   useEffect(() => {
     if (saveButtonTextRef.current == undefined) return;
@@ -36,7 +36,7 @@ const LocationSettings = () => {
       },
       {
         duration: 500,
-      },
+      }
     );
   }, [buttonName]);
 
@@ -72,20 +72,19 @@ const LocationSettings = () => {
           changed(stadt.name);
         }
       },
-      [searchValue],
+      [searchValue]
     );
   };
 
   const changed = (stadt: string) => {
-    setActiveStadt(stadt);
-    console.log(stadt);
+    activeCity$.set({ name: stadt });
     setButtonName("Changed");
     setSearchValue("");
-    setActiveCity(false);
+    setIsLocationSelected(false);
   };
 
   const handleChangedown = () => {
-    if (searchValue !== "" && activeCity === true) {
+    if (isLocationSelected === true) {
       changed(searchValue);
     } else {
       checkCity();
@@ -94,8 +93,7 @@ const LocationSettings = () => {
 
   const handleStadtclick = (name: string) => {
     setSearchValue(name);
-    setActiveCity(true);
-    console.log(activeCity);
+    setIsLocationSelected(true);
   };
 
   let anzahl = 0;
@@ -116,7 +114,7 @@ const LocationSettings = () => {
             <label className="mr-128 mb-2">Change location</label>
             <div className="flex w-full justify-center">
               <img
-                className="w-12 transform border-b-2 border-black bg-[#d8d5db] pt-3 pb-3 pl-3"
+                className="w-12 transform border-b-2 border-black bg-[#d8d5db] pb-3 pl-3 pt-3"
                 src="assets/search2.png"
                 alt="search-icon"
                 width={56}
@@ -124,7 +122,7 @@ const LocationSettings = () => {
               />
               <input
                 ref={firstInputRef}
-                className="w-4/12 border-b-2 border-black bg-[#d8d5db] pt-0.5 pb-0.5 pl-3 text-xl font-bold text-black outline-0"
+                className="w-4/12 border-b-2 border-black bg-[#d8d5db] pb-0.5 pl-3 pt-0.5 text-xl font-bold text-black outline-0"
                 placeholder="Search for your location"
                 type="text"
                 onFocus={() => handleInputFocus("input1")}
@@ -189,14 +187,14 @@ const LocationSettings = () => {
               <label className="mr-131 mb-2">Add new location</label>
               <div className="flex w-full justify-center">
                 <img
-                  className="w-12 transform border-b-2 border-black bg-[#d8d5db] pt-3 pb-3 pl-3"
+                  className="w-12 transform border-b-2 border-black bg-[#d8d5db] pb-3 pl-3 pt-3"
                   src="assets/search2.png"
                   alt="search-icon"
                   width={56}
                   height={56}
                 />
                 <input
-                  className="w-4/12 border-b-2 border-black bg-[#d8d5db] pt-0.5 pb-0.5 pl-3 text-xl font-bold text-black outline-0"
+                  className="w-4/12 border-b-2 border-black bg-[#d8d5db] pb-0.5 pl-3 pt-0.5 text-xl font-bold text-black outline-0"
                   placeholder="Search for your location"
                   type="text"
                   onFocus={() => handleInputFocus("input2")}

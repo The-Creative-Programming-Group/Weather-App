@@ -2,7 +2,7 @@ import React from "react";
 import styles from "./style-home.module.css";
 import Layout from "~/components/Layout";
 
-function Home() {
+function InternalHome() {
   return (
     <Layout>
       <div className={styles.contentflex}>
@@ -23,4 +23,4 @@ function Home() {
   );
 }
 
-export default Home;
+export default InternalHome;

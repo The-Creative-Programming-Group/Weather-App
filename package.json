@@ -10,6 +10,7 @@
     "preinstall": "npx only-allow pnpm"
   },
   "dependencies": {
+    "@legendapp/state": "^1.8.0",
     "@total-typescript/ts-reset": "^0.4.2",
     "next": "^13.4.1",
     "react": "^18.2.0",
