@@ -102,43 +102,43 @@ const LocationSettings = () => {
   cities.sort((stadtA, stadtB) => stadtB.population - stadtA.population);
 
   return (
-      <>
-        <Layout title={"Location Settings"}>
-          <div className="flex w-full flex-col items-center">
-            <h1 className="mt-24 flex justify-center text-3xl font-bold">
-              Location settings
-            </h1>
-            <hr className="mt-3 h-1.5 w-4/12 rounded bg-[#2d3142]" />
-            <div
-                id="styles-setup"
-                className="mt-9 flex w-full flex-col items-center"
-            >
-              <label className="mr-128 mb-2">Change location</label>
-              <div className="flex w-full justify-center">
-                <img
-                    className="w-12 transform border-b-2 border-black bg-[#d8d5db] pt-3 pb-3 pl-3"
-                    src="assets/search2.png"
-                    alt="search-icon"
-                    width={56}
-                    height={56}
-                />
-                <input
-                    ref={firstInputRef}
-                    className="w-4/12 border-b-2 border-black bg-[#d8d5db] pt-0.5 pb-0.5 pl-3 text-xl font-bold text-black outline-0"
-                    placeholder="Search for your location"
-                    type="text"
-                    onFocus={() => handleInputFocus("input1")}
-                    onChange={handleChange}
-                    value={searchValue}
-                    onBlur={handleInputBlur}
-                />
-              </div>
-              {cities.map((stadt) => {
-                if (
-                    searchValue !== "" &&
-                    stadt.name.toLowerCase().startsWith(searchValue.toLowerCase())
-                ) {
-                  anzahl++;
+    <>
+      <Layout title={"Location Settings"}>
+        <div className="flex w-full flex-col items-center">
+          <h1 className="mt-24 flex justify-center text-3xl font-bold">
+            Location settings
+          </h1>
+          <hr className="mt-3 h-1.5 w-4/12 rounded bg-[#2d3142]" />
+          <div
+            id="styles-setup"
+            className="mt-9 flex w-full flex-col items-center"
+          >
+            <label className="mr-128 mb-2">Change location</label>
+            <div className="flex w-full justify-center">
+              <img
+                className="w-12 transform border-b-2 border-black bg-[#d8d5db] pt-3 pb-3 pl-3"
+                src="assets/search2.png"
+                alt="search-icon"
+                width={56}
+                height={56}
+              />
+              <input
+                ref={firstInputRef}
+                className="w-4/12 border-b-2 border-black bg-[#d8d5db] pt-0.5 pb-0.5 pl-3 text-xl font-bold text-black outline-0"
+                placeholder="Search for your location"
+                type="text"
+                onFocus={() => handleInputFocus("input1")}
+                onChange={handleChange}
+                value={searchValue}
+                onBlur={handleInputBlur}
+              />
+            </div>
+            {cities.map((stadt) => {
+              if (
+                searchValue !== "" &&
+                stadt.name.toLowerCase().startsWith(searchValue.toLowerCase())
+              ) {
+                anzahl++;
 
                 if (anzahl <= 4) {
                   return (
@@ -165,53 +165,53 @@ const LocationSettings = () => {
                             >
                               {buchstabe}
                             </span>
-                                ))}
-                          </p>
-                        </div>
-                    );
-                  }
+                          ))}
+                      </p>
+                    </div>
+                  );
                 }
-              })}
-              <button
-                  onClick={handleChangeclick}
-                  onMouseDown={handleChangedown}
-                  className="mt-2.5 rounded border-solid bg-[#2d3142] p-2 font-bold text-white"
-                  ref={saveButtonTextRef}
-              >
-                {buttonName}
-              </button>
-              <div />
+              }
+            })}
+            <button
+              onClick={handleChangeclick}
+              onMouseDown={handleChangedown}
+              className="mt-2.5 rounded border-solid bg-[#2d3142] p-2 font-bold text-white"
+              ref={saveButtonTextRef}
+            >
+              {buttonName}
+            </button>
+            <div />
 
-              <div
-                  id="styles-setup"
-                  className="mt-9 flex w-full flex-col items-center"
-              >
-                <label className="mr-131 mb-2">Add new location</label>
-                <div className="flex w-full justify-center">
-                  <img
-                      className="w-12 transform border-b-2 border-black bg-[#d8d5db] pt-3 pb-3 pl-3"
-                      src="assets/search2.png"
-                      alt="search-icon"
-                      width={56}
-                      height={56}
-                  />
-                  <input
-                      className="w-4/12 border-b-2 border-black bg-[#d8d5db] pt-0.5 pb-0.5 pl-3 text-xl font-bold text-black outline-0"
-                      placeholder="Search for your location"
-                      type="text"
-                      onFocus={() => handleInputFocus("input2")}
-                      value={searchValue2}
-                      onBlur={handleInputBlur}
-                      onChange={handleChange2}
-                  />
-                </div>{" "}
-              </div>
-              {cities.map((stadt) => {
-                if (
-                    searchValue2 !== "" &&
-                    stadt.name.toLowerCase().startsWith(searchValue2.toLowerCase())
-                ) {
-                  anzahl++;
+            <div
+              id="styles-setup"
+              className="mt-9 flex w-full flex-col items-center"
+            >
+              <label className="mr-131 mb-2">Add new location</label>
+              <div className="flex w-full justify-center">
+                <img
+                  className="w-12 transform border-b-2 border-black bg-[#d8d5db] pt-3 pb-3 pl-3"
+                  src="assets/search2.png"
+                  alt="search-icon"
+                  width={56}
+                  height={56}
+                />
+                <input
+                  className="w-4/12 border-b-2 border-black bg-[#d8d5db] pt-0.5 pb-0.5 pl-3 text-xl font-bold text-black outline-0"
+                  placeholder="Search for your location"
+                  type="text"
+                  onFocus={() => handleInputFocus("input2")}
+                  value={searchValue2}
+                  onBlur={handleInputBlur}
+                  onChange={handleChange2}
+                />
+              </div>{" "}
+            </div>
+            {cities.map((stadt) => {
+              if (
+                searchValue2 !== "" &&
+                stadt.name.toLowerCase().startsWith(searchValue2.toLowerCase())
+              ) {
+                anzahl++;
 
                 if (anzahl <= 4) {
                   return (
@@ -237,17 +237,17 @@ const LocationSettings = () => {
                             >
                               {buchstabe}
                             </span>
-                                ))}
-                          </p>
-                        </div>
-                    );
-                  }
+                          ))}
+                      </p>
+                    </div>
+                  );
                 }
-              })}
-            </div>
+              }
+            })}
           </div>
-        </Layout>
-      </>
+        </div>
+      </Layout>
+    </>
   );
 };
 
