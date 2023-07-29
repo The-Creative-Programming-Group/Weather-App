@@ -1,14 +1,15 @@
-import React, { useState, useEffect, useRef, ChangeEvent } from "react";
+import React, { useState, useEffect, useRef, type ChangeEvent } from "react";
 import Layout from "~/components/Layout";
 import { ToastContainer, toast } from "react-toastify";
 
-const index = () => {
-  interface IStadt {
+const LocationSettings = () => {
+  interface ICity {
     name: string;
     population: number;
   }
 
-  const cities = [
+  // Only for testing, later it will be fetched from an API
+  const cities: ICity[] = [
     { name: "Berlin", population: 1000000 },
     { name: "Dresden", population: 510000 },
     { name: "Dortmund", population: 200000 },
@@ -20,7 +21,7 @@ const index = () => {
   const [searchValue, setSearchValue] = useState("");
   const [searchValue2, setSearchValue2] = useState("");
   const [activeInput, setActiveInput] = useState<string | null>(null);
-  const firstInputRef = useRef(null);
+  const firstInputRef = useRef<HTMLInputElement>(null);
   const [activeStadt, setActiveStadt] = useState("");
   const [buttonName, setButtonName] = useState("Change Location");
   const saveButtonTextRef = useRef<HTMLButtonElement>(null);
@@ -30,12 +31,12 @@ const index = () => {
     if (saveButtonTextRef.current == undefined) return;
     if (buttonName === "Save changes") return;
     saveButtonTextRef.current.animate(
-        {
-          opacity: [0, 1],
-        },
-        {
-          duration: 500,
-        }
+      {
+        opacity: [0, 1],
+      },
+      {
+        duration: 500,
+      },
     );
   }, [buttonName]);
 
@@ -66,12 +67,12 @@ const index = () => {
 
   const checkCity = () => {
     cities.map(
-        (stadt) => {
-          if (stadt.name.toLowerCase() === searchValue.toLowerCase()) {
-            changed(stadt.name);
-          }
-        },
-        [searchValue]
+      (stadt) => {
+        if (stadt.name.toLowerCase() === searchValue.toLowerCase()) {
+          changed(stadt.name);
+        }
+      },
+      [searchValue],
     );
   };
 
@@ -139,28 +140,29 @@ const index = () => {
                 ) {
                   anzahl++;
 
-                  if (anzahl <= 4) {
-                    return (
-                        <div
-                            className={
-                              activeInput !== "input1"
-                                  ? "hidden"
-                                  : "h-auto w-4/12+12px border-b-2 border-gray-400 bg-[#d8d5db] p-5"
-                            }
-                            key={stadt.name}
-                            onMouseDown={() => handleStadtclick(stadt.name)}
-                        >
-                          <p>
-                            {stadt.name
-                                .split("")
-                                .map((buchstabe, buchstabenIndex) => (
-                                    <span
-                                        className={
-                                          buchstabenIndex < searchValue.length
-                                              ? "font-bold"
-                                              : ""
-                                        }
-                                    >
+                if (anzahl <= 4) {
+                  return (
+                    <div
+                      className={
+                        activeInput !== "input1"
+                          ? "hidden"
+                          : "w-4/12+12px h-auto border-b-2 border-gray-400 bg-[#d8d5db] p-5"
+                      }
+                      key={stadt.name}
+                      onMouseDown={() => handleStadtclick(stadt.name)}
+                    >
+                      <p>
+                        {stadt.name
+                          .split("")
+                          .map((buchstabe, buchstabenIndex) => (
+                            <span
+                              className={
+                                buchstabenIndex < searchValue.length
+                                  ? "font-bold"
+                                  : ""
+                              }
+                              key={buchstabenIndex}
+                            >
                               {buchstabe}
                             </span>
                                 ))}
@@ -211,27 +213,28 @@ const index = () => {
                 ) {
                   anzahl++;
 
-                  if (anzahl <= 4) {
-                    return (
-                        <div
-                            className={
-                              activeInput !== "input2"
-                                  ? "hidden"
-                                  : "h-auto w-4/12+12px border-b-2 border-gray-400 bg-[#d8d5db] p-5"
-                            }
-                            key={stadt.name}
-                        >
-                          <p>
-                            {stadt.name
-                                .split("")
-                                .map((buchstabe, buchstabenIndex) => (
-                                    <span
-                                        className={
-                                          buchstabenIndex < searchValue.length
-                                              ? "font-bold"
-                                              : ""
-                                        }
-                                    >
+                if (anzahl <= 4) {
+                  return (
+                    <div
+                      className={
+                        activeInput !== "input2"
+                          ? "hidden"
+                          : "w-4/12+12px h-auto border-b-2 border-gray-400 bg-[#d8d5db] p-5"
+                      }
+                      key={stadt.name}
+                    >
+                      <p>
+                        {stadt.name
+                          .split("")
+                          .map((buchstabe, buchstabenIndex) => (
+                            <span
+                              className={
+                                buchstabenIndex < searchValue.length
+                                  ? "font-bold"
+                                  : ""
+                              }
+                              key={buchstabenIndex}
+                            >
                               {buchstabe}
                             </span>
                                 ))}
@@ -248,4 +251,4 @@ const index = () => {
   );
 };
 
-export default index;
+export default LocationSettings;

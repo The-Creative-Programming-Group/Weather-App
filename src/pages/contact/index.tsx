@@ -1,4 +1,4 @@
-import React, { use, useEffect, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import Layout from "~/components/Layout";
 
 const ContactUs = () => {
