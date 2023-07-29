@@ -36,7 +36,7 @@ const LocationSettings = () => {
       },
       {
         duration: 500,
-      }
+      },
     );
   }, [buttonName]);
 
@@ -72,7 +72,7 @@ const LocationSettings = () => {
           changed(stadt.name);
         }
       },
-      [searchValue]
+      [searchValue],
     );
   };
 
