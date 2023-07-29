@@ -1,8 +1,8 @@
-import React, { useState, useEffect, useRef, ChangeEvent } from "react";
+import React, { useState, useEffect, useRef, type ChangeEvent } from "react";
 import Layout from "~/components/Layout";
 import { ToastContainer, toast } from "react-toastify";
 
-const index = () => {
+const LocationSettings = () => {
   interface ICity {
     name: string;
     population: number;
@@ -36,7 +36,7 @@ const index = () => {
       },
       {
         duration: 500,
-      },
+      }
     );
   }, [buttonName]);
 
@@ -72,7 +72,7 @@ const index = () => {
           changed(stadt.name);
         }
       },
-      [searchValue],
+      [searchValue]
     );
   };
 
@@ -161,6 +161,7 @@ const index = () => {
                                   ? "font-bold"
                                   : ""
                               }
+                              key={buchstabenIndex}
                             >
                               {buchstabe}
                             </span>
@@ -232,6 +233,7 @@ const index = () => {
                                   ? "font-bold"
                                   : ""
                               }
+                              key={buchstabenIndex}
                             >
                               {buchstabe}
                             </span>
@@ -249,4 +251,4 @@ const index = () => {
   );
 };
 
-export default index;
+export default LocationSettings;

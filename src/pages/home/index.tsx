@@ -2,7 +2,7 @@ import React from "react";
 import styles from "./style-home.module.css";
 import Layout from "~/components/Layout";
 
-function index() {
+function Home() {
   return (
     <Layout>
       <div className={styles.contentflex}>
@@ -23,4 +23,4 @@ function index() {
   );
 }
 
-export default index;
+export default Home;
