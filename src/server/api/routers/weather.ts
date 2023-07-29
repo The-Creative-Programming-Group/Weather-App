@@ -42,7 +42,7 @@ const PresentWeatherSchema = z.object({
       main: z.string(),
       description: z.string(),
       icon: z.string(),
-    }),
+    })
   ),
   base: z.string(),
   main: z.object({
@@ -101,32 +101,13 @@ const PresentAirQualitySchema = z.object({
 
 type PresentAirQuality = z.infer<typeof PresentAirQualitySchema> | undefined;
 
-// !TODO: 0 - 100 instead of 0 - 500
 function calculateAirQualityIndex(pm10: number, pm25: number): number {
-  const aqiValues = [0, 50, 100, 150, 200, 300, 400, 500];
-  const breakpoints = [0, 12, 35.4, 55.4, 150.4, 250.4, 350.4, 500.4];
+  const scaleFactor = 500.4;
 
-  function calculateAqiConcentration(pm: number, index: number): number {
-    const bpLow = breakpoints[index];
-    const bpHigh = breakpoints[index + 1];
-    const aqiLow = aqiValues[index];
-    const aqiHigh = aqiValues[index + 1];
+  const aqiPm10 = (pm10 / scaleFactor) * 100;
+  const aqiPm25 = (pm25 / scaleFactor) * 100;
 
-    if (
-      bpLow === undefined ||
-      bpHigh === undefined ||
-      aqiLow === undefined ||
-      aqiHigh === undefined
-    ) {
-      return 0;
-    }
-
-    return ((aqiHigh - aqiLow) / (bpHigh - bpLow)) * (pm - bpLow) + aqiLow;
-  }
-
-  const aqiPm10 = calculateAqiConcentration(pm10, 0);
-  const aqiPm25 = calculateAqiConcentration(pm25, 1);
-
+  // Take the maximum of the two AQIs as overall AQI
   return Math.max(aqiPm10, aqiPm25);
 }
 
@@ -138,7 +119,7 @@ export const weatherRouter = createTRPCRouter({
           lat: z.number().min(-90).max(90),
           lon: z.number().min(0).max(180),
         }),
-      }),
+      })
     )
     .query(async ({ input }) => {
       // OpenWeatherMap API
@@ -152,7 +133,7 @@ export const weatherRouter = createTRPCRouter({
 
       try {
         const hourlyWeatherData = await axios.get<HourlyWeather>(
-          urlHourlyForecast,
+          urlHourlyForecast
         );
         hourlyData = HourlyWeatherSchema.parse(hourlyWeatherData.data);
       } catch (error) {
@@ -182,7 +163,7 @@ export const weatherRouter = createTRPCRouter({
 
       try {
         const airQualityData = await axios.get<PresentAirQuality>(
-          urlAirQuality,
+          urlAirQuality
         );
         presentAirQuality = PresentAirQualitySchema.parse(airQualityData.data);
       } catch (error) {
@@ -201,7 +182,7 @@ export const weatherRouter = createTRPCRouter({
       ) {
         presentAirQualityIndex = calculateAirQualityIndex(
           presentAirQuality.hourly.pm10[0],
-          presentAirQuality.hourly.pm2_5[0],
+          presentAirQuality.hourly.pm2_5[0]
         );
       }
 
@@ -216,7 +197,7 @@ export const weatherRouter = createTRPCRouter({
       const getTimeSlotAverage = (
         startIndex: number,
         endIndex: number,
-        data: HourlyData | undefined,
+        data: HourlyData | undefined
       ): number | undefined => {
         const probabilities = data?.hourly.precipitation_probability ?? [];
 
@@ -230,19 +211,20 @@ export const weatherRouter = createTRPCRouter({
         return undefined;
       };
 
-      const timeSlots = [
-        { slot: "1 night", start: 0, end: 1 },
-        { slot: "2 morning", start: 2, end: 3 },
-        { slot: "3 noon", start: 4, end: 4 },
-        { slot: "4 afternoon", start: 5, end: 6 },
-        { slot: "5 evening", start: 7, end: 8 },
+      const timeSlots: { slot: string; start: number; end: number }[] = [
+        { slot: "1 night", start: 0, end: 4 },
+        { slot: "2 morning", start: 5, end: 8 },
+        { slot: "3 noon", start: 9, end: 12 },
+        { slot: "4 afternoon", start: 13, end: 16 },
+        { slot: "5 evening", start: 17, end: 20 },
+        { slot: "6 night", start: 21, end: 23 },
       ];
 
       timeSlots.forEach(({ slot, start, end }) => {
         precipitationProbabilities[slot] = getTimeSlotAverage(
           start,
           end,
-          hourlyData,
+          hourlyData
         );
       });
 
