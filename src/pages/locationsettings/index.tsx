@@ -36,7 +36,7 @@ const index = () => {
       },
       {
         duration: 500,
-      }
+      },
     );
   }, [buttonName]);
 
@@ -72,7 +72,7 @@ const index = () => {
           changed(stadt.name);
         }
       },
-      [searchValue]
+      [searchValue],
     );
   };
 
