@@ -8,6 +8,7 @@ const index = () => {
     population: number;
   }
 
+  // Only for testing, later it will be fetched from an API
   const cities: ICity[] = [
     { name: "Berlin", population: 1000000 },
     { name: "Dresden", population: 510000 },
@@ -35,7 +36,7 @@ const index = () => {
       },
       {
         duration: 500,
-      },
+      }
     );
   }, [buttonName]);
 
@@ -71,7 +72,7 @@ const index = () => {
           changed(stadt.name);
         }
       },
-      [searchValue],
+      [searchValue]
     );
   };
 
