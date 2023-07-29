@@ -42,7 +42,7 @@ const PresentWeatherSchema = z.object({
       main: z.string(),
       description: z.string(),
       icon: z.string(),
-    }),
+    })
   ),
   base: z.string(),
   main: z.object({
@@ -119,7 +119,7 @@ export const weatherRouter = createTRPCRouter({
           lat: z.number().min(-90).max(90),
           lon: z.number().min(0).max(180),
         }),
-      }),
+      })
     )
     .query(async ({ input }) => {
       // OpenWeatherMap API
@@ -133,7 +133,7 @@ export const weatherRouter = createTRPCRouter({
 
       try {
         const hourlyWeatherData = await axios.get<HourlyWeather>(
-          urlHourlyForecast,
+          urlHourlyForecast
         );
         hourlyData = HourlyWeatherSchema.parse(hourlyWeatherData.data);
       } catch (error) {
@@ -163,7 +163,7 @@ export const weatherRouter = createTRPCRouter({
 
       try {
         const airQualityData = await axios.get<PresentAirQuality>(
-          urlAirQuality,
+          urlAirQuality
         );
         presentAirQuality = PresentAirQualitySchema.parse(airQualityData.data);
       } catch (error) {
@@ -182,7 +182,7 @@ export const weatherRouter = createTRPCRouter({
       ) {
         presentAirQualityIndex = calculateAirQualityIndex(
           presentAirQuality.hourly.pm10[0],
-          presentAirQuality.hourly.pm2_5[0],
+          presentAirQuality.hourly.pm2_5[0]
         );
       }
 
@@ -197,7 +197,7 @@ export const weatherRouter = createTRPCRouter({
       const getTimeSlotAverage = (
         startIndex: number,
         endIndex: number,
-        data: HourlyData | undefined,
+        data: HourlyData | undefined
       ): number | undefined => {
         const probabilities = data?.hourly.precipitation_probability ?? [];
 
@@ -212,19 +212,18 @@ export const weatherRouter = createTRPCRouter({
       };
 
       const timeSlots: { slot: string; start: number; end: number }[] = [
-        { slot: "1 night", start: 0, end: 4 },
-        { slot: "2 morning", start: 5, end: 8 },
-        { slot: "3 noon", start: 9, end: 12 },
-        { slot: "4 afternoon", start: 13, end: 16 },
-        { slot: "5 evening", start: 17, end: 20 },
-        { slot: "6 night", start: 21, end: 23 },
+        { slot: "1 early morning", start: 0, end: 5 },
+        { slot: "2 morning", start: 6, end: 10 },
+        { slot: "3 noon", start: 10, end: 14 },
+        { slot: "4 afternoon", start: 15, end: 19 },
+        { slot: "5 night", start: 20, end: 23 },
       ];
 
       timeSlots.forEach(({ slot, start, end }) => {
         precipitationProbabilities[slot] = getTimeSlotAverage(
           start,
           end,
-          hourlyData,
+          hourlyData
         );
       });
 
