@@ -20,7 +20,7 @@ const index = () => {
   const [searchValue, setSearchValue] = useState("");
   const [searchValue2, setSearchValue2] = useState("");
   const [activeInput, setActiveInput] = useState<string | null>(null);
-  const firstInputRef = useRef(null);
+  const firstInputRef = useRef<HTMLInputElement>(null);
   const [activeStadt, setActiveStadt] = useState("");
   const [buttonName, setButtonName] = useState("Change Location");
   const saveButtonTextRef = useRef<HTMLButtonElement>(null);
@@ -35,7 +35,7 @@ const index = () => {
       },
       {
         duration: 500,
-      },
+      }
     );
   }, [buttonName]);
 
@@ -71,7 +71,7 @@ const index = () => {
           changed(stadt.name);
         }
       },
-      [searchValue],
+      [searchValue]
     );
   };
 
