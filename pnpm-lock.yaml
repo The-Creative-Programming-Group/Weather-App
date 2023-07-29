@@ -37,9 +37,6 @@ devDependencies:
   '@types/node':
     specifier: ^18.14.0
     version: 18.15.3
-  '@types/prettier':
-    specifier: ^2.7.2
-    version: 2.7.2
   '@types/react':
     specifier: ^18.0.28
     version: 18.0.28
@@ -349,10 +346,6 @@ packages:
 
   /@types/node@18.15.3:
     resolution: {integrity: sha512-p6ua9zBxz5otCmbpb5D3U4B5Nanw6Pk3PPyX05xnxbB/fRv71N7CPmORg7uAD5P70T0xmx1pzAx/FUfa5X+3cw==}
-    dev: true
-
-  /@types/prettier@2.7.2:
-    resolution: {integrity: sha512-KufADq8uQqo1pYKVIYzfKbJfBAc0sOeXqGbFaSpv8MRmC/zXgowNZmFcbngndGk922QDmOASEXUZCaY48gs4cg==}
     dev: true
 
   /@types/prop-types@15.7.5:
