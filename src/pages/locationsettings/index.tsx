@@ -3,12 +3,12 @@ import Layout from "~/components/Layout";
 import { ToastContainer, toast } from "react-toastify";
 
 const index = () => {
-  interface IStadt {
+  interface ICity {
     name: string;
     population: number;
   }
 
-  const cities = [
+  const cities: ICity[] = [
     { name: "Berlin", population: 1000000 },
     { name: "Dresden", population: 510000 },
     { name: "Dortmund", population: 200000 },
@@ -35,7 +35,7 @@ const index = () => {
       },
       {
         duration: 500,
-      },
+      }
     );
   }, [buttonName]);
 
@@ -71,7 +71,7 @@ const index = () => {
           changed(stadt.name);
         }
       },
-      [searchValue],
+      [searchValue]
     );
   };
 
@@ -145,7 +145,7 @@ const index = () => {
                       className={
                         activeInput !== "input1"
                           ? "hidden"
-                          : "h-auto w-4/12+12px border-b-2 border-gray-400 bg-[#d8d5db] p-5"
+                          : "w-4/12+12px h-auto border-b-2 border-gray-400 bg-[#d8d5db] p-5"
                       }
                       key={stadt.name}
                       onMouseDown={() => handleStadtclick(stadt.name)}
@@ -217,7 +217,7 @@ const index = () => {
                       className={
                         activeInput !== "input2"
                           ? "hidden"
-                          : "h-auto w-4/12+12px border-b-2 border-gray-400 bg-[#d8d5db] p-5"
+                          : "w-4/12+12px h-auto border-b-2 border-gray-400 bg-[#d8d5db] p-5"
                       }
                       key={stadt.name}
                     >
