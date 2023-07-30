@@ -42,7 +42,7 @@ const PresentWeatherSchema = z.object({
       main: z.string(),
       description: z.string(),
       icon: z.string(),
-    }),
+    })
   ),
   base: z.string(),
   main: z.object({
@@ -119,7 +119,7 @@ export const weatherRouter = createTRPCRouter({
           lat: z.number().min(-90).max(90),
           lon: z.number().min(0).max(180),
         }),
-      }),
+      })
     )
     .query(async ({ input }) => {
       // OpenWeatherMap API
@@ -133,7 +133,7 @@ export const weatherRouter = createTRPCRouter({
 
       try {
         const hourlyWeatherData = await axios.get<HourlyWeather>(
-          urlHourlyForecast,
+          urlHourlyForecast
         );
         hourlyData = HourlyWeatherSchema.parse(hourlyWeatherData.data);
       } catch (error) {
@@ -163,7 +163,7 @@ export const weatherRouter = createTRPCRouter({
 
       try {
         const airQualityData = await axios.get<PresentAirQuality>(
-          urlAirQuality,
+          urlAirQuality
         );
         presentAirQuality = PresentAirQualitySchema.parse(airQualityData.data);
       } catch (error) {
@@ -182,11 +182,44 @@ export const weatherRouter = createTRPCRouter({
       ) {
         presentAirQualityIndex = calculateAirQualityIndex(
           presentAirQuality.hourly.pm10[0],
-          presentAirQuality.hourly.pm2_5[0],
+          presentAirQuality.hourly.pm2_5[0]
         );
       }
 
-      interface HourlyData {
+      interface IHourlyForecast {
+        // Hour of current day
+        time: number;
+        // In Kelvin
+        temperature: number | undefined;
+        // In millimeters
+        rain: number | undefined;
+        // In millimeters
+        showers: number | undefined;
+        // In centimeters
+        snowfall: number | undefined;
+      }
+
+      const hourlyForecast: IHourlyForecast[] = [];
+
+      const currentHour = new Date().getUTCHours();
+      console.log("Current Hour", currentHour);
+
+      for (let i = currentHour; i < currentHour + 15; i++) {
+        const temperature = hourlyData?.hourly.temperature_2m[i];
+        const rain = hourlyData?.hourly.rain[i];
+        const showers = hourlyData?.hourly.showers[i];
+        const snowfall = hourlyData?.hourly.snowfall[i];
+
+        hourlyForecast.push({
+          time: i,
+          temperature: temperature ? temperature + 273.15 : undefined,
+          rain: rain,
+          showers: showers,
+          snowfall: snowfall,
+        });
+      }
+
+      interface HourlyPrecipitationData {
         hourly: {
           precipitation_probability: number[];
         };
@@ -197,7 +230,7 @@ export const weatherRouter = createTRPCRouter({
       const getTimeSlotAverage = (
         startIndex: number,
         endIndex: number,
-        data: HourlyData | undefined,
+        data: HourlyPrecipitationData | undefined
       ): number | undefined => {
         const probabilities = data?.hourly.precipitation_probability ?? [];
 
@@ -223,7 +256,7 @@ export const weatherRouter = createTRPCRouter({
         precipitationProbabilities[slot] = getTimeSlotAverage(
           start,
           end,
-          hourlyData,
+          hourlyData
         );
       });
 
@@ -245,7 +278,8 @@ export const weatherRouter = createTRPCRouter({
           ? presentWeather.visibility / 100
           : undefined,
         precipitationProbabilities,
-        // hourlyForecast,
+        hourlyForecast,
+        // dailyForecast,
       };
     }),
 });
