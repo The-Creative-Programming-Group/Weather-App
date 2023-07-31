@@ -3,6 +3,11 @@ import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
 import { env } from "~/env.mjs";
 import axios from "axios";
 
+/**
+ * Zod schemas provide runtime data validation ensuring type safety,
+ * filling the gap TypeScript static analysis can't cover.
+ */
+
 const HourlyWeatherSchema = z.object({
   latitude: z.number(),
   longitude: z.number(),
@@ -42,7 +47,7 @@ const PresentWeatherSchema = z.object({
       main: z.string(),
       description: z.string(),
       icon: z.string(),
-    }),
+    })
   ),
   base: z.string(),
   main: z.object({
@@ -101,13 +106,20 @@ const PresentAirQualitySchema = z.object({
 
 type PresentAirQuality = z.infer<typeof PresentAirQualitySchema> | undefined;
 
+/**
+ * Calculates the Air Quality Index (AQI) based on the given PM10 and PM2.5 values.
+ *
+ * @param {number} pm10 - The PM10 value in micrograms per cubic meter (µg/m³).
+ * @param {number} pm25 - The PM2.5 value in micrograms per cubic meter (µg/m³).
+ *
+ * @return {number} The calculated Air Quality Index (AQI) between 0 and 100.
+ */
 function calculateAirQualityIndex(pm10: number, pm25: number): number {
   const scaleFactor = 500.4;
 
   const aqiPm10 = (pm10 / scaleFactor) * 100;
   const aqiPm25 = (pm25 / scaleFactor) * 100;
 
-  // Take the maximum of the two AQIs as overall AQI
   return Math.max(aqiPm10, aqiPm25);
 }
 
@@ -119,7 +131,7 @@ export const weatherRouter = createTRPCRouter({
           lat: z.number().min(-90).max(90),
           lon: z.number().min(0).max(180),
         }),
-      }),
+      })
     )
     .query(async ({ input }) => {
       // OpenWeatherMap API
@@ -133,7 +145,7 @@ export const weatherRouter = createTRPCRouter({
 
       try {
         const hourlyWeatherData = await axios.get<HourlyWeather>(
-          urlHourlyForecast,
+          urlHourlyForecast
         );
         hourlyData = HourlyWeatherSchema.parse(hourlyWeatherData.data);
       } catch (error) {
@@ -163,7 +175,7 @@ export const weatherRouter = createTRPCRouter({
 
       try {
         const airQualityData = await axios.get<PresentAirQuality>(
-          urlAirQuality,
+          urlAirQuality
         );
         presentAirQuality = PresentAirQualitySchema.parse(airQualityData.data);
       } catch (error) {
@@ -182,7 +194,7 @@ export const weatherRouter = createTRPCRouter({
       ) {
         presentAirQualityIndex = calculateAirQualityIndex(
           presentAirQuality.hourly.pm10[0],
-          presentAirQuality.hourly.pm2_5[0],
+          presentAirQuality.hourly.pm2_5[0]
         );
       }
 
@@ -202,8 +214,6 @@ export const weatherRouter = createTRPCRouter({
       const hourlyForecast: IHourlyForecast[] = [];
 
       const currentHour = new Date().getUTCHours();
-      console.log("Current Hour", currentHour);
-
       for (let i = currentHour; i < currentHour + 15; i++) {
         const temperature = hourlyData?.hourly.temperature_2m[i];
         const rain = hourlyData?.hourly.rain[i];
@@ -229,10 +239,18 @@ export const weatherRouter = createTRPCRouter({
 
       const precipitationProbabilities: Record<string, number | undefined> = {};
 
+      /**
+       * Calculates the average precipitation probability for a given time slot.
+       *
+       * @param {number} startIndex - The start index of the time slot.
+       * @param {number} endIndex - The end index of the time slot.
+       * @param {HourlyPrecipitationData|undefined} data - The hourly precipitation data.
+       * @returns {number|undefined} - The average precipitation probability for the time slot, or undefined if the data is unavailable.
+       */
       const getTimeSlotAverage = (
         startIndex: number,
         endIndex: number,
-        data: HourlyPrecipitationData | undefined,
+        data: HourlyPrecipitationData | undefined
       ): number | undefined => {
         const probabilities = data?.hourly.precipitation_probability ?? [];
 
@@ -258,7 +276,7 @@ export const weatherRouter = createTRPCRouter({
         precipitationProbabilities[slot] = getTimeSlotAverage(
           start,
           end,
-          hourlyData,
+          hourlyData
         );
       });
 
@@ -279,7 +297,9 @@ export const weatherRouter = createTRPCRouter({
         visibility: presentWeather
           ? presentWeather.visibility / 100
           : undefined,
-        precipitationProbabilities,
+        precipitationProbabilities: hourlyData
+          ? precipitationProbabilities
+          : undefined,
         hourlyForecast,
         // dailyForecast,
       };
