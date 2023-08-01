@@ -137,7 +137,7 @@ export const weatherRouter = createTRPCRouter({
       // OpenWeatherMap API
       const urlWeather = `https://api.openweathermap.org/data/2.5/weather?lat=${input.coordinates.lat}&lon=${input.coordinates.lon}&appid=${env.OPEN_WEATHER_API_KEY}`;
       // Open Meteo
-      const urlHourlyForecast = `https://api.open-meteo.com/v1/forecast?latitude=${input.coordinates.lat}&longitude=${input.coordinates.lon}&hourly=temperature_2m,rain,showers,snowfall,precipitation_probability&forecast_days=10`;
+      const urlHourlyForecast = `https://api.open-meteo.com/v1/forecast?latitude=${input.coordinates.lat}&longitude=${input.coordinates.lon}&hourly=temperature_2m,rain,showers,snowfall,precipitation_probability&forecast_days=7`;
       const urlAirQuality = `https://air-quality-api.open-meteo.com/v1/air-quality?latitude=${input.coordinates.lat}&longitude=${input.coordinates.lon}&hourly=pm10,pm2_5`;
 
       // Hourly Weather Forecast from Open Meteo
@@ -231,6 +231,108 @@ export const weatherRouter = createTRPCRouter({
         });
       }
 
+      interface IDailyForecast {
+        // Day of current week (starts with 0 (current day))
+        day: number;
+        // In Kelvin day and night
+        temperature: number | undefined;
+        // In millimeters
+        rain: number | undefined;
+        // In millimeters
+        showers: number | undefined;
+        // In centimeters
+        snowfall: number | undefined;
+      }
+
+      const dailyForecast: IDailyForecast[] = [];
+
+      if (hourlyData) {
+        for (let i = 0; i < 7; i++) {
+          // console.log("i", i);
+          let temperatureSum = 0;
+          let rainSum = 0;
+          let showersSum = 0;
+          let snowfallSum = 0;
+
+          let temperatureCount = 0;
+          let rainCount = 0;
+          let showersCount = 0;
+          let snowfallCount = 0;
+
+          for (let j = 24 * i; j < 24 * (i + 1); j++) {
+            // console.log("j", j);
+            if (hourlyData.hourly.temperature_2m[j] !== undefined) {
+              temperatureSum += hourlyData.hourly.temperature_2m[j]!;
+              temperatureCount++;
+              // console.log(hourlyData.hourly.temperature_2m[j]!);
+              // console.log("temperatureSum", temperatureSum);
+            } else {
+              console.log("undefined value temperature: ", j);
+            }
+
+            if (hourlyData.hourly.rain[j] !== undefined) {
+              rainSum += hourlyData.hourly.rain[j]!;
+              rainCount++;
+              // console.log(hourlyData.hourly.rain[j]!);
+              // console.log("rainSum", rainSum);
+            } else {
+              console.log("undefined value rain: ", j);
+            }
+
+            if (hourlyData.hourly.showers[j] !== undefined) {
+              showersSum += hourlyData.hourly.showers[j]!;
+              showersCount++;
+              // console.log(hourlyData.hourly.showers[j]!);
+              // console.log("showersSum", showersSum);
+            } else {
+              console.log("undefined value showers: ", j);
+            }
+
+            if (hourlyData.hourly.snowfall[j] !== undefined) {
+              snowfallSum += hourlyData.hourly.snowfall[j]!;
+              snowfallCount++;
+              // console.log(hourlyData.hourly.snowfall[j]!);
+              // console.log("snowfallSum", snowfallSum);
+            } else {
+              console.log("undefined value snowfall: ", j);
+            }
+          }
+
+          /*
+            console.log("temperatureSum", temperatureSum);
+            console.log("temperatureCount", temperatureCount);
+            console.log("rainSum", rainSum);
+            console.log("rainCount", rainCount);
+            console.log("showersSum", showersSum);
+            console.log("showersCount", showersCount);
+            console.log("snowfallSum", snowfallSum);
+            console.log("snowfallCount", snowfallCount);
+            */
+
+          const temperatureAverage = temperatureSum / (temperatureCount || 1);
+          const rainAverage = rainSum / (rainCount || 1);
+          const showersAverage = showersSum / (showersCount || 1);
+          const snowfallAverage = snowfallSum / (snowfallCount || 1);
+
+          /*
+            console.log("temperatureAverage", temperatureAverage);
+            console.log("rainAverage", rainAverage);
+            console.log("showersAverage", showersAverage);
+            console.log("snowfallAverage", snowfallAverage);
+            */
+
+          dailyForecast.push({
+            day: i,
+            temperature: temperatureCount
+              ? temperatureAverage + 273.15
+              : undefined,
+            rain: rainCount ? rainAverage : undefined,
+            showers: showersCount ? showersAverage : undefined,
+            snowfall: snowfallCount ? snowfallAverage : undefined,
+          });
+        }
+      }
+
       interface HourlyPrecipitationData {
         hourly: {
           precipitation_probability: number[];
@@ -282,7 +384,7 @@ export const weatherRouter = createTRPCRouter({
 
       return {
         time: new Date(),
-        // In Kelvin
+        // Present weather in Kelvin NOT daily average
         temperature: presentWeather?.main.temp,
         feels_like: presentWeather?.main.feels_like,
         // In meters per second
@@ -301,7 +403,7 @@ export const weatherRouter = createTRPCRouter({
           ? precipitationProbabilities
           : undefined,
         hourlyForecast,
-        // dailyForecast,
+        dailyForecast,
       };
     }),
 });
