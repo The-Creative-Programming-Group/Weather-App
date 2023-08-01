@@ -7,10 +7,12 @@
  * need to use are documented accordingly near the end.
  */
 
-import { initTRPC } from "@trpc/server";
+import { initTRPC, TRPCError } from "@trpc/server";
 import { type CreateNextContextOptions } from "@trpc/server/adapters/next";
 import superjson from "superjson";
 import { ZodError } from "zod";
+import { redis } from "~/server/upstash";
+import { Ratelimit } from "@upstash/ratelimit";
 
 /**
  * 1. CONTEXT
@@ -43,7 +45,11 @@ const createInnerTRPCContext = (_opts: CreateContextOptions) => {
  * @see https://trpc.io/docs/context
  */
 export const createTRPCContext = (_opts: CreateNextContextOptions) => {
-  return createInnerTRPCContext({});
+  const ip = _opts.req.headers["x-forwarded-for"] as string;
+  return {
+    ...createInnerTRPCContext({}),
+    ip,
+  };
 };
 
 /**
@@ -80,6 +86,31 @@ const t = initTRPC.context<typeof createTRPCContext>().create({
  *
  * @see https://trpc.io/docs/router
  */
+
+const ratelimit = new Ratelimit({
+  redis,
+  limiter: Ratelimit.slidingWindow(10, "1h"),
+  analytics: true,
+  prefix: "@upstash/ratelimit",
+});
+
+const rateLimitMiddleware = t.middleware(async ({ ctx, next }) => {
+  const identifier = ctx.ip;
+  if (typeof identifier !== "string") {
+    console.error("No identifier");
+    return next();
+  }
+  // console.log("identifier", identifier);
+  const { success } = await ratelimit.limit(identifier);
+  if (!success) {
+    throw new TRPCError({
+      code: "INTERNAL_SERVER_ERROR",
+      message: "Rate limit exceeded",
+    });
+  }
+  return next();
+});
+
 export const createTRPCRouter = t.router;
 
 /**
@@ -90,3 +121,4 @@ export const createTRPCRouter = t.router;
  * are logged in.
  */
 export const publicProcedure = t.procedure;
+export const rateLimitedProcedure = t.procedure.use(rateLimitMiddleware);

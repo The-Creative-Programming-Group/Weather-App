@@ -1,5 +1,9 @@
 import { z } from "zod";
-import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
+import {
+  createTRPCRouter,
+  publicProcedure,
+  rateLimitedProcedure,
+} from "~/server/api/trpc";
 import { env } from "~/env.mjs";
 import axios from "axios";
 
@@ -47,7 +51,7 @@ const PresentWeatherSchema = z.object({
       main: z.string(),
       description: z.string(),
       icon: z.string(),
-    }),
+    })
   ),
   base: z.string(),
   main: z.object({
@@ -124,14 +128,14 @@ function calculateAirQualityIndex(pm10: number, pm25: number): number {
 }
 
 export const weatherRouter = createTRPCRouter({
-  getWeather: publicProcedure
+  getWeather: rateLimitedProcedure
     .input(
       z.object({
         coordinates: z.object({
           lat: z.number().min(-90).max(90),
           lon: z.number().min(0).max(180),
         }),
-      }),
+      })
     )
     .query(async ({ input }) => {
       // OpenWeatherMap API
@@ -145,7 +149,7 @@ export const weatherRouter = createTRPCRouter({
 
       try {
         const hourlyWeatherData = await axios.get<HourlyWeather>(
-          urlHourlyForecast,
+          urlHourlyForecast
         );
         hourlyData = HourlyWeatherSchema.parse(hourlyWeatherData.data);
       } catch (error) {
@@ -175,7 +179,7 @@ export const weatherRouter = createTRPCRouter({
 
       try {
         const airQualityData = await axios.get<PresentAirQuality>(
-          urlAirQuality,
+          urlAirQuality
         );
         presentAirQuality = PresentAirQualitySchema.parse(airQualityData.data);
       } catch (error) {
@@ -194,7 +198,7 @@ export const weatherRouter = createTRPCRouter({
       ) {
         presentAirQualityIndex = calculateAirQualityIndex(
           presentAirQuality.hourly.pm10[0],
-          presentAirQuality.hourly.pm2_5[0],
+          presentAirQuality.hourly.pm2_5[0]
         );
       }
 
@@ -352,7 +356,7 @@ export const weatherRouter = createTRPCRouter({
       const getTimeSlotAverage = (
         startIndex: number,
         endIndex: number,
-        data: HourlyPrecipitationData | undefined,
+        data: HourlyPrecipitationData | undefined
       ): number | undefined => {
         const probabilities = data?.hourly.precipitation_probability ?? [];
 
@@ -378,7 +382,7 @@ export const weatherRouter = createTRPCRouter({
         precipitationProbabilities[slot] = getTimeSlotAverage(
           start,
           end,
-          hourlyData,
+          hourlyData
         );
       });
 
