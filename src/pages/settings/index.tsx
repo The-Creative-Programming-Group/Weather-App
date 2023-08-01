@@ -4,35 +4,15 @@ import Image from "next/image";
 import styles from "./settings.module.css";
 
 const Settings = () => {
-  type SaveButtonTextType = "Save changes" | "Saved";
-
   const doneImage = "/assets/done.png";
   const [temperatureUnit, setTemperatureUnit] = useState<string>("Celsius");
   const [windSpeedUnit, setWindSpeedUnit] = useState<string>("Miles per hour");
-  const [saveButtonText, setSaveButtonText] =
-    React.useState<SaveButtonTextType>("Save changes");
-  const saveButtonTextRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    if (saveButtonTextRef.current == undefined) return;
-    if (saveButtonText === "Save changes") return;
-    saveButtonTextRef.current.animate(
-      {
-        opacity: [0, 1],
-      },
-      {
-        duration: 500,
-      },
-    );
-  }, [saveButtonText]);
 
   const handleTemperatureUnitClick = (unit: string) => {
     setTemperatureUnit(unit);
-    setSaveButtonText("Save changes");
   };
   const handleSpeedUnitClick = (unit: string) => {
     setWindSpeedUnit(unit);
-    setSaveButtonText("Save changes");
   };
 
   const normalButtonClass = styles.normalbutton ? styles.normalbutton : "";
@@ -127,17 +107,6 @@ const Settings = () => {
               {windSpeedUnit === "Beaufort" && (
                 <Image src={doneImage} alt="Checkmark" width={29} height={29} />
               )}
-            </button>
-          </div>
-
-          <div>
-            <button
-              className={`bg-[#2d3142] w-60 h-9 border-solid font-bold rounded text-white`}
-              onClick={() => {
-                setSaveButtonText("Saved");
-              }}
-            >
-              <div ref={saveButtonTextRef}>{saveButtonText}</div>
             </button>
           </div>
         </div>
