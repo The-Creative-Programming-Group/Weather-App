@@ -2,8 +2,13 @@ import React, { useEffect, useRef, useState } from "react";
 import Layout from "~/components/Layout";
 import Image from "next/image";
 import styles from "./settings.module.css";
-import {temperatureUnit$, type TemperatureUnitType, windSpeedUnit$, type WindSpeedUnitType} from "~/states";
-import {observer} from "@legendapp/state/react-components";
+import {
+  temperatureUnit$,
+  type TemperatureUnitType,
+  windSpeedUnit$,
+  type WindSpeedUnitType,
+} from "~/states";
+import { observer } from "@legendapp/state/react-components";
 
 const Settings = observer(() => {
   const doneImage = "/assets/done.png";
