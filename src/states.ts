@@ -10,3 +10,21 @@ persistObservable(activeCity$, {
   local: "activeCity",
   persistLocal: ObservablePersistLocalStorage,
 });
+
+export type TemperatureUnitType = "Celsius" | "Fahrenheit";
+
+export const temperatureUnit$ = observable<TemperatureUnitType>("Celsius");
+
+persistObservable(temperatureUnit$, {
+    local: "temperatureUnit",
+    persistLocal: ObservablePersistLocalStorage,
+});
+
+export type WindSpeedUnitType = "Miles per hour" | "Kilometers per hour" | "Knots" | "Meters per second" | "Beaufort";
+
+export const windSpeedUnit$ = observable<WindSpeedUnitType>("Miles per hour");
+
+persistObservable(windSpeedUnit$, {
+    local: "windSpeedUnit",
+    persistLocal: ObservablePersistLocalStorage,
+});

@@ -2,17 +2,17 @@ import React, { useEffect, useRef, useState } from "react";
 import Layout from "~/components/Layout";
 import Image from "next/image";
 import styles from "./settings.module.css";
+import {temperatureUnit$, type TemperatureUnitType, windSpeedUnit$, type WindSpeedUnitType} from "~/states";
+import {observer} from "@legendapp/state/react-components";
 
-const Settings = () => {
+const Settings = observer(() => {
   const doneImage = "/assets/done.png";
-  const [temperatureUnit, setTemperatureUnit] = useState<string>("Celsius");
-  const [windSpeedUnit, setWindSpeedUnit] = useState<string>("Miles per hour");
 
-  const handleTemperatureUnitClick = (unit: string) => {
-    setTemperatureUnit(unit);
+  const handleTemperatureUnitClick = (unit: TemperatureUnitType) => {
+    temperatureUnit$.set(unit);
   };
-  const handleSpeedUnitClick = (unit: string) => {
-    setWindSpeedUnit(unit);
+  const handleSpeedUnitClick = (unit: WindSpeedUnitType) => {
+    windSpeedUnit$.set(unit);
   };
 
   const normalButtonClass = styles.normalbutton ? styles.normalbutton : "";
@@ -29,23 +29,23 @@ const Settings = () => {
             <h2 className="text-basic font-bold">Temperature units</h2>
             <button
               className={`${normalButtonClass} ${
-                temperatureUnit === "Celsius" ? "border-2" : ""
+                temperatureUnit$.get() === "Celsius" ? "border-2" : ""
               }`}
               onClick={() => handleTemperatureUnitClick("Celsius")}
             >
               <p className={styles.buttontext}>Celsius (°C)</p>
-              {temperatureUnit === "Celsius" && (
+              {temperatureUnit$.get() === "Celsius" && (
                 <Image src={doneImage} alt="Checkmark" width={29} height={29} />
               )}
             </button>
             <button
               className={`${normalButtonClass} ${
-                temperatureUnit === "Fahrenheit" ? "border-2" : ""
+                temperatureUnit$.get() === "Fahrenheit" ? "border-2" : ""
               }`}
               onClick={() => handleTemperatureUnitClick("Fahrenheit")}
             >
               <p className={styles.buttontext}>Fahrenheit (°F)</p>
-              {temperatureUnit === "Fahrenheit" && (
+              {temperatureUnit$.get() === "Fahrenheit" && (
                 <Image src={doneImage} alt="Checkmark" width={29} height={29} />
               )}
             </button>
@@ -55,56 +55,56 @@ const Settings = () => {
             <h2 className="text-basic font-bold">Wind speed units</h2>
             <button
               className={`${normalButtonClass} ${
-                windSpeedUnit === "Miles per hour" ? "border-2" : ""
+                windSpeedUnit$.get() === "Miles per hour" ? "border-2" : ""
               }`}
               onClick={() => handleSpeedUnitClick("Miles per hour")}
             >
               <p className={styles.buttontext}>Miles per hour (mph)</p>
-              {windSpeedUnit === "Miles per hour" && (
+              {windSpeedUnit$.get() === "Miles per hour" && (
                 <Image src={doneImage} alt="Checkmark" width={29} height={29} />
               )}
             </button>
             <button
               className={`${normalButtonClass} ${
-                windSpeedUnit === "Kilometers per hour" ? "border-2" : ""
+                windSpeedUnit$.get() === "Kilometers per hour" ? "border-2" : ""
               }`}
               onClick={() => handleSpeedUnitClick("Kilometers per hour")}
             >
               <p className={styles.buttontext}>Kilometers per hour (km/h)</p>
-              {windSpeedUnit === "Kilometers per hour" && (
+              {windSpeedUnit$.get() === "Kilometers per hour" && (
                 <Image src={doneImage} alt="Checkmark" width={29} height={29} />
               )}
             </button>
             <button
               className={`${normalButtonClass} ${
-                windSpeedUnit === "Knots" ? "border-2" : ""
+                windSpeedUnit$.get() === "Knots" ? "border-2" : ""
               }`}
               onClick={() => handleSpeedUnitClick("Knots")}
             >
               <p className={styles.buttontext}>Knots</p>
-              {windSpeedUnit === "Knots" && (
+              {windSpeedUnit$.get() === "Knots" && (
                 <Image src={doneImage} alt="Checkmark" width={29} height={29} />
               )}
             </button>
             <button
               className={`${normalButtonClass} ${
-                windSpeedUnit === "Meters per second" ? "border-2" : ""
+                windSpeedUnit$.get() === "Meters per second" ? "border-2" : ""
               }`}
               onClick={() => handleSpeedUnitClick("Meters per second")}
             >
               <p className={styles.buttontext}>Meters per second (m/s)</p>
-              {windSpeedUnit === "Meters per second" && (
+              {windSpeedUnit$.get() === "Meters per second" && (
                 <Image src={doneImage} alt="Checkmark" width={29} height={29} />
               )}
             </button>
             <button
               className={`${normalButtonClass} ${
-                windSpeedUnit === "Beaufort" ? "border-2" : ""
+                windSpeedUnit$.get() === "Beaufort" ? "border-2" : ""
               }`}
               onClick={() => handleSpeedUnitClick("Beaufort")}
             >
               <p className={styles.buttontext}>Beaufort</p>
-              {windSpeedUnit === "Beaufort" && (
+              {windSpeedUnit$.get() === "Beaufort" && (
                 <Image src={doneImage} alt="Checkmark" width={29} height={29} />
               )}
             </button>
@@ -113,6 +113,6 @@ const Settings = () => {
       </Layout>
     </>
   );
-};
+});
 
 export default Settings;
