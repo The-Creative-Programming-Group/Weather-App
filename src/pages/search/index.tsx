@@ -27,8 +27,7 @@ const Search = () => {
         src="/assets/background.png"
         alt="background"
         className="absolute w-full h-full -z-10 object-cover"
-        width={56}
-        height={56}
+        fill
       />
       <div
         id="styles-setup"
