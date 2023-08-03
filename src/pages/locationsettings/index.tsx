@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef, type ChangeEvent } from "react";
 import Layout from "~/components/Layout";
-import {activeCity$, addedCities$} from "~/states";
+import { activeCity$, addedCities$ } from "~/states";
 import Image from "next/image";
 
 const LocationSettings = () => {
