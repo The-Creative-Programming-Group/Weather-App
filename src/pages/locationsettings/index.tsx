@@ -36,7 +36,7 @@ const LocationSettings = () => {
   const [isLocationSelected, setIsLocationSelected] = useState(false); // isLocationSelected is true if the user selected a location (first input)
   const [isLocation2Selected, setIsLocation2Selected] = useState(false); // isLocation2Selected is true if the user selected a location (second input)
 
-  //Animation for the changeButton
+  // Animation for the changeButton
   useEffect(() => {
     if (saveButtonTextRef.current == undefined) return;
     if (buttonName === "Save changes") return;
