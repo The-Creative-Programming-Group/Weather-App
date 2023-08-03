@@ -9,7 +9,7 @@ const LocationSettings = () => {
     population: number;
   }
 
-  // Only for testing, later it will be fetched from an API. Now its the TestArray (data) with the cities and their population.
+  // Only for testing, later it will be fetched from an API. Now its TestArray (data) with the cities and their population.
   const cities: ICity[] = [
     { name: "Berlin", population: 1000000 },
     { name: "Dresden", population: 510000 },
@@ -76,18 +76,18 @@ const LocationSettings = () => {
     setActiveInput(inputName);
   };
 
-  // Will set no active input if the user click outside the input field
+  // Will set no active input if the user clicks outside the input field
   const handleInputBlur = () => {
     setActiveInput(null);
   };
 
-  // Will set the value of the second input field to the city if the user click on a proposed city in the list
+  // Will set the value of the second input field to the city if the user clicks on a proposed city in the list
   const handleChange2 = (event: ChangeEvent<HTMLInputElement>) => {
     setsecondButtonName("Add New Location");
     setSearchValue2(event.target.value);
   };
 
-  // Will focus the first input field if the user click on the change button
+  // Will focus the first input field if the user clicks on the change button
   const handleChangeclick = () => {
     if (searchValue === "") {
       if (firstInputRef.current) {
@@ -149,7 +149,7 @@ const LocationSettings = () => {
     setIsLocation2Selected(false);
   };
 
-  // Will check if the user click on the change button or if he click on the city in the list
+  // Will check if the user clicks on the change button or if he clicks on the city in the list
   const handleChangedown = () => {
     if (isLocationSelected === true) {
       changed(searchValue);
@@ -158,7 +158,7 @@ const LocationSettings = () => {
     }
   };
 
-  // Will check if the user click on the change button or if he click on the city in the list
+  // Will check if the user clicks on the change button or if he clicks on the city in the list
   const handleChangedown2 = () => {
     if (isLocation2Selected === true) {
       changed2(searchValue2);
@@ -167,13 +167,13 @@ const LocationSettings = () => {
     }
   };
 
-  // Will set the value of the first input field to the city if the user click on a proposed city in the list
+  // Will set the value of the first input field to the city if the user clicks on a proposed city in the list
   const handleStadtclick2 = (name: string) => {
     setSearchValue2(name);
     setIsLocation2Selected(true);
   };
 
-  // Will set the value of the first input field to the city if the user click on a proposed city in the list
+  // Will set the value of the first input field to the city if the user clicks on a proposed city in the list
   const handleStadtclick = (name: string) => {
     setSearchValue(name);
     setIsLocationSelected(true);
