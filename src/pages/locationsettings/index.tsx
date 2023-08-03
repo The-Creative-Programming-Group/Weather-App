@@ -20,7 +20,7 @@ const LocationSettings = () => {
     { name: "Delb", population: 20000 },
   ];
 
-  const [addedItems, setAddedItems] = useState<string[]>([]); // Will safe the cities their added in this array 
+  const [addedItems, setAddedItems] = useState<string[]>([]); // Will safe the cities their added in this array
   const [searchValue, setSearchValue] = useState(""); // SearchValue is the value of the input field
   const [searchValue2, setSearchValue2] = useState(""); // SearchValue2 is the value of the second input field
   const [activeInput, setActiveInput] = useState<string | null>(null); // activeInput is the input field which is active
@@ -125,7 +125,7 @@ const LocationSettings = () => {
 
   // Will change the city
   const changed = (stadt: string) => {
-        activeCity$.set(stadt);
+    activeCity$.set(stadt);
     setButtonName("Changed");
     setsecondButtonName("Add New Location");
     setSearchValue("");
@@ -136,9 +136,8 @@ const LocationSettings = () => {
   const changed2 = (stadt: string) => {
     if (!addedItems.includes(stadt)) {
       setAddedItems([...addedItems, stadt]);
-    }
-    else {
-      alert("City already added")
+    } else {
+      alert("City already added");
     }
     setsecondButtonName("Added");
     setButtonName("Change Location");
@@ -326,11 +325,15 @@ const LocationSettings = () => {
               }
             })}
             <div className="w-full flex justify-center mt-4">
-            <div className="  bg-[#d8d5db] w-4/12+12px block">
-            {addedItems.map((city) => {
-             return <p className=" p-2  border border-solid border-black">{city}</p>
-            })}
-            </div>
+              <div className="  bg-[#d8d5db] w-4/12+12px block">
+                {addedItems.map((city) => {
+                  return (
+                    <p className=" p-2  border border-solid border-black">
+                      {city}
+                    </p>
+                  );
+                })}
+              </div>
             </div>
             <button
               onClick={handleChangeclick2}
