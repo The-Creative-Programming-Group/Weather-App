@@ -15,7 +15,6 @@ const PublicHome: NextPage = () => {
         src="assets/background.png"
         alt="background"
         className="absolute -z-10 h-full w-full object-cover"
-        
       />
       <div className="relative flex h-screen flex-col items-center justify-center gap-12">
         <h1 className="text-8xl">Weather.io</h1>
