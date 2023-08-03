@@ -75,9 +75,6 @@ const PresentWeatherSchema = z.object({
   }),
   dt: z.number(),
   sys: z.object({
-    type: z.number(),
-    id: z.number(),
-    country: z.string(),
     sunrise: z.number(),
     sunset: z.number(),
   }),
