@@ -45,7 +45,7 @@ const LocationSettings = () => {
     );
   }, [buttonName]);
 
-  //Animation for the AddButton
+  // Animation for the AddButton
   useEffect(() => {
     if (saveButtonTextRef2.current == undefined) return;
     if (buttonName === "Save changes") return;
@@ -59,31 +59,31 @@ const LocationSettings = () => {
     );
   }, [secondButtonName]);
 
-  //Will change button name to ChangeLocation if the first input field not empty
+  // Will change button name to ChangeLocation if the first input field not empty
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     setButtonName("Change Location");
     setSearchValue(event.target.value);
   };
 
 
-  //Set the active input value to the input field which is active
+  // Set the active input value to the input field which is active
   const handleInputFocus = (inputName: string) => {
     setActiveInput(inputName);
   };
 
 
-  //Will set no active input if the user click outside the input field
+  // Will set no active input if the user click outside the input field
   const handleInputBlur = () => {
     setActiveInput(null);
   };
 
-  //Will set the value of the second input field to the city if the user click on a proposed city in the list
+  // Will set the value of the second input field to the city if the user click on a proposed city in the list
   const handleChange2 = (event: ChangeEvent<HTMLInputElement>) => {
     setsecondButtonName("Add New Location");
     setSearchValue2(event.target.value);
   };
 
-  //Will focus the first input field if the user click on the change button
+  // Will focus the first input field if the user click on the change button
   const handleChangeclick = () => {
     if (searchValue === "") {
       if (firstInputRef.current) {
@@ -100,7 +100,7 @@ const LocationSettings = () => {
     }
   };
 
-  //Will check if the city is in the array and will change the city if it is in the array
+  // Will check if the city is in the array and will change the city if it is in the array
   const checkCity = () => {
     cities.map(
       (stadt) => {
@@ -123,7 +123,7 @@ const LocationSettings = () => {
     );
   };
 
-  //Will change the city
+  // Will change the city
   const changed = (stadt: string) => {
     activeCity$.set(stadt);
     setButtonName("Changed");
@@ -132,7 +132,7 @@ const LocationSettings = () => {
     setIsLocationSelected(false);
   };
   
-   //Will add the city
+   // Will add the city
   const changed2 = (stadt: string) => {
     activeCity$.set(stadt);
     setsecondButtonName("Added");
@@ -142,7 +142,7 @@ const LocationSettings = () => {
   };
 
 
-  //Will check if the user click on the change button or if he click on the city in the list
+  // Will check if the user click on the change button or if he click on the city in the list
   const handleChangedown = () => {
     if (isLocationSelected === true) {
       changed(searchValue);
@@ -151,7 +151,7 @@ const LocationSettings = () => {
     }
   };
 
-//Will check if the user click on the change button or if he click on the city in the list
+// Will check if the user click on the change button or if he click on the city in the list
   const handleChangedown2 = () => {
     if (isLocation2Selected === true) {
       changed2(searchValue2);
@@ -166,13 +166,13 @@ const LocationSettings = () => {
     setIsLocation2Selected(true);
   };
 
-  //Will set the value of the first input field to the city if the user click on a proposed city in the list
+  // Will set the value of the first input field to the city if the user click on a proposed city in the list
   const handleStadtclick = (name: string) => {
     setSearchValue(name);
     setIsLocationSelected(true);
   };
 
-  //Sort the cities by population
+  // Sort the cities by population
   let anzahl = 0;
   cities.sort((stadtA, stadtB) => stadtB.population - stadtA.population);
 
@@ -295,7 +295,7 @@ const LocationSettings = () => {
                       className={
                         activeInput !== "input2"
                           ? "hidden"
-                          : "w-4/12+12px h-auto border-b-2 border-gray-400 bg-[#d8d5db] p-5"
+                          : "w-4/12+12px h-auto border-b-2 border-gray-400 bg-[#d8d5db] p-5 hover: cursor-pointer"
                       }
                       key={stadt.name}
                       onMouseDown={() => handleStadtclick2(stadt.name)}
