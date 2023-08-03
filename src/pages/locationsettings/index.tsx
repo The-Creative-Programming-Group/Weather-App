@@ -23,7 +23,7 @@ const LocationSettings = () => {
 
   const [searchValue, setSearchValue] = useState(""); // SearchValue2 is the value of the second input field
   const [activeInput, setActiveInput] = useState<string | null>(null); // activeInput is the input field which is active
-  const InputRef = useRef<HTMLInputElement>(null); // firstInputRef is the ref of the first input field
+  const inputRef = useRef<HTMLInputElement>(null); // firstInputRef is the ref of the first input field
   const [buttonName, setButtonName] =
     useState<ButtonNameType>("Add New Location"); // buttonName is the name of the first button
   const saveButtonTextRef = useRef<HTMLButtonElement>(null); // saveButtonTextRef is the ref of the first button
@@ -48,8 +48,8 @@ const LocationSettings = () => {
   // Will focus the first input field if the user clicks on the change button
   const handleChangeclick = () => {
     if (searchValue === "") {
-      if (InputRef.current) {
-        InputRef.current.focus();
+      if (inputRef.current) {
+        inputRef.current.focus();
       }
     }
   };
@@ -131,7 +131,7 @@ const LocationSettings = () => {
                   value={searchValue}
                   onBlur={handleInputBlur}
                   onChange={handleChange}
-                  ref={InputRef}
+                  ref={inputRef}
                 />
               </div>{" "}
             </div>

@@ -68,7 +68,7 @@ const ContactUs = () => {
             />
           </div>
           <button
-            className="h-9 w-60 rounded border-solid bg-[#2d3142] text-white"
+            className="h-9 w-60 rounded border-solid bg-[#2d3142] font-bold text-white"
             onClick={() => setSendButtonText("Sent")}
           >
             <div ref={sendButtonTextRef}>{sendButtonText}</div>
