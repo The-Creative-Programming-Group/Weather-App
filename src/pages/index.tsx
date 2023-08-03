@@ -1,6 +1,7 @@
 import { type NextPage } from "next";
 import Head from "next/head";
 import Link from "next/link";
+import Image from "next/image";
 
 const PublicHome: NextPage = () => {
   return (
@@ -10,7 +11,7 @@ const PublicHome: NextPage = () => {
         <meta name="description" content="An faboulus weather website" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <img
+      <Image
         src="assets/background.png"
         alt="background"
         className="absolute -z-10 h-full w-full object-cover"

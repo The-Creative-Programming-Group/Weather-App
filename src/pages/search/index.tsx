@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import Head from "next/head";
 import Link from "next/link";
+import Image from "next/image";
 
 const Search = () => {
   const searchFocusRef = useRef<HTMLInputElement>(null);
@@ -22,18 +23,20 @@ const Search = () => {
         <meta name="description" content="An faboulus weather website" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <img
-        src="assets/background.png"
+      <Image
+        src="/assets/background.png"
         alt="background"
         className="absolute w-full h-full -z-10 object-cover"
+        width={56}
+        height={56}
       />
       <div
         id="styles-setup"
         className="mt-32 absolute w-full flex justify-center"
       >
-        <img
+        <Image
           className="transform bg-[#383b53] border-solid border-[#2d3142] border-8 border-r-0 pt-3 pb-3 pl-3 w-12"
-          src="assets/search1.png"
+          src="/assets/search1.png"
           alt="search-icon"
           width={56}
           height={56}

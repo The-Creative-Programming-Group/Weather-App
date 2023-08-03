@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef, type ChangeEvent } from "react";
 import Layout from "~/components/Layout";
 import { ToastContainer, toast } from "react-toastify";
 import { activeCity$ } from "~/states";
+import Image from "next/image";
 
 const LocationSettings = () => {
   interface ICity {
@@ -113,9 +114,9 @@ const LocationSettings = () => {
           >
             <label className="mr-128 mb-2">Change location</label>
             <div className="flex w-full justify-center">
-              <img
+              <Image
                 className="w-12 transform border-b-2 border-black bg-[#d8d5db] pb-3 pl-3 pt-3"
-                src="assets/search2.png"
+                src="/assets/search2.png"
                 alt="search-icon"
                 width={56}
                 height={56}
@@ -186,9 +187,9 @@ const LocationSettings = () => {
             >
               <label className="mr-131 mb-2">Add new location</label>
               <div className="flex w-full justify-center">
-                <img
+                <Image
                   className="w-12 transform border-b-2 border-black bg-[#d8d5db] pb-3 pl-3 pt-3"
-                  src="assets/search2.png"
+                  src="/assets/search2.png"
                   alt="search-icon"
                   width={56}
                   height={56}
