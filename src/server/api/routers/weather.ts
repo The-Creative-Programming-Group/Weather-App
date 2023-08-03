@@ -151,7 +151,7 @@ export const weatherRouter = createTRPCRouter({
           urlHourlyForecast,
         );
         hourlyData = HourlyWeatherSchema.parse(hourlyWeatherData.data);
-        console.log(hourlyData)
+        console.log(hourlyData);
       } catch (error) {
         if (error instanceof z.ZodError) {
           console.log("Zod Errors", error.issues);
@@ -311,10 +311,10 @@ export const weatherRouter = createTRPCRouter({
             }
 
             if (hourlyData.hourly.cloudcover_700hPa[j] !== undefined) {
-                cloudcoverSum += hourlyData.hourly.cloudcover_700hPa[j]!;
-                cloudcoverCount++;
-                // console.log(hourlyData.hourly.cloudcover_700hPa[j]!);
-                // console.log("cloudcoverSum", cloudcoverSum);
+              cloudcoverSum += hourlyData.hourly.cloudcover_700hPa[j]!;
+              cloudcoverCount++;
+              // console.log(hourlyData.hourly.cloudcover_700hPa[j]!);
+              // console.log("cloudcoverSum", cloudcoverSum);
             }
           }
 
