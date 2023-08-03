@@ -65,12 +65,10 @@ const LocationSettings = () => {
     setSearchValue(event.target.value);
   };
 
-
   // Set the active input value to the input field which is active
   const handleInputFocus = (inputName: string) => {
     setActiveInput(inputName);
   };
-
 
   // Will set no active input if the user click outside the input field
   const handleInputBlur = () => {
@@ -132,7 +130,7 @@ const LocationSettings = () => {
     setIsLocationSelected(false);
   };
   
-   // Will add the city
+   //Will add the city
   const changed2 = (stadt: string) => {
     activeCity$.set(stadt);
     setsecondButtonName("Added");
@@ -140,7 +138,6 @@ const LocationSettings = () => {
     setSearchValue2("");
     setIsLocation2Selected(false);
   };
-
 
   // Will check if the user click on the change button or if he click on the city in the list
   const handleChangedown = () => {
@@ -151,7 +148,7 @@ const LocationSettings = () => {
     }
   };
 
-// Will check if the user click on the change button or if he click on the city in the list
+//Will check if the user click on the change button or if he click on the city in the list
   const handleChangedown2 = () => {
     if (isLocation2Selected === true) {
       changed2(searchValue2);
@@ -321,7 +318,7 @@ const LocationSettings = () => {
                 }
               }
             })}
-                   <button
+            <button
               onClick={handleChangeclick2}
               onMouseDown={handleChangedown2}
               className="mt-2.5 rounded border-solid bg-[#2d3142] p-2 font-bold text-white"

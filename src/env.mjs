@@ -5,7 +5,10 @@ import { z } from 'zod'
  * built with invalid env vars.
  */
 const server = z.object({
-  NODE_ENV: z.enum(['development', 'test', 'production'])
+  NODE_ENV: z.enum(['development', 'test', 'production']),
+  OPEN_WEATHER_API_KEY: z.string().min(1),
+  UPSTASH_REDIS_REST_URL: z.string().min(1).url(),
+  UPSTASH_REDIS_REST_TOKEN: z.string().min(1)
 })
 
 /**
@@ -23,7 +26,10 @@ const client = z.object({
  * @type {Record<keyof z.infer<typeof server> | keyof z.infer<typeof client>, string | undefined>}
  */
 const processEnv = {
-  NODE_ENV: process.env.NODE_ENV
+  NODE_ENV: process.env.NODE_ENV,
+  OPEN_WEATHER_API_KEY: process.env.OPEN_WEATHER_API_KEY,
+  UPSTASH_REDIS_REST_URL: process.env.UPSTASH_REDIS_REST_URL,
+  UPSTASH_REDIS_REST_TOKEN: process.env.UPSTASH_REDIS_REST_TOKEN
   // NEXT_PUBLIC_CLIENTVAR: process.env.NEXT_PUBLIC_CLIENTVAR,
 }
 
