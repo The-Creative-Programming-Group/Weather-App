@@ -78,7 +78,6 @@ const LocationSettings = () => {
     setIsLocationSelected(false);
   };
 
-
   // Will check if the user clicks on the change button or if he clicks on the city in the list
   const handleChangedown = () => {
     if (isLocationSelected === true) {
