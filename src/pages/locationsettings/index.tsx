@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, type ChangeEvent } from "react";
+import React, { useState, useRef, type ChangeEvent } from "react";
 import Layout from "~/components/Layout";
 import { activeCity$, addedCities$ } from "~/states";
 import Image from "next/image";
@@ -154,9 +154,7 @@ const LocationSettings = () => {
                   return (
                     <div
                       className={
-                        activeInput !== "input2"
-                          ? "hidden"
-                          : "w-4/12+12px h-auto border-b-2 border-gray-400 bg-[#d8d5db] p-5 hover: cursor-pointer"
+                        activeInput === "input2" ? "w-4/12+12px h-auto border-b-2 border-gray-400 bg-[#d8d5db] p-5 hover: cursor-pointer" : "hidden"
                       }
                       key={stadt.name}
                       onMouseDown={() => handleStadtclick(stadt.name)}
