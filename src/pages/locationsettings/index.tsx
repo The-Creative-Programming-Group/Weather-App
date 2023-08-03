@@ -130,7 +130,7 @@ const LocationSettings = () => {
     setIsLocationSelected(false);
   };
 
-  //Will add the city
+  // Will add the city
   const changed2 = (stadt: string) => {
     activeCity$.set(stadt);
     setsecondButtonName("Added");
@@ -148,7 +148,7 @@ const LocationSettings = () => {
     }
   };
 
-  //Will check if the user click on the change button or if he click on the city in the list
+  // Will check if the user click on the change button or if he click on the city in the list
   const handleChangedown2 = () => {
     if (isLocation2Selected === true) {
       changed2(searchValue2);
@@ -157,7 +157,7 @@ const LocationSettings = () => {
     }
   };
 
-  //Will set the value of the first input field to the city if the user click on a proposed city in the list
+  // Will set the value of the first input field to the city if the user click on a proposed city in the list
   const handleStadtclick2 = (name: string) => {
     setSearchValue2(name);
     setIsLocation2Selected(true);
