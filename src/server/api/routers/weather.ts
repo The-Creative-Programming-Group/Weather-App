@@ -213,7 +213,7 @@ export const weatherRouter = createTRPCRouter({
         showers: number | undefined;
         // In centimeters
         snowfall: number | undefined;
-        // In percent
+        // In percentages
         cloudcover: number | undefined;
       }
 
