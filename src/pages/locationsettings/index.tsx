@@ -19,9 +19,9 @@ const LocationSettings = () => {
     { name: "Delb", population: 20000 },
   ];
 
-  type ButtonNameType = "Change Location" | "Save changes" | "Changed"
+  type ButtonNameType = "Change Location" | "Save changes" | "Changed";
 
-  type SecondButtonNameType = "Add New Location" | "Added"
+  type SecondButtonNameType = "Add New Location" | "Added";
 
   const [addedItems, setAddedItems] = useState<string[]>([]); // Will safe the cities their added in this array
   const [searchValue, setSearchValue] = useState(""); // SearchValue is the value of the input field
@@ -29,8 +29,10 @@ const LocationSettings = () => {
   const [activeInput, setActiveInput] = useState<string | null>(null); // activeInput is the input field which is active
   const firstInputRef = useRef<HTMLInputElement>(null); // firstInputRef is the ref of the first input field
   const secondInputRef = useRef<HTMLInputElement>(null); // secondInputRef is the ref of the first input field
-  const [buttonName, setButtonName] = useState<ButtonNameType>("Change Location"); // buttonName is the name of the first button
-  const [secondButtonName, setsecondButtonName] = useState<SecondButtonNameType>("Add New Location"); // buttonName is the name of the second button
+  const [buttonName, setButtonName] =
+    useState<ButtonNameType>("Change Location"); // buttonName is the name of the first button
+  const [secondButtonName, setsecondButtonName] =
+    useState<SecondButtonNameType>("Add New Location"); // buttonName is the name of the second button
   const saveButtonTextRef = useRef<HTMLButtonElement>(null); // saveButtonTextRef is the ref of the first button
   const saveButtonTextRef2 = useRef<HTMLButtonElement>(null); // saveButtonTextRef is the ref of the second button
   const [isLocationSelected, setIsLocationSelected] = useState(false); // isLocationSelected is true if the user selected a location (first input)
