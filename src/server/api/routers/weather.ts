@@ -151,7 +151,7 @@ export const weatherRouter = createTRPCRouter({
           urlHourlyForecast,
         );
         hourlyData = HourlyWeatherSchema.parse(hourlyWeatherData.data);
-        console.log(hourlyData);
+        // console.log(hourlyData);
       } catch (error) {
         if (error instanceof z.ZodError) {
           console.log("Zod Errors", error.issues);
@@ -226,7 +226,7 @@ export const weatherRouter = createTRPCRouter({
         const showers = hourlyData?.hourly.showers[i];
         const snowfall = hourlyData?.hourly.snowfall[i];
         const cloudcover = hourlyData?.hourly.cloudcover_700hPa[i];
-        console.log(cloudcover);
+        // console.log(cloudcover);
 
         const j = i % 24;
 
