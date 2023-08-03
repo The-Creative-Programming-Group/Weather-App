@@ -1,7 +1,9 @@
-import React, { useState, useEffect, useRef, type ChangeEvent } from "react";
+import React, { useState, useEffect, useRef, type ChangeEvent} from "react";
 import Layout from "~/components/Layout";
 import { activeCity$, addedCities$ } from "~/states";
 import Image from "next/image";
+import { AiOutlineCheck } from "react-icons/ai";
+import { RxCross2 } from "react-icons/rx"
 
 const LocationSettings = () => {
   interface ICity {
@@ -34,6 +36,13 @@ const LocationSettings = () => {
     setButtonName("Add New Location");
     setSearchValue(event.target.value);
   };
+
+  // Will close the Elements
+  const test = (city: string) => {
+    if (addedCities$.get().includes(city)) {
+    console.log(city)
+    }
+  }
 
   // Set the active input value to the input field which is active
   const handleInputFocus = (inputName: string) => {
@@ -173,13 +182,19 @@ const LocationSettings = () => {
                 }
               }
             })}
-            <div className="w-full flex justify-center mt-4">
-              <div className="  bg-[#d8d5db] w-4/12+12px block">
+            <div className="w-full flex justify-center mt-2">
+              <div className=" w-4/12+12px block">
                 {addedCities$.get().map((city: string) => {
                   return (
-                    <p className=" p-2  border border-solid border-black">
+                      <div className="bg-[#d8d5db] p-2  border border-solid border-black mt-2 hover: cursor-pointer flex justify-between">
+                    <p className="">
                       {city}
                     </p>
+                        <div className="flex">
+                        <RxCross2 onClick={() => test(city)} className="mr-5 mt-1"/>
+                        <AiOutlineCheck className="mt-1"/>
+                        </div>
+                      </div>
                   );
                 })}
               </div>
