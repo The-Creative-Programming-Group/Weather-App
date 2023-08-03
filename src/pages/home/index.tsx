@@ -125,7 +125,7 @@ const InternalHome = observer(() => {
             if (hourlyForecast.time === new Date().getUTCHours()) {
               time = "Now";
             } else if (hourlyForecast.time === 12) {
-                time = "12PM";
+              time = "12PM";
             } else if (hourlyForecast.time > 12) {
               time = `${hourlyForecast.time - 12}PM`;
             } else if (hourlyForecast.time === 0) {
