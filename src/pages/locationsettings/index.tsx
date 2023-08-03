@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef, type ChangeEvent } from "react";
 import Layout from "~/components/Layout";
-import { activeCity$ } from "~/states";
+import {activeCity$, addedCities$} from "~/states";
 import Image from "next/image";
 
 const LocationSettings = () => {
@@ -23,7 +23,6 @@ const LocationSettings = () => {
 
   type SecondButtonNameType = "Add New Location" | "Added";
 
-  const [addedItems, setAddedItems] = useState<string[]>([]); // Will safe the cities their added in this array
   const [searchValue, setSearchValue] = useState(""); // SearchValue is the value of the input field
   const [searchValue2, setSearchValue2] = useState(""); // SearchValue2 is the value of the second input field
   const [activeInput, setActiveInput] = useState<string | null>(null); // activeInput is the input field which is active
@@ -139,8 +138,8 @@ const LocationSettings = () => {
 
   // Will add the city
   const changed2 = (stadt: string) => {
-    if (!addedItems.includes(stadt)) {
-      setAddedItems([...addedItems, stadt]);
+    if (!addedCities$.get().includes(stadt)) {
+      addedCities$.push(stadt);
     } else {
       alert("City already added");
     }
@@ -331,7 +330,7 @@ const LocationSettings = () => {
             })}
             <div className="w-full flex justify-center mt-4">
               <div className="  bg-[#d8d5db] w-4/12+12px block">
-                {addedItems.map((city) => {
+                {addedCities$.get().map((city: string) => {
                   return (
                     <p className=" p-2  border border-solid border-black">
                       {city}

@@ -11,6 +11,13 @@ persistObservable(activeCity$, {
   persistLocal: ObservablePersistLocalStorage,
 });
 
+export const addedCities$ = observable<string[]>([]);
+
+persistObservable(addedCities$, {
+  local: "addedCities",
+  persistLocal: ObservablePersistLocalStorage,
+});
+
 export type TemperatureUnitType = "Celsius" | "Fahrenheit";
 
 export const temperatureUnit$ = observable<TemperatureUnitType>("Celsius");
