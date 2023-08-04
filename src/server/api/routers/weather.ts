@@ -6,6 +6,7 @@ import {
 } from "~/server/api/trpc";
 import { env } from "~/env.mjs";
 import axios from "axios";
+import {IHourlyForecast} from "~/types";
 
 /**
  * Zod schemas provide runtime data validation ensuring type safety,
@@ -200,21 +201,6 @@ export const weatherRouter = createTRPCRouter({
           presentAirQuality.hourly.pm10[0],
           presentAirQuality.hourly.pm2_5[0],
         );
-      }
-
-      interface IHourlyForecast {
-        // Hour of current day
-        time: number;
-        // In Kelvin
-        temperature: number | undefined;
-        // In millimeters
-        rain: number | undefined;
-        // In millimeters
-        showers: number | undefined;
-        // In centimeters
-        snowfall: number | undefined;
-        // In percentages
-        cloudcover: number | undefined;
       }
 
       const hourlyForecast: IHourlyForecast[] = [];

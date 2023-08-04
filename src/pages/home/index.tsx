@@ -10,6 +10,7 @@ import {
   TiWeatherStormy,
   TiWeatherSunny,
 } from "react-icons/ti";
+import {IHourlyForecast} from "~/types";
 
 const InternalHome = observer(() => {
   const weatherData = api.weather.getWeather.useQuery(
@@ -120,7 +121,7 @@ const InternalHome = observer(() => {
       </div>
       <div className="flex justify-center mt-12">
         <div className="rounded-md bg-gray-400 min-w-10/12 flex justify-evenly">
-          {weatherData.data?.hourlyForecast.map((hourlyForecast, index) => {
+          {weatherData.data?.hourlyForecast.map((hourlyForecast: IHourlyForecast, index: number) => {
             let time;
             if (hourlyForecast.time === new Date().getUTCHours()) {
               time = "Now";
