@@ -6,7 +6,7 @@ import {
 } from "~/server/api/trpc";
 import { env } from "~/env.mjs";
 import axios from "axios";
-import {IHourlyForecast} from "~/types";
+import { IHourlyForecast } from "~/types";
 
 /**
  * Zod schemas provide runtime data validation ensuring type safety,
