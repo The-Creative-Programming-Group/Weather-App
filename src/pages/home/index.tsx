@@ -10,7 +10,7 @@ import {
   TiWeatherStormy,
   TiWeatherSunny,
 } from "react-icons/ti";
-import {IHourlyForecast} from "~/types";
+import { IHourlyForecast } from "~/types";
 
 const InternalHome = observer(() => {
   const weatherData = api.weather.getWeather.useQuery(
@@ -121,37 +121,39 @@ const InternalHome = observer(() => {
       </div>
       <div className="flex justify-center mt-12">
         <div className="rounded-md bg-gray-400 min-w-10/12 flex justify-evenly">
-          {weatherData.data?.hourlyForecast.map((hourlyForecast: IHourlyForecast, index: number) => {
-            let time;
-            if (hourlyForecast.time === new Date().getUTCHours()) {
-              time = "Now";
-            } else if (hourlyForecast.time === 12) {
-              time = "12PM";
-            } else if (hourlyForecast.time > 12) {
-              time = `${hourlyForecast.time - 12}PM`;
-            } else if (hourlyForecast.time === 0) {
-              time = `12AM`;
-            } else {
-              time = `${hourlyForecast.time}AM`;
-            }
-            return (
-              <div className="m-3 flex flex-col items-center" key={index}>
-                <div className="mt-1.5">{time}</div>
-                {weatherState({ hour: index, icons: true })}
-                {hourlyForecast.temperature ? (
-                  <div>
-                    {temperatureUnit$.get() === "Celsius"
-                      ? `${Math.round(hourlyForecast.temperature - 273.15)}°C`
-                      : `${Math.round(
-                          (hourlyForecast.temperature * 9) / 5 - 459.67,
-                        )}°F`}
-                  </div>
-                ) : (
-                  "Loading"
-                )}
-              </div>
-            );
-          })}
+          {weatherData.data?.hourlyForecast.map(
+            (hourlyForecast: IHourlyForecast, index: number) => {
+              let time;
+              if (hourlyForecast.time === new Date().getUTCHours()) {
+                time = "Now";
+              } else if (hourlyForecast.time === 12) {
+                time = "12PM";
+              } else if (hourlyForecast.time > 12) {
+                time = `${hourlyForecast.time - 12}PM`;
+              } else if (hourlyForecast.time === 0) {
+                time = `12AM`;
+              } else {
+                time = `${hourlyForecast.time}AM`;
+              }
+              return (
+                <div className="m-3 flex flex-col items-center" key={index}>
+                  <div className="mt-1.5">{time}</div>
+                  {weatherState({ hour: index, icons: true })}
+                  {hourlyForecast.temperature ? (
+                    <div>
+                      {temperatureUnit$.get() === "Celsius"
+                        ? `${Math.round(hourlyForecast.temperature - 273.15)}°C`
+                        : `${Math.round(
+                            (hourlyForecast.temperature * 9) / 5 - 459.67,
+                          )}°F`}
+                    </div>
+                  ) : (
+                    "Loading"
+                  )}
+                </div>
+              );
+            },
+          )}
         </div>
       </div>
     </Layout>
