@@ -12,9 +12,9 @@
   "dependencies": {
     "@legendapp/state": "^1.8.0",
     "@total-typescript/ts-reset": "^0.4.2",
-    "@trpc/client": "^10.35.0",
-    "@trpc/next": "^10.35.0",
-    "@trpc/server": "^10.35.0",
+    "@trpc/client": "^10.37.1",
+    "@trpc/next": "^10.37.1",
+    "@trpc/server": "^10.37.1",
     "@types/eslint": "^8.37.0",
     "@types/node": "^18.14.0",
     "@types/react": "^18.0.28",
