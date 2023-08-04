@@ -37,15 +37,14 @@ const LocationSettings = () => {
     setSearchValue(event.target.value);
   };
 
-
   const connect = (city: string) => {
     activeCity$.set(city);
-  }
+  };
 
   // Will close the Elements
   const removeElement = (city: string) => {
     if (addedCities$.get().includes(city)) {
-            activeCity$.set(null);
+      activeCity$.set(null);
       addedCities$.set(addedCities$.get().filter((item) => item !== city));
     }
   };
@@ -191,18 +190,25 @@ const LocationSettings = () => {
             <div className="w-full flex justify-center mt-2">
               <div className=" w-4/12+12px block">
                 {addedCities$.get().map((city: string) => {
-                  return  (
-                    <div onMouseDown={() => {connect(city)}} className="bg-[#d8d5db] p-2  border border-solid border-black mt-2 hover: cursor-pointer flex justify-between">
+                  return (
+                    <div
+                      onMouseDown={() => {
+                        connect(city);
+                      }}
+                      className="bg-[#d8d5db] p-2  border border-solid border-black mt-2 hover: cursor-pointer flex justify-between"
+                    >
                       <p className="">{city}</p>
                       <div className="flex">
                         <RxCross2
                           onClick={() => removeElement(city)}
                           className="mr-5 mt-1"
                         />
-                        { activeCity$.get() === city ? <AiOutlineCheck className="mt-1" /> : null}
+                        {activeCity$.get() === city ? (
+                          <AiOutlineCheck className="mt-1" />
+                        ) : null}
                       </div>
                     </div>
-                  )  
+                  );
                 })}
               </div>
             </div>
