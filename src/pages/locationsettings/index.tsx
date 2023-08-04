@@ -196,7 +196,7 @@ const LocationSettings = observer(() => {
                       onMouseDown={() => {
                         connect(city);
                       }}
-                      className="bg-[#d8d5db] p-2  border border-solid border-black mt-2 hover: cursor-pointer flex justify-between"
+                      className="bg-[#d8d5db] p-2 border border-solid border-black mt-2 hover: cursor-pointer flex justify-between"
                     >
                       <p className="">{city}</p>
                       <div className="flex">
