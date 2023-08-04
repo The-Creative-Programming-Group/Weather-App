@@ -4,8 +4,9 @@ import { activeCity$, addedCities$ } from "~/states";
 import Image from "next/image";
 import { AiOutlineCheck } from "react-icons/ai";
 import { RxCross2 } from "react-icons/rx";
+import {observer} from "@legendapp/state/react-components";
 
-const LocationSettings = () => {
+const LocationSettings = observer(() => {
   interface ICity {
     name: string;
     population: number;
@@ -225,6 +226,6 @@ const LocationSettings = () => {
       </Layout>
     </>
   );
-};
+});
 
 export default LocationSettings;
