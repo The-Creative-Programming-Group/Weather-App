@@ -5,7 +5,7 @@ import Image from "next/image";
 import { AiOutlineCheck } from "react-icons/ai";
 import { RxCross2 } from "react-icons/rx";
 import { observer } from "@legendapp/state/react-components";
-import {cities, ICity} from "~/testdata";
+import { cities, ICity } from "~/testdata";
 
 const LocationSettings = observer(() => {
   type ButtonNameType = "Add New Location" | "Added";
@@ -24,12 +24,21 @@ const LocationSettings = observer(() => {
     setSearchValue(event.target.value);
   };
 
-  const connect = (city: { name: string, coordinates: {lat: number, lon: number }}) => {
-    activeCity$.set({ name: city.name, coordinates: { lat: city.coordinates.lat, lon: city.coordinates.lon } });
+  const connect = (city: {
+    name: string;
+    coordinates: { lat: number; lon: number };
+  }) => {
+    activeCity$.set({
+      name: city.name,
+      coordinates: { lat: city.coordinates.lat, lon: city.coordinates.lon },
+    });
   };
 
   // Will close the Elements
-  const removeElement = (city: { name: string, coordinates: { lat: number, lon: number }}) => {
+  const removeElement = (city: {
+    name: string;
+    coordinates: { lat: number; lon: number };
+  }) => {
     if (addedCities$.get().includes(city)) {
       activeCity$.set(null);
       addedCities$.set(addedCities$.get().filter((item) => item !== city));
@@ -71,7 +80,7 @@ const LocationSettings = observer(() => {
   const changed = (stadt: ICity) => {
     if (!addedCities$.get().includes(stadt)) {
       addedCities$.push(stadt);
-      activeCity$.set({ name: stadt.name, coordinates: stadt.coordinates  });
+      activeCity$.set({ name: stadt.name, coordinates: stadt.coordinates });
       setButtonName("Added");
     } else {
       alert("City already added");
@@ -168,28 +177,35 @@ const LocationSettings = observer(() => {
             })}
             <div className="w-full flex justify-center mt-2">
               <div className=" w-4/12+12px block">
-                {addedCities$.get().map((city: { name: string, coordinates: {lat: number, lon: number }}) => {
-                  return (
-                    <div
-                      onClick={() => {
-                        connect(city);
-                      }}
-                      className={
-                        activeCity$.name.get() === city.name
-                          ? "bg-[#d8d5db] p-2 border-2 border-black mt-2 hover: cursor-pointer flex justify-between"
-                          : "bg-[#d8d5db] p-2 border border-solid border-black mt-2 hover: cursor-pointer flex justify-between"
-                      }
-                    >
-                      <p className="">{city.name}</p>
-                      <div className="flex">
-                        <RxCross2
-                          onClick={() => removeElement(city)}
-                          className="mr-5 mt-1"
-                        />
-                      </div>
-                    </div>
-                  );
-                })}
+                {addedCities$
+                  .get()
+                  .map(
+                    (city: {
+                      name: string;
+                      coordinates: { lat: number; lon: number };
+                    }) => {
+                      return (
+                        <div
+                          onClick={() => {
+                            connect(city);
+                          }}
+                          className={
+                            activeCity$.name.get() === city.name
+                              ? "bg-[#d8d5db] p-2 border-2 border-black mt-2 hover: cursor-pointer flex justify-between"
+                              : "bg-[#d8d5db] p-2 border border-solid border-black mt-2 hover: cursor-pointer flex justify-between"
+                          }
+                        >
+                          <p className="">{city.name}</p>
+                          <div className="flex">
+                            <RxCross2
+                              onClick={() => removeElement(city)}
+                              className="mr-5 mt-1"
+                            />
+                          </div>
+                        </div>
+                      );
+                    },
+                  )}
               </div>
             </div>
             <button

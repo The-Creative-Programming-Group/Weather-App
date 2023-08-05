@@ -14,7 +14,7 @@ import { IHourlyForecast } from "~/types";
 
 const InternalHome = observer(() => {
   const weatherData = api.weather.getWeather.useQuery(
-      { coordinates: activeCity$.coordinates.get() },
+    { coordinates: activeCity$.coordinates.get() },
     { refetchOnWindowFocus: false },
   );
   let temperature = undefined;
