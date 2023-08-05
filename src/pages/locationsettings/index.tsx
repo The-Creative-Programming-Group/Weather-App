@@ -5,26 +5,9 @@ import Image from "next/image";
 import { AiOutlineCheck } from "react-icons/ai";
 import { RxCross2 } from "react-icons/rx";
 import { observer } from "@legendapp/state/react-components";
+import {cities, ICity} from "~/testdata";
 
 const LocationSettings = observer(() => {
-  interface ICity {
-    name: string;
-    population: number;
-  }
-
-  // Only for testing, later it will be fetched from an API. Now its TestArray (data) with the cities and their population.
-  const cities: ICity[] = [
-    { name: "Berlin", population: 1000000 },
-    { name: "Dresden", population: 510000 },
-    { name: "Dortmund", population: 200000 },
-    { name: "Dessau", population: 530000 },
-    { name: "Döbeln", population: 50000 },
-    { name: "Delb", population: 20000 },
-    { name: "Pissen", population: 30000 },
-    { name: "Prag", population: 30000 },
-    { name: "Hamburg", population: 30000 },
-  ];
-
   type ButtonNameType = "Add New Location" | "Added";
 
   const [searchValue, setSearchValue] = useState(""); // SearchValue2 is the value of the second input field
@@ -41,12 +24,12 @@ const LocationSettings = observer(() => {
     setSearchValue(event.target.value);
   };
 
-  const connect = (city: string) => {
-    activeCity$.set(city);
+  const connect = (city: { name: string, coordinates: {lat: number, lon: number }}) => {
+    activeCity$.set({ name: city.name, coordinates: { lat: city.coordinates.lat, lon: city.coordinates.lon } });
   };
 
   // Will close the Elements
-  const removeElement = (city: string) => {
+  const removeElement = (city: { name: string, coordinates: { lat: number, lon: number }}) => {
     if (addedCities$.get().includes(city)) {
       activeCity$.set(null);
       addedCities$.set(addedCities$.get().filter((item) => item !== city));
@@ -77,7 +60,7 @@ const LocationSettings = observer(() => {
     cities.map(
       (stadt) => {
         if (stadt.name.toLowerCase() === searchValue.toLowerCase()) {
-          changed(stadt.name);
+          changed(stadt);
         }
       },
       [searchValue],
@@ -85,25 +68,16 @@ const LocationSettings = observer(() => {
   };
 
   // Will add the city
-  const changed = (stadt: string) => {
+  const changed = (stadt: ICity) => {
     if (!addedCities$.get().includes(stadt)) {
       addedCities$.push(stadt);
-      activeCity$.set(stadt);
+      activeCity$.set({ name: stadt.name, coordinates: stadt.coordinates  });
       setButtonName("Added");
     } else {
       alert("City already added");
     }
     setSearchValue("");
     setIsLocationSelected(false);
-  };
-
-  // Will check if the user clicks on the change button or if he clicks on the city in the list
-  const handleChangedown = () => {
-    if (isLocationSelected === true) {
-      changed(searchValue);
-    } else {
-      checkCity();
-    }
   };
 
   // Will set the value of the first input field to the city if the user clicks on a proposed city in the list
@@ -194,19 +168,19 @@ const LocationSettings = observer(() => {
             })}
             <div className="w-full flex justify-center mt-2">
               <div className=" w-4/12+12px block">
-                {addedCities$.get().map((city: string) => {
+                {addedCities$.get().map((city: { name: string, coordinates: {lat: number, lon: number }}) => {
                   return (
                     <div
                       onClick={() => {
                         connect(city);
                       }}
                       className={
-                        activeCity$.get() === city
+                        activeCity$.name.get() === city.name
                           ? "bg-[#d8d5db] p-2 border-2 border-black mt-2 hover: cursor-pointer flex justify-between"
                           : "bg-[#d8d5db] p-2 border border-solid border-black mt-2 hover: cursor-pointer flex justify-between"
                       }
                     >
-                      <p className="">{city}</p>
+                      <p className="">{city.name}</p>
                       <div className="flex">
                         <RxCross2
                           onClick={() => removeElement(city)}
@@ -220,7 +194,7 @@ const LocationSettings = observer(() => {
             </div>
             <button
               onClick={handleChangeclick}
-              onMouseDown={handleChangedown}
+              onMouseDown={checkCity}
               className="mt-2.5 rounded border-solid bg-[#2d3142] p-2 font-bold text-white"
               ref={saveButtonTextRef}
             >

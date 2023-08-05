@@ -14,7 +14,7 @@ import { IHourlyForecast } from "~/types";
 
 const InternalHome = observer(() => {
   const weatherData = api.weather.getWeather.useQuery(
-    { coordinates: { lat: 52.116, lon: 13.622 } },
+      { coordinates: activeCity$.coordinates.get() },
     { refetchOnWindowFocus: false },
   );
   let temperature = undefined;
@@ -109,7 +109,7 @@ const InternalHome = observer(() => {
   return (
     <Layout>
       <div className="mt-24 flex items-center flex-col">
-        <h1 className="text-7xl">{activeCity$.get()}</h1>
+        <h1 className="text-7xl">{activeCity$.name.get()}</h1>
         <h1 className="text-7xl mt-3 text-gray-500">
           {temperature ? temperature : "Loading..."}
         </h1>

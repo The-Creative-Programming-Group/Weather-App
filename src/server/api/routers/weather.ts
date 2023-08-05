@@ -64,14 +64,11 @@ const PresentWeatherSchema = z.object({
     temp_max: z.number(),
     pressure: z.number(),
     humidity: z.number(),
-    sea_level: z.number(),
-    grnd_level: z.number(),
   }),
   visibility: z.number(),
   wind: z.object({
     speed: z.number(),
     deg: z.number(),
-    gust: z.number(),
   }),
   clouds: z.object({
     all: z.number(),
