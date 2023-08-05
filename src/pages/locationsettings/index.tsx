@@ -30,7 +30,8 @@ const LocationSettings = observer(() => {
   const [searchValue, setSearchValue] = useState(""); // SearchValue2 is the value of the second input field
   const [activeInput, setActiveInput] = useState<string | null>(null); // activeInput is the input field which is active
   const inputRef = useRef<HTMLInputElement>(null); // firstInputRef is the ref of the first input field
-  const [buttonName, setButtonName] = useState<ButtonNameType>("Add New Location"); // buttonName is the name of the first button
+  const [buttonName, setButtonName] =
+    useState<ButtonNameType>("Add New Location"); // buttonName is the name of the first button
   const saveButtonTextRef = useRef<HTMLButtonElement>(null); // saveButtonTextRef is the ref of the first button
   const [isLocationSelected, setIsLocationSelected] = useState(false); // isLocationSelected is true if the user selected a location (first input)
 
@@ -199,7 +200,11 @@ const LocationSettings = observer(() => {
                       onClick={() => {
                         connect(city);
                       }}
-                      className= { activeCity$.get() === city ? "bg-[#d8d5db] p-2 border-2 border-black mt-2 hover: cursor-pointer flex justify-between" : "bg-[#d8d5db] p-2 border border-solid border-black mt-2 hover: cursor-pointer flex justify-between"}
+                      className={
+                        activeCity$.get() === city
+                          ? "bg-[#d8d5db] p-2 border-2 border-black mt-2 hover: cursor-pointer flex justify-between"
+                          : "bg-[#d8d5db] p-2 border border-solid border-black mt-2 hover: cursor-pointer flex justify-between"
+                      }
                     >
                       <p className="">{city}</p>
                       <div className="flex">
