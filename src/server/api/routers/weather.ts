@@ -6,7 +6,7 @@ import {
 } from "~/server/api/trpc";
 import { env } from "~/env.mjs";
 import axios from "axios";
-import { IHourlyForecast } from "~/types";
+import {IDailyForecast, IHourlyForecast} from "~/types";
 
 /**
  * Zod schemas provide runtime data validation ensuring type safety,
@@ -223,21 +223,6 @@ export const weatherRouter = createTRPCRouter({
         });
       }
 
-      interface IDailyForecast {
-        // Day of current week (starts with 0 (current day))
-        day: number;
-        // In Kelvin day and night
-        temperature: number | undefined;
-        // In millimeters
-        rain: number | undefined;
-        // In millimeters
-        showers: number | undefined;
-        // In centimeters
-        snowfall: number | undefined;
-        // In percent
-        cloudcover: number | undefined;
-      }
-
       const dailyForecast: IDailyForecast[] = [];
 
       if (hourlyData) {
@@ -326,7 +311,9 @@ export const weatherRouter = createTRPCRouter({
             */
 
           dailyForecast.push({
-            day: i,
+            date: new Date(
+                new Date().setDate(new Date().getDate() + i),
+            ),
             temperature: temperatureCount
               ? temperatureAverage + 273.15
               : undefined,
