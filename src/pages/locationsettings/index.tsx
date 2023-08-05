@@ -20,6 +20,9 @@ const LocationSettings = observer(() => {
     { name: "Dessau", population: 530000 },
     { name: "Döbeln", population: 50000 },
     { name: "Delb", population: 20000 },
+    { name: "Pissen", population: 30000 },
+    { name: "Prag", population: 30000 },
+    { name: "Hamburg", population: 30000 },
   ];
 
   type ButtonNameType = "Add New Location" | "Added";
@@ -27,8 +30,7 @@ const LocationSettings = observer(() => {
   const [searchValue, setSearchValue] = useState(""); // SearchValue2 is the value of the second input field
   const [activeInput, setActiveInput] = useState<string | null>(null); // activeInput is the input field which is active
   const inputRef = useRef<HTMLInputElement>(null); // firstInputRef is the ref of the first input field
-  const [buttonName, setButtonName] =
-    useState<ButtonNameType>("Add New Location"); // buttonName is the name of the first button
+  const [buttonName, setButtonName] = useState<ButtonNameType>("Add New Location"); // buttonName is the name of the first button
   const saveButtonTextRef = useRef<HTMLButtonElement>(null); // saveButtonTextRef is the ref of the first button
   const [isLocationSelected, setIsLocationSelected] = useState(false); // isLocationSelected is true if the user selected a location (first input)
 
@@ -85,6 +87,7 @@ const LocationSettings = observer(() => {
   const changed = (stadt: string) => {
     if (!addedCities$.get().includes(stadt)) {
       addedCities$.push(stadt);
+      activeCity$.set(stadt);
       setButtonName("Added");
     } else {
       alert("City already added");
@@ -193,10 +196,10 @@ const LocationSettings = observer(() => {
                 {addedCities$.get().map((city: string) => {
                   return (
                     <div
-                      onMouseDown={() => {
+                      onClick={() => {
                         connect(city);
                       }}
-                      className="bg-[#d8d5db] p-2 border border-solid border-black mt-2 hover: cursor-pointer flex justify-between"
+                      className= { activeCity$.get() === city ? "bg-[#d8d5db] p-2 border-2 border-black mt-2 hover: cursor-pointer flex justify-between" : "bg-[#d8d5db] p-2 border border-solid border-black mt-2 hover: cursor-pointer flex justify-between"}
                     >
                       <p className="">{city}</p>
                       <div className="flex">
@@ -204,9 +207,6 @@ const LocationSettings = observer(() => {
                           onClick={() => removeElement(city)}
                           className="mr-5 mt-1"
                         />
-                        {activeCity$.get() === city ? (
-                          <AiOutlineCheck className="mt-1" />
-                        ) : null}
                       </div>
                     </div>
                   );
