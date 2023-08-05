@@ -174,32 +174,28 @@ const LocationSettings = observer(() => {
             })}
             <div className="w-full flex justify-center mt-2">
               <div className=" w-4/12+12px block">
-                {addedCities$
-                  .get()
-                  .map(
-                    (city: ICity) => {
-                      return (
-                        <div
-                          onClick={() => {
-                            connect(city);
-                          }}
-                          className={
-                            activeCity$.name.get() === city.name
-                              ? "bg-[#d8d5db] p-2 border-2 border-black mt-2 hover: cursor-pointer flex justify-between"
-                              : "bg-[#d8d5db] p-2 border border-solid border-black mt-2 hover: cursor-pointer flex justify-between"
-                          }
-                        >
-                          <p className="">{city.name}</p>
-                          <div className="flex">
-                            <RxCross2
-                              onClick={() => removeElement(city)}
-                              className="mr-5 mt-1"
-                            />
-                          </div>
-                        </div>
-                      );
-                    },
-                  )}
+                {addedCities$.get().map((city: ICity) => {
+                  return (
+                    <div
+                      onClick={() => {
+                        connect(city);
+                      }}
+                      className={
+                        activeCity$.name.get() === city.name
+                          ? "bg-[#d8d5db] p-2 border-2 border-black mt-2 hover: cursor-pointer flex justify-between"
+                          : "bg-[#d8d5db] p-2 border border-solid border-black mt-2 hover: cursor-pointer flex justify-between"
+                      }
+                    >
+                      <p className="">{city.name}</p>
+                      <div className="flex">
+                        <RxCross2
+                          onClick={() => removeElement(city)}
+                          className="mr-5 mt-1"
+                        />
+                      </div>
+                    </div>
+                  );
+                })}
               </div>
             </div>
             <button
