@@ -35,10 +35,7 @@ const LocationSettings = observer(() => {
   };
 
   // Will close the Elements
-  const removeElement = (city: {
-    name: string;
-    coordinates: { lat: number; lon: number };
-  }) => {
+  const removeElement = (city: ICity) => {
     if (addedCities$.get().includes(city)) {
       activeCity$.set(null);
       addedCities$.set(addedCities$.get().filter((item) => item !== city));
@@ -180,10 +177,7 @@ const LocationSettings = observer(() => {
                 {addedCities$
                   .get()
                   .map(
-                    (city: {
-                      name: string;
-                      coordinates: { lat: number; lon: number };
-                    }) => {
+                    (city: ICity) => {
                       return (
                         <div
                           onClick={() => {
