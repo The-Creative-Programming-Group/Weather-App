@@ -5,8 +5,8 @@ import Image from "next/image";
 import { RxCross2 } from "react-icons/rx";
 import { observer } from "@legendapp/state/react-components";
 import { cities, ICity } from "~/testdata";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const LocationSettings = observer(() => {
   type ButtonNameType = "Add New Location" | "Added";
@@ -34,13 +34,12 @@ const LocationSettings = observer(() => {
   // Will close the Elements
   const removeElement = (city: ICity) => {
     if (addedCities$.get().length > 1) {
-    if (addedCities$.get().includes(city)) {
-      activeCity$.set(null);
-      addedCities$.set(addedCities$.get().filter((item) => item !== city));
-    }
-    }
-    else {
-        toast.error("You need at least one city")
+      if (addedCities$.get().includes(city)) {
+        activeCity$.set(null);
+        addedCities$.set(addedCities$.get().filter((item) => item !== city));
+      }
+    } else {
+      toast.error("You need at least one city");
     }
   };
 
@@ -82,7 +81,7 @@ const LocationSettings = observer(() => {
       activeCity$.set({ name: stadt.name, coordinates: stadt.coordinates });
       setButtonName("Added");
     } else {
-      toast.error("City already added")
+      toast.error("City already added");
     }
     setSearchValue("");
   };
