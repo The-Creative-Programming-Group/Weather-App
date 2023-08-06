@@ -70,7 +70,7 @@ const LocationSettings = observer(() => {
 
   // Will add the city
   const changed = (stadt: ICity) => {
-    if (!addedCities$.get().includes(stadt)) {
+    if (!addedCities$.get().some(city => city.name === stadt.name)) {
       addedCities$.push(stadt);
       activeCity$.set({ name: stadt.name, coordinates: stadt.coordinates });
       setButtonName("Added");
