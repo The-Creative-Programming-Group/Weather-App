@@ -380,7 +380,7 @@ export const weatherRouter = createTRPCRouter({
         // In meters per second
         wind_speed: presentWeather?.wind.speed,
         // Calculates the wind pressure in Pa
-        wind_pressure: presentWeather
+        wind_pressure: presentWeather?.wind.speed
           ? 0.5 * 1.225 * Math.pow(presentWeather.wind.speed, 2)
           : undefined,
         // Index from 0 to 100
