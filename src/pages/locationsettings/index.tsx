@@ -1,10 +1,10 @@
 import React, { useState, useRef, type ChangeEvent } from "react";
 import Layout from "~/components/Layout";
-import {activeCity$, addedCities$} from "~/states";
+import { activeCity$, addedCities$ } from "~/states";
 import Image from "next/image";
 import { RxCross2 } from "react-icons/rx";
 import { observer } from "@legendapp/state/react-components";
-import {cities, ICity} from "~/testdata";
+import { cities, ICity } from "~/testdata";
 
 const LocationSettings = observer(() => {
   type ButtonNameType = "Add New Location" | "Added";
@@ -70,7 +70,7 @@ const LocationSettings = observer(() => {
 
   // Will add the city
   const changed = (stadt: ICity) => {
-    if (!addedCities$.get().includes(stadt)) {
+    if (!addedCities$.get().some((city) => city.name === stadt.name)) {
       addedCities$.push(stadt);
       activeCity$.set({ name: stadt.name, coordinates: stadt.coordinates });
       setButtonName("Added");
@@ -87,7 +87,9 @@ const LocationSettings = observer(() => {
 
   // Sort the cities by population
   let anzahl = 0;
-  cities.sort((cityA: ICity, cityB: ICity) => cityB.population - cityA.population);
+  cities.sort(
+    (cityA: ICity, cityB: ICity) => cityB.population - cityA.population,
+  );
 
   return (
     <>
