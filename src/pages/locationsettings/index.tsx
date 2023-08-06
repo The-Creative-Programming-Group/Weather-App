@@ -1,22 +1,20 @@
 import React, { useState, useRef, type ChangeEvent } from "react";
 import Layout from "~/components/Layout";
-import { activeCity$, addedCities$ } from "~/states";
+import {activeCity$, addedCities$} from "~/states";
 import Image from "next/image";
-import { AiOutlineCheck } from "react-icons/ai";
 import { RxCross2 } from "react-icons/rx";
 import { observer } from "@legendapp/state/react-components";
-import { cities, ICity } from "~/testdata";
+import {cities, ICity} from "~/testdata";
 
 const LocationSettings = observer(() => {
   type ButtonNameType = "Add New Location" | "Added";
 
-  const [searchValue, setSearchValue] = useState(""); // SearchValue2 is the value of the second input field
-  const [activeInput, setActiveInput] = useState<string | null>(null); // activeInput is the input field which is active
-  const inputRef = useRef<HTMLInputElement>(null); // firstInputRef is the ref of the first input field
+  const [searchValue, setSearchValue] = useState(""); // searchValue is the value of the input field
+  const [activeInput, setActiveInput] = useState<string | null>(null); // activeInput is the input field that is active
+  const inputRef = useRef<HTMLInputElement>(null); // inputRef is the ref of the input field
   const [buttonName, setButtonName] =
     useState<ButtonNameType>("Add New Location"); // buttonName is the name of the first button
   const saveButtonTextRef = useRef<HTMLButtonElement>(null); // saveButtonTextRef is the ref of the first button
-  const [isLocationSelected, setIsLocationSelected] = useState(false); // isLocationSelected is true if the user selected a location (first input)
 
   // Will change button name to ChangeLocation if the first input field not empty
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -24,10 +22,7 @@ const LocationSettings = observer(() => {
     setSearchValue(event.target.value);
   };
 
-  const connect = (city: {
-    name: string;
-    coordinates: { lat: number; lon: number };
-  }) => {
+  const connect = (city: ICity) => {
     activeCity$.set({
       name: city.name,
       coordinates: { lat: city.coordinates.lat, lon: city.coordinates.lon },
@@ -64,9 +59,9 @@ const LocationSettings = observer(() => {
   // Will check if the city is in the array and will change the city if it is in the array
   const checkCity = () => {
     cities.map(
-      (stadt) => {
-        if (stadt.name.toLowerCase() === searchValue.toLowerCase()) {
-          changed(stadt);
+      (city: ICity) => {
+        if (city.name.toLowerCase() === searchValue.toLowerCase()) {
+          changed(city);
         }
       },
       [searchValue],
@@ -83,18 +78,16 @@ const LocationSettings = observer(() => {
       alert("City already added");
     }
     setSearchValue("");
-    setIsLocationSelected(false);
   };
 
   // Will set the value of the first input field to the city if the user clicks on a proposed city in the list
   const handleStadtclick = (name: string) => {
     setSearchValue(name);
-    setIsLocationSelected(true);
   };
 
   // Sort the cities by population
   let anzahl = 0;
-  cities.sort((stadtA, stadtB) => stadtB.population - stadtA.population);
+  cities.sort((cityA: ICity, cityB: ICity) => cityB.population - cityA.population);
 
   return (
     <>
@@ -133,10 +126,10 @@ const LocationSettings = observer(() => {
                 />
               </div>{" "}
             </div>
-            {cities.map((stadt) => {
+            {cities.map((city: ICity) => {
               if (
                 searchValue !== "" &&
-                stadt.name.toLowerCase().startsWith(searchValue.toLowerCase())
+                city.name.toLowerCase().startsWith(searchValue.toLowerCase())
               ) {
                 anzahl++;
 
@@ -148,22 +141,22 @@ const LocationSettings = observer(() => {
                           ? "w-4/12+12px h-auto border-b-2 border-gray-400 bg-[#d8d5db] p-5 hover: cursor-pointer"
                           : "hidden"
                       }
-                      key={stadt.name}
-                      onMouseDown={() => handleStadtclick(stadt.name)}
+                      key={city.name}
+                      onMouseDown={() => handleStadtclick(city.name)}
                     >
                       <p>
-                        {stadt.name
+                        {city.name
                           .split("")
-                          .map((buchstabe, buchstabenIndex) => (
+                          .map((letter: string, letterIndex: number) => (
                             <span
                               className={
-                                buchstabenIndex < searchValue.length
+                                letterIndex < searchValue.length
                                   ? "font-bold"
                                   : ""
                               }
-                              key={buchstabenIndex}
+                              key={letterIndex}
                             >
-                              {buchstabe}
+                              {letter}
                             </span>
                           ))}
                       </p>
@@ -185,6 +178,7 @@ const LocationSettings = observer(() => {
                           ? "bg-[#d8d5db] p-2 border-2 border-black mt-2 hover: cursor-pointer flex justify-between"
                           : "bg-[#d8d5db] p-2 border border-solid border-black mt-2 hover: cursor-pointer flex justify-between"
                       }
+                      key={city.name}
                     >
                       <p className="">{city.name}</p>
                       <div className="flex">
