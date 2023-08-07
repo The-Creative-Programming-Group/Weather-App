@@ -5,9 +5,9 @@ import { FaMapMarkedAlt } from "react-icons/fa";
 import { AiFillHome } from "react-icons/ai";
 import Link from "next/link";
 import Image from "next/image";
-import dicsiluksProfile from "~/assets/dicsiluks-profile.webp"
-import jakobProfile from "~/assets/jakob-profile.png"
-import fabiusProfile from "~/assets/fabius-profile.jpg"
+import dicsiluksProfile from "~/assets/dicsiluks-profile.webp";
+import jakobProfile from "~/assets/jakob-profile.png";
+import fabiusProfile from "~/assets/fabius-profile.jpg";
 
 interface LayoutProps {
   title?: string;
@@ -57,19 +57,37 @@ const Layout: React.FC<LayoutProps> = ({ title, children, footer }) => {
             <div className="text-sm w-28">Made with ♥️ by</div>
             <div className="flex flex-col items-center">
               <Link href="https://www.roessner.tech">
-                <Image src={jakobProfile} alt="jakobs logo" width="50" height="50" className="rounded-full shadow-black hover:shadow-2xl" />
+                <Image
+                  src={jakobProfile}
+                  alt="jakobs logo"
+                  width="50"
+                  height="50"
+                  className="rounded-full shadow-black hover:shadow-2xl"
+                />
               </Link>
               <p className="text-sm">Founder</p>
             </div>
             <div className="flex flex-col items-center ml-6">
               <Link href="https://github.com/dicsiluks">
-                <Image src={dicsiluksProfile} alt="dicsiluks logo" width="50" height="50" className="rounded-full shadow-black hover:shadow-2xl" />
+                <Image
+                  src={dicsiluksProfile}
+                  alt="dicsiluks logo"
+                  width="50"
+                  height="50"
+                  className="rounded-full shadow-black hover:shadow-2xl"
+                />
               </Link>
               <p className="text-sm">Designer</p>
             </div>
             <div className="flex flex-col items-center ml-6">
               <Link href="https://www.schurig.tech">
-                <Image src={fabiusProfile} alt="Fabius logo" width="50" height="50" className="rounded-full shadow-black hover:shadow-2xl" />
+                <Image
+                  src={fabiusProfile}
+                  alt="Fabius logo"
+                  width="50"
+                  height="50"
+                  className="rounded-full shadow-black hover:shadow-2xl"
+                />
               </Link>
               <p className="text-sm">Engineer</p>
             </div>
