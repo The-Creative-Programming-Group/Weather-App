@@ -10,9 +10,9 @@ import {
   FaCloudRain,
   FaCloudShowersHeavy,
   FaSun,
+  FaMoon,
+  FaWind
 } from "react-icons/fa6";
-import { FaMoon } from "react-icons/fa";
-import { TiWeatherCloudy } from "react-icons/ti";
 
 const InternalHome = observer(() => {
   const weatherData = api.weather.getWeather.useQuery(
@@ -33,6 +33,7 @@ const InternalHome = observer(() => {
     | "Rainy"
     | "Stormy"
     | "Snowy"
+    | "Windy"
     | JSX.Element
     | undefined;
 
@@ -72,16 +73,14 @@ const InternalHome = observer(() => {
             return <FaCloud className="w-12 h-12" />;
           }
           return "Cloudy";
-        } else {
-          if (icons) {
-            if (weatherData.data.hourlyForecast[hour!]!.time < 19) {
-              return <FaSun className="w-12 h-12" />;
-            } else {
-              return <FaMoon className="w-12 h-12" />;
+        }
+        if (weatherData.data?.dailyForecast[hour!]?.windSpeed) {
+          if (weatherData.data?.dailyForecast[hour!]!.windSpeed! >= 20) {
+            if (icons) {
+              return <FaWind className="w-12 h-12" />;
             }
+            return "Windy";
           }
-          // console.log("Sunny", icons, hour)
-          return "Sunny";
         }
       }
     } else if (hour === undefined) {
@@ -112,20 +111,30 @@ const InternalHome = observer(() => {
       if (weatherData.data?.dailyForecast[day!]?.cloudcover) {
         if (weatherData.data?.dailyForecast[day!]!.cloudcover! > 40) {
           if (icons) {
-            return <TiWeatherCloudy className="w-10 h-10" />;
+            return <FaCloud className="w-10 h-10" />;
           }
           return "Cloudy";
         }
       }
+      if (weatherData.data?.dailyForecast[day!]?.windSpeed) {
+        if (weatherData.data?.dailyForecast[day!]!.windSpeed! >= 20) {
+          if (icons) {
+            return <FaWind className="w-10 h-10" />;
+          }
+          return "Windy";
+        }
+      }
     }
     if (icons && day === undefined) {
-      if (
-        weatherData.data?.hourlyForecast[hour!]?.time &&
-        weatherData.data.hourlyForecast[hour!]!.time < 19
-      ) {
-        return <FaSun className="w-12 h-12" />;
-      } else {
-        return <FaMoon className="w-12 h-12" />;
+      if (weatherData.data) {
+        if (
+            weatherData.data.hourlyForecast[hour!]!.time < 19 &&
+            weatherData.data.hourlyForecast[hour!]!.time > 6
+        ) {
+          return <FaSun className="w-12 h-12"/>;
+        } else {
+          return <FaMoon className="w-12 h-12"/>;
+        }
       }
     } else if (icons && hour === undefined) {
       return <FaSun className="w-10 h-10" />;

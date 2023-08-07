@@ -11,6 +11,8 @@ export interface IHourlyForecast {
   snowfall: number | undefined;
   // In percentages
   cloudcover: number | undefined;
+  // In kilometers per hour
+  windSpeed: number | undefined;
 }
 
 export interface IDailyForecast {
@@ -26,4 +28,6 @@ export interface IDailyForecast {
   snowfall: number | undefined;
   // In percent
   cloudcover: number | undefined;
+  // In kilometers per hour
+  windSpeed: number | undefined;
 }
