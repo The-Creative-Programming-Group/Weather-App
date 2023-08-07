@@ -117,16 +117,16 @@ export const cities: ICity[] = [
     name: "Ruhla",
     population: 6000,
     coordinates: {
-      lat: 50.8900,
+      lat: 50.89,
       lon: 10.3736,
     },
-    },
+  },
   {
     name: "Erfurt",
     population: 214969,
     coordinates: {
-        lat: 50.9848,
-        lon: 11.0299,
-    }
+      lat: 50.9848,
+      lon: 11.0299,
+    },
   },
 ];
