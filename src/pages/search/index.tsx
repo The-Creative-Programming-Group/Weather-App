@@ -15,7 +15,7 @@ const Search = () => {
   let cityFound = false;
 
   useEffect(() => {
-    if (searchFocusRef.current == undefined) return;
+    if (!searchFocusRef.current) return;
     searchFocusRef.current.focus();
   }, []);
 
@@ -26,10 +26,10 @@ const Search = () => {
   const checkCity = () => {
     cities.map((city: ICity) => {
       if (city.name.toLowerCase() === searchValue.toLowerCase()) {
+        cityFound = true;
         if (
           addedCities$.get().some((cityValue) => cityValue.name === city.name)
         ) {
-          cityFound = true;
           activeCity$.set({
             name: city.name,
             coordinates: {
@@ -40,7 +40,6 @@ const Search = () => {
           location.href = "/home";
         } else {
           continueValue(city);
-          cityFound = true;
         }
       }
     });
@@ -58,7 +57,7 @@ const Search = () => {
     });
     addedCities$.push({
       name: city.name,
-      population: 563311,
+      population: city.population,
       coordinates: { lat: city.coordinates.lat, lon: city.coordinates.lon },
     });
     location.href = "/home";
@@ -172,7 +171,7 @@ const Search = () => {
             onClick={checkCity}
             className="absolute z-30 bottom-14 right-16 w-40 h-10 text-white bg-[#2d3142] rounded text-2xl hover:shadow-2xl transition duration-500 ease-in-out"
           >
-            <p>{"Continue ->"}</p>
+            <p>Continue -{">"}</p>
           </button>
         ) : null}
       </div>
