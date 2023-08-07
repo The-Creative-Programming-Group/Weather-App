@@ -209,12 +209,12 @@ const InternalHome = observer(() => {
                     className="flex items-center border-t-2 border-black mr-4 ml-4 mb-2"
                     key={index}
                   >
-                    <div className="w-32 text-xl mt-1.5">{day}</div>
-                    <div className="mr-4 mt-1.5">
+                    <div className="w-32 text-xl mt-2">{day}</div>
+                    <div className="mr-4 mt-2">
                       {weatherState({ day: index, icons: true })}
                     </div>
                     {dailyForecast.temperature ? (
-                      <div className="mt-1.5">
+                      <div className="mt-2">
                         {temperatureUnit$.get() === "Celsius"
                           ? `${Math.round(
                               dailyForecast.temperature - 273.15,
