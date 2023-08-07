@@ -3,14 +3,10 @@ import Layout from "~/components/Layout";
 import { api } from "~/lib/utils/api";
 import { activeCity$, temperatureUnit$ } from "~/states";
 import { observer } from "@legendapp/state/react-components";
-import {
-  TiWeatherCloudy,
-  TiWeatherDownpour,
-  TiWeatherSnow,
-  TiWeatherStormy,
-  TiWeatherSunny,
-} from "react-icons/ti";
 import { IDailyForecast, IHourlyForecast } from "~/types";
+import {FaCloud, FaCloudMeatball, FaCloudRain, FaCloudShowersHeavy, FaSun} from "react-icons/fa6";
+import {FaMoon} from "react-icons/fa";
+import {TiWeatherCloudy} from "react-icons/ti";
 
 const InternalHome = observer(() => {
   const weatherData = api.weather.getWeather.useQuery(
@@ -43,7 +39,7 @@ const InternalHome = observer(() => {
       if (weatherData.data?.hourlyForecast[hour!]?.showers) {
         if (weatherData.data?.hourlyForecast[hour!]!.showers! > 0) {
           if (icons) {
-            return <TiWeatherStormy className="w-14 h-14" />;
+            return <FaCloudShowersHeavy className="w-12 h-12" />;
           }
           return "Stormy";
         }
@@ -51,7 +47,7 @@ const InternalHome = observer(() => {
       if (weatherData.data?.hourlyForecast[hour!]?.snowfall) {
         if (weatherData.data?.hourlyForecast[hour!]!.snowfall! > 0) {
           if (icons) {
-            return <TiWeatherSnow className="w-14 h-14" />;
+            return <FaCloudMeatball className="w-12 h-12" />;
           }
           return "Snowy";
         }
@@ -59,7 +55,7 @@ const InternalHome = observer(() => {
       if (weatherData.data?.hourlyForecast[hour!]?.rain) {
         if (weatherData.data?.hourlyForecast[hour!]!.rain! > 0) {
           if (icons) {
-            return <TiWeatherDownpour className="w-14 h-14" />;
+            return <FaCloudRain className="w-12 h-12" />;
           }
           return "Rainy";
         }
@@ -67,12 +63,16 @@ const InternalHome = observer(() => {
       if (weatherData.data?.hourlyForecast[hour!]?.cloudcover) {
         if (weatherData.data?.hourlyForecast[hour!]!.cloudcover! > 40) {
           if (icons) {
-            return <TiWeatherCloudy className="w-14 h-14" />;
+            return <FaCloud className="w-12 h-12" />;
           }
           return "Cloudy";
         } else {
           if (icons) {
-            return <TiWeatherSunny className="w-14 h-14" />;
+            if (weatherData.data.hourlyForecast[hour!]!.time < 19) {
+              return <FaSun className="w-12 h-12"/>;
+            } else {
+              return <FaMoon className="w-12 h-12"/>;
+            }
           }
           // console.log("Sunny", icons, hour)
           return "Sunny";
@@ -82,7 +82,7 @@ const InternalHome = observer(() => {
       if (weatherData.data?.dailyForecast[day!]?.showers) {
         if (weatherData.data?.dailyForecast[day!]!.showers! > 0) {
           if (icons) {
-            return <TiWeatherStormy className="w-10 h-10" />;
+            return <FaCloudShowersHeavy className="w-10 h-10" />;
           }
           return "Stormy";
         }
@@ -90,7 +90,7 @@ const InternalHome = observer(() => {
       if (weatherData.data?.dailyForecast[day!]?.snowfall) {
         if (weatherData.data?.dailyForecast[day!]!.snowfall! > 0) {
           if (icons) {
-            return <TiWeatherSnow className="w-10 h-10" />;
+            return <FaCloudMeatball className="w-10 h-10" />;
           }
           return "Snowy";
         }
@@ -98,7 +98,7 @@ const InternalHome = observer(() => {
       if (weatherData.data?.dailyForecast[day!]?.rain) {
         if (weatherData.data?.dailyForecast[day!]!.rain! > 0) {
           if (icons) {
-            return <TiWeatherDownpour className="w-10 h-10" />;
+            return <FaCloudRain className="w-10 h-10" />;
           }
           return "Rainy";
         }
@@ -113,9 +113,13 @@ const InternalHome = observer(() => {
       }
     }
     if (icons && day === undefined) {
-      return <TiWeatherSunny className="w-14 h-14" />;
+      if (weatherData.data?.hourlyForecast[hour!]?.time && weatherData.data.hourlyForecast[hour!]!.time < 19) {
+        return <FaSun className="w-12 h-12"/>;
+      } else {
+        return <FaMoon className="w-12 h-12"/>;
+      }
     } else if (icons && hour === undefined) {
-      return <TiWeatherSunny className="w-10 h-10" />;
+      return <FaSun className="w-10 h-10" />;
     }
     return "Sunny";
   };
