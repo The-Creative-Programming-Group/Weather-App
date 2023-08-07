@@ -24,22 +24,26 @@ const Search = () => {
   };
 
   const checkCity = () => {
-    cities.map(
-        (city: ICity) => {
-            if (city.name.toLowerCase() === searchValue.toLowerCase()) {
-              if (addedCities$.get().some(cityValue  => cityValue.name === city.name)) {
-                cityFound = true;
-                activeCity$.set({  name: city.name,
-                  coordinates: {lat: city.coordinates.lat, lon: city.coordinates.lon},});
-                location.href = "/home";
-              }
-              else {
-                continueValue(city);
-                cityFound = true;
-              }
-            }
-        },
-    );
+    cities.map((city: ICity) => {
+      if (city.name.toLowerCase() === searchValue.toLowerCase()) {
+        if (
+          addedCities$.get().some((cityValue) => cityValue.name === city.name)
+        ) {
+          cityFound = true;
+          activeCity$.set({
+            name: city.name,
+            coordinates: {
+              lat: city.coordinates.lat,
+              lon: city.coordinates.lon,
+            },
+          });
+          location.href = "/home";
+        } else {
+          continueValue(city);
+          cityFound = true;
+        }
+      }
+    });
 
     if (!cityFound) {
       toast.error("City not found");
@@ -48,15 +52,15 @@ const Search = () => {
   };
 
   const continueValue = (city: ICity) => {
-      activeCity$.set({
-        name: city.name,
-        coordinates: {lat: city.coordinates.lat, lon: city.coordinates.lon},
-      });
-      addedCities$.push({
-        name: city.name,
-        population: 563311,
-        coordinates: {lat: city.coordinates.lat, lon: city.coordinates.lon},
-      })
+    activeCity$.set({
+      name: city.name,
+      coordinates: { lat: city.coordinates.lat, lon: city.coordinates.lon },
+    });
+    addedCities$.push({
+      name: city.name,
+      population: 563311,
+      coordinates: { lat: city.coordinates.lat, lon: city.coordinates.lon },
+    });
     location.href = "/home";
   };
 
