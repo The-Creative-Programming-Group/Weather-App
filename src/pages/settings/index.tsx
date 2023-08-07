@@ -8,7 +8,7 @@ import {
   type WindSpeedUnitType,
 } from "~/states";
 import { observer } from "@legendapp/state/react-components";
-import {RxCheck} from "react-icons/rx";
+import { RxCheck } from "react-icons/rx";
 
 const Settings = observer(() => {
   const doneImage = "/assets/done.png";
@@ -40,7 +40,7 @@ const Settings = observer(() => {
             >
               <p className={styles.buttontext}>Celsius (°C)</p>
               {temperatureUnit$.get() === "Celsius" && (
-                  <RxCheck width={20} height={20} className="w-9 h-9"/>
+                <RxCheck width={20} height={20} className="w-9 h-9" />
               )}
             </button>
             <button
@@ -51,7 +51,7 @@ const Settings = observer(() => {
             >
               <p className={styles.buttontext}>Fahrenheit (°F)</p>
               {temperatureUnit$.get() === "Fahrenheit" && (
-                  <RxCheck width={20} height={20} className="w-9 h-9"/>
+                <RxCheck width={20} height={20} className="w-9 h-9" />
               )}
             </button>
           </div>
@@ -66,7 +66,7 @@ const Settings = observer(() => {
             >
               <p className={styles.buttontext}>Miles per hour (mph)</p>
               {windSpeedUnit$.get() === "Miles per hour" && (
-                  <RxCheck width={20} height={20} className="w-9 h-9"/>
+                <RxCheck width={20} height={20} className="w-9 h-9" />
               )}
             </button>
             <button
@@ -77,7 +77,7 @@ const Settings = observer(() => {
             >
               <p className={styles.buttontext}>Kilometers per hour (km/h)</p>
               {windSpeedUnit$.get() === "Kilometers per hour" && (
-                  <RxCheck width={20} height={20} className="w-9 h-9"/>
+                <RxCheck width={20} height={20} className="w-9 h-9" />
               )}
             </button>
             <button
@@ -88,7 +88,7 @@ const Settings = observer(() => {
             >
               <p className={styles.buttontext}>Knots</p>
               {windSpeedUnit$.get() === "Knots" && (
-                  <RxCheck width={20} height={20} className="w-9 h-9"/>
+                <RxCheck width={20} height={20} className="w-9 h-9" />
               )}
             </button>
             <button
@@ -99,7 +99,7 @@ const Settings = observer(() => {
             >
               <p className={styles.buttontext}>Meters per second (m/s)</p>
               {windSpeedUnit$.get() === "Meters per second" && (
-                  <RxCheck width={20} height={20} className="w-9 h-9"/>
+                <RxCheck width={20} height={20} className="w-9 h-9" />
               )}
             </button>
             <button
@@ -110,7 +110,7 @@ const Settings = observer(() => {
             >
               <p className={styles.buttontext}>Beaufort</p>
               {windSpeedUnit$.get() === "Beaufort" && (
-                  <RxCheck width={20} height={20} className="w-9 h-9"/>
+                <RxCheck width={20} height={20} className="w-9 h-9" />
               )}
             </button>
           </div>
