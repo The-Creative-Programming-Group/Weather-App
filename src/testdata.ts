@@ -107,13 +107,13 @@ export const cities: ICity[] = [
       lat: 19.076,
       lon: 72.8777,
     },
-    },
+  },
   {
     name: "Ruhla",
     population: 6000,
     coordinates: {
-        lat: 50.9167,
-        lon: 10.3667,
-    }
-  }
+      lat: 50.9167,
+      lon: 10.3667,
+    },
+  },
 ];
