@@ -2,6 +2,7 @@ import { type NextPage } from "next";
 import Head from "next/head";
 import Link from "next/link";
 import Image from "next/image";
+import background from "~/assets/background.png";
 
 const PublicHome: NextPage = () => {
   return (
@@ -12,7 +13,7 @@ const PublicHome: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Image
-        src="/assets/background.png"
+        src={background}
         alt="background"
         className="absolute -z-10 h-full w-full object-cover"
         fill

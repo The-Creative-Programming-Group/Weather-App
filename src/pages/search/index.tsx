@@ -6,6 +6,7 @@ import { cities, ICity } from "~/testdata";
 import { activeCity$, addedCities$ } from "~/states";
 import { toast, ToastContainer } from "react-toastify";
 import search1Image from "~/assets/search1.png";
+import background from "~/assets/background.png";
 import "react-toastify/dist/ReactToastify.css";
 
 const Search = () => {
@@ -90,7 +91,7 @@ const Search = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Image
-        src="/assets/background.png"
+        src={background}
         alt="background"
         className="absolute w-full h-full -z-10 object-cover"
         fill
