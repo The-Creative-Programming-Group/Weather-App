@@ -11,8 +11,6 @@ import {
   TiWeatherSunny,
 } from "react-icons/ti";
 import { IDailyForecast, IHourlyForecast } from "~/types";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 
 const InternalHome = observer(() => {
   const weatherData = api.weather.getWeather.useQuery(

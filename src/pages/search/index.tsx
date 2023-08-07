@@ -24,13 +24,22 @@ const Search = () => {
   };
 
   const checkCity = () => {
-    cities.map((city: ICity) => {
-      if (city.name.toLowerCase() === searchValue.toLowerCase()) {
-        console.log("City found");
-        continueValue(city.name);
-        cityFound = true;
-      }
-    });
+    cities.map(
+        (city: ICity) => {
+            if (city.name.toLowerCase() === searchValue.toLowerCase()) {
+              if (addedCities$.get().some(cityValue  => cityValue.name === city.name)) {
+                cityFound = true;
+                activeCity$.set({  name: city.name,
+                  coordinates: {lat: city.coordinates.lat, lon: city.coordinates.lon},});
+                location.href = "/home";
+              }
+              else {
+                continueValue(city);
+                cityFound = true;
+              }
+            }
+        },
+    );
 
     if (!cityFound) {
       toast.error("City not found");
@@ -38,16 +47,16 @@ const Search = () => {
     }
   };
 
-  const continueValue = (city: string) => {
-    activeCity$.set({
-      name: city,
-      coordinates: { lat: 0, lon: 0 },
-    });
-    addedCities$.push({
-      name: city,
-      population: 563311,
-      coordinates: { lat: 51.0504, lon: 13.7373 },
-    });
+  const continueValue = (city: ICity) => {
+      activeCity$.set({
+        name: city.name,
+        coordinates: {lat: city.coordinates.lat, lon: city.coordinates.lon},
+      });
+      addedCities$.push({
+        name: city.name,
+        population: 563311,
+        coordinates: {lat: city.coordinates.lat, lon: city.coordinates.lon},
+      })
     location.href = "/home";
   };
 

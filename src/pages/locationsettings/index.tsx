@@ -87,7 +87,7 @@ const LocationSettings = observer(() => {
   };
 
   // Will set the value of the first input field to the city if the user clicks on a proposed city in the list
-  const handleStadtclick = (name: string) => {
+  const handleCityclick = (name: string) => {
     setSearchValue(name);
   };
 
@@ -151,7 +151,7 @@ const LocationSettings = observer(() => {
                           : "hidden"
                       }
                       key={city.name}
-                      onMouseDown={() => handleStadtclick(city.name)}
+                      onMouseDown={() => handleCityclick(city.name)}
                     >
                       <p>
                         {city.name
