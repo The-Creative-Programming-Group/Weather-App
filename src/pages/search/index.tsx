@@ -5,6 +5,7 @@ import Image from "next/image";
 import { cities, ICity } from "~/testdata";
 import { activeCity$, addedCities$ } from "~/states";
 import { toast, ToastContainer } from "react-toastify";
+import search1Image from "~/assets/search1.png";
 import "react-toastify/dist/ReactToastify.css";
 
 const Search = () => {
@@ -97,7 +98,7 @@ const Search = () => {
       <div id="styles-setup" className="mt-24 w-full flex justify-center">
         <Image
           className="transform bg-[#383b53] border-solid border-[#2d3142] border-8 border-r-0 pt-3 pb-3 pl-3 w-1/36"
-          src="/assets/search1.png"
+          src={search1Image}
           alt="search-icon"
           width={56}
           height={56}
