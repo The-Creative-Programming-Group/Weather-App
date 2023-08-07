@@ -2,7 +2,7 @@ import React from "react";
 import Head from "next/head";
 import { IoIosSettings, IoMdContact } from "react-icons/io";
 import { FaMapMarkedAlt } from "react-icons/fa";
-import {AiFillGithub, AiFillHome} from "react-icons/ai";
+import { AiFillGithub, AiFillHome } from "react-icons/ai";
 import Link from "next/link";
 import Image from "next/image";
 import dicsiluksProfile from "~/assets/dicsiluks-profile.webp";
@@ -59,7 +59,10 @@ const Layout: React.FC<LayoutProps> = ({ title, children, footer }) => {
           <div className="absolute mr-12 flex justify-between items-center w-96 right-0">
             <div className="text-sm w-28">Made with ♥️ by</div>
             <div className="flex flex-col items-center">
-              <Link href="https://www.roessner.tech" className="relative group inline-block">
+              <Link
+                href="https://www.roessner.tech"
+                className="relative group inline-block"
+              >
                 <Image
                   src={jakobProfile}
                   alt="jakobs logo"
@@ -71,7 +74,10 @@ const Layout: React.FC<LayoutProps> = ({ title, children, footer }) => {
               <p className="text-sm">Founder</p>
             </div>
             <div className="flex flex-col items-center ml-6">
-              <Link href="https://github.com/dicsiluks" className="relative group inline-block">
+              <Link
+                href="https://github.com/dicsiluks"
+                className="relative group inline-block"
+              >
                 <Image
                   src={dicsiluksProfile}
                   alt="dicsiluks logo"
@@ -83,7 +89,10 @@ const Layout: React.FC<LayoutProps> = ({ title, children, footer }) => {
               <p className="text-sm">Designer</p>
             </div>
             <div className="flex flex-col items-center ml-6">
-              <Link href="https://www.schurig.tech" className="relative group inline-block">
+              <Link
+                href="https://www.schurig.tech"
+                className="relative group inline-block"
+              >
                 <Image
                   src={fabiusProfile}
                   alt="Fabius logo"
