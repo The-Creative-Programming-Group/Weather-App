@@ -35,6 +35,11 @@ export const cities: ICity[] = [
     coordinates: { lat: 51.1229, lon: 13.1167 },
   },
   {
+    name: "Düsseldorf",
+    population: 629047,
+    coordinates: { lat: 51.2277, lon: 6.7735 },
+  },
+  {
     name: "Prag",
     population: 1300000,
     coordinates: { lat: 50.0755, lon: 14.4378 },
