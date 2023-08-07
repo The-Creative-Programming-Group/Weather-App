@@ -292,10 +292,10 @@ export const weatherRouter = createTRPCRouter({
             }
 
             if (hourlyData.hourly.windspeed_10m[j] !== undefined) {
-                windSpeedSum += hourlyData.hourly.windspeed_10m[j]!;
-                windSpeedCount++;
-                // console.log(hourlyData.hourly.cloudcover_700hPa[j]!);
-                // console.log("cloudcoverSum", cloudcoverSum);
+              windSpeedSum += hourlyData.hourly.windspeed_10m[j]!;
+              windSpeedCount++;
+              // console.log(hourlyData.hourly.cloudcover_700hPa[j]!);
+              // console.log("cloudcoverSum", cloudcoverSum);
             }
           }
 

@@ -11,7 +11,7 @@ import {
   FaCloudShowersHeavy,
   FaSun,
   FaMoon,
-  FaWind
+  FaWind,
 } from "react-icons/fa6";
 
 const InternalHome = observer(() => {
@@ -128,12 +128,12 @@ const InternalHome = observer(() => {
     if (icons && day === undefined) {
       if (weatherData.data) {
         if (
-            weatherData.data.hourlyForecast[hour!]!.time < 19 &&
-            weatherData.data.hourlyForecast[hour!]!.time > 6
+          weatherData.data.hourlyForecast[hour!]!.time < 19 &&
+          weatherData.data.hourlyForecast[hour!]!.time > 6
         ) {
-          return <FaSun className="w-12 h-12"/>;
+          return <FaSun className="w-12 h-12" />;
         } else {
-          return <FaMoon className="w-12 h-12"/>;
+          return <FaMoon className="w-12 h-12" />;
         }
       }
     } else if (icons && hour === undefined) {
