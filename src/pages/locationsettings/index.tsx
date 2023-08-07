@@ -101,7 +101,7 @@ const LocationSettings = observer(() => {
   return (
     <>
       <ToastContainer />
-      <Layout title={"Location Settings"}>
+      <Layout title="Location Settings">
         <div className="flex w-full flex-col items-center">
           <h1 className="mt-24 flex justify-center text-3xl font-bold">
             Location settings
