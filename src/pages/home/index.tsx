@@ -4,9 +4,15 @@ import { api } from "~/lib/utils/api";
 import { activeCity$, temperatureUnit$ } from "~/states";
 import { observer } from "@legendapp/state/react-components";
 import { IDailyForecast, IHourlyForecast } from "~/types";
-import {FaCloud, FaCloudMeatball, FaCloudRain, FaCloudShowersHeavy, FaSun} from "react-icons/fa6";
-import {FaMoon} from "react-icons/fa";
-import {TiWeatherCloudy} from "react-icons/ti";
+import {
+  FaCloud,
+  FaCloudMeatball,
+  FaCloudRain,
+  FaCloudShowersHeavy,
+  FaSun,
+} from "react-icons/fa6";
+import { FaMoon } from "react-icons/fa";
+import { TiWeatherCloudy } from "react-icons/ti";
 
 const InternalHome = observer(() => {
   const weatherData = api.weather.getWeather.useQuery(
@@ -69,9 +75,9 @@ const InternalHome = observer(() => {
         } else {
           if (icons) {
             if (weatherData.data.hourlyForecast[hour!]!.time < 19) {
-              return <FaSun className="w-12 h-12"/>;
+              return <FaSun className="w-12 h-12" />;
             } else {
-              return <FaMoon className="w-12 h-12"/>;
+              return <FaMoon className="w-12 h-12" />;
             }
           }
           // console.log("Sunny", icons, hour)
@@ -113,10 +119,13 @@ const InternalHome = observer(() => {
       }
     }
     if (icons && day === undefined) {
-      if (weatherData.data?.hourlyForecast[hour!]?.time && weatherData.data.hourlyForecast[hour!]!.time < 19) {
-        return <FaSun className="w-12 h-12"/>;
+      if (
+        weatherData.data?.hourlyForecast[hour!]?.time &&
+        weatherData.data.hourlyForecast[hour!]!.time < 19
+      ) {
+        return <FaSun className="w-12 h-12" />;
       } else {
-        return <FaMoon className="w-12 h-12"/>;
+        return <FaMoon className="w-12 h-12" />;
       }
     } else if (icons && hour === undefined) {
       return <FaSun className="w-10 h-10" />;
