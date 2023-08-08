@@ -15,7 +15,7 @@ import {
   FaCloudSun,
   FaCloudMoon,
 } from "react-icons/fa6";
-import {WiRaindrop} from "react-icons/wi";
+import { WiRaindrop } from "react-icons/wi";
 import cn from "classnames";
 
 const InternalHome = observer(() => {
@@ -203,7 +203,10 @@ const InternalHome = observer(() => {
                 time = `${hourlyForecast.time}AM`;
               }
               return (
-                <div className="m-3 flex flex-col items-center w-20" key={index}>
+                <div
+                  className="m-3 flex flex-col items-center w-20"
+                  key={index}
+                >
                   <div className="mt-1.5">{time}</div>
                   {weatherState({ hour: index, icons: true })}
                   {hourlyForecast.temperature ? (
@@ -278,31 +281,36 @@ const InternalHome = observer(() => {
           <div className="col-start-4 col-span-4 row-span-1 bg-gray-400 rounded-md">
             <div className="ml-4 mt-1.5 text-xl">Precipitation</div>
             <div className="flex justify-evenly">
-              {weatherData.data?.precipitationProbabilities ? (
-                  Object.entries(weatherData.data?.precipitationProbabilities).map(
-                    ([key, value]) => {
-                      let raindropClass = "";
-                      if (value) {
+              {weatherData.data?.precipitationProbabilities
+                ? Object.entries(
+                    weatherData.data?.precipitationProbabilities,
+                  ).map(([key, value]) => {
+                    let raindropClass = "";
+                    if (value) {
                       raindropClass = cn(
-                          "w-16",
-                          "h-16",
-                          { "opacity-0": value === 0 },
-                          { "opacity-25": value > 0 && value <= 25 },
-                          { "opacity-50": value > 25 && value <= 50 },
-                          { "opacity-75": value > 50 && value <= 75 },
-                          {"opacity-100": value > 75 },
-                      )
-                        }
-                      return (
-                        <div className="flex flex-col items-center mt-1 w-24" key={key}>
-                          <div className="text-sm">{key.charAt(2).toUpperCase() + key.slice(3)}</div>
-                          <WiRaindrop className={raindropClass} />
-                          <div className="text-xl">{value}%</div>
-                        </div>
+                        "w-16",
+                        "h-16",
+                        { "opacity-0": value === 0 },
+                        { "opacity-25": value > 0 && value <= 25 },
+                        { "opacity-50": value > 25 && value <= 50 },
+                        { "opacity-75": value > 50 && value <= 75 },
+                        { "opacity-100": value > 75 },
                       );
-                    },
-                  )
-              ) : "Loading..."}
+                    }
+                    return (
+                      <div
+                        className="flex flex-col items-center mt-1 w-24"
+                        key={key}
+                      >
+                        <div className="text-sm">
+                          {key.charAt(2).toUpperCase() + key.slice(3)}
+                        </div>
+                        <WiRaindrop className={raindropClass} />
+                        <div className="text-xl">{value}%</div>
+                      </div>
+                    );
+                  })
+                : "Loading..."}
             </div>
           </div>
           <div className="col-start-4 col-span-2 row-start-2 row-span-2 bg-gray-400 rounded-md">
