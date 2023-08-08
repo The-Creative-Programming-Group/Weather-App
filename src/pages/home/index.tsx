@@ -256,17 +256,17 @@ const InternalHome = observer(() => {
                       "Loading"
                     )}
                     {dailyForecast.temperatureNight ? (
-                        <div className="mt-2 ml-4 text-gray-700">
-                          {temperatureUnit$.get() === "Celsius"
-                              ? `${Math.round(
-                                  dailyForecast.temperatureNight - 273.15,
-                              )}°C`
-                              : `${Math.round(
-                                  (dailyForecast.temperatureNight * 9) / 5 - 459.67,
-                              )}°F`}
-                        </div>
+                      <div className="mt-2 ml-4 text-gray-700">
+                        {temperatureUnit$.get() === "Celsius"
+                          ? `${Math.round(
+                              dailyForecast.temperatureNight - 273.15,
+                            )}°C`
+                          : `${Math.round(
+                              (dailyForecast.temperatureNight * 9) / 5 - 459.67,
+                            )}°F`}
+                      </div>
                     ) : (
-                        "Loading"
+                      "Loading"
                     )}
                   </div>
                 );

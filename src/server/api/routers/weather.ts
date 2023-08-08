@@ -251,7 +251,7 @@ export const weatherRouter = createTRPCRouter({
           for (let j = 24 * i; j < 24 * (i + 1); j++) {
             // console.log("j", j);
             if (hourlyData.hourly.temperature_2m[j] !== undefined) {
-                if (j % 24 > 6 && j % 24 < 19) {
+              if (j % 24 > 6 && j % 24 < 19) {
                 temperatureSumDay += hourlyData.hourly.temperature_2m[j]!;
                 // console.log("j", j);
                 temperatureCountDay++;
@@ -321,8 +321,10 @@ export const weatherRouter = createTRPCRouter({
             console.log("snowfallCount", snowfallCount);
             */
 
-          const temperatureAverageDay = temperatureSumDay / (temperatureCountDay || 1);
-          const temperatureAverageNight = temperatureSumNight / (temperatureCountNight || 1);
+          const temperatureAverageDay =
+            temperatureSumDay / (temperatureCountDay || 1);
+          const temperatureAverageNight =
+            temperatureSumNight / (temperatureCountNight || 1);
           const rainAverage = rainSum / (rainCount || 1);
           const showersAverage = showersSum / (showersCount || 1);
           const snowfallAverage = snowfallSum / (snowfallCount || 1);
@@ -342,7 +344,9 @@ export const weatherRouter = createTRPCRouter({
             temperatureDay: temperatureCountDay
               ? temperatureAverageDay + 273.15
               : undefined,
-            temperatureNight: temperatureCountNight ? temperatureAverageNight + 273.15 : undefined,
+            temperatureNight: temperatureCountNight
+              ? temperatureAverageNight + 273.15
+              : undefined,
             rain: rainCount ? rainAverage : undefined,
             showers: showersCount ? showersAverage : undefined,
             snowfall: snowfallCount ? snowfallAverage : undefined,
