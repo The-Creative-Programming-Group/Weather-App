@@ -185,7 +185,7 @@ const InternalHome = observer(() => {
         </p>
       </div>
       <div className="flex flex-col items-center mt-12">
-        <div className="rounded-md bg-gray-400 min-w-10/12 flex justify-evenly">
+        <div className="rounded-md bg-gray-400 max-w-8/12 flex justify-evenly">
           {weatherData.data?.hourlyForecast.map(
             (hourlyForecast: IHourlyForecast, index: number) => {
               let time;
@@ -220,7 +220,7 @@ const InternalHome = observer(() => {
             },
           )}
         </div>
-        <div className="grid grid-cols-9 grid-rows-5 gap-6 min-w-11/12 mt-6">
+        <div className="grid grid-cols-9 grid-rows-5 gap-6 max-w-8/12 mt-6">
           <div className="col-span-3 row-span-5 bg-gray-400 rounded-xl flex flex-col">
             <span className="ml-5 mt-2">7-Day Forecast</span>
             {weatherData.data?.dailyForecast.map(
