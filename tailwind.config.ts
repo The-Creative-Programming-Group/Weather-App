@@ -25,8 +25,11 @@ export default {
         "12+5/12": "44.2%",
       },
       height: {
-        "100%": "500px",
+        "128": "32rem" // 512px
       },
+      maxHeight: {
+        "128": "32rem" // 512px
+      }
     },
   },
   plugins: [],
