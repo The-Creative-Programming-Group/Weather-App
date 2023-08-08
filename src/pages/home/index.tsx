@@ -12,7 +12,8 @@ import {
   FaSun,
   FaMoon,
   FaWind,
-  FaCloudSun, FaCloudMoon,
+  FaCloudSun,
+  FaCloudMoon,
 } from "react-icons/fa6";
 
 const InternalHome = observer(() => {
@@ -73,22 +74,22 @@ const InternalHome = observer(() => {
         if (weatherData.data.hourlyForecast[hour]!.cloudcover! > 40) {
           if (weatherData.data.hourlyForecast[hour!]!.cloudcover! > 60) {
             if (icons) {
-              return <FaCloud className="w-12 h-12"/>;
+              return <FaCloud className="w-12 h-12" />;
             }
             return "Very Cloudy";
           } else {
             if (weatherData.data) {
               if (
-                  weatherData.data.hourlyForecast[hour!]!.time < 19 &&
-                  weatherData.data.hourlyForecast[hour!]!.time > 6
+                weatherData.data.hourlyForecast[hour!]!.time < 19 &&
+                weatherData.data.hourlyForecast[hour!]!.time > 6
               ) {
                 if (icons) {
-                  return <FaCloudSun className="w-12 h-12"/>;
+                  return <FaCloudSun className="w-12 h-12" />;
                 }
                 return "Cloudy";
               } else {
                 if (icons) {
-                  return <FaCloudMoon className="w-12 h-12"/>;
+                  return <FaCloudMoon className="w-12 h-12" />;
                 }
                 return "Cloudy";
               }
@@ -133,7 +134,7 @@ const InternalHome = observer(() => {
         if (weatherData.data.dailyForecast[day]!.cloudcover! > 40) {
           if (weatherData.data.dailyForecast[day!]!.cloudcover! > 60) {
             if (icons) {
-              return <FaCloud className="w-10 h-10"/>;
+              return <FaCloud className="w-10 h-10" />;
             }
             return "Cloudy";
           } else {
