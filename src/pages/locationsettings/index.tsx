@@ -205,7 +205,7 @@ const LocationSettings = observer(() => {
             <button
               onClick={handleChangeclick}
               onMouseDown={checkCity}
-              className="mt-2.5 rounded border-solid bg-[#2d3142] p-2 font-bold text-white"
+              className="mt-2.5 mb-2.5 rounded border-solid bg-[#2d3142] p-2 font-bold text-white"
               ref={saveButtonTextRef}
             >
               {buttonName}
