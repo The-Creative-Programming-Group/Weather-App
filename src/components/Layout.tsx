@@ -36,8 +36,7 @@ const Layout: React.FC<LayoutProps> = ({ title, children, footer }) => {
           <Link href="/home">Weather.io</Link>
         </h1>
         <Link href="/settings" className="flex">
-          <IoIosSettings className="mr-1.5 md:text-2xl" />{" "}
-          <p>Settings</p>
+          <IoIosSettings className="mr-1.5 md:text-2xl" /> <p>Settings</p>
         </Link>
         <Link href="/contact" className="flex">
           <IoMdContact className="mr-1.5 md:text-2xl" />
