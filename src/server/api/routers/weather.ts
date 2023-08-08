@@ -28,7 +28,7 @@ const HourlyWeatherSchema = z.object({
     showers: z.string(),
     snowfall: z.string(),
     precipitation_probability: z.string(),
-    cloudcover_700hPa: z.string(),
+    cloudcover: z.string(),
     windspeed_10m: z.string(),
   }),
   hourly: z.object({
@@ -38,7 +38,7 @@ const HourlyWeatherSchema = z.object({
     showers: z.array(z.number()),
     snowfall: z.array(z.number()),
     precipitation_probability: z.array(z.number()),
-    cloudcover_700hPa: z.array(z.number()),
+    cloudcover: z.array(z.number()),
     windspeed_10m: z.array(z.number()),
   }),
 });
@@ -140,7 +140,7 @@ export const weatherRouter = createTRPCRouter({
       // OpenWeatherMap API
       const urlWeather = `https://api.openweathermap.org/data/2.5/weather?lat=${input.coordinates.lat}&lon=${input.coordinates.lon}&appid=${env.OPEN_WEATHER_API_KEY}`;
       // Open Meteo
-      const urlHourlyForecast = `https://api.open-meteo.com/v1/forecast?latitude=${input.coordinates.lat}&longitude=${input.coordinates.lon}&hourly=temperature_2m,rain,showers,snowfall,precipitation_probability,cloudcover_700hPa,windspeed_10m&forecast_days=7`;
+      const urlHourlyForecast = `https://api.open-meteo.com/v1/forecast?latitude=${input.coordinates.lat}&longitude=${input.coordinates.lon}&hourly=temperature_2m,rain,showers,snowfall,precipitation_probability,cloudcover,windspeed_10m&forecast_days=7`;
       const urlAirQuality = `https://air-quality-api.open-meteo.com/v1/air-quality?latitude=${input.coordinates.lat}&longitude=${input.coordinates.lon}&hourly=pm10,pm2_5`;
 
       // Hourly Weather Forecast from Open Meteo
@@ -210,7 +210,7 @@ export const weatherRouter = createTRPCRouter({
         const rain = hourlyData?.hourly.rain[i];
         const showers = hourlyData?.hourly.showers[i];
         const snowfall = hourlyData?.hourly.snowfall[i];
-        const cloudcover = hourlyData?.hourly.cloudcover_700hPa[i];
+        const cloudcover = hourlyData?.hourly.cloudcover[i];
         const windSpeed = hourlyData?.hourly.windspeed_10m[i];
         // console.log(cloudcover);
 
@@ -284,17 +284,17 @@ export const weatherRouter = createTRPCRouter({
               console.log("undefined value snowfall: ", j);
             }
 
-            if (hourlyData.hourly.cloudcover_700hPa[j] !== undefined) {
-              cloudcoverSum += hourlyData.hourly.cloudcover_700hPa[j]!;
+            if (hourlyData.hourly.cloudcover[j] !== undefined) {
+              cloudcoverSum += hourlyData.hourly.cloudcover[j]!;
               cloudcoverCount++;
-              // console.log(hourlyData.hourly.cloudcover_700hPa[j]!);
+              // console.log(hourlyData.hourly.cloudcover[j]!);
               // console.log("cloudcoverSum", cloudcoverSum);
             }
 
             if (hourlyData.hourly.windspeed_10m[j] !== undefined) {
               windSpeedSum += hourlyData.hourly.windspeed_10m[j]!;
               windSpeedCount++;
-              // console.log(hourlyData.hourly.cloudcover_700hPa[j]!);
+              // console.log(hourlyData.hourly.cloudcover[j]!);
               // console.log("cloudcoverSum", cloudcoverSum);
             }
           }
