@@ -239,21 +239,34 @@ const InternalHome = observer(() => {
                     key={index}
                   >
                     <div className="w-32 text-xl mt-2">{day}</div>
-                    <div className="mr-4 mt-2">
+                    <div className="mt-2 w-12">
                       {weatherState({ day: index, icons: true })}
                     </div>
-                    {dailyForecast.temperature ? (
-                      <div className="mt-2">
+                    {dailyForecast.temperatureDay ? (
+                      <div className="mt-2 ml-5">
                         {temperatureUnit$.get() === "Celsius"
                           ? `${Math.round(
-                              dailyForecast.temperature - 273.15,
+                              dailyForecast.temperatureDay - 273.15,
                             )}°C`
                           : `${Math.round(
-                              (dailyForecast.temperature * 9) / 5 - 459.67,
+                              (dailyForecast.temperatureDay * 9) / 5 - 459.67,
                             )}°F`}
                       </div>
                     ) : (
                       "Loading"
+                    )}
+                    {dailyForecast.temperatureNight ? (
+                        <div className="mt-2 ml-4 text-gray-700">
+                          {temperatureUnit$.get() === "Celsius"
+                              ? `${Math.round(
+                                  dailyForecast.temperatureNight - 273.15,
+                              )}°C`
+                              : `${Math.round(
+                                  (dailyForecast.temperatureNight * 9) / 5 - 459.67,
+                              )}°F`}
+                        </div>
+                    ) : (
+                        "Loading"
                     )}
                   </div>
                 );

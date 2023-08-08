@@ -232,14 +232,16 @@ export const weatherRouter = createTRPCRouter({
       if (hourlyData) {
         for (let i = 0; i < 7; i++) {
           // console.log("i", i);
-          let temperatureSum = 0;
+          let temperatureSumDay = 0;
+          let temperatureSumNight = 0;
           let rainSum = 0;
           let showersSum = 0;
           let snowfallSum = 0;
           let cloudcoverSum = 0;
           let windSpeedSum = 0;
 
-          let temperatureCount = 0;
+          let temperatureCountDay = 0;
+          let temperatureCountNight = 0;
           let rainCount = 0;
           let showersCount = 0;
           let snowfallCount = 0;
@@ -249,10 +251,19 @@ export const weatherRouter = createTRPCRouter({
           for (let j = 24 * i; j < 24 * (i + 1); j++) {
             // console.log("j", j);
             if (hourlyData.hourly.temperature_2m[j] !== undefined) {
-              temperatureSum += hourlyData.hourly.temperature_2m[j]!;
-              temperatureCount++;
-              // console.log(hourlyData.hourly.temperature_2m[j]!);
-              // console.log("temperatureSum", temperatureSum);
+                if (j % 24 > 6 && j % 24 < 19) {
+                temperatureSumDay += hourlyData.hourly.temperature_2m[j]!;
+                // console.log("j", j);
+                temperatureCountDay++;
+                // console.log(hourlyData.hourly.temperature_2m[j]!);
+                // console.log("temperatureSumDay", temperatureSumDay);
+              } else {
+                temperatureSumNight += hourlyData.hourly.temperature_2m[j]!;
+                // console.log("j", j);
+                temperatureCountNight++;
+                // console.log(hourlyData.hourly.temperature_2m[j]!);
+                // console.log("temperatureSumNight", temperatureSumNight);
+              }
             } else {
               console.log("undefined value temperature: ", j);
             }
@@ -310,7 +321,8 @@ export const weatherRouter = createTRPCRouter({
             console.log("snowfallCount", snowfallCount);
             */
 
-          const temperatureAverage = temperatureSum / (temperatureCount || 1);
+          const temperatureAverageDay = temperatureSumDay / (temperatureCountDay || 1);
+          const temperatureAverageNight = temperatureSumNight / (temperatureCountNight || 1);
           const rainAverage = rainSum / (rainCount || 1);
           const showersAverage = showersSum / (showersCount || 1);
           const snowfallAverage = snowfallSum / (snowfallCount || 1);
@@ -318,7 +330,8 @@ export const weatherRouter = createTRPCRouter({
           const windSpeedAverage = windSpeedSum / (windSpeedCount || 1);
 
           /*
-            console.log("temperatureAverage", temperatureAverage);
+            console.log("temperatureAverageDay", temperatureAverageDay);
+            console.log("temperatureAverageNight", temperatureAverageNight);
             console.log("rainAverage", rainAverage);
             console.log("showersAverage", showersAverage);
             console.log("snowfallAverage", snowfallAverage);
@@ -326,9 +339,10 @@ export const weatherRouter = createTRPCRouter({
 
           dailyForecast.push({
             date: new Date(new Date().setDate(new Date().getDate() + i)),
-            temperature: temperatureCount
-              ? temperatureAverage + 273.15
+            temperatureDay: temperatureCountDay
+              ? temperatureAverageDay + 273.15
               : undefined,
+            temperatureNight: temperatureCountNight ? temperatureAverageNight + 273.15 : undefined,
             rain: rainCount ? rainAverage : undefined,
             showers: showersCount ? showersAverage : undefined,
             snowfall: snowfallCount ? snowfallAverage : undefined,
