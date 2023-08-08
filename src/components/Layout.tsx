@@ -25,24 +25,23 @@ const Layout: React.FC<LayoutProps> = ({ title, children, footer }) => {
       </Head>
       <header className="flex items-center justify-around bg-[#2d3142] p-2 text-white">
         <Link href="/home" className="flex">
-          <AiFillHome className="mr-1.5 mt-0.5 md:text-2xl" />
-          <p className="mt-0.2">Home</p>
+          <AiFillHome className="mr-1.5 md:text-2xl" />
+          <p>Home</p>
         </Link>
         <Link href="/locationsettings" className="flex">
-          <FaMapMarkedAlt className="mr-1.5 mt-0.5 md:text-2xl" />
-          <p className="mt-0.2">Location settings</p>
+          <FaMapMarkedAlt className="mr-1.5 md:text-2xl" />
+          <p>Locations</p>
         </Link>
         <h1 className="text-base font-semibold md:text-4xl md:font-normal">
           <Link href="/home">Weather.io</Link>
         </h1>
         <Link href="/settings" className="flex">
-          {" "}
-          <IoIosSettings className="mr-1.5 mt-0.5 md:text-2xl" />{" "}
-          <p className="mt-0.2">Settings</p>
+          <IoIosSettings className="mr-1.5 md:text-2xl" />{" "}
+          <p>Settings</p>
         </Link>
         <Link href="/contact" className="flex">
-          <IoMdContact className="mr-1.5 mt-0.5 md:text-2xl" />
-          <p className="mt-0.2">Contact</p>
+          <IoMdContact className="mr-1.5 md:text-2xl" />
+          <p>Contact</p>
         </Link>
       </header>
       <main className="min-h-screen">{children}</main>
