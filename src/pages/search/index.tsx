@@ -156,7 +156,7 @@ const Search = () => {
           }
         })}
 
-          <div className="absolute mt-24 left-1/2 transform -translate-x-1/2 w-3/5 h-100% border-solid border-[#2d3142] border-8">
+          <div className="absolute mt-24 left-1/2 transform -translate-x-1/2 w-3/5 h-128 border-solid border-[#2d3142] border-8">
               <iframe
                   id="map"
                   src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d5125429.316419938!2d10.415039000000002!3d51.151785999999994!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sde!2sde!4v1679694749290!5m2!1sde!2sde"
