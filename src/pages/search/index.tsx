@@ -125,7 +125,7 @@ const Search = () => {
                 <div
                   className={
                     activeInput === "input2"
-                      ? "block w-12+5/12 h-auto border-b-2 border-gray-400 text-amber-50 bg-[#383b53] p-5 hover: cursor-pointer "
+                      ? "block w-12+5/12 h-auto border-b-2 border-gray-400 text-amber-50 bg-[#383b53] p-5 hover: cursor-pointer z-20"
                       : "hidden"
                   }
                   key={city.name}
@@ -150,28 +150,29 @@ const Search = () => {
             }
           }
         })}
+
+          <div className="absolute mt-24 left-1/2 transform -translate-x-1/2 w-3/5 h-100% border-solid border-[#2d3142] border-8">
+              <iframe
+                  id="map"
+                  src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d5125429.316419938!2d10.415039000000002!3d51.151785999999994!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sde!2sde!4v1679694749290!5m2!1sde!2sde"
+                  width="600"
+                  height="450"
+                  allowFullScreen={false}
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  className="w-full h-full z-10"
+              />
+              {searchValue.length > 0 ? (
+                  <button
+                      onClick={checkCity}
+                      className="absolute z-30 bottom-14 right-16 w-40 h-10 text-white bg-[#2d3142] rounded text-2xl hover:shadow-2xl transition duration-500 ease-in-out"
+                  >
+                      <p>{"Continue ->"}</p>
+                  </button>
+              ) : null}
+          </div>
       </div>
 
-      <div className="relative mt-24 left-1/2 transform -translate-x-1/2  w-3/5 h-100% border-solid border-[#2d3142] border-8">
-        <iframe
-          id="map"
-          src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d5125429.316419938!2d10.415039000000002!3d51.151785999999994!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sde!2sde!4v1679694749290!5m2!1sde!2sde"
-          width="600"
-          height="450"
-          allowFullScreen={false}
-          loading="lazy"
-          referrerPolicy="no-referrer-when-downgrade"
-          className="w-full h-full"
-        />
-        {searchValue.length > 0 ? (
-          <button
-            onClick={checkCity}
-            className="absolute z-30 bottom-14 right-16 w-40 h-10 text-white bg-[#2d3142] rounded text-2xl hover:shadow-2xl transition duration-500 ease-in-out"
-          >
-            <p>{"Continue ->"}</p>
-          </button>
-        ) : null}
-      </div>
     </>
   );
 };
