@@ -32,7 +32,12 @@ export const cities: ICity[] = [
   {
     name: "Döbeln",
     population: 24000,
-    coordinates: { lat: 51.121, lon: 13.1146 },
+    coordinates: { lat: 51.1229, lon: 13.1167 },
+  },
+  {
+    name: "Düsseldorf",
+    population: 629047,
+    coordinates: { lat: 51.2277, lon: 6.7735 },
   },
   {
     name: "Prag",
@@ -106,6 +111,22 @@ export const cities: ICity[] = [
     coordinates: {
       lat: 19.076,
       lon: 72.8777,
+    },
+  },
+  {
+    name: "Ruhla",
+    population: 6000,
+    coordinates: {
+      lat: 50.89,
+      lon: 10.3736,
+    },
+  },
+  {
+    name: "Erfurt",
+    population: 214969,
+    coordinates: {
+      lat: 50.9848,
+      lon: 11.0299,
     },
   },
 ];

@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
 import Layout from "~/components/Layout";
-import Image from "next/image";
 import styles from "./settings.module.css";
 import {
   temperatureUnit$,
@@ -9,6 +8,7 @@ import {
   type WindSpeedUnitType,
 } from "~/states";
 import { observer } from "@legendapp/state/react-components";
+import { RxCheck } from "react-icons/rx";
 
 const Settings = observer(() => {
   const doneImage = "/assets/done.png";
@@ -24,7 +24,7 @@ const Settings = observer(() => {
 
   return (
     <>
-      <Layout title={"Settings"}>
+      <Layout title="Settings">
         <div className="flex flex-col items-center w-full">
           <h1 className="flex mt-10 justify-center text-4xl font-bold">
             Settings
@@ -40,7 +40,7 @@ const Settings = observer(() => {
             >
               <p className={styles.buttontext}>Celsius (°C)</p>
               {temperatureUnit$.get() === "Celsius" && (
-                <Image src={doneImage} alt="Checkmark" width={29} height={29} />
+                <RxCheck width={20} height={20} className="w-9 h-9" />
               )}
             </button>
             <button
@@ -51,7 +51,7 @@ const Settings = observer(() => {
             >
               <p className={styles.buttontext}>Fahrenheit (°F)</p>
               {temperatureUnit$.get() === "Fahrenheit" && (
-                <Image src={doneImage} alt="Checkmark" width={29} height={29} />
+                <RxCheck width={20} height={20} className="w-9 h-9" />
               )}
             </button>
           </div>
@@ -66,7 +66,7 @@ const Settings = observer(() => {
             >
               <p className={styles.buttontext}>Miles per hour (mph)</p>
               {windSpeedUnit$.get() === "Miles per hour" && (
-                <Image src={doneImage} alt="Checkmark" width={29} height={29} />
+                <RxCheck width={20} height={20} className="w-9 h-9" />
               )}
             </button>
             <button
@@ -77,7 +77,7 @@ const Settings = observer(() => {
             >
               <p className={styles.buttontext}>Kilometers per hour (km/h)</p>
               {windSpeedUnit$.get() === "Kilometers per hour" && (
-                <Image src={doneImage} alt="Checkmark" width={29} height={29} />
+                <RxCheck width={20} height={20} className="w-9 h-9" />
               )}
             </button>
             <button
@@ -88,7 +88,7 @@ const Settings = observer(() => {
             >
               <p className={styles.buttontext}>Knots</p>
               {windSpeedUnit$.get() === "Knots" && (
-                <Image src={doneImage} alt="Checkmark" width={29} height={29} />
+                <RxCheck width={20} height={20} className="w-9 h-9" />
               )}
             </button>
             <button
@@ -99,7 +99,7 @@ const Settings = observer(() => {
             >
               <p className={styles.buttontext}>Meters per second (m/s)</p>
               {windSpeedUnit$.get() === "Meters per second" && (
-                <Image src={doneImage} alt="Checkmark" width={29} height={29} />
+                <RxCheck width={20} height={20} className="w-9 h-9" />
               )}
             </button>
             <button
@@ -110,7 +110,7 @@ const Settings = observer(() => {
             >
               <p className={styles.buttontext}>Beaufort</p>
               {windSpeedUnit$.get() === "Beaufort" && (
-                <Image src={doneImage} alt="Checkmark" width={29} height={29} />
+                <RxCheck width={20} height={20} className="w-9 h-9" />
               )}
             </button>
           </div>

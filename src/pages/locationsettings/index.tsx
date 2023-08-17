@@ -6,6 +6,7 @@ import { RxCross2 } from "react-icons/rx";
 import { observer } from "@legendapp/state/react-components";
 import { cities, ICity } from "~/testdata";
 import { ToastContainer, toast } from "react-toastify";
+import search2Image from "~/assets/search2.png";
 import "react-toastify/dist/ReactToastify.css";
 
 const LocationSettings = observer(() => {
@@ -100,7 +101,7 @@ const LocationSettings = observer(() => {
   return (
     <>
       <ToastContainer />
-      <Layout title={"Location Settings"}>
+      <Layout title="Location Settings">
         <div className="flex w-full flex-col items-center">
           <h1 className="mt-24 flex justify-center text-3xl font-bold">
             Location settings
@@ -118,7 +119,7 @@ const LocationSettings = observer(() => {
               <div className="flex w-full justify-center">
                 <Image
                   className="w-12 transform border-b-2 border-black bg-[#d8d5db] pb-3 pl-3 pt-3"
-                  src="/assets/search2.png"
+                  src={search2Image}
                   alt="search-icon"
                   width={56}
                   height={56}
@@ -204,7 +205,7 @@ const LocationSettings = observer(() => {
             <button
               onClick={handleChangeclick}
               onMouseDown={checkCity}
-              className="mt-2.5 rounded border-solid bg-[#2d3142] p-2 font-bold text-white"
+              className="mt-2.5 mb-2.5 rounded border-solid bg-[#2d3142] p-2 font-bold text-white"
               ref={saveButtonTextRef}
             >
               {buttonName}

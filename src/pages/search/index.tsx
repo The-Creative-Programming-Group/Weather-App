@@ -5,6 +5,8 @@ import Image from "next/image";
 import { cities, ICity } from "~/testdata";
 import { activeCity$, addedCities$ } from "~/states";
 import { toast, ToastContainer } from "react-toastify";
+import search1Image from "~/assets/search1.png";
+import background from "~/assets/background.png";
 import "react-toastify/dist/ReactToastify.css";
 
 const Search = () => {
@@ -15,7 +17,7 @@ const Search = () => {
   let cityFound = false;
 
   useEffect(() => {
-    if (searchFocusRef.current == undefined) return;
+    if (!searchFocusRef.current) return;
     searchFocusRef.current.focus();
   }, []);
 
@@ -24,22 +26,25 @@ const Search = () => {
   };
 
   const checkCity = () => {
-    cities.map(
-        (city: ICity) => {
-            if (city.name.toLowerCase() === searchValue.toLowerCase()) {
-              if (addedCities$.get().some(cityValue  => cityValue.name === city.name)) {
-                cityFound = true;
-                activeCity$.set({  name: city.name,
-                  coordinates: {lat: city.coordinates.lat, lon: city.coordinates.lon},});
-                location.href = "/home";
-              }
-              else {
-                continueValue(city);
-                cityFound = true;
-              }
-            }
-        },
-    );
+    cities.map((city: ICity) => {
+      if (city.name.toLowerCase() === searchValue.toLowerCase()) {
+        cityFound = true;
+        if (
+          addedCities$.get().some((cityValue) => cityValue.name === city.name)
+        ) {
+          activeCity$.set({
+            name: city.name,
+            coordinates: {
+              lat: city.coordinates.lat,
+              lon: city.coordinates.lon,
+            },
+          });
+          location.href = "/home";
+        } else {
+          continueValue(city);
+        }
+      }
+    });
 
     if (!cityFound) {
       toast.error("City not found");
@@ -48,15 +53,15 @@ const Search = () => {
   };
 
   const continueValue = (city: ICity) => {
-      activeCity$.set({
-        name: city.name,
-        coordinates: {lat: city.coordinates.lat, lon: city.coordinates.lon},
-      });
-      addedCities$.push({
-        name: city.name,
-        population: 563311,
-        coordinates: {lat: city.coordinates.lat, lon: city.coordinates.lon},
-      })
+    activeCity$.set({
+      name: city.name,
+      coordinates: { lat: city.coordinates.lat, lon: city.coordinates.lon },
+    });
+    addedCities$.push({
+      name: city.name,
+      population: city.population,
+      coordinates: { lat: city.coordinates.lat, lon: city.coordinates.lon },
+    });
     location.href = "/home";
   };
 
@@ -86,7 +91,7 @@ const Search = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Image
-        src="/assets/background.png"
+        src={background}
         alt="background"
         className="absolute w-full h-full -z-10 object-cover"
         fill
@@ -94,7 +99,7 @@ const Search = () => {
       <div id="styles-setup" className="mt-24 w-full flex justify-center">
         <Image
           className="transform bg-[#383b53] border-solid border-[#2d3142] border-8 border-r-0 pt-3 pb-3 pl-3 w-1/36"
-          src="/assets/search1.png"
+          src={search1Image}
           alt="search-icon"
           width={56}
           height={56}
@@ -172,7 +177,6 @@ const Search = () => {
               ) : null}
           </div>
       </div>
-
     </>
   );
 };
