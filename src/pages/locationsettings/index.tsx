@@ -8,6 +8,7 @@ import { cities, ICity } from "~/testdata";
 import { ToastContainer, toast } from "react-toastify";
 import search2Image from "~/assets/search2.png";
 import "react-toastify/dist/ReactToastify.css";
+import Share from "~/components/Share";
 
 const LocationSettings = observer(() => {
   type ButtonNameType = "Add New Location" | "Added";
@@ -102,6 +103,7 @@ const LocationSettings = observer(() => {
     <>
       <ToastContainer />
       <Layout title="Location Settings">
+        <Share />
         <div className="flex w-full flex-col items-center">
           <h1 className="mt-24 flex justify-center text-3xl font-bold">
             Location settings

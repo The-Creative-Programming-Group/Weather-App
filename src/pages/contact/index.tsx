@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import Layout from "~/components/Layout";
+import Share from "~/components/Share";
 
 const ContactUs = () => {
   type SendButtonTextType = "Send" | "Sent";
@@ -29,6 +30,7 @@ const ContactUs = () => {
   return (
     <>
       <Layout title="Contact Us">
+        <Share/>
         <div className="flex w-full flex-col items-center">
           <h1 className="mt-24 flex justify-center text-3xl font-bold">
             Contact Us

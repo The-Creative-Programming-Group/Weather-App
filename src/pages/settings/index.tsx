@@ -9,6 +9,7 @@ import {
 } from "~/states";
 import { observer } from "@legendapp/state/react-components";
 import { RxCheck } from "react-icons/rx";
+import Share from "~/components/Share";
 
 const Settings = observer(() => {
   const doneImage = "/assets/done.png";
@@ -25,6 +26,7 @@ const Settings = observer(() => {
   return (
     <>
       <Layout title="Settings">
+        <Share/>
         <div className="flex flex-col items-center w-full">
           <h1 className="flex mt-10 justify-center text-4xl font-bold">
             Settings
