@@ -30,7 +30,7 @@ const ContactUs = () => {
   return (
     <>
       <Layout title="Contact Us">
-        <Share/>
+        <Share />
         <div className="flex w-full flex-col items-center">
           <h1 className="mt-24 flex justify-center text-3xl font-bold">
             Contact Us

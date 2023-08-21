@@ -54,7 +54,12 @@ const Layout: React.FC<LayoutProps> = ({ title, children, footer }) => {
           <Link href="https://github.com/The-Creative-Programming-Group/Weather-App">
             <AiFillGithub className="ml-5 text-3xl hover:text-gray-400 transition duration-500 ease-in-out" />
           </Link>
-          <div className="flex justify-center w-full mr-72"> <Link href="/legal" className="flex justify-center underline">Legal</Link></div>
+          <div className="flex justify-center w-full mr-72">
+            {" "}
+            <Link href="/legal" className="flex justify-center underline">
+              Legal
+            </Link>
+          </div>
           <div className="absolute mr-12 flex justify-between items-center w-96 right-0">
             <div className="text-sm w-28">Made with ♥️ by</div>
             <div className="flex flex-col items-center">
