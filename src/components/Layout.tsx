@@ -1,7 +1,7 @@
 import React from "react";
 import Head from "next/head";
 import { IoIosSettings, IoMdContact } from "react-icons/io";
-import {FaMapMarkedAlt, FaShare} from "react-icons/fa";
+import { FaMapMarkedAlt, FaShare } from "react-icons/fa";
 import { AiFillGithub, AiFillHome } from "react-icons/ai";
 import Link from "next/link";
 import Image from "next/image";
