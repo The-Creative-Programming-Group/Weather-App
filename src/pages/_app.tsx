@@ -5,6 +5,7 @@ import { api } from "~/lib/utils/api";
 import { Inter } from "next/font/google";
 import React from "react";
 import { Analytics } from "@vercel/analytics/react";
+import {AxiomWebVitals} from "next-axiom";
 
 // Next font inter
 
@@ -17,6 +18,7 @@ const MyApp: AppType = ({ Component, pageProps }) => {
         <Component {...pageProps} />
       </main>
       <Analytics />
+      <AxiomWebVitals />
     </>
   );
 };
