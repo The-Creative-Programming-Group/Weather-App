@@ -291,9 +291,11 @@ const InternalHome = observer(() => {
                         "w-16",
                         "h-16",
                         { "opacity-5": value === 0 },
-                        { "opacity-25": value > 0 && value <= 25 },
+                        { "opacity-10": value > 0 && value <= 10 },
+                        { "opacity-25": value > 10 && value <= 25 },
                         { "opacity-50": value > 25 && value <= 50 },
                         { "opacity-75": value > 50 && value <= 75 },
+                        { "opacity-90": value > 75 && value <= 90 },
                         { "opacity-100": value > 75 },
                       );
                     }
