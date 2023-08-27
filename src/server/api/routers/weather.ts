@@ -181,6 +181,19 @@ export const weatherRouter = createTRPCRouter({
         const airQualityData = await axios.get<PresentAirQuality>(
           urlAirQuality,
         );
+
+        if (!airQualityData.data) {
+          throw new Error("Air quality data is undefined");
+        }
+
+        airQualityData.data.hourly.pm10 = airQualityData.data.hourly.pm10.filter(
+            (value) => value !== null,
+        );
+
+        airQualityData.data.hourly.pm2_5 = airQualityData.data.hourly.pm2_5.filter(
+            (value) => value !== null,
+        );
+
         presentAirQuality = PresentAirQualitySchema.parse(airQualityData.data);
       } catch (error) {
         if (error instanceof z.ZodError) {
