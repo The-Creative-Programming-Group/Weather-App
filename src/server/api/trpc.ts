@@ -13,6 +13,7 @@ import superjson from "superjson";
 import { ZodError } from "zod";
 import { redis } from "~/server/upstash";
 import { Ratelimit } from "@upstash/ratelimit";
+import {log} from "next-axiom";
 
 /**
  * 1. CONTEXT
@@ -97,12 +98,13 @@ const ratelimit = new Ratelimit({
 const rateLimitMiddleware = t.middleware(async ({ ctx, next }) => {
   const identifier = ctx.ip;
   if (typeof identifier !== "string") {
-    console.error("No identifier");
+    log.warn("Rate limit identifier is not a string", { identifier });
     return next();
   }
   // console.log("identifier", identifier);
   const { success } = await ratelimit.limit(identifier);
   if (!success) {
+    log.warn("Rate limit exceeded", { identifier });
     throw new TRPCError({
       code: "INTERNAL_SERVER_ERROR",
       message: "Rate limit exceeded",
