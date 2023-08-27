@@ -4,7 +4,6 @@ import { api } from "~/lib/utils/api";
 import { activeCity$, temperatureUnit$ } from "~/states";
 import { observer } from "@legendapp/state/react-components";
 import { IDailyForecast, IHourlyForecast } from "~/types";
-import Share from "~/components/Share";
 import {
   FaCloud,
   FaCloudMeatball,
@@ -176,7 +175,6 @@ const InternalHome = observer(() => {
 
   return (
     <Layout>
-      <Share />
       <div className="mt-24 flex items-center flex-col">
         <h1 className="text-7xl">{activeCity$.name.get()}</h1>
         <h1 className="text-7xl mt-3 text-gray-500">

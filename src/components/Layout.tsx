@@ -1,7 +1,7 @@
 import React from "react";
 import Head from "next/head";
 import { IoIosSettings, IoMdContact } from "react-icons/io";
-import { FaMapMarkedAlt } from "react-icons/fa";
+import {FaMapMarkedAlt, FaShare} from "react-icons/fa";
 import { AiFillGithub, AiFillHome } from "react-icons/ai";
 import Link from "next/link";
 import Image from "next/image";
@@ -43,7 +43,15 @@ const Layout: React.FC<LayoutProps> = ({ title, children, footer }) => {
           <p>Contact</p>
         </Link>
       </header>
-      <main className="min-h-screen">{children}</main>
+      <main className="min-h-screen">
+        <div>
+          <button className="top-36 absolute right-16 bg-[#2d3142] text-amber-50 p-2 rounded flex">
+            {" "}
+            <FaShare className="mr-1.5 mt-1" /> Share
+          </button>
+        </div>
+        {children}
+      </main>
       {footer == "white" ? (
         <footer className="absolute w-full bg-[#adacb5] pt-8 text-xl text-black">
           <div className="mb-3 ml-3">© - Weather.io</div>
