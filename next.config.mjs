@@ -1,4 +1,4 @@
-const { withAxiom } = require('next-axiom');
+import { withAxiom } from "next-axiom";
 
 /**
  * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation.
