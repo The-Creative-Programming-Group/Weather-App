@@ -286,11 +286,11 @@ const InternalHome = observer(() => {
                     weatherData.data?.precipitationProbabilities,
                   ).map(([key, value]) => {
                     let raindropClass = "";
-                    if (value) {
+                    if (value !== undefined && value !== null) {
                       raindropClass = cn(
                         "w-16",
                         "h-16",
-                        { "opacity-0": value === 0 },
+                        { "opacity-5": value === 0 },
                         { "opacity-25": value > 0 && value <= 25 },
                         { "opacity-50": value > 25 && value <= 50 },
                         { "opacity-75": value > 50 && value <= 75 },
