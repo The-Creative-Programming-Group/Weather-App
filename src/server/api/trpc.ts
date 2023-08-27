@@ -13,7 +13,7 @@ import superjson from "superjson";
 import { ZodError } from "zod";
 import { redis } from "~/server/upstash";
 import { Ratelimit } from "@upstash/ratelimit";
-import {log} from "next-axiom";
+import { log } from "next-axiom";
 
 /**
  * 1. CONTEXT
