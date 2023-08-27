@@ -6,7 +6,7 @@ import { AiFillGithub, AiFillHome } from "react-icons/ai";
 import Link from "next/link";
 import Image from "next/image";
 import dicsiluksProfile from "~/assets/dicsiluks-profile.webp";
-import jakobProfile from "~/assets/jakob-profile.png";
+import jakobProfile from "~/assets/jakob-profile.webp";
 import fabiusProfile from "~/assets/fabius-profile.jpg";
 
 interface LayoutProps {
