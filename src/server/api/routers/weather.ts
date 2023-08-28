@@ -7,7 +7,7 @@ import {
 import { env } from "~/env.mjs";
 import axios from "axios";
 import { IDailyForecast, IHourlyForecast } from "~/types";
-import {log} from "next-axiom";
+import { log } from "next-axiom";
 
 /**
  * Zod schemas provide runtime data validation ensuring type safety,
@@ -137,8 +137,11 @@ export const weatherRouter = createTRPCRouter({
         }),
       }),
     )
-    .query(async ({ input , ctx}) => {
-      log.info("User requested weather data for coordinates", { coordinates: input.coordinates, user: ctx.ip });
+    .query(async ({ input, ctx }) => {
+      log.info("User requested weather data for coordinates", {
+        coordinates: input.coordinates,
+        user: ctx.ip,
+      });
       // OpenWeatherMap API
       const urlWeather = `https://api.openweathermap.org/data/2.5/weather?lat=${input.coordinates.lat}&lon=${input.coordinates.lon}&appid=${env.OPEN_WEATHER_API_KEY}`;
       // Open Meteo
@@ -149,9 +152,8 @@ export const weatherRouter = createTRPCRouter({
       let hourlyData: HourlyWeather = undefined;
 
       try {
-        const hourlyWeatherData = await axios.get<HourlyWeather>(
-          urlHourlyForecast,
-        );
+        const hourlyWeatherData =
+          await axios.get<HourlyWeather>(urlHourlyForecast);
         hourlyData = HourlyWeatherSchema.parse(hourlyWeatherData.data);
         // console.log(hourlyData);
       } catch (error) {
@@ -180,9 +182,8 @@ export const weatherRouter = createTRPCRouter({
       let presentAirQuality: PresentAirQuality = undefined;
 
       try {
-        const airQualityData = await axios.get<PresentAirQuality>(
-          urlAirQuality,
-        );
+        const airQualityData =
+          await axios.get<PresentAirQuality>(urlAirQuality);
 
         if (!airQualityData.data) {
           throw new Error("Air quality data is undefined");
