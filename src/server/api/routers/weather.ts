@@ -7,6 +7,7 @@ import {
 import { env } from "~/env.mjs";
 import axios from "axios";
 import { IDailyForecast, IHourlyForecast } from "~/types";
+import {log} from "next-axiom";
 
 /**
  * Zod schemas provide runtime data validation ensuring type safety,
@@ -136,7 +137,8 @@ export const weatherRouter = createTRPCRouter({
         }),
       }),
     )
-    .query(async ({ input }) => {
+    .query(async ({ input , ctx}) => {
+      log.info("User requested weather data for coordinates", { coordinates: input.coordinates, user: ctx.ip });
       // OpenWeatherMap API
       const urlWeather = `https://api.openweathermap.org/data/2.5/weather?lat=${input.coordinates.lat}&lon=${input.coordinates.lon}&appid=${env.OPEN_WEATHER_API_KEY}`;
       // Open Meteo
