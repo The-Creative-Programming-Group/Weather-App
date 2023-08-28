@@ -101,10 +101,10 @@ const rateLimitMiddleware = t.middleware(async ({ ctx, next }) => {
     log.warn("Rate limit identifier is not a string", { identifier });
     return next();
   }
-  // console.log("identifier", identifier);
+  // log.debug("identifier", identifier);
   const { success } = await ratelimit.limit(identifier);
   if (!success) {
-    log.warn("Rate limit exceeded", { identifier });
+    log.warn("Rate limit exceeded", { coordinates: identifier });
     throw new TRPCError({
       code: "INTERNAL_SERVER_ERROR",
       message: "Rate limit exceeded",

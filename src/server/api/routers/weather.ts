@@ -148,60 +148,66 @@ export const weatherRouter = createTRPCRouter({
       const urlHourlyForecast = `https://api.open-meteo.com/v1/forecast?latitude=${input.coordinates.lat}&longitude=${input.coordinates.lon}&hourly=temperature_2m,rain,showers,snowfall,precipitation_probability,cloudcover,windspeed_10m&forecast_days=7`;
       const urlAirQuality = `https://air-quality-api.open-meteo.com/v1/air-quality?latitude=${input.coordinates.lat}&longitude=${input.coordinates.lon}&hourly=pm10,pm2_5`;
 
-      // Hourly Weather Forecast from Open Meteo
+      let [hourlyResult, presentWeatherResult, presentAirQualityResult] = await Promise.allSettled([
+        axios.get<HourlyWeather>(urlHourlyForecast),
+        axios.get<PresentWeather>(urlWeather),
+        axios.get<PresentAirQuality>(urlAirQuality),
+      ]);
+
       let hourlyData: HourlyWeather = undefined;
-
-      try {
-        const hourlyWeatherData =
-          await axios.get<HourlyWeather>(urlHourlyForecast);
-        hourlyData = HourlyWeatherSchema.parse(hourlyWeatherData.data);
-        // console.log(hourlyData);
-      } catch (error) {
-        if (error instanceof z.ZodError) {
-          console.log("Zod Errors", error.issues);
-        } else {
-          console.error(error);
-        }
-      }
-
-      // Present Weather from OpenWeatherMap
       let presentWeather: PresentWeather = undefined;
-
-      try {
-        const weatherData = await axios.get<PresentWeather>(urlWeather);
-        presentWeather = PresentWeatherSchema.parse(weatherData.data);
-      } catch (error) {
-        if (error instanceof z.ZodError) {
-          console.log("Zod Errors", error.issues);
-        } else {
-          console.error(error);
-        }
-      }
-
-      // Present Air Quality from Open Meteo
       let presentAirQuality: PresentAirQuality = undefined;
 
-      try {
-        const airQualityData =
-          await axios.get<PresentAirQuality>(urlAirQuality);
+      if (hourlyResult.status === "fulfilled") {
+        try {
+          hourlyData = HourlyWeatherSchema.parse(hourlyResult.value.data);
+          // log.debug(hourlyData);
+        } catch (error) {
+          if (error instanceof z.ZodError) {
+            log.error("Zod Errors", error.issues);
+          } else {
+            console.error("Error", error)
+          }
+        }
+      } else {
+        log.error("Hourly weather data request failed", { status: hourlyResult.status, reason: hourlyResult.reason })
+      }
 
-        if (!airQualityData.data) {
+      if (presentWeatherResult.status === "fulfilled") {
+        try {
+          presentWeather = PresentWeatherSchema.parse(presentWeatherResult.value.data);
+        } catch (error) {
+          if (error instanceof z.ZodError) {
+            log.error("Zod Errors", error.issues);
+          } else {
+            console.error(error);
+          }
+        }
+      } else {
+        log.error("Present weather data request failed", { status: presentWeatherResult.status, reason: presentWeatherResult.reason })
+      }
+
+      if (presentAirQualityResult.status === "fulfilled") {
+        try {
+          let data = presentAirQualityResult.value.data;
+
+        if (!data) {
           throw new Error("Air quality data is undefined");
         }
 
-        airQualityData.data.hourly.pm10 =
-          airQualityData.data.hourly.pm10.filter((value) => value !== null);
+        data.hourly.pm10 = data.hourly.pm10.filter((value) => value !== null);
+        data.hourly.pm2_5 = data.hourly.pm2_5.filter((value) => value !== null);
 
-        airQualityData.data.hourly.pm2_5 =
-          airQualityData.data.hourly.pm2_5.filter((value) => value !== null);
-
-        presentAirQuality = PresentAirQualitySchema.parse(airQualityData.data);
-      } catch (error) {
-        if (error instanceof z.ZodError) {
-          console.log("Zod Errors", error.issues);
-        } else {
-          console.error(error);
+        presentAirQuality = PresentAirQualitySchema.parse(data);
+        } catch (error) {
+          if (error instanceof z.ZodError) {
+            log.error("Zod Errors", error.issues);
+          } else {
+            console.error(error);
+          }
         }
+      } else {
+        log.error("Present air quality data request failed", { status: presentAirQualityResult.status, reason: presentAirQualityResult.reason })
       }
 
       let presentAirQualityIndex: number | undefined = undefined;
