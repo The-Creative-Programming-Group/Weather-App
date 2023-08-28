@@ -104,7 +104,7 @@ const rateLimitMiddleware = t.middleware(async ({ ctx, next }) => {
   // log.debug("identifier", identifier);
   const { success } = await ratelimit.limit(identifier);
   if (!success) {
-    log.warn("Rate limit exceeded", { coordinates: identifier });
+    log.warn("Rate limit exceeded", { ip: identifier });
     throw new TRPCError({
       code: "INTERNAL_SERVER_ERROR",
       message: "Rate limit exceeded",
