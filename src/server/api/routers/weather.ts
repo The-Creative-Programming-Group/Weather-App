@@ -148,11 +148,12 @@ export const weatherRouter = createTRPCRouter({
       const urlHourlyForecast = `https://api.open-meteo.com/v1/forecast?latitude=${input.coordinates.lat}&longitude=${input.coordinates.lon}&hourly=temperature_2m,rain,showers,snowfall,precipitation_probability,cloudcover,windspeed_10m&forecast_days=7`;
       const urlAirQuality = `https://air-quality-api.open-meteo.com/v1/air-quality?latitude=${input.coordinates.lat}&longitude=${input.coordinates.lon}&hourly=pm10,pm2_5`;
 
-      let [hourlyResult, presentWeatherResult, presentAirQualityResult] = await Promise.allSettled([
-        axios.get<HourlyWeather>(urlHourlyForecast),
-        axios.get<PresentWeather>(urlWeather),
-        axios.get<PresentAirQuality>(urlAirQuality),
-      ]);
+      let [hourlyResult, presentWeatherResult, presentAirQualityResult] =
+        await Promise.allSettled([
+          axios.get<HourlyWeather>(urlHourlyForecast),
+          axios.get<PresentWeather>(urlWeather),
+          axios.get<PresentAirQuality>(urlAirQuality),
+        ]);
 
       let hourlyData: HourlyWeather = undefined;
       let presentWeather: PresentWeather = undefined;
@@ -166,16 +167,21 @@ export const weatherRouter = createTRPCRouter({
           if (error instanceof z.ZodError) {
             log.error("Zod Errors", error.issues);
           } else {
-            console.error("Error", error)
+            console.error("Error", error);
           }
         }
       } else {
-        log.error("Hourly weather data request failed", { status: hourlyResult.status, reason: hourlyResult.reason })
+        log.error("Hourly weather data request failed", {
+          status: hourlyResult.status,
+          reason: hourlyResult.reason,
+        });
       }
 
       if (presentWeatherResult.status === "fulfilled") {
         try {
-          presentWeather = PresentWeatherSchema.parse(presentWeatherResult.value.data);
+          presentWeather = PresentWeatherSchema.parse(
+            presentWeatherResult.value.data,
+          );
         } catch (error) {
           if (error instanceof z.ZodError) {
             log.error("Zod Errors", error.issues);
@@ -184,21 +190,26 @@ export const weatherRouter = createTRPCRouter({
           }
         }
       } else {
-        log.error("Present weather data request failed", { status: presentWeatherResult.status, reason: presentWeatherResult.reason })
+        log.error("Present weather data request failed", {
+          status: presentWeatherResult.status,
+          reason: presentWeatherResult.reason,
+        });
       }
 
       if (presentAirQualityResult.status === "fulfilled") {
         try {
           let data = presentAirQualityResult.value.data;
 
-        if (!data) {
-          throw new Error("Air quality data is undefined");
-        }
+          if (!data) {
+            throw new Error("Air quality data is undefined");
+          }
 
-        data.hourly.pm10 = data.hourly.pm10.filter((value) => value !== null);
-        data.hourly.pm2_5 = data.hourly.pm2_5.filter((value) => value !== null);
+          data.hourly.pm10 = data.hourly.pm10.filter((value) => value !== null);
+          data.hourly.pm2_5 = data.hourly.pm2_5.filter(
+            (value) => value !== null,
+          );
 
-        presentAirQuality = PresentAirQualitySchema.parse(data);
+          presentAirQuality = PresentAirQualitySchema.parse(data);
         } catch (error) {
           if (error instanceof z.ZodError) {
             log.error("Zod Errors", error.issues);
@@ -207,7 +218,10 @@ export const weatherRouter = createTRPCRouter({
           }
         }
       } else {
-        log.error("Present air quality data request failed", { status: presentAirQualityResult.status, reason: presentAirQualityResult.reason })
+        log.error("Present air quality data request failed", {
+          status: presentAirQualityResult.status,
+          reason: presentAirQualityResult.reason,
+        });
       }
 
       let presentAirQualityIndex: number | undefined = undefined;
