@@ -47,7 +47,7 @@ const InternalHome = observer(() => {
     | { hour?: undefined; day: number; icons: boolean };
 
   const weatherState = ({ hour, day, icons }: TimeType): WeatherStateType => {
-    if (hour) {
+    if (hour !== undefined && hour !== null) {
       if (weatherData.data?.hourlyForecast[hour]?.showers) {
         if (weatherData.data.hourlyForecast[hour]!.showers! > 0) {
           if (icons) {
@@ -107,7 +107,7 @@ const InternalHome = observer(() => {
           }
         }
       }
-    } else if (day) {
+    } else if (day !== undefined && day !== null) {
       if (weatherData.data?.dailyForecast[day]?.showers) {
         if (weatherData.data.dailyForecast[day]!.showers! > 0) {
           if (icons) {
@@ -162,12 +162,14 @@ const InternalHome = observer(() => {
           weatherData.data.hourlyForecast[hour]!.time < 19 &&
           weatherData.data.hourlyForecast[hour]!.time > 6
         ) {
+          // console.log("Sunny", hour, day)
           return <FaSun className="w-12 h-12" />;
         } else {
           return <FaMoon className="w-12 h-12" />;
         }
       }
     } else if (icons && hour === undefined) {
+      // console.log("Sunny", hour, day);
       return <FaSun className="w-10 h-10" />;
     }
     return "Sunny";
