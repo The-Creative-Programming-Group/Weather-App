@@ -443,6 +443,7 @@ export const weatherRouter = createTRPCRouter({
         time: new Date(),
         // Present weather in Kelvin NOT daily average
         temperature: presentWeather?.main.temp,
+        // Present weather in Kelvin
         feels_like: presentWeather?.main.feels_like,
         // In meters per second
         wind_speed: presentWeather?.wind.speed,
@@ -456,6 +457,7 @@ export const weatherRouter = createTRPCRouter({
         visibility: presentWeather
           ? presentWeather.visibility / 100
           : undefined,
+        // In percentages
         precipitationProbabilities: hourlyData
           ? precipitationProbabilities
           : undefined,
