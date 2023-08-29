@@ -320,25 +320,28 @@ const InternalHome = observer(() => {
           <div className="col-start-4 col-span-2 row-start-2 row-span-2 bg-gray-400 rounded-md">
             <div className="ml-4 mt-1.5 text-xl">Feels like</div>
             {weatherData.data?.feels_like ? (
-                <div className="ml-4 mt-2">
-                  <div className="flex text-5xl">
-                    {temperatureUnit$.get() === "Celsius"
-                        ? `${Math.round(weatherData.data?.feels_like - 273.15)}°C`
-                        : `${Math.round(
-                            (weatherData.data?.feels_like * 9) / 5 - 459.67,
-                        )}°F`}
-                  </div>
-                    <div className="text-sm font-medium text-gray-500">
-                      { weatherData.data.feels_like > 309 ? "I bet the sun itself is trying to cool down!" :
-                        weatherData.data.feels_like > 299 ? "Even ice cream complains about being too warm!" :
-                        weatherData.data.feels_like > 279 ? "So moderate, even Goldilocks would approve!" :
-                        weatherData.data.feels_like > 269 ? "So chilly that even penguins are ordering hot chocolate!" :
-                            "The weather today is so frosty, even the snowmen are shivering!"
-                      }
-                    </div>
+              <div className="ml-4 mt-2">
+                <div className="flex text-5xl">
+                  {temperatureUnit$.get() === "Celsius"
+                    ? `${Math.round(weatherData.data?.feels_like - 273.15)}°C`
+                    : `${Math.round(
+                        (weatherData.data?.feels_like * 9) / 5 - 459.67,
+                      )}°F`}
                 </div>
+                <div className="text-sm font-medium text-gray-500">
+                  {weatherData.data.feels_like > 309
+                    ? "I bet the sun itself is trying to cool down!"
+                    : weatherData.data.feels_like > 299
+                    ? "Even ice cream complains about being too warm!"
+                    : weatherData.data.feels_like > 279
+                    ? "So moderate, even Goldilocks would approve!"
+                    : weatherData.data.feels_like > 269
+                    ? "So chilly that even penguins are ordering hot chocolate!"
+                    : "The weather today is so frosty, even the snowmen are shivering!"}
+                </div>
+              </div>
             ) : (
-                "Loading..."
+              "Loading..."
             )}
           </div>
           <div className="col-start-4 col-span-1 row-start-4 row-span-3 bg-gray-400 rounded-md">
