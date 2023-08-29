@@ -9,7 +9,7 @@ const ContactUs = () => {
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    if (inputRef.current == undefined) return;
+    if (!inputRef.current) return;
     inputRef.current.focus();
   });
 
