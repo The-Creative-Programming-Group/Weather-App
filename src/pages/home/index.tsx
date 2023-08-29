@@ -282,7 +282,7 @@ const InternalHome = observer(() => {
           </div>
           <div className="col-start-4 col-span-4 row-span-1 bg-gray-400 rounded-md">
             <div className="ml-4 mt-1.5 text-xl">Precipitation</div>
-            <div className="flex justify-evenly ml-4">
+            <div className="flex justify-between ml-4">
               {weatherData.data?.precipitationProbabilities
                 ? Object.entries(
                     weatherData.data?.precipitationProbabilities,
