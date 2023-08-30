@@ -17,6 +17,7 @@ import {
 } from "react-icons/fa6";
 import { WiRaindrop } from "react-icons/wi";
 import cn from "classnames";
+import {PiSunglasses} from "react-icons/pi";
 
 const InternalHome = observer(() => {
   const weatherData = api.weather.getWeather.useQuery(
@@ -348,7 +349,17 @@ const InternalHome = observer(() => {
             Div 4
           </div>
           <div className="col-start-6 col-span-2 row-start-2 row-span-2 bg-gray-400 rounded-md">
-            Div 5
+            <div className="ml-4 mt-1.5 text-xl">Visibility</div>
+            <div className="flex items-center">
+            <PiSunglasses className="ml-4 mt-2 w-16 h-16" />
+            {weatherData.data?.visibility ? (
+                <div className="ml-4 mt-2 text-5xl">
+                    {weatherData.data?.visibility}%
+                </div>
+                ) : (
+                "Loading..."
+                )}
+            </div>
           </div>
           <div className="col-start-5 col-span-3 row-start-4 row-span-3 bg-gray-400 rounded-md">
             Div 6
