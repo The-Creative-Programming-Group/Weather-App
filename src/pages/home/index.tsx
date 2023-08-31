@@ -348,23 +348,31 @@ const InternalHome = observer(() => {
           <div className="col-start-4 col-span-1 row-start-4 row-span-3 bg-gray-400 rounded-md">
             <div className="ml-2 mt-1.5 text-xl">Air quality</div>
             {weatherData.data?.air_quality ? (
-                <div className="relative ml-3 mt-2 mb-2 flex items-center h-64">
-                    <div className="mt-2 text-md font-medium">
-                    {weatherData.data?.air_quality.toPrecision(2)} <br />
-                      {weatherData.data?.air_quality > 90 ? "Very Poor"
-                          : weatherData.data?.air_quality > 70 ? "Poor"
-                          : weatherData.data?.air_quality > 50 ? "Fair"
-                          : weatherData.data?.air_quality > 30 ? "Moderate"
-                          : weatherData.data?.air_quality > 10 ? "Good"
-                          : "Excellent"}
-                    </div>
-                  <div className="absolute right-3 w-3 h-64 bg-gradient-to-t from-red-500 to-green-800 rounded-md">
-                    <div className="relative w-full h-3 bg-black rounded-xl" style={{top: `${weatherData.data?.air_quality}%`}}></div>
-                  </div>
+              <div className="relative ml-3 mt-2 mb-2 flex items-center h-64">
+                <div className="mt-2 text-md font-medium">
+                  {weatherData.data?.air_quality.toPrecision(2)} <br />
+                  {weatherData.data?.air_quality > 90
+                    ? "Very Poor"
+                    : weatherData.data?.air_quality > 70
+                    ? "Poor"
+                    : weatherData.data?.air_quality > 50
+                    ? "Fair"
+                    : weatherData.data?.air_quality > 30
+                    ? "Moderate"
+                    : weatherData.data?.air_quality > 10
+                    ? "Good"
+                    : "Excellent"}
                 </div>
-                ) : (
-                "Loading..."
-                )}
+                <div className="absolute right-3 w-3 h-64 bg-gradient-to-t from-red-500 to-green-800 rounded-md">
+                  <div
+                    className="relative w-full h-3 bg-black rounded-xl"
+                    style={{ top: `${weatherData.data?.air_quality}%` }}
+                  ></div>
+                </div>
+              </div>
+            ) : (
+              "Loading..."
+            )}
           </div>
           <div className="col-start-6 col-span-2 row-start-2 row-span-2 bg-gray-400 rounded-md">
             <div className="ml-4 mt-1.5 text-xl">Visibility</div>
