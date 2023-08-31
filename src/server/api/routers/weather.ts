@@ -120,14 +120,21 @@ type PresentAirQuality = z.infer<typeof PresentAirQualitySchema> | undefined;
  *
  * @return {number} The calculated Air Quality Index (AQI) between 0 and 100.
  */
-function calculateAirQualityIndex(pm10: number, pm25: number, nitrogenDioxide: number): number {
+function calculateAirQualityIndex(
+  pm10: number,
+  pm25: number,
+  nitrogenDioxide: number,
+): number {
   const maxPm10Value = 100;
   const maxPm25Value = 71;
   const maxNitrogenDioxideValue = 601;
 
-  const aqiPm10 = (pm10 <= maxPm10Value) ? (pm10 / maxPm10Value) * 100 : 100;
-  const aqiPm25 = (pm25 <= maxPm25Value) ? (pm25 / maxPm25Value) * 100 : 100;
-  const aqiNitrogenDioxide = (nitrogenDioxide <= maxNitrogenDioxideValue) ? (nitrogenDioxide / maxNitrogenDioxideValue) * 100 : 100;
+  const aqiPm10 = pm10 <= maxPm10Value ? (pm10 / maxPm10Value) * 100 : 100;
+  const aqiPm25 = pm25 <= maxPm25Value ? (pm25 / maxPm25Value) * 100 : 100;
+  const aqiNitrogenDioxide =
+    nitrogenDioxide <= maxNitrogenDioxideValue
+      ? (nitrogenDioxide / maxNitrogenDioxideValue) * 100
+      : 100;
 
   // console.log("aqiPm10", aqiPm10);
   // console.log("aqiPm25", aqiPm25);
