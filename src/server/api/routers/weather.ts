@@ -105,6 +105,7 @@ const PresentAirQualitySchema = z.object({
     time: z.array(z.string()),
     pm10: z.array(z.number()),
     pm2_5: z.array(z.number()),
+    nitrogen_dioxide: z.array(z.number()),
   }),
 });
 
@@ -115,16 +116,23 @@ type PresentAirQuality = z.infer<typeof PresentAirQualitySchema> | undefined;
  *
  * @param {number} pm10 - The PM10 value in micrograms per cubic meter (µg/m³).
  * @param {number} pm25 - The PM2.5 value in micrograms per cubic meter (µg/m³).
+ * @param {number} nitrogenDioxide - The nitrogen dioxide value in micrograms per cubic meter (µg/m³).
  *
  * @return {number} The calculated Air Quality Index (AQI) between 0 and 100.
  */
-function calculateAirQualityIndex(pm10: number, pm25: number): number {
-  const scaleFactor = 500.4;
+function calculateAirQualityIndex(pm10: number, pm25: number, nitrogenDioxide: number): number {
+  const maxPm10Value = 100;
+  const maxPm25Value = 71;
+  const maxNitrogenDioxideValue = 601;
 
-  const aqiPm10 = (pm10 / scaleFactor) * 100;
-  const aqiPm25 = (pm25 / scaleFactor) * 100;
+  const aqiPm10 = (pm10 <= maxPm10Value) ? (pm10 / maxPm10Value) * 100 : 100;
+  const aqiPm25 = (pm25 <= maxPm25Value) ? (pm25 / maxPm25Value) * 100 : 100;
+  const aqiNitrogenDioxide = (nitrogenDioxide <= maxNitrogenDioxideValue) ? (nitrogenDioxide / maxNitrogenDioxideValue) * 100 : 100;
 
-  return Math.max(aqiPm10, aqiPm25);
+  // console.log("aqiPm10", aqiPm10);
+  // console.log("aqiPm25", aqiPm25);
+  // console.log("aqiNitrogenDioxide", aqiNitrogenDioxide);
+  return Math.max(aqiPm10, aqiPm25, aqiNitrogenDioxide);
 }
 
 export const weatherRouter = createTRPCRouter({
@@ -146,7 +154,7 @@ export const weatherRouter = createTRPCRouter({
       const urlWeather = `https://api.openweathermap.org/data/2.5/weather?lat=${input.coordinates.lat}&lon=${input.coordinates.lon}&appid=${env.OPEN_WEATHER_API_KEY}`;
       // Open Meteo
       const urlHourlyForecast = `https://api.open-meteo.com/v1/forecast?latitude=${input.coordinates.lat}&longitude=${input.coordinates.lon}&hourly=temperature_2m,rain,showers,snowfall,precipitation_probability,cloudcover,windspeed_10m&forecast_days=7`;
-      const urlAirQuality = `https://air-quality-api.open-meteo.com/v1/air-quality?latitude=${input.coordinates.lat}&longitude=${input.coordinates.lon}&hourly=pm10,pm2_5`;
+      const urlAirQuality = `https://air-quality-api.open-meteo.com/v1/air-quality?latitude=${input.coordinates.lat}&longitude=${input.coordinates.lon}&hourly=pm10,pm2_5,nitrogen_dioxide`;
 
       let [hourlyResult, presentWeatherResult, presentAirQualityResult] =
         await Promise.allSettled([
@@ -228,11 +236,13 @@ export const weatherRouter = createTRPCRouter({
 
       if (
         presentAirQuality?.hourly.pm10[0] &&
-        presentAirQuality?.hourly.pm2_5[0]
+        presentAirQuality?.hourly.pm2_5[0] &&
+        presentAirQuality?.hourly.nitrogen_dioxide[0]
       ) {
         presentAirQualityIndex = calculateAirQualityIndex(
           presentAirQuality.hourly.pm10[0],
           presentAirQuality.hourly.pm2_5[0],
+          presentAirQuality.hourly.nitrogen_dioxide[0],
         );
       }
 
