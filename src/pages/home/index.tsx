@@ -112,7 +112,7 @@ const InternalHome = observer(() => {
       if (weatherData.data?.dailyForecast[day]?.showers) {
         if (weatherData.data.dailyForecast[day]!.showers! > 0) {
           if (icons) {
-            return <FaCloudShowersHeavy className="w-10 h-10" />;
+            return <FaCloudShowersHeavy className="w-12 h-12" />;
           }
           return "Stormy";
         }
@@ -120,7 +120,7 @@ const InternalHome = observer(() => {
       if (weatherData.data?.dailyForecast[day]?.snowfall) {
         if (weatherData.data.dailyForecast[day]!.snowfall! > 0) {
           if (icons) {
-            return <FaCloudMeatball className="w-10 h-10" />;
+            return <FaCloudMeatball className="w-12 h-12" />;
           }
           return "Snowy";
         }
@@ -128,7 +128,7 @@ const InternalHome = observer(() => {
       if (weatherData.data?.dailyForecast[day]?.rain) {
         if (weatherData.data.dailyForecast[day]!.rain! > 0) {
           if (icons) {
-            return <FaCloudRain className="w-10 h-10" />;
+            return <FaCloudRain className="w-12 h-12" />;
           }
           return "Rainy";
         }
@@ -137,12 +137,12 @@ const InternalHome = observer(() => {
         if (weatherData.data.dailyForecast[day]!.cloudcover! > 40) {
           if (weatherData.data.dailyForecast[day!]!.cloudcover! > 60) {
             if (icons) {
-              return <FaCloud className="w-10 h-10" />;
+              return <FaCloud className="w-12 h-12" />;
             }
             return "Cloudy";
           } else {
             if (icons) {
-              return <FaCloudSun className="w-10 h-10" />;
+              return <FaCloudSun className="w-12 h-12" />;
             }
             return "Cloudy";
           }
@@ -151,7 +151,7 @@ const InternalHome = observer(() => {
       if (weatherData.data?.dailyForecast[day]?.windSpeed) {
         if (weatherData.data.dailyForecast[day]!.windSpeed! >= 20) {
           if (icons) {
-            return <FaWind className="w-10 h-10" />;
+            return <FaWind className="w-12 h-12" />;
           }
           return "Windy";
         }
@@ -230,7 +230,7 @@ const InternalHome = observer(() => {
         </div>
         <div className="grid grid-cols-9 grid-rows-7 gap-6 max-w-screen-xl mt-6 mb-6">
           <div className="col-span-3 row-span-6 bg-gray-400 rounded-xl flex flex-col">
-            <span className="ml-5 mt-2">7-Day Forecast</span>
+            <span className="ml-5 mt-2">9-Day Forecast</span>
             {weatherData.data?.dailyForecast.map(
               (dailyForecast: IDailyForecast, index: number) => {
                 let day;
@@ -246,12 +246,12 @@ const InternalHome = observer(() => {
                     className="flex items-center border-t-2 border-black mr-5 ml-5 mb-2"
                     key={index}
                   >
-                    <div className="w-32 text-xl mt-2">{day}</div>
+                    <div className="w-36 text-2xl mt-2">{day}</div>
                     <div className="mt-2 w-12">
                       {weatherState({ day: index, icons: true })}
                     </div>
                     {dailyForecast.temperatureDay ? (
-                      <div className="mt-2 ml-5">
+                      <div className="mt-2 ml-9 text-2xl">
                         {temperatureUnit$.get() === "Celsius"
                           ? `${Math.round(
                               dailyForecast.temperatureDay - 273.15,
@@ -264,7 +264,7 @@ const InternalHome = observer(() => {
                       "Loading"
                     )}
                     {dailyForecast.temperatureNight ? (
-                      <div className="mt-2 ml-4 text-gray-700">
+                      <div className="mt-2 ml-8 text-gray-700 text-2xl">
                         {temperatureUnit$.get() === "Celsius"
                           ? `${Math.round(
                               dailyForecast.temperatureNight - 273.15,
@@ -304,14 +304,14 @@ const InternalHome = observer(() => {
                     }
                     return (
                       <div
-                        className="flex flex-col items-center mt-1 w-24"
+                        className="flex flex-col items-center justify-center mt-1 w-24"
                         key={key}
                       >
                         <div className="text-sm">
                           {key.charAt(2).toUpperCase() + key.slice(3)}
                         </div>
                         <WiRaindrop className={raindropClass} />
-                        <div className="text-xl">{value}%</div>
+                        <div className="-mt-4 text-xl">{value}%</div>
                       </div>
                     );
                   })
@@ -321,7 +321,7 @@ const InternalHome = observer(() => {
           <div className="col-start-4 col-span-2 row-start-2 row-span-2 bg-gray-400 rounded-md">
             <div className="ml-4 mt-1.5 text-xl">Feels like</div>
             {weatherData.data?.feels_like ? (
-              <div className="ml-4 mt-2">
+              <div className="ml-4 mt-1.5 mb-0.5">
                 <div className="flex text-5xl">
                   {temperatureUnit$.get() === "Celsius"
                     ? `${Math.round(weatherData.data?.feels_like - 273.15)}°C`
@@ -331,14 +331,14 @@ const InternalHome = observer(() => {
                 </div>
                 <div className="text-sm font-medium text-gray-500">
                   {weatherData.data.feels_like > 309
-                    ? "I bet the sun itself is trying to cool down!"
+                    ? "The sun is likely trying to cool down!"
                     : weatherData.data.feels_like > 299
-                    ? "Even ice cream complains about being too warm!"
+                    ? "Even ice cream finds warmth too much!"
                     : weatherData.data.feels_like > 279
                     ? "So moderate, even Goldilocks would approve!"
                     : weatherData.data.feels_like > 269
-                    ? "So chilly that even penguins are ordering hot chocolate!"
-                    : "The weather today is so frosty, even the snowmen are shivering!"}
+                    ? "Penguins are ordering hot chocolate due to the chill!"
+                    : "Today's frosty weather is making even snowmen shiver!"}
                 </div>
               </div>
             ) : (
@@ -346,7 +346,25 @@ const InternalHome = observer(() => {
             )}
           </div>
           <div className="col-start-4 col-span-1 row-start-4 row-span-3 bg-gray-400 rounded-md">
-            Div 4
+            <div className="ml-2 mt-1.5 text-xl">Air quality</div>
+            {weatherData.data?.air_quality ? (
+                <div className="relative ml-3 mt-2 mb-2 flex items-center h-64">
+                    <div className="mt-2 text-md font-medium">
+                    {weatherData.data?.air_quality.toPrecision(2)} <br />
+                      {weatherData.data?.air_quality > 90 ? "Very Poor"
+                          : weatherData.data?.air_quality > 70 ? "Poor"
+                          : weatherData.data?.air_quality > 50 ? "Fair"
+                          : weatherData.data?.air_quality > 30 ? "Moderate"
+                          : weatherData.data?.air_quality > 10 ? "Good"
+                          : "Excellent"}
+                    </div>
+                  <div className="absolute right-3 w-3 h-64 bg-gradient-to-t from-red-500 to-green-800 rounded-md">
+                    <div className="relative w-full h-3 bg-black rounded-xl" style={{top: `${weatherData.data?.air_quality}%`}}></div>
+                  </div>
+                </div>
+                ) : (
+                "Loading..."
+                )}
           </div>
           <div className="col-start-6 col-span-2 row-start-2 row-span-2 bg-gray-400 rounded-md">
             <div className="ml-4 mt-1.5 text-xl">Visibility</div>

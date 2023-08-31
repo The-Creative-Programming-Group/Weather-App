@@ -160,7 +160,7 @@ export const weatherRouter = createTRPCRouter({
       // OpenWeatherMap API
       const urlWeather = `https://api.openweathermap.org/data/2.5/weather?lat=${input.coordinates.lat}&lon=${input.coordinates.lon}&appid=${env.OPEN_WEATHER_API_KEY}`;
       // Open Meteo
-      const urlHourlyForecast = `https://api.open-meteo.com/v1/forecast?latitude=${input.coordinates.lat}&longitude=${input.coordinates.lon}&hourly=temperature_2m,rain,showers,snowfall,precipitation_probability,cloudcover,windspeed_10m&forecast_days=7`;
+      const urlHourlyForecast = `https://api.open-meteo.com/v1/forecast?latitude=${input.coordinates.lat}&longitude=${input.coordinates.lon}&hourly=temperature_2m,rain,showers,snowfall,precipitation_probability,cloudcover,windspeed_10m&forecast_days=9`;
       const urlAirQuality = `https://air-quality-api.open-meteo.com/v1/air-quality?latitude=${input.coordinates.lat}&longitude=${input.coordinates.lon}&hourly=pm10,pm2_5,nitrogen_dioxide`;
 
       let [hourlyResult, presentWeatherResult, presentAirQualityResult] =
@@ -281,7 +281,7 @@ export const weatherRouter = createTRPCRouter({
       const dailyForecast: IDailyForecast[] = [];
 
       if (hourlyData) {
-        for (let i = 0; i < 7; i++) {
+        for (let i = 0; i < 9; i++) {
           // console.log("i", i);
           let temperatureSumDay = 0;
           let temperatureSumNight = 0;
