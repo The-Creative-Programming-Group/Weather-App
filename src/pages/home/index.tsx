@@ -228,7 +228,7 @@ const InternalHome = observer(() => {
             },
           )}
         </div>
-        <div className="grid grid-cols-9 grid-rows-7 gap-6 max-w-screen-xl mt-6">
+        <div className="grid grid-cols-9 grid-rows-7 gap-6 max-w-screen-xl mt-6 mb-6">
           <div className="col-span-3 row-span-6 bg-gray-400 rounded-xl flex flex-col">
             <span className="ml-5 mt-2">7-Day Forecast</span>
             {weatherData.data?.dailyForecast.map(
