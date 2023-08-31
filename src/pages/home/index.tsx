@@ -171,7 +171,7 @@ const InternalHome = observer(() => {
       }
     } else if (icons && hour === undefined) {
       // console.log("Sunny", hour, day);
-      return <FaSun className="w-10 h-10" />;
+      return <FaSun className="w-12 h-12" />;
     }
     return "Sunny";
   };
@@ -291,8 +291,9 @@ const InternalHome = observer(() => {
                     let raindropClass = "";
                     if (value !== undefined && value !== null) {
                       raindropClass = cn(
-                        "w-16",
-                        "h-16",
+                        "w-20",
+                        "h-20",
+                          "-mt-2",
                         { "opacity-5": value === 0 },
                         { "opacity-10": value > 0 && value <= 10 },
                         { "opacity-25": value > 10 && value <= 25 },
@@ -321,7 +322,7 @@ const InternalHome = observer(() => {
           <div className="col-start-4 col-span-2 row-start-2 row-span-2 bg-gray-400 rounded-md">
             <div className="ml-4 mt-1.5 text-xl">Feels like</div>
             {weatherData.data?.feels_like ? (
-              <div className="ml-4 mt-1.5 mb-0.5">
+              <div className="ml-4 mt-1.5 mb-1">
                 <div className="flex text-5xl">
                   {temperatureUnit$.get() === "Celsius"
                     ? `${Math.round(weatherData.data?.feels_like - 273.15)}°C`
@@ -348,7 +349,7 @@ const InternalHome = observer(() => {
           <div className="col-start-4 col-span-1 row-start-4 row-span-3 bg-gray-400 rounded-md">
             <div className="ml-2 mt-1.5 text-xl">Air quality</div>
             {weatherData.data?.air_quality ? (
-                <div className="relative ml-3 mt-2 mb-2 flex items-center h-64">
+                <div className="relative ml-3.5 mt-2 mb-2 flex items-center h-64">
                     <div className="mt-2 text-md font-medium">
                     {weatherData.data?.air_quality.toPrecision(2)} <br />
                       {weatherData.data?.air_quality > 90 ? "Very Poor"
