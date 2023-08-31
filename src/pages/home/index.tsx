@@ -293,7 +293,7 @@ const InternalHome = observer(() => {
                       raindropClass = cn(
                         "w-20",
                         "h-20",
-                          "-mt-2",
+                        "-mt-2",
                         { "opacity-5": value === 0 },
                         { "opacity-10": value > 0 && value <= 10 },
                         { "opacity-25": value > 10 && value <= 25 },
