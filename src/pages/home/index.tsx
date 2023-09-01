@@ -294,7 +294,7 @@ const InternalHome = observer(() => {
                       {weatherState({ day: index, icons: true })}
                     </div>
                     {dailyForecast.temperatureDay ? (
-                      <div className="mt-2 ml-9 text-2xl">
+                      <div className="mt-2 ml-8 text-2xl">
                         {temperatureUnit$.get() === "Celsius"
                           ? `${Math.round(
                               dailyForecast.temperatureDay - 273.15,
