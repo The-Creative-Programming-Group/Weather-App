@@ -24,7 +24,7 @@ import { WiRaindrop } from "react-icons/wi";
 import cn from "classnames";
 import { PiSunglasses } from "react-icons/pi";
 import { BsWind } from "react-icons/bs";
-import {Skeleton} from "~/components/ui/skeleton";
+import { Skeleton } from "~/components/ui/skeleton";
 
 function convertWindSpeed(
   speedInMetersPerSecond: number,
@@ -228,161 +228,169 @@ const InternalHome = observer(() => {
           {temperature ? temperature : <Skeleton className="w-36 h-20" />}
         </h1>
         <p className="mt-3 text-xl">
-          {weatherData.data
-            ? weatherState({ hour: 0, icons: false })
-            : <Skeleton className="w-36 h-9" />}
+          {weatherData.data ? (
+            weatherState({ hour: 0, icons: false })
+          ) : (
+            <Skeleton className="w-36 h-9" />
+          )}
         </p>
       </div>
       <div className="flex flex-col items-center mt-12">
         <div className="rounded-md bg-gray-400 max-w-screen-xl flex justify-evenly">
           {weatherData.data?.hourlyForecast ? (
-              <>
-          {weatherData.data.hourlyForecast.map(
-            (hourlyForecast: IHourlyForecast, index: number) => {
-              let time;
-              if (hourlyForecast.time === new Date().getUTCHours()) {
-                time = "Now";
-              } else if (hourlyForecast.time === 12) {
-                time = "12PM";
-              } else if (hourlyForecast.time > 12) {
-                time = `${hourlyForecast.time - 12}PM`;
-              } else if (hourlyForecast.time === 0) {
-                time = `12AM`;
-              } else {
-                time = `${hourlyForecast.time}AM`;
-              }
-              return (
-                <div
-                  className="m-4 flex flex-col items-center w-20"
-                  key={index}
-                >
-                  <div className="mt-1.5">{time}</div>
-                  {weatherState({ hour: index, icons: true })}
-                  {hourlyForecast.temperature ? (
-                    <div>
-                      {temperatureUnit$.get() === "Celsius"
-                        ? `${Math.round(hourlyForecast.temperature - 273.15)}°C`
-                        : `${Math.round(
-                            (hourlyForecast.temperature * 9) / 5 - 459.67,
-                          )}°F`}
+            <>
+              {weatherData.data.hourlyForecast.map(
+                (hourlyForecast: IHourlyForecast, index: number) => {
+                  let time;
+                  if (hourlyForecast.time === new Date().getUTCHours()) {
+                    time = "Now";
+                  } else if (hourlyForecast.time === 12) {
+                    time = "12PM";
+                  } else if (hourlyForecast.time > 12) {
+                    time = `${hourlyForecast.time - 12}PM`;
+                  } else if (hourlyForecast.time === 0) {
+                    time = `12AM`;
+                  } else {
+                    time = `${hourlyForecast.time}AM`;
+                  }
+                  return (
+                    <div
+                      className="m-4 flex flex-col items-center w-20"
+                      key={index}
+                    >
+                      <div className="mt-1.5">{time}</div>
+                      {weatherState({ hour: index, icons: true })}
+                      {hourlyForecast.temperature ? (
+                        <div>
+                          {temperatureUnit$.get() === "Celsius"
+                            ? `${Math.round(
+                                hourlyForecast.temperature - 273.15,
+                              )}°C`
+                            : `${Math.round(
+                                (hourlyForecast.temperature * 9) / 5 - 459.67,
+                              )}°F`}
+                        </div>
+                      ) : (
+                        "Not available"
+                      )}
                     </div>
-                  ) : (
-                    "Not available"
-                  )}
-                </div>
-              );
-            },
+                  );
+                },
+              )}
+            </>
+          ) : (
+            <Skeleton className="w-screen-xl h-36" />
           )}
-                </>
-            ) : (
-                <Skeleton className="w-screen-xl h-36" />
-            )}
         </div>
         <div className="grid grid-cols-9 grid-rows-7 gap-6 max-w-screen-xl mt-6 mb-6">
           {weatherData.data?.dailyForecast ? (
-              <>
-          <div className="col-span-3 row-span-6 bg-gray-400 rounded-xl flex flex-col">
-            <span className="ml-5 mt-2">9-Day Forecast</span>
-            {weatherData.data.dailyForecast.map(
-              (dailyForecast: IDailyForecast, index: number) => {
-                let day;
-                if (index === 0) {
-                  day = "Today";
-                } else {
-                  day = new Date(dailyForecast.date).toLocaleString("en-us", {
-                    weekday: "long",
-                  });
-                }
-                return (
-                  <div
-                    className="flex items-center border-t-2 border-black mr-5 ml-5 mb-2"
-                    key={index}
-                  >
-                    <div className="w-36 text-2xl mt-2">{day}</div>
-                    <div className="mt-2 w-12">
-                      {weatherState({ day: index, icons: true })}
-                    </div>
-                    {dailyForecast.temperatureDay ? (
-                      <div className="mt-2 ml-8 text-2xl">
-                        {temperatureUnit$.get() === "Celsius"
-                          ? `${Math.round(
-                              dailyForecast.temperatureDay - 273.15,
-                            )}°C`
-                          : `${Math.round(
-                              (dailyForecast.temperatureDay * 9) / 5 - 459.67,
-                            )}°F`}
-                      </div>
-                    ) : (
-                      "Not available"
-                    )}
-                    {dailyForecast.temperatureNight ? (
-                      <div className="mt-2 ml-8 text-gray-700 text-2xl">
-                        {temperatureUnit$.get() === "Celsius"
-                          ? `${Math.round(
-                              dailyForecast.temperatureNight - 273.15,
-                            )}°C`
-                          : `${Math.round(
-                              (dailyForecast.temperatureNight * 9) / 5 - 459.67,
-                            )}°F`}
-                      </div>
-                    ) : (
-                      "Not available"
-                    )}
-                  </div>
-                );
-              },
-            )}
-          </div>
-              </>
-          ) : (
-              <Skeleton className="col-span-3 row-span-6 w-96" />
-          )}
-
-          {weatherData.data?.precipitationProbabilities ? (
-          <div className="col-start-4 col-span-4 row-span-1 bg-gray-400 rounded-md">
-            <div className="ml-4 mt-1.5 text-xl">Precipitation</div>
-            <div className="flex justify-between ml-4">
-              {Object.entries(
-                    weatherData.data.precipitationProbabilities,
-                  ).map(([key, value]) => {
-                    let raindropClass = "";
-                    if (value !== undefined && value !== null) {
-                      raindropClass = cn(
-                        "w-20",
-                        "h-20",
-                        "-mt-2",
-                        { "opacity-5": value === 0 },
-                        { "opacity-10": value > 0 && value <= 10 },
-                        { "opacity-25": value > 10 && value <= 25 },
-                        { "opacity-50": value > 25 && value <= 50 },
-                        { "opacity-75": value > 50 && value <= 75 },
-                        { "opacity-90": value > 75 && value <= 90 },
-                        { "opacity-100": value > 75 },
+            <>
+              <div className="col-span-3 row-span-6 bg-gray-400 rounded-xl flex flex-col">
+                <span className="ml-5 mt-2">9-Day Forecast</span>
+                {weatherData.data.dailyForecast.map(
+                  (dailyForecast: IDailyForecast, index: number) => {
+                    let day;
+                    if (index === 0) {
+                      day = "Today";
+                    } else {
+                      day = new Date(dailyForecast.date).toLocaleString(
+                        "en-us",
+                        {
+                          weekday: "long",
+                        },
                       );
                     }
                     return (
                       <div
-                        className="flex flex-col items-center justify-center mt-1 w-24"
-                        key={key}
+                        className="flex items-center border-t-2 border-black mr-5 ml-5 mb-2"
+                        key={index}
                       >
-                        <div className="text-sm">
-                          {key.charAt(2).toUpperCase() + key.slice(3)}
+                        <div className="w-36 text-2xl mt-2">{day}</div>
+                        <div className="mt-2 w-12">
+                          {weatherState({ day: index, icons: true })}
                         </div>
-                        <WiRaindrop className={raindropClass} />
-                        <div className="-mt-4 text-xl">{value}%</div>
+                        {dailyForecast.temperatureDay ? (
+                          <div className="mt-2 ml-8 text-2xl">
+                            {temperatureUnit$.get() === "Celsius"
+                              ? `${Math.round(
+                                  dailyForecast.temperatureDay - 273.15,
+                                )}°C`
+                              : `${Math.round(
+                                  (dailyForecast.temperatureDay * 9) / 5 -
+                                    459.67,
+                                )}°F`}
+                          </div>
+                        ) : (
+                          "Not available"
+                        )}
+                        {dailyForecast.temperatureNight ? (
+                          <div className="mt-2 ml-8 text-gray-700 text-2xl">
+                            {temperatureUnit$.get() === "Celsius"
+                              ? `${Math.round(
+                                  dailyForecast.temperatureNight - 273.15,
+                                )}°C`
+                              : `${Math.round(
+                                  (dailyForecast.temperatureNight * 9) / 5 -
+                                    459.67,
+                                )}°F`}
+                          </div>
+                        ) : (
+                          "Not available"
+                        )}
                       </div>
                     );
-                  })
-                }
-            </div>
-          </div>
-                ) : (
-                    <Skeleton className="col-start-4 col-span-4 row-span-1 w-full h-32" />
+                  },
                 )}
+              </div>
+            </>
+          ) : (
+            <Skeleton className="col-span-3 row-span-6 w-96" />
+          )}
+
+          {weatherData.data?.precipitationProbabilities ? (
+            <div className="col-start-4 col-span-4 row-span-1 bg-gray-400 rounded-md">
+              <div className="ml-4 mt-1.5 text-xl">Precipitation</div>
+              <div className="flex justify-between ml-4">
+                {Object.entries(
+                  weatherData.data.precipitationProbabilities,
+                ).map(([key, value]) => {
+                  let raindropClass = "";
+                  if (value !== undefined && value !== null) {
+                    raindropClass = cn(
+                      "w-20",
+                      "h-20",
+                      "-mt-2",
+                      { "opacity-5": value === 0 },
+                      { "opacity-10": value > 0 && value <= 10 },
+                      { "opacity-25": value > 10 && value <= 25 },
+                      { "opacity-50": value > 25 && value <= 50 },
+                      { "opacity-75": value > 50 && value <= 75 },
+                      { "opacity-90": value > 75 && value <= 90 },
+                      { "opacity-100": value > 75 },
+                    );
+                  }
+                  return (
+                    <div
+                      className="flex flex-col items-center justify-center mt-1 w-24"
+                      key={key}
+                    >
+                      <div className="text-sm">
+                        {key.charAt(2).toUpperCase() + key.slice(3)}
+                      </div>
+                      <WiRaindrop className={raindropClass} />
+                      <div className="-mt-4 text-xl">{value}%</div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          ) : (
+            <Skeleton className="col-start-4 col-span-4 row-span-1 w-full h-32" />
+          )}
 
           {weatherData.data?.feels_like ? (
-          <div className="col-start-4 col-span-2 row-start-2 row-span-2 bg-gray-400 rounded-md">
-            <div className="ml-4 mt-1.5 text-xl">Feels like</div>
+            <div className="col-start-4 col-span-2 row-start-2 row-span-2 bg-gray-400 rounded-md">
+              <div className="ml-4 mt-1.5 text-xl">Feels like</div>
               <div className="ml-4 mt-1.5 mb-1">
                 <div className="flex text-5xl">
                   {temperatureUnit$.get() === "Celsius"
@@ -403,14 +411,14 @@ const InternalHome = observer(() => {
                     : "Today's frosty weather is making even snowmen shiver!"}
                 </div>
               </div>
-          </div>
-                  ) : (
-                        <Skeleton className="col-start-4 col-span-2 row-start-2 row-span-2 h-32" />
-                    )}
+            </div>
+          ) : (
+            <Skeleton className="col-start-4 col-span-2 row-start-2 row-span-2 h-32" />
+          )}
 
           {weatherData.data?.air_quality ? (
-          <div className="col-start-4 col-span-1 row-start-4 row-span-3 bg-gray-400 rounded-md">
-            <div className="ml-2 mt-1.5 text-xl">Air quality</div>
+            <div className="col-start-4 col-span-1 row-start-4 row-span-3 bg-gray-400 rounded-md">
+              <div className="ml-2 mt-1.5 text-xl">Air quality</div>
               <div className="relative ml-3.5 mt-2 mb-2 flex items-center h-64">
                 <div className="mt-2 text-md font-medium">
                   {weatherData.data?.air_quality.toPrecision(2)} <br />
@@ -433,57 +441,57 @@ const InternalHome = observer(() => {
                   ></div>
                 </div>
               </div>
-          </div>
-                    ) : (
-                        <Skeleton className="col-start-4 col-span-1 row-start-4 row-span-3" />
-                    )}
+            </div>
+          ) : (
+            <Skeleton className="col-start-4 col-span-1 row-start-4 row-span-3" />
+          )}
 
           {weatherData.data?.visibility ? (
-          <div className="col-start-6 col-span-2 row-start-2 row-span-2 bg-gray-400 rounded-md">
-            <div className="ml-4 mt-1.5 text-xl">Visibility</div>
-            <div className="flex items-center">
-              <PiSunglasses className="ml-4 mt-2 w-16 h-16" />
+            <div className="col-start-6 col-span-2 row-start-2 row-span-2 bg-gray-400 rounded-md">
+              <div className="ml-4 mt-1.5 text-xl">Visibility</div>
+              <div className="flex items-center">
+                <PiSunglasses className="ml-4 mt-2 w-16 h-16" />
                 <div className="ml-4 mt-2 text-5xl">
                   {weatherData.data?.visibility}%
                 </div>
+              </div>
             </div>
-          </div>
-                    ) : (
-                        <Skeleton className="col-start-6 col-span-2 row-start-2 row-span-2" />
-                    )}
+          ) : (
+            <Skeleton className="col-start-6 col-span-2 row-start-2 row-span-2" />
+          )}
 
           {weatherData.data?.wind_speed && weatherData.data?.wind_pressure ? (
-          <div className="col-start-5 col-span-3 row-start-4 row-span-3 bg-gray-400 rounded-md">
-            <div className="ml-4 mt-1.5 text-xl">Wind & Pressure</div>
-            <div className="flex flex-col ml-9">
-              <BsWind className="mt-5 w-32 h-32" />
-              <div className="flex gap-10 text-xl mt-9">
-                <div>
-                  Pressure
+            <div className="col-start-5 col-span-3 row-start-4 row-span-3 bg-gray-400 rounded-md">
+              <div className="ml-4 mt-1.5 text-xl">Wind & Pressure</div>
+              <div className="flex flex-col ml-9">
+                <BsWind className="mt-5 w-32 h-32" />
+                <div className="flex gap-10 text-xl mt-9">
+                  <div>
+                    Pressure
                     <div className="mt-2">
                       {weatherData.data.wind_pressure.toPrecision(2)} Pa
                     </div>
-                </div>
-                <div>
-                  Speed
-                  {weatherData.data?.wind_speed ? (
-                    <div className="mt-2">
-                      {convertWindSpeed(
-                        weatherData.data.wind_speed,
-                        windSpeedUnit$.get(),
-                      ).toPrecision(2)}{" "}
-                      {windSpeedUnit$.get()}
-                    </div>
-                  ) : (
-                    "Loading..."
-                  )}
+                  </div>
+                  <div>
+                    Speed
+                    {weatherData.data?.wind_speed ? (
+                      <div className="mt-2">
+                        {convertWindSpeed(
+                          weatherData.data.wind_speed,
+                          windSpeedUnit$.get(),
+                        ).toPrecision(2)}{" "}
+                        {windSpeedUnit$.get()}
+                      </div>
+                    ) : (
+                      "Loading..."
+                    )}
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-                    ) : (
-                        <Skeleton className="col-start-5 col-span-3 row-start-4 row-span-3 w-96 h-96" />
-                    )}
+          ) : (
+            <Skeleton className="col-start-5 col-span-3 row-start-4 row-span-3 w-96 h-96" />
+          )}
           <div className="col-start-8 col-span-2 row-span-6 bg-gray-400 rounded-md">
             Div 7
           </div>
