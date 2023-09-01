@@ -1,7 +1,7 @@
 import React from "react";
 import Layout from "~/components/Layout";
 import { api } from "~/lib/utils/api";
-import { activeCity$, temperatureUnit$ } from "~/states";
+import {activeCity$, temperatureUnit$, windSpeedUnit$, WindSpeedUnitType} from "~/states";
 import { observer } from "@legendapp/state/react-components";
 import { IDailyForecast, IHourlyForecast } from "~/types";
 import {
@@ -18,6 +18,41 @@ import {
 import { WiRaindrop } from "react-icons/wi";
 import cn from "classnames";
 import { PiSunglasses } from "react-icons/pi";
+import {BsWind} from "react-icons/bs";
+
+function convertWindSpeed(speedInMetersPerSecond: number, unit: WindSpeedUnitType): number {
+  let convertedSpeed: number = 0;
+
+  switch (unit) {
+    case "Miles per hour":
+      convertedSpeed = speedInMetersPerSecond * 2.23694;
+      break;
+    case "Kilometers per hour":
+      convertedSpeed = speedInMetersPerSecond * 3.6;
+      break;
+    case "Knots":
+      convertedSpeed = speedInMetersPerSecond * 1.94384;
+      break;
+    case "Meters per second":
+      convertedSpeed = speedInMetersPerSecond;
+      break;
+    case "Beaufort":
+      if (speedInMetersPerSecond < 0.3) {
+        convertedSpeed = 0; // Calm
+      } else if (speedInMetersPerSecond < 1.6) {
+        convertedSpeed = 1; // Light air
+      } else if (speedInMetersPerSecond < 3.4) {
+        convertedSpeed = 2; // Light breeze
+      } else if (speedInMetersPerSecond < 5.5) {
+        convertedSpeed = 3; // Gentle breeze
+      } // The scale continues up to force 12 - hurricane
+      break;
+    default:
+      throw new Error("Invalid unit for wind speed");
+  }
+
+  return convertedSpeed;
+}
 
 const InternalHome = observer(() => {
   const weatherData = api.weather.getWeather.useQuery(
@@ -389,7 +424,32 @@ const InternalHome = observer(() => {
             </div>
           </div>
           <div className="col-start-5 col-span-3 row-start-4 row-span-3 bg-gray-400 rounded-md">
-            Div 6
+            <div className="ml-4 mt-1.5 text-xl">Wind & Pressure</div>
+            <div className="flex flex-col ml-9">
+              <BsWind className="mt-5 w-32 h-32" />
+              <div className="flex gap-10 text-xl mt-9">
+                <div>
+                Pressure
+                {weatherData.data?.wind_pressure ? (
+                    <div className="mt-2">
+                        {weatherData.data.wind_pressure.toPrecision(2)} Pa
+                    </div>
+                    ) : (
+                    "Loading..."
+                )}
+                </div>
+                <div>
+                Speed
+                {weatherData.data?.wind_speed ? (
+                    <div className="mt-2">
+                        {convertWindSpeed(weatherData.data.wind_speed, windSpeedUnit$.get()).toPrecision(2)} {windSpeedUnit$.get()}
+                    </div>
+                    ) : (
+                    "Loading..."
+                )}
+                </div>
+              </div>
+            </div>
           </div>
           <div className="col-start-8 col-span-2 row-span-6 bg-gray-400 rounded-md">
             Div 7
