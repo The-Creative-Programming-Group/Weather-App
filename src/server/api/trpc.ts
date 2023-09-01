@@ -90,7 +90,7 @@ const t = initTRPC.context<typeof createTRPCContext>().create({
 
 const ratelimit = new Ratelimit({
   redis,
-  limiter: Ratelimit.slidingWindow(10, "1h"),
+  limiter: Ratelimit.slidingWindow(1, "1s"),
   analytics: true,
   prefix: "@upstash/ratelimit",
 });

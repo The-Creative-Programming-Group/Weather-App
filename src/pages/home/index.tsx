@@ -24,6 +24,7 @@ import { WiRaindrop } from "react-icons/wi";
 import cn from "classnames";
 import { PiSunglasses } from "react-icons/pi";
 import { BsWind } from "react-icons/bs";
+import {Skeleton} from "~/components/ui/skeleton";
 
 function convertWindSpeed(
   speedInMetersPerSecond: number,
@@ -224,17 +225,19 @@ const InternalHome = observer(() => {
       <div className="mt-24 flex items-center flex-col">
         <h1 className="text-7xl">{activeCity$.name.get()}</h1>
         <h1 className="text-7xl mt-3 text-gray-500">
-          {temperature ? temperature : "Loading..."}
+          {temperature ? temperature : <Skeleton className="w-36 h-20" />}
         </h1>
         <p className="mt-3 text-xl">
-          {weatherState({ hour: 0, icons: false })
+          {weatherData.data
             ? weatherState({ hour: 0, icons: false })
-            : "Loading..."}
+            : <Skeleton className="w-36 h-9" />}
         </p>
       </div>
       <div className="flex flex-col items-center mt-12">
         <div className="rounded-md bg-gray-400 max-w-screen-xl flex justify-evenly">
-          {weatherData.data?.hourlyForecast.map(
+          {weatherData.data?.hourlyForecast ? (
+              <>
+          {weatherData.data.hourlyForecast.map(
             (hourlyForecast: IHourlyForecast, index: number) => {
               let time;
               if (hourlyForecast.time === new Date().getUTCHours()) {
@@ -250,7 +253,7 @@ const InternalHome = observer(() => {
               }
               return (
                 <div
-                  className="m-3 flex flex-col items-center w-20"
+                  className="m-4 flex flex-col items-center w-20"
                   key={index}
                 >
                   <div className="mt-1.5">{time}</div>
@@ -264,17 +267,23 @@ const InternalHome = observer(() => {
                           )}°F`}
                     </div>
                   ) : (
-                    "Loading..."
+                    "Not available"
                   )}
                 </div>
               );
             },
           )}
+                </>
+            ) : (
+                <Skeleton className="w-screen-xl h-36" />
+            )}
         </div>
         <div className="grid grid-cols-9 grid-rows-7 gap-6 max-w-screen-xl mt-6 mb-6">
+          {weatherData.data?.dailyForecast ? (
+              <>
           <div className="col-span-3 row-span-6 bg-gray-400 rounded-xl flex flex-col">
             <span className="ml-5 mt-2">9-Day Forecast</span>
-            {weatherData.data?.dailyForecast.map(
+            {weatherData.data.dailyForecast.map(
               (dailyForecast: IDailyForecast, index: number) => {
                 let day;
                 if (index === 0) {
@@ -304,7 +313,7 @@ const InternalHome = observer(() => {
                             )}°F`}
                       </div>
                     ) : (
-                      "Loading"
+                      "Not available"
                     )}
                     {dailyForecast.temperatureNight ? (
                       <div className="mt-2 ml-8 text-gray-700 text-2xl">
@@ -317,19 +326,24 @@ const InternalHome = observer(() => {
                             )}°F`}
                       </div>
                     ) : (
-                      "Loading"
+                      "Not available"
                     )}
                   </div>
                 );
               },
             )}
           </div>
+              </>
+          ) : (
+              <Skeleton className="col-span-3 row-span-6 w-96" />
+          )}
+
+          {weatherData.data?.precipitationProbabilities ? (
           <div className="col-start-4 col-span-4 row-span-1 bg-gray-400 rounded-md">
             <div className="ml-4 mt-1.5 text-xl">Precipitation</div>
             <div className="flex justify-between ml-4">
-              {weatherData.data?.precipitationProbabilities
-                ? Object.entries(
-                    weatherData.data?.precipitationProbabilities,
+              {Object.entries(
+                    weatherData.data.precipitationProbabilities,
                   ).map(([key, value]) => {
                     let raindropClass = "";
                     if (value !== undefined && value !== null) {
@@ -359,12 +373,16 @@ const InternalHome = observer(() => {
                       </div>
                     );
                   })
-                : "Loading..."}
+                }
             </div>
           </div>
+                ) : (
+                    <Skeleton className="col-start-4 col-span-4 row-span-1 w-full h-32" />
+                )}
+
+          {weatherData.data?.feels_like ? (
           <div className="col-start-4 col-span-2 row-start-2 row-span-2 bg-gray-400 rounded-md">
             <div className="ml-4 mt-1.5 text-xl">Feels like</div>
-            {weatherData.data?.feels_like ? (
               <div className="ml-4 mt-1.5 mb-1">
                 <div className="flex text-5xl">
                   {temperatureUnit$.get() === "Celsius"
@@ -385,13 +403,14 @@ const InternalHome = observer(() => {
                     : "Today's frosty weather is making even snowmen shiver!"}
                 </div>
               </div>
-            ) : (
-              "Loading..."
-            )}
           </div>
+                  ) : (
+                        <Skeleton className="col-start-4 col-span-2 row-start-2 row-span-2 h-32" />
+                    )}
+
+          {weatherData.data?.air_quality ? (
           <div className="col-start-4 col-span-1 row-start-4 row-span-3 bg-gray-400 rounded-md">
             <div className="ml-2 mt-1.5 text-xl">Air quality</div>
-            {weatherData.data?.air_quality ? (
               <div className="relative ml-3.5 mt-2 mb-2 flex items-center h-64">
                 <div className="mt-2 text-md font-medium">
                   {weatherData.data?.air_quality.toPrecision(2)} <br />
@@ -414,23 +433,26 @@ const InternalHome = observer(() => {
                   ></div>
                 </div>
               </div>
-            ) : (
-              "Loading..."
-            )}
           </div>
+                    ) : (
+                        <Skeleton className="col-start-4 col-span-1 row-start-4 row-span-3" />
+                    )}
+
+          {weatherData.data?.visibility ? (
           <div className="col-start-6 col-span-2 row-start-2 row-span-2 bg-gray-400 rounded-md">
             <div className="ml-4 mt-1.5 text-xl">Visibility</div>
             <div className="flex items-center">
               <PiSunglasses className="ml-4 mt-2 w-16 h-16" />
-              {weatherData.data?.visibility ? (
                 <div className="ml-4 mt-2 text-5xl">
                   {weatherData.data?.visibility}%
                 </div>
-              ) : (
-                "Loading..."
-              )}
             </div>
           </div>
+                    ) : (
+                        <Skeleton className="col-start-6 col-span-2 row-start-2 row-span-2" />
+                    )}
+
+          {weatherData.data?.wind_speed && weatherData.data?.wind_pressure ? (
           <div className="col-start-5 col-span-3 row-start-4 row-span-3 bg-gray-400 rounded-md">
             <div className="ml-4 mt-1.5 text-xl">Wind & Pressure</div>
             <div className="flex flex-col ml-9">
@@ -438,13 +460,9 @@ const InternalHome = observer(() => {
               <div className="flex gap-10 text-xl mt-9">
                 <div>
                   Pressure
-                  {weatherData.data?.wind_pressure ? (
                     <div className="mt-2">
                       {weatherData.data.wind_pressure.toPrecision(2)} Pa
                     </div>
-                  ) : (
-                    "Loading..."
-                  )}
                 </div>
                 <div>
                   Speed
@@ -463,6 +481,9 @@ const InternalHome = observer(() => {
               </div>
             </div>
           </div>
+                    ) : (
+                        <Skeleton className="col-start-5 col-span-3 row-start-4 row-span-3 w-96 h-96" />
+                    )}
           <div className="col-start-8 col-span-2 row-span-6 bg-gray-400 rounded-md">
             Div 7
           </div>
