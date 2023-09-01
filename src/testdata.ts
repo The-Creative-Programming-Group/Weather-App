@@ -133,16 +133,16 @@ export const cities: ICity[] = [
     name: "Paris",
     population: 214969,
     coordinates: {
-        lat: 48.8566,
-        lon: 2.3522,
+      lat: 48.8566,
+      lon: 2.3522,
     },
   },
   {
     name: "Peking",
     population: 21893095,
     coordinates: {
-    lat: 39.9042,
-    lon: 116.4074,
-    }
+      lat: 39.9042,
+      lon: 116.4074,
+    },
   },
 ];
