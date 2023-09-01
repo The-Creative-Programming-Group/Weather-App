@@ -1,7 +1,12 @@
 import React from "react";
 import Layout from "~/components/Layout";
 import { api } from "~/lib/utils/api";
-import {activeCity$, temperatureUnit$, windSpeedUnit$, WindSpeedUnitType} from "~/states";
+import {
+  activeCity$,
+  temperatureUnit$,
+  windSpeedUnit$,
+  WindSpeedUnitType,
+} from "~/states";
 import { observer } from "@legendapp/state/react-components";
 import { IDailyForecast, IHourlyForecast } from "~/types";
 import {
@@ -18,9 +23,12 @@ import {
 import { WiRaindrop } from "react-icons/wi";
 import cn from "classnames";
 import { PiSunglasses } from "react-icons/pi";
-import {BsWind} from "react-icons/bs";
+import { BsWind } from "react-icons/bs";
 
-function convertWindSpeed(speedInMetersPerSecond: number, unit: WindSpeedUnitType): number {
+function convertWindSpeed(
+  speedInMetersPerSecond: number,
+  unit: WindSpeedUnitType,
+): number {
   let convertedSpeed: number = 0;
 
   switch (unit) {
@@ -429,24 +437,28 @@ const InternalHome = observer(() => {
               <BsWind className="mt-5 w-32 h-32" />
               <div className="flex gap-10 text-xl mt-9">
                 <div>
-                Pressure
-                {weatherData.data?.wind_pressure ? (
+                  Pressure
+                  {weatherData.data?.wind_pressure ? (
                     <div className="mt-2">
-                        {weatherData.data.wind_pressure.toPrecision(2)} Pa
+                      {weatherData.data.wind_pressure.toPrecision(2)} Pa
                     </div>
-                    ) : (
+                  ) : (
                     "Loading..."
-                )}
+                  )}
                 </div>
                 <div>
-                Speed
-                {weatherData.data?.wind_speed ? (
+                  Speed
+                  {weatherData.data?.wind_speed ? (
                     <div className="mt-2">
-                        {convertWindSpeed(weatherData.data.wind_speed, windSpeedUnit$.get()).toPrecision(2)} {windSpeedUnit$.get()}
+                      {convertWindSpeed(
+                        weatherData.data.wind_speed,
+                        windSpeedUnit$.get(),
+                      ).toPrecision(2)}{" "}
+                      {windSpeedUnit$.get()}
                     </div>
-                    ) : (
+                  ) : (
                     "Loading..."
-                )}
+                  )}
                 </div>
               </div>
             </div>
