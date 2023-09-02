@@ -25,6 +25,12 @@ import cn from "classnames";
 import { PiSunglasses } from "react-icons/pi";
 import { BsWind } from "react-icons/bs";
 import { Skeleton } from "~/components/ui/skeleton";
+import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc";
+import timezone from "dayjs/plugin/timezone";
+
+dayjs.extend(utc);
+dayjs.extend(timezone);
 
 function convertWindSpeed(
   speedInMetersPerSecond: number,
@@ -65,7 +71,7 @@ function convertWindSpeed(
 
 const InternalHome = observer(() => {
   const weatherData = api.weather.getWeather.useQuery(
-    { coordinates: activeCity$.coordinates.get() },
+    { coordinates: activeCity$.coordinates.get(), timezone: dayjs.tz.guess() },
     { refetchOnWindowFocus: false },
   );
   let temperature = undefined;
@@ -242,7 +248,7 @@ const InternalHome = observer(() => {
               {weatherData.data.hourlyForecast.map(
                 (hourlyForecast: IHourlyForecast, index: number) => {
                   let time;
-                  if (hourlyForecast.time === new Date().getUTCHours()) {
+                  if (hourlyForecast.time === new Date().getHours()) {
                     time = "Now";
                   } else if (hourlyForecast.time === 12) {
                     time = "12PM";

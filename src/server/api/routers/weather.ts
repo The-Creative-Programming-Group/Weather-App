@@ -8,6 +8,12 @@ import { env } from "~/env.mjs";
 import axios from "axios";
 import { IDailyForecast, IHourlyForecast } from "~/types";
 import { log } from "next-axiom";
+import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc";
+import timezone from "dayjs/plugin/timezone";
+
+dayjs.extend(utc);
+dayjs.extend(timezone);
 
 /**
  * Zod schemas provide runtime data validation ensuring type safety,
@@ -150,11 +156,13 @@ export const weatherRouter = createTRPCRouter({
           lat: z.number().min(-90).max(90),
           lon: z.number().min(-180).max(180),
         }),
+        timezone: z.string()
       }),
     )
     .query(async ({ input, ctx }) => {
       log.info("User requested weather data for coordinates", {
         coordinates: input.coordinates,
+        timezone: input.timezone,
         user: ctx.ip,
       });
       // OpenWeatherMap API
@@ -268,7 +276,7 @@ export const weatherRouter = createTRPCRouter({
         const windSpeed = hourlyData?.hourly.windspeed_10m[i];
         // console.log(cloudcover);
 
-        const time = i % 24;
+        const time = (dayjs().tz(input.timezone).hour() + i - 13) % 24;
 
         hourlyForecast.push({
           time,
