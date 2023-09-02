@@ -156,7 +156,7 @@ export const weatherRouter = createTRPCRouter({
           lat: z.number().min(-90).max(90),
           lon: z.number().min(-180).max(180),
         }),
-        timezone: z.string()
+        timezone: z.string(),
       }),
     )
     .query(async ({ input, ctx }) => {
