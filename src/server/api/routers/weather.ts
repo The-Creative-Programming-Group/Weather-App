@@ -168,7 +168,7 @@ export const weatherRouter = createTRPCRouter({
       // OpenWeatherMap API
       const urlWeather = `https://api.openweathermap.org/data/2.5/weather?lat=${input.coordinates.lat}&lon=${input.coordinates.lon}&appid=${env.OPEN_WEATHER_API_KEY}`;
       // Open Meteo
-      const urlHourlyForecast = `https://api.open-meteo.com/v1/forecast?latitude=${input.coordinates.lat}&longitude=${input.coordinates.lon}&hourly=temperature_2m,rain,showers,snowfall,precipitation_probability,cloudcover,windspeed_10m&forecast_days=9`;
+      const urlHourlyForecast = `https://api.open-meteo.com/v1/forecast?latitude=${input.coordinates.lat}&longitude=${input.coordinates.lon}&hourly=temperature_2m,rain,showers,snowfall,precipitation_probability,cloudcover,windspeed_10m&forecast_days=9&timezone=${input.timezone}`;
       const urlAirQuality = `https://air-quality-api.open-meteo.com/v1/air-quality?latitude=${input.coordinates.lat}&longitude=${input.coordinates.lon}&hourly=pm10,pm2_5,nitrogen_dioxide`;
 
       let [hourlyResult, presentWeatherResult, presentAirQualityResult] =
@@ -266,7 +266,7 @@ export const weatherRouter = createTRPCRouter({
 
       const hourlyForecast: IHourlyForecast[] = [];
 
-      const currentHour = new Date().getUTCHours();
+      const currentHour = dayjs().tz(input.timezone).hour();
       for (let i = currentHour; i < currentHour + 15; i++) {
         const temperature = hourlyData?.hourly.temperature_2m[i];
         const rain = hourlyData?.hourly.rain[i];
@@ -276,7 +276,7 @@ export const weatherRouter = createTRPCRouter({
         const windSpeed = hourlyData?.hourly.windspeed_10m[i];
         // console.log(cloudcover);
 
-        const time = (dayjs().tz(input.timezone).hour() + i - 15) % 24;
+        const time = i % 24;
 
         hourlyForecast.push({
           time,
