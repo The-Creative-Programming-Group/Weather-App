@@ -276,7 +276,7 @@ export const weatherRouter = createTRPCRouter({
         const windSpeed = hourlyData?.hourly.windspeed_10m[i];
         // console.log(cloudcover);
 
-        const time = (dayjs().tz(input.timezone).hour() + i - 13) % 24;
+        const time = (dayjs().tz(input.timezone).hour() + i - 14) % 24;
 
         hourlyForecast.push({
           time,
