@@ -69,60 +69,60 @@ const Layout: React.FC<LayoutProps> = ({ title, children, footer }) => {
             <div className="text-sm w-28">Made with ♥️ by</div>
             <div className="flex flex-col items-center">
               <Link
-                  href="https://www.roessner.tech"
-                  className="relative group inline-block"
+                href="https://www.roessner.tech"
+                className="relative group inline-block"
               >
                 <Image
-                    src={jakobProfile}
-                    alt="Jakob's logo"
-                    width="50"
-                    height="50"
-                    className="rounded-full transition-transform transform duration-300 group-hover:-translate-x-2 group-hover:scale-105"
+                  src={jakobProfile}
+                  alt="Jakob's logo"
+                  width="50"
+                  height="50"
+                  className="rounded-full transition-transform transform duration-300 group-hover:-translate-x-2 group-hover:scale-105"
                 />
               </Link>
               <p className="text-sm">Founder</p>
             </div>
             <div className="flex flex-col items-center ml-6">
               <Link
-                  href="https://github.com/dicsiluks"
-                  className="relative group inline-block"
+                href="https://github.com/dicsiluks"
+                className="relative group inline-block"
               >
                 <Image
-                    src={dicsiluksProfile}
-                    alt="dicsiluks' logo"
-                    width="50"
-                    height="50"
-                    className="rounded-full transition-transform transform duration-300 group-hover:-translate-x-2 group-hover:scale-105"
+                  src={dicsiluksProfile}
+                  alt="dicsiluks' logo"
+                  width="50"
+                  height="50"
+                  className="rounded-full transition-transform transform duration-300 group-hover:-translate-x-2 group-hover:scale-105"
                 />
               </Link>
               <p className="text-sm">Designer</p>
             </div>
             <div className="flex flex-col items-center ml-6">
               <Link
-                  href="https://www.schurig.tech"
-                  className="relative group inline-block"
+                href="https://www.schurig.tech"
+                className="relative group inline-block"
               >
                 <Image
-                    src={fabiusProfile}
-                    alt="Fabius' logo"
-                    width="50"
-                    height="50"
-                    className="rounded-full transition-transform transform duration-300 group-hover:-translate-x-2 group-hover:scale-105"
+                  src={fabiusProfile}
+                  alt="Fabius' logo"
+                  width="50"
+                  height="50"
+                  className="rounded-full transition-transform transform duration-300 group-hover:-translate-x-2 group-hover:scale-105"
                 />
               </Link>
               <p className="text-sm">Engineer</p>
             </div>
             <div className="flex flex-col items-center ml-6">
               <Link
-                  href="https://github.com/dongjin2008"
-                  className="relative group inline-block"
+                href="https://github.com/dongjin2008"
+                className="relative group inline-block"
               >
                 <Image
-                    src={jakeProfile}
-                    alt="Jake's logo"
-                    width="50"
-                    height="50"
-                    className="rounded-full transition-transform transform duration-300 group-hover:-translate-x-2 group-hover:scale-105"
+                  src={jakeProfile}
+                  alt="Jake's logo"
+                  width="50"
+                  height="50"
+                  className="rounded-full transition-transform transform duration-300 group-hover:-translate-x-2 group-hover:scale-105"
                 />
               </Link>
               <p className="text-sm text-center">Designer & Engineer</p>
@@ -190,15 +190,15 @@ const Layout: React.FC<LayoutProps> = ({ title, children, footer }) => {
             </div>
             <div className="flex flex-col items-center ml-6">
               <Link
-                  href="https://github.com/dongjin2008"
-                  className="relative group inline-block"
+                href="https://github.com/dongjin2008"
+                className="relative group inline-block"
               >
                 <Image
-                    src={jakeProfile}
-                    alt="Jake's logo"
-                    width="50"
-                    height="50"
-                    className="rounded-full transition-transform transform duration-300 group-hover:-translate-x-2 group-hover:scale-105"
+                  src={jakeProfile}
+                  alt="Jake's logo"
+                  width="50"
+                  height="50"
+                  className="rounded-full transition-transform transform duration-300 group-hover:-translate-x-2 group-hover:scale-105"
                 />
               </Link>
               <p className="text-sm text-center">Designer & Engineer</p>
