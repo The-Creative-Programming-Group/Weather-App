@@ -223,6 +223,9 @@ export const weatherRouter = createTRPCRouter({
           data.hourly.pm2_5 = data.hourly.pm2_5.filter(
             (value) => value !== null,
           );
+          data.hourly.nitrogen_dioxide = data.hourly.nitrogen_dioxide.filter(
+            (value) => value !== null,
+          );
 
           presentAirQuality = PresentAirQualitySchema.parse(data);
         } catch (error) {
