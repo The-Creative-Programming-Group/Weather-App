@@ -28,6 +28,9 @@ import { Skeleton } from "~/components/ui/skeleton";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 import timezone from "dayjs/plugin/timezone";
+import dynamic from "next/dynamic";
+
+const Map = dynamic(() => import("~/components/ui/map"), { ssr: false });
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
@@ -225,6 +228,8 @@ const InternalHome = observer(() => {
     }
     return "Sunny";
   };
+
+  const mapPosition: [number, number] = [activeCity$.coordinates.lat.get(), activeCity$.coordinates.lon.get()];
 
   return (
     <Layout>
@@ -499,8 +504,8 @@ const InternalHome = observer(() => {
             <Skeleton className="col-start-5 col-span-3 row-start-4 row-span-3 w-96 h-96" />
           )}
           <div className="col-start-8 col-span-2 row-span-6 bg-gray-400 rounded-md">
-            Div 7
-          </div>
+            <Map position={mapPosition} className="w-full h-full roundend-md"/>
+            </div>
         </div>
       </div>
     </Layout>
