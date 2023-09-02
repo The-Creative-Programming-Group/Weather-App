@@ -15,7 +15,7 @@ const Map = ({
   return (
     <MapContainer
       center={position}
-      zoom={13}
+      zoom={10}
       scrollWheelZoom={false}
       className={className}
     >
