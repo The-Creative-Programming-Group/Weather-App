@@ -8,6 +8,7 @@ import Image from "next/image";
 import dicsiluksProfile from "~/assets/dicsiluks-profile.webp";
 import jakobProfile from "~/assets/jakob-profile.webp";
 import fabiusProfile from "~/assets/fabius-profile.jpg";
+import jakeProfile from "~/assets/jake-profile.png";
 
 interface LayoutProps {
   title?: string;
@@ -53,11 +54,7 @@ const Layout: React.FC<LayoutProps> = ({ title, children, footer }) => {
         {children}
       </main>
       {footer == "white" ? (
-        <footer className="absolute w-full bg-[#adacb5] pt-8 text-xl text-black">
-          <div className="mb-3 ml-3">© - Weather.io</div>
-        </footer>
-      ) : (
-        <footer className="absolute w-full bg-[#2d3142] text-xl text-white flex h-20 items-center">
+        <footer className="absolute w-full bg-[#adacb5] text-xl text-black flex h-24 items-center">
           <div className="ml-5 w-52">© - Weather.io</div>
           <Link href="https://github.com/The-Creative-Programming-Group/Weather-App">
             <AiFillGithub className="ml-5 text-3xl hover:text-gray-400 transition duration-500 ease-in-out" />
@@ -68,7 +65,83 @@ const Layout: React.FC<LayoutProps> = ({ title, children, footer }) => {
               Legal
             </Link>
           </div>
-          <div className="absolute mr-12 flex justify-between items-center w-96 right-0">
+          <div className="absolute mr-12 flex justify-between items-center w-1/4 right-0">
+            <div className="text-sm w-28">Made with ♥️ by</div>
+            <div className="flex flex-col items-center">
+              <Link
+                  href="https://www.roessner.tech"
+                  className="relative group inline-block"
+              >
+                <Image
+                    src={jakobProfile}
+                    alt="Jakob's logo"
+                    width="50"
+                    height="50"
+                    className="rounded-full transition-transform transform duration-300 group-hover:-translate-x-2 group-hover:scale-105"
+                />
+              </Link>
+              <p className="text-sm">Founder</p>
+            </div>
+            <div className="flex flex-col items-center ml-6">
+              <Link
+                  href="https://github.com/dicsiluks"
+                  className="relative group inline-block"
+              >
+                <Image
+                    src={dicsiluksProfile}
+                    alt="dicsiluks' logo"
+                    width="50"
+                    height="50"
+                    className="rounded-full transition-transform transform duration-300 group-hover:-translate-x-2 group-hover:scale-105"
+                />
+              </Link>
+              <p className="text-sm">Designer</p>
+            </div>
+            <div className="flex flex-col items-center ml-6">
+              <Link
+                  href="https://www.schurig.tech"
+                  className="relative group inline-block"
+              >
+                <Image
+                    src={fabiusProfile}
+                    alt="Fabius' logo"
+                    width="50"
+                    height="50"
+                    className="rounded-full transition-transform transform duration-300 group-hover:-translate-x-2 group-hover:scale-105"
+                />
+              </Link>
+              <p className="text-sm">Engineer</p>
+            </div>
+            <div className="flex flex-col items-center ml-6">
+              <Link
+                  href="https://github.com/dongjin2008"
+                  className="relative group inline-block"
+              >
+                <Image
+                    src={jakeProfile}
+                    alt="Jake's logo"
+                    width="50"
+                    height="50"
+                    className="rounded-full transition-transform transform duration-300 group-hover:-translate-x-2 group-hover:scale-105"
+                />
+              </Link>
+              <p className="text-sm text-center">Designer & Engineer</p>
+            </div>
+          </div>
+        </footer>
+      ) : (
+        <footer className="absolute w-full bg-[#2d3142] text-xl text-white flex h-24 items-center">
+          <div className="ml-5 w-52">© - Weather.io</div>
+          <Link href="https://github.com/The-Creative-Programming-Group/Weather-App">
+            <AiFillGithub className="ml-5 text-3xl hover:text-gray-400 transition duration-500 ease-in-out" />
+          </Link>
+          <div className="flex justify-center w-full mr-72">
+            {" "}
+            <Link href="/legal" className="flex justify-center underline">
+              Legal
+            </Link>
+          </div>
+          <div className="absolute mr-12 flex justify-between items-center w-1/4 right-0">
             <div className="text-sm w-28">Made with ♥️ by</div>
             <div className="flex flex-col items-center">
               <Link
@@ -77,7 +150,7 @@ const Layout: React.FC<LayoutProps> = ({ title, children, footer }) => {
               >
                 <Image
                   src={jakobProfile}
-                  alt="jakobs logo"
+                  alt="Jakob's logo"
                   width="50"
                   height="50"
                   className="rounded-full transition-transform transform duration-300 group-hover:-translate-x-2 group-hover:scale-105"
@@ -92,7 +165,7 @@ const Layout: React.FC<LayoutProps> = ({ title, children, footer }) => {
               >
                 <Image
                   src={dicsiluksProfile}
-                  alt="dicsiluks logo"
+                  alt="dicsiluks' logo"
                   width="50"
                   height="50"
                   className="rounded-full transition-transform transform duration-300 group-hover:-translate-x-2 group-hover:scale-105"
@@ -107,13 +180,28 @@ const Layout: React.FC<LayoutProps> = ({ title, children, footer }) => {
               >
                 <Image
                   src={fabiusProfile}
-                  alt="Fabius logo"
+                  alt="Fabius' logo"
                   width="50"
                   height="50"
                   className="rounded-full transition-transform transform duration-300 group-hover:-translate-x-2 group-hover:scale-105"
                 />
               </Link>
               <p className="text-sm">Engineer</p>
+            </div>
+            <div className="flex flex-col items-center ml-6">
+              <Link
+                  href="https://github.com/dongjin2008"
+                  className="relative group inline-block"
+              >
+                <Image
+                    src={jakeProfile}
+                    alt="Jake's logo"
+                    width="50"
+                    height="50"
+                    className="rounded-full transition-transform transform duration-300 group-hover:-translate-x-2 group-hover:scale-105"
+                />
+              </Link>
+              <p className="text-sm text-center">Designer & Engineer</p>
             </div>
           </div>
         </footer>
