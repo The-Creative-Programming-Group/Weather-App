@@ -464,10 +464,14 @@ export const weatherRouter = createTRPCRouter({
         // Present weather in Kelvin NOT daily average
         temperature: presentWeather?.main.temp,
         highestTemperature: Math.max(
-            ...hourlyForecast?.map((hourlyForecast) => hourlyForecast.temperature).filter((temp): temp is number => temp !== undefined) ?? []
+          ...(hourlyForecast
+            ?.map((hourlyForecast) => hourlyForecast.temperature)
+            .filter((temp): temp is number => temp !== undefined) ?? []),
         ),
         minimumTemperature: Math.min(
-            ...hourlyForecast?.map((hourlyForecast) => hourlyForecast.temperature).filter((temp): temp is number => temp !== undefined) ?? []
+          ...(hourlyForecast
+            ?.map((hourlyForecast) => hourlyForecast.temperature)
+            .filter((temp): temp is number => temp !== undefined) ?? []),
         ),
         // Present weather in Kelvin
         feels_like: presentWeather?.main.feels_like,
