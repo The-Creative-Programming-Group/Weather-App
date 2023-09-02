@@ -177,7 +177,7 @@ export const weatherRouter = createTRPCRouter({
       if (hourlyResult.status === "fulfilled") {
         try {
           hourlyData = HourlyWeatherSchema.parse(hourlyResult.value.data);
-          // log.debug(hourlyData);
+          console.log(hourlyData);
         } catch (error) {
           if (error instanceof z.ZodError) {
             log.error("Zod Errors", error.issues);
@@ -464,15 +464,11 @@ export const weatherRouter = createTRPCRouter({
         // Present weather in Kelvin NOT daily average
         temperature: presentWeather?.main.temp,
         highestTemperature: Math.max(
-          ...(hourlyForecast
-            ?.map((hourlyForecast) => hourlyForecast.temperature)
-            .filter((temp): temp is number => temp !== undefined) ?? []),
-        ),
+            ...hourlyData?.hourly.temperature_2m.slice(0, 23) ?? [],
+        ) + 273.15,
         minimumTemperature: Math.min(
-          ...(hourlyForecast
-            ?.map((hourlyForecast) => hourlyForecast.temperature)
-            .filter((temp): temp is number => temp !== undefined) ?? []),
-        ),
+            ...hourlyData?.hourly.temperature_2m.slice(0, 23) ?? [],
+        ) + 273.15,
         // Present weather in Kelvin
         feels_like: presentWeather?.main.feels_like,
         // In meters per second
