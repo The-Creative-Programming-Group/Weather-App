@@ -10,7 +10,7 @@ import background from "~/assets/background.png";
 import dynamic from "next/dynamic";
 import "react-toastify/dist/ReactToastify.css";
 const DraggableMarker = dynamic(
-  () => import("../../components/ui/DraggableMarker"),
+  () => import("../../components/ui/draggable-marker"),
   { ssr: false },
 );
 
