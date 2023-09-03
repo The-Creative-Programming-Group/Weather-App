@@ -7,7 +7,7 @@ import "leaflet-defaulticon-compatibility";
 const Map = ({
   position,
   className,
-    children,
+  children,
 }: {
   position: [number, number];
   className?: string;
