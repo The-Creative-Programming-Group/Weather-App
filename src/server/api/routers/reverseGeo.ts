@@ -1,8 +1,5 @@
 import { z } from "zod";
-import {
-  createTRPCRouter,
-  rateLimitedProcedure,
-} from "~/server/api/trpc";
+import { createTRPCRouter, rateLimitedProcedure } from "~/server/api/trpc";
 import { env } from "~/env.mjs";
 import axios from "axios";
 import { log } from "next-axiom";
@@ -23,27 +20,28 @@ export const reverseGeoRouter = createTRPCRouter({
           lat: z.number(),
           lng: z.number(),
         }),
-      })
+      }),
     )
     .query(async ({ input }) => {
       log.info("User requested location data for coordiantes", {
         coordinates: input.coordinates,
-      })
+      });
 
-      const urlReverseGeo = `https://api.api-ninjas.com/v1/reversegeocoding?lat=${input.coordinates.lat.toString()}&lon=${input.coordinates.lng.toString}`
+      const urlReverseGeo = `https://api.api-ninjas.com/v1/reversegeocoding?lat=${input.coordinates.lat.toString()}&lon=${
+        input.coordinates.lng.toString
+      }`;
 
-      let reverseGeoResult =
-        axios.get<ReverseGeo>(urlReverseGeo, {
-          headers: {
-            'X-Api-Key': `${env.API_NINJAS_API_KEY}`,
-          }
-        })
-      
+      let reverseGeoResult = axios.get<ReverseGeo>(urlReverseGeo, {
+        headers: {
+          "X-Api-Key": `${env.API_NINJAS_API_KEY}`,
+        },
+      });
+
       let reverseGeoData: ReverseGeo = undefined;
 
       reverseGeoData = reverseGeoSchema.parse((await reverseGeoResult).data);
       return {
         city: reverseGeoData?.name,
       };
-    })
-})
+    }),
+});

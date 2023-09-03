@@ -5,7 +5,7 @@ import Image from "next/image";
 import { cities, ICity } from "~/testdata";
 import { activeCity$, addedCities$ } from "~/states";
 import { toast, ToastContainer } from "react-toastify";
-import search1Image from "~/assets/search1.png"
+import search1Image from "~/assets/search1.png";
 import background from "~/assets/background.png";
 import dynamic from "next/dynamic";
 import "react-toastify/dist/ReactToastify.css";
@@ -165,15 +165,14 @@ const Search = () => {
         })}
 
         <div className="absolute mt-24 left-1/2 transform -translate-x-1/2 w-3/5 h-128 border-solid border-[#2d3142] border-8">
-          <DraggableMarker className="w-full h-full"/>
-                </div>
-              <button
-              onClick={checkCity}
-              className="absolute z-30 bottom-14 right-1 w-40 h-10 text-white bg-[#2d3142] rounded text-2xl hover:shadow-2xl transition duration-500 ease-in-out"
-            >
-              <p>{"Continue ->"}</p>
-            </button>
-
+          <DraggableMarker className="w-full h-full" />
+        </div>
+        <button
+          onClick={checkCity}
+          className="absolute z-30 bottom-14 right-1 w-40 h-10 text-white bg-[#2d3142] rounded text-2xl hover:shadow-2xl transition duration-500 ease-in-out"
+        >
+          <p>{"Continue ->"}</p>
+        </button>
       </div>
     </>
   );
