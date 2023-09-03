@@ -468,7 +468,10 @@ export const weatherRouter = createTRPCRouter({
       });
 
       return {
-        time: new Date(),
+        time: {
+          time: dayjs().tz(input.timezone).format(),
+          timezone: input.timezone,
+        },
         // Present weather in Kelvin NOT daily average
         temperature: presentWeather?.main.temp,
         // In Kelvin
@@ -501,6 +504,10 @@ export const weatherRouter = createTRPCRouter({
         dailyForecast,
         // In percentages
         cloudcover: hourlyForecast[0]?.cloudcover,
+        // Dayjs timestamp
+        sunrise: dayjs.unix(presentWeather?.sys.sunrise ?? 0).tz(input.timezone).format(),
+        // Dayjs timestamp
+        sunset: dayjs.unix(presentWeather?.sys.sunset ?? 0).tz(input.timezone).format(),
       };
     }),
 });

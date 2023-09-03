@@ -252,49 +252,64 @@ const InternalHome = observer(() => {
       <div className="flex flex-col items-center mt-12">
         <div className="rounded-md bg-gray-400 max-w-screen-xl flex justify-evenly">
           {weatherData.data?.hourlyForecast ? (
-            <>
-              {weatherData.data.hourlyForecast.map(
-                (hourlyForecast: IHourlyForecast, index: number) => {
-                  let time;
-                  if (hourlyForecast.time === new Date().getHours()) {
-                    time = "Now";
-                  } else if (hourlyForecast.time === 12) {
-                    time = "12PM";
-                  } else if (hourlyForecast.time > 12) {
-                    time = `${hourlyForecast.time - 12}PM`;
-                  } else if (hourlyForecast.time === 0) {
-                    time = `12AM`;
-                  } else {
-                    time = `${hourlyForecast.time}AM`;
-                  }
-                  return (
-                    <div
-                      className="m-4 flex flex-col items-center w-20"
-                      key={index}
-                    >
-                      <div className="mt-1.5">{time}</div>
-                      {weatherState({ hour: index, icons: true })}
-                      {hourlyForecast.temperature ? (
-                        <div>
-                          {temperatureUnit$.get() === "Celsius"
-                            ? `${Math.round(
-                                hourlyForecast.temperature - 273.15,
-                              )}°C`
-                            : `${Math.round(
-                                (hourlyForecast.temperature * 9) / 5 - 459.67,
-                              )}°F`}
-                        </div>
-                      ) : (
-                        "Not available"
-                      )}
-                    </div>
-                  );
-                },
-              )}
-            </>
+              <>
+                {weatherData.data.hourlyForecast.map(
+                    (hourlyForecast: IHourlyForecast, index: number) => {
+                      let time;
+                      let isSunsetOrSunrise = false;
+                      let sunEvent = '';
+                      const currentHour = new Date().getHours();
+                      if (weatherData.data.sunset && dayjs(weatherData.data.sunset).hour() === hourlyForecast.time) {
+                        isSunsetOrSunrise = true;
+                        sunEvent = 'Sunset';
+                      } else if (weatherData.data.sunrise && dayjs(weatherData.data.sunrise).hour() === hourlyForecast.time) {
+                        isSunsetOrSunrise = true;
+                        sunEvent = 'Sunrise';
+                      }
+
+                      if (hourlyForecast.time === currentHour) {
+                        time = "Now";
+                      } else if (hourlyForecast.time === 12) {
+                        time = "12PM";
+                      } else if (hourlyForecast.time > 12) {
+                        time = `${hourlyForecast.time - 12}PM`;
+                      } else if (hourlyForecast.time === 0) {
+                        time = `12AM`;
+                      } else {
+                        time = `${hourlyForecast.time}AM`;
+                      }
+                      return (
+                          <div
+                              className="m-4 flex flex-col items-center w-20"
+                              key={index}
+                          >
+                            <div className="mt-1.5 font-semibold">{time}</div>
+                            {isSunsetOrSunrise && (
+                                <div className="mt-1.5">{sunEvent}</div>
+                            )}
+                            {weatherState({ hour: index, icons: true })}
+                            {hourlyForecast.temperature ? (
+                                <div>
+                                  {temperatureUnit$.get() === "Celsius"
+                                      ? `${Math.round(
+                                          hourlyForecast.temperature - 273.15,
+                                      )}°C`
+                                      : `${Math.round(
+                                          (hourlyForecast.temperature * 9) / 5 - 459.67,
+                                      )}°F`}
+                                </div>
+                            ) : (
+                                "Not available"
+                            )}
+                          </div>
+                      );
+                    },
+                )}
+              </>
           ) : (
-            <Skeleton className="w-screen-xl h-36" />
+              <Skeleton className="w-screen-xl h-36" />
           )}
+
         </div>
         <div className="grid grid-cols-9 grid-rows-7 gap-6 max-w-screen-xl mt-6 mb-6">
           {weatherData.data?.dailyForecast ? (
