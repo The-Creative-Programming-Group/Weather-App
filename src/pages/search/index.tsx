@@ -5,9 +5,11 @@ import Image from "next/image";
 import { cities, ICity } from "~/testdata";
 import { activeCity$, addedCities$ } from "~/states";
 import { toast, ToastContainer } from "react-toastify";
-import search1Image from "~/assets/search1.png";
+import search1Image from "~/assets/search1.png"
 import background from "~/assets/background.png";
+import dynamic from "next/dynamic";
 import "react-toastify/dist/ReactToastify.css";
+const DraggableMarker = dynamic(() => import("./DraggableMarker"), { ssr: false });
 
 const Search = () => {
   const searchFocusRef = useRef<HTMLInputElement>(null);
@@ -24,7 +26,13 @@ const Search = () => {
   const handleStadtclick = (name: string) => {
     setSearchValue(name);
   };
-
+  const checkContinue = () => {
+    if (activeCity$.get().name !== "") {
+      location.href = "/home";
+    } else {
+      toast.error("Please select a city");
+    }
+  };
   const checkCity = () => {
     cities.map((city: ICity) => {
       if (city.name.toLowerCase() === searchValue.toLowerCase()) {
@@ -157,25 +165,15 @@ const Search = () => {
         })}
 
         <div className="absolute mt-24 left-1/2 transform -translate-x-1/2 w-3/5 h-128 border-solid border-[#2d3142] border-8">
-          <iframe
-            id="map"
-            src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d5125429.316419938!2d10.415039000000002!3d51.151785999999994!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sde!2sde!4v1679694749290!5m2!1sde!2sde"
-            width="600"
-            height="450"
-            allowFullScreen={false}
-            loading="lazy"
-            referrerPolicy="no-referrer-when-downgrade"
-            className="w-full h-full z-10"
-          />
-          {searchValue.length > 0 ? (
-            <button
+          <DraggableMarker className="w-full h-full"/>
+                </div>
+              <button
               onClick={checkCity}
-              className="absolute z-30 bottom-14 right-16 w-40 h-10 text-white bg-[#2d3142] rounded text-2xl hover:shadow-2xl transition duration-500 ease-in-out"
+              className="absolute z-30 bottom-14 right-1 w-40 h-10 text-white bg-[#2d3142] rounded text-2xl hover:shadow-2xl transition duration-500 ease-in-out"
             >
               <p>{"Continue ->"}</p>
             </button>
-          ) : null}
-        </div>
+
       </div>
     </>
   );
