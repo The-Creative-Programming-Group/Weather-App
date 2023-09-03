@@ -505,9 +505,15 @@ export const weatherRouter = createTRPCRouter({
         // In percentages
         cloudcover: hourlyForecast[0]?.cloudcover,
         // Dayjs timestamp
-        sunrise: dayjs.unix(presentWeather?.sys.sunrise ?? 0).tz(input.timezone).format(),
+        sunrise: dayjs
+          .unix(presentWeather?.sys.sunrise ?? 0)
+          .tz(input.timezone)
+          .format(),
         // Dayjs timestamp
-        sunset: dayjs.unix(presentWeather?.sys.sunset ?? 0).tz(input.timezone).format(),
+        sunset: dayjs
+          .unix(presentWeather?.sys.sunset ?? 0)
+          .tz(input.timezone)
+          .format(),
       };
     }),
 });
