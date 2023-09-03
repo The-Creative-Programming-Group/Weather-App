@@ -9,7 +9,7 @@ import search1Image from "~/assets/search1.png"
 import background from "~/assets/background.png";
 import dynamic from "next/dynamic";
 import "react-toastify/dist/ReactToastify.css";
-const DraggableMarker = dynamic(() => import("./DraggableMarker"), { ssr: false });
+const DraggableMarker = dynamic(() => import("../../components/ui/DraggableMarker"), { ssr: false });
 
 const Search = () => {
   const searchFocusRef = useRef<HTMLInputElement>(null);
