@@ -529,7 +529,7 @@ const InternalHome = observer(() => {
             <Skeleton className="col-start-5 col-span-3 row-start-4 row-span-3 w-96 h-96" />
           )}
           <div className="col-start-8 col-span-2 row-span-6 bg-gray-400 rounded-md">
-            <Map position={mapPosition} className="w-full h-full roundend-md" />
+            <Map position={mapPosition} className="w-full h-full rounded-md" />
           </div>
         </div>
       </div>
