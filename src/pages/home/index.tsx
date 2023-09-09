@@ -249,25 +249,37 @@ const InternalHome = observer(() => {
           )}
         </p>
         <div className="flex gap-5 text-gray-500 mt-1">
-            <p className="text-xl">
-                {weatherData.data?.highestTemperature ? (
-                    temperatureUnit$.get() === "Celsius"
-                    ? `H: ${Math.round(weatherData.data.highestTemperature - 273.15)}°C`
-                    : `${Math.round((weatherData.data.highestTemperature * 9) / 5 - 459.67)}°F`
-                ) : (
-                    <Skeleton className="w-24 h-7" />
-                )}
-            </p>
+          <p className="text-xl">
+            {weatherData.data?.highestTemperature ? (
+              temperatureUnit$.get() === "Celsius" ? (
+                `H: ${Math.round(
+                  weatherData.data.highestTemperature - 273.15,
+                )}°C`
+              ) : (
+                `${Math.round(
+                  (weatherData.data.highestTemperature * 9) / 5 - 459.67,
+                )}°F`
+              )
+            ) : (
+              <Skeleton className="w-24 h-7" />
+            )}
+          </p>
           <p className="text-xl">
             {weatherData.data?.minimumTemperature ? (
-                temperatureUnit$.get() === "Celsius"
-                ? `L: ${Math.round(weatherData.data.minimumTemperature - 273.15)}°C`
-                : `${Math.round((weatherData.data.minimumTemperature * 9) / 5 - 459.67)}°F`
+              temperatureUnit$.get() === "Celsius" ? (
+                `L: ${Math.round(
+                  weatherData.data.minimumTemperature - 273.15,
+                )}°C`
+              ) : (
+                `${Math.round(
+                  (weatherData.data.minimumTemperature * 9) / 5 - 459.67,
+                )}°F`
+              )
             ) : (
-                <Skeleton className="w-24 h-7" />
+              <Skeleton className="w-24 h-7" />
             )}
-            </p>
-          </div>
+          </p>
+        </div>
       </div>
       <div className="flex flex-col items-center mt-12">
         <div className="rounded-md bg-gray-400 max-w-screen-xl flex justify-evenly">
