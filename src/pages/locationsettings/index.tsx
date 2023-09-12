@@ -1,4 +1,4 @@
-import React, {useState, useRef, useEffect} from "react";
+import React, { useState, useRef, useEffect } from "react";
 import Layout from "~/components/Layout";
 import { activeCity$, addedCities$ } from "~/states";
 import Image from "next/image";
@@ -7,7 +7,7 @@ import { observer } from "@legendapp/state/react-components";
 import { ToastContainer, toast } from "react-toastify";
 import search2Image from "~/assets/search2.png";
 import "react-toastify/dist/ReactToastify.css";
-import {ICity} from "~/types";
+import { ICity } from "~/types";
 import citiesJSON from "~/lib/city-list.json";
 
 const cities = citiesJSON as ICity[];
@@ -24,9 +24,11 @@ const LocationSettings = observer(() => {
       return;
     }
     setResults(
-        cities.filter((city: ICity) =>
-            city.name.toLowerCase().includes(searchValue.toLowerCase())
-        ).slice(0, 4)
+      cities
+        .filter((city: ICity) =>
+          city.name.toLowerCase().includes(searchValue.toLowerCase()),
+        )
+        .slice(0, 4),
     );
   }, [searchValue]);
 
@@ -36,10 +38,12 @@ const LocationSettings = observer(() => {
 
   const removeCityFromAddedCities = (city: ICity) => {
     if (addedCities$.get().length === 1) {
-        toast.error("You must have at least one city");
-        return;
+      toast.error("You must have at least one city");
+      return;
     }
-    addedCities$.set((prev) => prev.filter((value) => value.name !== city.name));
+    addedCities$.set((prev) =>
+      prev.filter((value) => value.name !== city.name),
+    );
     if (activeCity$.name.get() === city.name) {
       activeCity$.set(addedCities$.get()[0]);
     }
@@ -76,20 +80,29 @@ const LocationSettings = observer(() => {
                   autoFocus
                   placeholder="Search for your location"
                   type="text"
-                  onFocus={() => { setIsInputActive(true) }}
+                  onFocus={() => {
+                    setIsInputActive(true);
+                  }}
                   value={searchValue}
-                  onBlur={() => { setIsInputActive(false) }}
-                  onChange={(event) => { setSearchValue(event.target.value) }}
+                  onBlur={() => {
+                    setIsInputActive(false);
+                  }}
+                  onChange={(event) => {
+                    setSearchValue(event.target.value);
+                  }}
                   ref={inputRef}
                   onKeyDown={(event) => {
                     if (event.key === "Enter") {
                       // Check if the city is in the list of cities
                       const city = cities.find(
-                          (city: ICity) => city.name.toLowerCase() === searchValue.toLowerCase()
+                        (city: ICity) =>
+                          city.name.toLowerCase() === searchValue.toLowerCase(),
                       );
                       if (city) {
                         if (
-                            addedCities$.get().find((value: ICity) => value.name === city.name)
+                          addedCities$
+                            .get()
+                            .find((value: ICity) => value.name === city.name)
                         ) {
                           toast.error("City already added");
                         } else {
@@ -107,43 +120,43 @@ const LocationSettings = observer(() => {
             </div>
             {results.map((city: ICity) => {
               if (
-                  isInputActive &&
-                  city.name.toLowerCase().startsWith(searchValue.toLowerCase())
+                isInputActive &&
+                city.name.toLowerCase().startsWith(searchValue.toLowerCase())
               ) {
-                  return (
-                      <div
-                          className={
-                        isInputActive
-                                ? "flex justify-between w-36/100 h-auto border-b-2 border-gray-400 bg-[#d8d5db] p-5 hover: cursor-pointer"
-                                : "hidden"
-                          }
-                          key={city.id}
-                          onMouseDown={() => {
-                            setSearchValue(city.name);
-                            setIsInputActive(false);
-                            inputRef.current?.blur();
-                          }}
-                      >
-                        <p>
-                          {city.name
-                              .split("")
-                              .map((letter: string, letterIndex: number) => (
-                                  <span
-                                      className={
-                                        letterIndex < searchValue.length
-                                            ? "font-bold"
-                                            : ""
-                                      }
-                                      key={letterIndex}
-                                  >
-                              {letter}
-                            </span>
-                              ))}
-                        </p>
-                        {city.country}
-                      </div>
-                  );
-                }
+                return (
+                  <div
+                    className={
+                      isInputActive
+                        ? "flex justify-between w-36/100 h-auto border-b-2 border-gray-400 bg-[#d8d5db] p-5 hover: cursor-pointer"
+                        : "hidden"
+                    }
+                    key={city.id}
+                    onMouseDown={() => {
+                      setSearchValue(city.name);
+                      setIsInputActive(false);
+                      inputRef.current?.blur();
+                    }}
+                  >
+                    <p>
+                      {city.name
+                        .split("")
+                        .map((letter: string, letterIndex: number) => (
+                          <span
+                            className={
+                              letterIndex < searchValue.length
+                                ? "font-bold"
+                                : ""
+                            }
+                            key={letterIndex}
+                          >
+                            {letter}
+                          </span>
+                        ))}
+                    </p>
+                    {city.country}
+                  </div>
+                );
+              }
             })}
             <div className="w-full flex justify-center mt-2">
               <div className=" w-36/100 block">
@@ -158,11 +171,14 @@ const LocationSettings = observer(() => {
                       key={city.name}
                     >
                       <div
-                          onClick={() => {
-                            setToActiveCity(city);
-                          }}
-                          className="w-full flex justify-between mr-5"
-                      ><span>{city.name}</span> <span className="text-gray-500">{city.country}</span></div>
+                        onClick={() => {
+                          setToActiveCity(city);
+                        }}
+                        className="w-full flex justify-between mr-5"
+                      >
+                        <span>{city.name}</span>{" "}
+                        <span className="text-gray-500">{city.country}</span>
+                      </div>
                       <div className="flex">
                         <RxCross2
                           onClick={() => removeCityFromAddedCities(city)}
@@ -178,26 +194,28 @@ const LocationSettings = observer(() => {
               onClick={() => {
                 // Check if the city is in the list of cities
                 const city = cities.find(
-                    (city: ICity) => city.name.toLowerCase() === searchValue.toLowerCase()
+                  (city: ICity) =>
+                    city.name.toLowerCase() === searchValue.toLowerCase(),
                 );
                 if (city) {
-                    if (
-                        addedCities$.get().find((value: ICity) => value.name === city.name)
-                    ) {
-                        toast.error("City already added");
-                    } else {
-                        addedCities$.push(city);
-                        activeCity$.set(city);
-                        toast.success("City added");
-                    }
+                  if (
+                    addedCities$
+                      .get()
+                      .find((value: ICity) => value.name === city.name)
+                  ) {
+                    toast.error("City already added");
+                  } else {
+                    addedCities$.push(city);
+                    activeCity$.set(city);
+                    toast.success("City added");
+                  }
                 } else {
-                    toast.error("City not found");
+                  toast.error("City not found");
                 }
               }}
-
               className="mt-2.5 mb-2.5 rounded border-solid bg-[#2d3142] p-2 font-bold text-white"
             >
-             Add New Location
+              Add New Location
             </button>
           </div>
         </div>
