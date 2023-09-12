@@ -15,7 +15,7 @@ const cities = citiesJSON as ICity[];
 const LocationSettings = observer(() => {
   const [searchValue, setSearchValue] = useState(""); // searchValue is the value of the input field
   const [results, setResults] = useState<ICity[]>([]); // results is the list of cities that match the searchValue
-  const [isInputActive, setIsInputActive] = useState<boolean>(false); // activeInput is the input field that is active
+  const [isInputActive, setIsInputActive] = useState<boolean>(true); // activeInput is the input field that is active
   const inputRef = useRef<HTMLInputElement>(null); // inputRef is the ref of the input field
 
   useEffect(() => {

@@ -21,7 +21,7 @@ const Search = () => {
   const router = useRouter();
   const [searchValue, setSearchValue] = useState(""); // searchValue is the value of the input field
   const [results, setResults] = useState<IResults[]>([]); // results is the list of cities that match the searchValue
-  const [isInputActive, setIsInputActive] = useState<boolean>(false); // activeInput is the input field that is active
+  const [isInputActive, setIsInputActive] = useState<boolean>(true); // activeInput is the input field that is active
   const inputRef = useRef<HTMLInputElement>(null); // inputRef is the ref of the input field
 
   useEffect(() => {
