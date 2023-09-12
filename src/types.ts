@@ -33,3 +33,14 @@ export interface IDailyForecast {
   // In kilometers per hour
   windSpeed: number | undefined;
 }
+
+export interface ICity {
+  id: number;
+  name: string;
+  coord: {
+    lon: number;
+    lat: number;
+  };
+  state: string;
+  country: string;
+}

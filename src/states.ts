@@ -1,13 +1,16 @@
 import { observable } from "@legendapp/state";
 import { persistObservable } from "@legendapp/state/persist";
 import { ObservablePersistLocalStorage } from "@legendapp/state/persist-plugins/local-storage";
-import { ICity } from "~/testdata";
+import { ICity } from "~/types";
 
 // See Legend Documentation for more information about the state management
 // If you want more information stored in the state, you can change the input into an object
-export const activeCity$ = observable({
+export const activeCity$ = observable<ICity>({
+  id: 1,
   name: "",
-  coordinates: { lat: 0, lon: 0 },
+  coord: { lat: 0, lon: 0 },
+  state: "",
+  country: "",
 });
 
 persistObservable(activeCity$, {

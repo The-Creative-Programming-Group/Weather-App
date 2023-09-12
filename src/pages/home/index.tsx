@@ -74,7 +74,7 @@ function convertWindSpeed(
 
 const InternalHome = observer(() => {
   const weatherData = api.weather.getWeather.useQuery(
-    { coordinates: activeCity$.coordinates.get(), timezone: dayjs.tz.guess() },
+    { coordinates: activeCity$.coord.get(), timezone: dayjs.tz.guess() },
     { refetchOnWindowFocus: false },
   );
   let temperature = undefined;
@@ -230,8 +230,8 @@ const InternalHome = observer(() => {
   };
 
   const mapPosition: [number, number] = [
-    activeCity$.coordinates.lat.get(),
-    activeCity$.coordinates.lon.get(),
+    activeCity$.coord.lat.get(),
+    activeCity$.coord.lon.get(),
   ];
 
   return (
