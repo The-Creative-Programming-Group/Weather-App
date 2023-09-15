@@ -3,7 +3,7 @@ import withBundleAnalyzer from '@next/bundle-analyzer'
 
 // create the bundle analyzer config
 const withMyBundleAnalyzer = withBundleAnalyzer({
-  enabled: process.env.ANALYZE === 'true',
+  enabled: process.env.ANALYZE === 'true'
 })
 
 /**
@@ -13,11 +13,13 @@ const withMyBundleAnalyzer = withBundleAnalyzer({
 !process.env.SKIP_ENV_VALIDATION && (await import('./src/env.mjs'))
 
 /** @type {import("next").NextConfig} */
-const config = withMyBundleAnalyzer(withAxiom({
-  reactStrictMode: true,
-  i18n: {
-    locales: ['en'],
-    defaultLocale: 'en'
-  }
-}))
+const config = withMyBundleAnalyzer(
+  withAxiom({
+    reactStrictMode: true,
+    i18n: {
+      locales: ['en'],
+      defaultLocale: 'en'
+    }
+  })
+)
 export default config
