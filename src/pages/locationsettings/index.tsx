@@ -42,9 +42,9 @@ const LocationSettings = observer(() => {
       return;
     }
     addedCities$.set((prev) =>
-      prev.filter((value) => value.name !== city.name),
+      prev.filter((value) => value.id !== city.id),
     );
-    if (activeCity$.name.get() === city.name) {
+    if (activeCity$.id.get() === city.id) {
       activeCity$.set(addedCities$.get()[0]);
     }
   };
@@ -102,7 +102,7 @@ const LocationSettings = observer(() => {
                         if (
                           addedCities$
                             .get()
-                            .find((value: ICity) => value.name === city.name)
+                            .find((value: ICity) => value.id === city.id)
                         ) {
                           toast.error("City already added");
                         } else {
@@ -164,11 +164,11 @@ const LocationSettings = observer(() => {
                   return (
                     <div
                       className={
-                        activeCity$.name.get() === city.name
+                        activeCity$.id.get() === city.id
                           ? "bg-[#d8d5db] p-2 border-2 border-black mt-2 hover: cursor-pointer flex justify-between"
                           : "bg-[#d8d5db] p-2 border border-solid border-black mt-2 hover: cursor-pointer flex justify-between"
                       }
-                      key={city.name}
+                      key={city.id}
                     >
                       <div
                         onClick={() => {
@@ -201,7 +201,7 @@ const LocationSettings = observer(() => {
                   if (
                     addedCities$
                       .get()
-                      .find((value: ICity) => value.name === city.name)
+                      .find((value: ICity) => value.id === city.id)
                   ) {
                     toast.error("City already added");
                   } else {

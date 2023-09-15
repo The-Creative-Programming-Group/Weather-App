@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef, ChangeEvent } from "react";
 import Head from "next/head";
-import Link from "next/link";
 import Image from "next/image";
 import { activeCity$, addedCities$ } from "~/states";
 import { toast, ToastContainer } from "react-toastify";
@@ -38,28 +37,11 @@ const Search = () => {
     );
   }, [searchValue]);
 
-  const setToActiveCity = (city: ICity) => {
-    activeCity$.set(city);
-  };
-
-  const removeCityFromAddedCities = (city: ICity) => {
-    if (addedCities$.get().length === 1) {
-      toast.error("You must have at least one city");
-      return;
-    }
-    addedCities$.set((prev) =>
-      prev.filter((value) => value.name !== city.name),
-    );
-    if (activeCity$.name.get() === city.name) {
-      activeCity$.set(addedCities$.get()[0]);
-    }
-  };
-
   return (
     <>
       <ToastContainer />
       <Head>
-        <title>{"Search - Weather.io"}</title>
+        <title>Search - Weather.io</title>
         <meta name="description" content="An faboulus weather website" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
@@ -105,7 +87,7 @@ const Search = () => {
                 if (
                   addedCities$
                     .get()
-                    .find((value: ICity) => value.name === city.name)
+                    .find((value: ICity) => value.id === city.id)
                 ) {
                   toast.error("City already added");
                 } else {
@@ -171,7 +153,7 @@ const Search = () => {
                 if (
                   addedCities$
                     .get()
-                    .find((value: ICity) => value.name === city.name)
+                    .find((value: ICity) => value.id === city.id)
                 ) {
                   toast.error("City already added");
                 } else {
