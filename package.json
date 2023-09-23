@@ -12,6 +12,8 @@
   "dependencies": {
     "@legendapp/state": "^1.11.1",
     "@next/bundle-analyzer": "^13.5.2",
+    "@radix-ui/react-hover-card": "^1.0.6",
+    "@radix-ui/react-slot": "^1.0.2",
     "@total-typescript/ts-reset": "^0.5.1",
     "@trpc/client": "^10.38.4",
     "@trpc/next": "^10.38.4",

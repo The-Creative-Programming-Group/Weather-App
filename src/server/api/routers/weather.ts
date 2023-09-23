@@ -74,6 +74,7 @@ const PresentWeatherSchema = z.object({
     pressure: z.number(),
     humidity: z.number(),
   }),
+  // Visibility, meter. The maximum value of the visibility is 10 km
   visibility: z.number(),
   wind: z.object({
     speed: z.number(),

@@ -29,6 +29,14 @@ import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 import timezone from "dayjs/plugin/timezone";
 import dynamic from "next/dynamic";
+import {
+  HoverCard,
+  HoverCardContent,
+  HoverCardTrigger,
+} from "~/components/ui/hover-card";
+import { Button } from "~/components/ui/button";
+import { InfoIcon, LinkIcon } from "lucide-react";
+import Link from "next/link";
 
 const Map = dynamic(() => import("~/components/ui/map"), { ssr: false });
 
@@ -93,7 +101,7 @@ const InternalHome = observer(() => {
     | "Stormy"
     | "Snowy"
     | "Windy"
-    | JSX.Element
+    | React.ReactNode
     | undefined;
 
   type TimeType =
@@ -105,7 +113,7 @@ const InternalHome = observer(() => {
       if (weatherData.data?.hourlyForecast[hour]?.showers) {
         if (weatherData.data.hourlyForecast[hour]!.showers! > 0) {
           if (icons) {
-            return <FaCloudShowersHeavy className="w-12 h-12" />;
+            return <FaCloudShowersHeavy className="h-12 w-12" />;
           }
           return "Stormy";
         }
@@ -113,7 +121,7 @@ const InternalHome = observer(() => {
       if (weatherData.data?.hourlyForecast[hour]?.snowfall) {
         if (weatherData.data.hourlyForecast[hour]!.snowfall! > 0) {
           if (icons) {
-            return <FaCloudMeatball className="w-12 h-12" />;
+            return <FaCloudMeatball className="h-12 w-12" />;
           }
           return "Snowy";
         }
@@ -121,7 +129,7 @@ const InternalHome = observer(() => {
       if (weatherData.data?.hourlyForecast[hour]?.rain) {
         if (weatherData.data.hourlyForecast[hour]!.rain! > 0) {
           if (icons) {
-            return <FaCloudRain className="w-12 h-12" />;
+            return <FaCloudRain className="h-12 w-12" />;
           }
           return "Rainy";
         }
@@ -130,7 +138,7 @@ const InternalHome = observer(() => {
         if (weatherData.data.hourlyForecast[hour]!.cloudcover! > 40) {
           if (weatherData.data.hourlyForecast[hour!]!.cloudcover! > 60) {
             if (icons) {
-              return <FaCloud className="w-12 h-12" />;
+              return <FaCloud className="h-12 w-12" />;
             }
             return "Very Cloudy";
           } else {
@@ -140,12 +148,12 @@ const InternalHome = observer(() => {
                 weatherData.data.hourlyForecast[hour!]!.time > 6
               ) {
                 if (icons) {
-                  return <FaCloudSun className="w-12 h-12" />;
+                  return <FaCloudSun className="h-12 w-12" />;
                 }
                 return "Cloudy";
               } else {
                 if (icons) {
-                  return <FaCloudMoon className="w-12 h-12" />;
+                  return <FaCloudMoon className="h-12 w-12" />;
                 }
                 return "Cloudy";
               }
@@ -155,7 +163,7 @@ const InternalHome = observer(() => {
         if (weatherData.data?.dailyForecast[hour]?.windSpeed) {
           if (weatherData.data.dailyForecast[hour]!.windSpeed! >= 20) {
             if (icons) {
-              return <FaWind className="w-12 h-12" />;
+              return <FaWind className="h-12 w-12" />;
             }
             return "Windy";
           }
@@ -165,7 +173,7 @@ const InternalHome = observer(() => {
       if (weatherData.data?.dailyForecast[day]?.showers) {
         if (weatherData.data.dailyForecast[day]!.showers! > 0) {
           if (icons) {
-            return <FaCloudShowersHeavy className="w-12 h-12" />;
+            return <FaCloudShowersHeavy className="h-12 w-12" />;
           }
           return "Stormy";
         }
@@ -173,7 +181,7 @@ const InternalHome = observer(() => {
       if (weatherData.data?.dailyForecast[day]?.snowfall) {
         if (weatherData.data.dailyForecast[day]!.snowfall! > 0) {
           if (icons) {
-            return <FaCloudMeatball className="w-12 h-12" />;
+            return <FaCloudMeatball className="h-12 w-12" />;
           }
           return "Snowy";
         }
@@ -181,7 +189,7 @@ const InternalHome = observer(() => {
       if (weatherData.data?.dailyForecast[day]?.rain) {
         if (weatherData.data.dailyForecast[day]!.rain! > 0) {
           if (icons) {
-            return <FaCloudRain className="w-12 h-12" />;
+            return <FaCloudRain className="h-12 w-12" />;
           }
           return "Rainy";
         }
@@ -190,12 +198,12 @@ const InternalHome = observer(() => {
         if (weatherData.data.dailyForecast[day]!.cloudcover! > 40) {
           if (weatherData.data.dailyForecast[day!]!.cloudcover! > 60) {
             if (icons) {
-              return <FaCloud className="w-12 h-12" />;
+              return <FaCloud className="h-12 w-12" />;
             }
             return "Cloudy";
           } else {
             if (icons) {
-              return <FaCloudSun className="w-12 h-12" />;
+              return <FaCloudSun className="h-12 w-12" />;
             }
             return "Cloudy";
           }
@@ -204,7 +212,7 @@ const InternalHome = observer(() => {
       if (weatherData.data?.dailyForecast[day]?.windSpeed) {
         if (weatherData.data.dailyForecast[day]!.windSpeed! >= 20) {
           if (icons) {
-            return <FaWind className="w-12 h-12" />;
+            return <FaWind className="h-12 w-12" />;
           }
           return "Windy";
         }
@@ -217,14 +225,14 @@ const InternalHome = observer(() => {
           weatherData.data.hourlyForecast[hour]!.time > 6
         ) {
           // console.log("Sunny", hour, day)
-          return <FaSun className="w-12 h-12" />;
+          return <FaSun className="h-12 w-12" />;
         } else {
-          return <FaMoon className="w-12 h-12" />;
+          return <FaMoon className="h-12 w-12" />;
         }
       }
     } else if (icons && hour === undefined) {
       // console.log("Sunny", hour, day);
-      return <FaSun className="w-12 h-12" />;
+      return <FaSun className="h-12 w-12" />;
     }
     return "Sunny";
   };
@@ -236,19 +244,19 @@ const InternalHome = observer(() => {
 
   return (
     <Layout>
-      <div className="mt-24 flex items-center flex-col">
+      <div className="mt-24 flex flex-col items-center">
         <h1 className="text-7xl">{activeCity$.name.get()}</h1>
-        <h1 className="text-7xl mt-3 text-gray-500">
-          {temperature ? temperature : <Skeleton className="w-36 h-20" />}
+        <h1 className="mt-3 text-7xl text-gray-500">
+          {temperature ? temperature : <Skeleton className="h-20 w-36" />}
         </h1>
         <p className="mt-3 text-xl">
           {weatherData.data ? (
             weatherState({ hour: 0, icons: false })
           ) : (
-            <Skeleton className="w-36 h-9" />
+            <Skeleton className="h-9 w-36" />
           )}
         </p>
-        <div className="flex gap-5 text-gray-500 mt-1">
+        <div className="mt-1 flex gap-5 text-gray-500">
           <p className="text-xl">
             {weatherData.data?.highestTemperature ? (
               temperatureUnit$.get() === "Celsius" ? (
@@ -261,7 +269,7 @@ const InternalHome = observer(() => {
                 )}°F`
               )
             ) : (
-              <Skeleton className="w-24 h-7" />
+              <Skeleton className="h-7 w-24" />
             )}
           </p>
           <p className="text-xl">
@@ -276,13 +284,13 @@ const InternalHome = observer(() => {
                 )}°F`
               )
             ) : (
-              <Skeleton className="w-24 h-7" />
+              <Skeleton className="h-7 w-24" />
             )}
           </p>
         </div>
       </div>
-      <div className="flex flex-col items-center mt-12">
-        <div className="rounded-md bg-gray-400 max-w-screen-xl flex justify-evenly">
+      <div className="mt-12 flex flex-col items-center">
+        <div className="flex max-w-screen-xl justify-evenly rounded-md bg-gray-400">
           {weatherData.data?.hourlyForecast ? (
             <>
               {weatherData.data.hourlyForecast.map(
@@ -320,7 +328,7 @@ const InternalHome = observer(() => {
                   }
                   return (
                     <div
-                      className="m-4 flex flex-col items-center w-20"
+                      className="m-4 flex w-20 flex-col items-center"
                       key={index}
                     >
                       <div className="mt-1.5 font-semibold">{time}</div>
@@ -347,14 +355,35 @@ const InternalHome = observer(() => {
               )}
             </>
           ) : (
-            <Skeleton className="w-screen-xl h-36" />
+            <Skeleton className="h-36 w-screen-xl" />
           )}
         </div>
-        <div className="grid grid-cols-9 grid-rows-7 gap-6 max-w-screen-xl mt-6 mb-6">
+        <div className="grid-rows-7 mb-6 mt-6 grid max-w-screen-xl grid-cols-9 gap-6">
           {weatherData.data?.dailyForecast ? (
             <>
-              <div className="col-span-3 row-span-6 bg-gray-400 rounded-xl flex flex-col">
-                <span className="ml-5 mt-2">9-Day Forecast</span>
+              <div className="col-span-3 row-span-6 flex flex-col rounded-xl bg-gray-400">
+                <div className="flex w-full items-center justify-between pb-2 pl-5 pr-3 pt-2 text-xl">
+                  9-Day Forecast{" "}
+                  <HoverCard>
+                    <HoverCardTrigger asChild>
+                      <Button className="w-10 rounded-full p-1.5">
+                        <InfoIcon className="h-full w-full" />
+                      </Button>
+                    </HoverCardTrigger>
+                    <HoverCardContent className="w-80">
+                      <span className="font-semibold underline">
+                        9-Day Forecast:
+                      </span>
+                      <br /> <br />
+                      The forecast for the next 9 days. <br />
+                      The <span className="font-semibold">
+                        temperatures
+                      </span>{" "}
+                      are the average temperatures for the day. One for the day
+                      and one for the night.
+                    </HoverCardContent>
+                  </HoverCard>
+                </div>
                 {weatherData.data.dailyForecast.map(
                   (dailyForecast: IDailyForecast, index: number) => {
                     let day;
@@ -370,15 +399,15 @@ const InternalHome = observer(() => {
                     }
                     return (
                       <div
-                        className="flex items-center border-t-2 border-black mr-5 ml-5 mb-2"
+                        className="mb-2 ml-5 mr-5 flex items-center border-t-2 border-black"
                         key={index}
                       >
-                        <div className="w-36 text-2xl mt-2">{day}</div>
+                        <div className="mt-2 w-36 text-2xl">{day}</div>
                         <div className="mt-2 w-12">
                           {weatherState({ day: index, icons: true })}
                         </div>
                         {dailyForecast.temperatureDay ? (
-                          <div className="mt-2 ml-8 text-2xl">
+                          <div className="ml-8 mt-2 text-2xl">
                             {temperatureUnit$.get() === "Celsius"
                               ? `${Math.round(
                                   dailyForecast.temperatureDay - 273.15,
@@ -392,7 +421,7 @@ const InternalHome = observer(() => {
                           "Not available"
                         )}
                         {dailyForecast.temperatureNight ? (
-                          <div className="mt-2 ml-8 text-gray-700 text-2xl">
+                          <div className="ml-8 mt-2 text-2xl text-gray-700">
                             {temperatureUnit$.get() === "Celsius"
                               ? `${Math.round(
                                   dailyForecast.temperatureNight - 273.15,
@@ -416,9 +445,34 @@ const InternalHome = observer(() => {
           )}
 
           {weatherData.data?.precipitationProbabilities ? (
-            <div className="col-start-4 col-span-4 row-span-1 bg-gray-400 rounded-md">
-              <div className="ml-4 mt-1.5 text-xl">Precipitation</div>
-              <div className="flex justify-between ml-4">
+            <div className="col-span-4 col-start-4 row-span-1 rounded-md bg-gray-400 pb-2">
+              <div className="mt-1.5 flex justify-between pl-4 pr-3 text-xl">
+                Precipitation{" "}
+                <HoverCard>
+                  <HoverCardTrigger asChild>
+                    <Button className="w-10 rounded-full p-1.5">
+                      <InfoIcon className="h-full w-full" />
+                    </Button>
+                  </HoverCardTrigger>
+                  <HoverCardContent className="w-80">
+                    <span className="font-semibold underline">
+                      Current Precipitation:
+                    </span>
+                    <br /> <br />
+                    <span className="font-semibold">Early morning:</span> 12AM -
+                    5AM
+                    <br />
+                    <span className="font-semibold">Morning:</span> 6AM - 10AM
+                    <br />
+                    <span className="font-semibold">Afternoon:</span> 11AM - 2PM
+                    <br />
+                    <span className="font-semibold">Evening:</span> 3PM - 7PM
+                    <br />
+                    <span className="font-semibold">Night:</span> 8PM - 11PM
+                  </HoverCardContent>
+                </HoverCard>
+              </div>
+              <div className="ml-4 flex justify-between">
                 {Object.entries(
                   weatherData.data.precipitationProbabilities,
                 ).map(([key, value]) => {
@@ -439,7 +493,7 @@ const InternalHome = observer(() => {
                   }
                   return (
                     <div
-                      className="flex flex-col items-center justify-center mt-1 w-24"
+                      className="mt-1 flex w-24 flex-col items-center justify-center"
                       key={key}
                     >
                       <div className="text-sm">
@@ -453,13 +507,28 @@ const InternalHome = observer(() => {
               </div>
             </div>
           ) : (
-            <Skeleton className="col-start-4 col-span-4 row-span-1 w-full h-32" />
+            <Skeleton className="col-span-4 col-start-4 row-span-1 h-32 w-full" />
           )}
 
           {weatherData.data?.feels_like ? (
-            <div className="col-start-4 col-span-2 row-start-2 row-span-2 bg-gray-400 rounded-md">
-              <div className="ml-4 mt-1.5 text-xl">Feels like</div>
-              <div className="ml-4 mt-1.5 mb-1">
+            <div className="col-span-2 col-start-4 row-span-2 row-start-2 rounded-md bg-gray-400">
+              <div className="mt-1.5 flex justify-between pl-4 pr-3 text-xl">
+                Feels like{" "}
+                <HoverCard>
+                  <HoverCardTrigger asChild>
+                    <Button className="w-10 rounded-full p-1.5">
+                      <InfoIcon className="h-full w-full" />
+                    </Button>
+                  </HoverCardTrigger>
+                  <HoverCardContent className="w-80">
+                    <span className="font-semibold underline">Feels like:</span>
+                    <br /> <br />
+                    This temperature parameter accounts for the human perception
+                    of weather
+                  </HoverCardContent>
+                </HoverCard>
+              </div>
+              <div className="mb-1 ml-4 mt-1.5">
                 <div className="flex text-5xl">
                   {temperatureUnit$.get() === "Celsius"
                     ? `${Math.round(weatherData.data?.feels_like - 273.15)}°C`
@@ -481,14 +550,14 @@ const InternalHome = observer(() => {
               </div>
             </div>
           ) : (
-            <Skeleton className="col-start-4 col-span-2 row-start-2 row-span-2 h-32" />
+            <Skeleton className="col-span-2 col-start-4 row-span-2 row-start-2 h-32" />
           )}
 
           {weatherData.data?.air_quality ? (
-            <div className="col-start-4 col-span-1 row-start-4 row-span-3 bg-gray-400 rounded-md">
+            <div className="col-span-1 col-start-4 row-span-3 row-start-4 rounded-md bg-gray-400">
               <div className="ml-2 mt-1.5 text-xl">Air quality</div>
-              <div className="relative ml-3.5 mt-2 mb-2 flex items-center h-64">
-                <div className="mt-2 text-md font-medium">
+              <div className="relative mb-2 ml-3.5 mt-2 flex h-64 items-center">
+                <div className="text-md mt-2 font-medium">
                   {weatherData.data?.air_quality.toPrecision(2)} <br />
                   {weatherData.data?.air_quality > 90
                     ? "Very Poor"
@@ -502,38 +571,81 @@ const InternalHome = observer(() => {
                     ? "Good"
                     : "Excellent"}
                 </div>
-                <div className="absolute right-3 w-3 h-64 bg-gradient-to-t from-red-500 to-green-800 rounded-md">
+                <div className="absolute right-3 h-64 w-3 rounded-md bg-gradient-to-t from-red-500 to-green-800">
                   <div
-                    className="relative w-full h-3 bg-black rounded-xl"
+                    className="relative h-3 w-full rounded-xl bg-black"
                     style={{ top: `${weatherData.data?.air_quality}%` }}
                   ></div>
                 </div>
               </div>
             </div>
           ) : (
-            <Skeleton className="col-start-4 col-span-1 row-start-4 row-span-3" />
+            <Skeleton className="col-span-1 col-start-4 row-span-3 row-start-4" />
           )}
 
           {weatherData.data?.visibility ? (
-            <div className="col-start-6 col-span-2 row-start-2 row-span-2 bg-gray-400 rounded-md">
-              <div className="ml-4 mt-1.5 text-xl">Visibility</div>
+            <div className="col-span-2 col-start-6 row-span-2 row-start-2 rounded-md bg-gray-400">
+              <div className="mt-1.5 flex justify-between pl-4 pr-3 text-xl">
+                Visibility{" "}
+                <HoverCard>
+                  <HoverCardTrigger asChild>
+                    <Button className="w-10 rounded-full p-1.5">
+                      <InfoIcon className="h-full w-full" />
+                    </Button>
+                  </HoverCardTrigger>
+                  <HoverCardContent className="w-80">
+                    <span className="font-semibold underline">
+                      Current Visibility:
+                    </span>
+                    <br /> <br />
+                    100% = 10km
+                  </HoverCardContent>
+                </HoverCard>
+              </div>
               <div className="flex items-center">
-                <PiSunglasses className="ml-4 mt-2 w-16 h-16" />
+                <PiSunglasses className="ml-4 mt-2 h-16 w-16" />
                 <div className="ml-4 mt-2 text-5xl">
                   {weatherData.data?.visibility}%
                 </div>
               </div>
             </div>
           ) : (
-            <Skeleton className="col-start-6 col-span-2 row-start-2 row-span-2" />
+            <Skeleton className="col-span-2 col-start-6 row-span-2 row-start-2" />
           )}
 
           {weatherData.data?.wind_speed && weatherData.data?.wind_pressure ? (
-            <div className="col-start-5 col-span-3 row-start-4 row-span-3 bg-gray-400 rounded-md">
-              <div className="ml-4 mt-1.5 text-xl">Wind & Pressure</div>
-              <div className="flex flex-col ml-9">
-                <BsWind className="mt-5 w-32 h-32" />
-                <div className="flex gap-10 text-xl mt-9">
+            <div className="col-span-3 col-start-5 row-span-3 row-start-4 rounded-md bg-gray-400">
+              <div className="mt-1.5 flex w-full justify-between pl-4 pr-3 text-xl">
+                Wind & Pressure
+                <HoverCard>
+                  <HoverCardTrigger asChild>
+                    <Button className="w-10 rounded-full p-1.5">
+                      <InfoIcon className="h-full w-full" />
+                    </Button>
+                  </HoverCardTrigger>
+                  <HoverCardContent className="w-80">
+                    <span className="font-semibold underline">
+                      Current Wind & Pressure
+                    </span>{" "}
+                    <br /> <br />
+                    <span className="font-semibold">Wind Speed:</span> In{" "}
+                    <Link
+                      className="underline"
+                      href="https://en.wikipedia.org/wiki/Pascal_(unit)"
+                    >
+                      Pascal (Pa)
+                      <LinkIcon className="ml-1 inline h-4 w-4" />
+                    </Link>
+                    <br />
+                    <span className="font-semibold">
+                      Wind Pressure:
+                    </span> In {windSpeedUnit$.get()}
+                  </HoverCardContent>
+                </HoverCard>
+              </div>
+              <div className="ml-9 flex flex-col">
+                <BsWind className="mt-5 h-32 w-32" />
+                <div className="mt-9 flex gap-10 text-xl">
                   <div>
                     Pressure
                     <div className="mt-2">
@@ -558,10 +670,10 @@ const InternalHome = observer(() => {
               </div>
             </div>
           ) : (
-            <Skeleton className="col-start-5 col-span-3 row-start-4 row-span-3 w-96 h-96" />
+            <Skeleton className="col-span-3 col-start-5 row-span-3 row-start-4 h-96 w-96" />
           )}
-          <div className="col-start-8 col-span-2 row-span-6 bg-gray-400 rounded-md">
-            <Map position={mapPosition} className="w-full h-full rounded-md" />
+          <div className="z-0 col-span-2 col-start-8 row-span-6 rounded-md bg-gray-400">
+            <Map position={mapPosition} className="h-full w-full rounded-md" />
           </div>
         </div>
       </div>
