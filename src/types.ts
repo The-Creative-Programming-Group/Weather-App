@@ -44,3 +44,7 @@ export interface ICity {
   state: string;
   country: string;
 }
+
+// Copied from @upstash/ratelimiter
+type Unit = "ms" | "s" | "m" | "h" | "d";
+export type Duration = `${number} ${Unit}` | `${number}${Unit}`;

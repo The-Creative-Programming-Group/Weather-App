@@ -10,10 +10,12 @@
 import { initTRPC, TRPCError } from "@trpc/server";
 import { type CreateNextContextOptions } from "@trpc/server/adapters/next";
 import superjson from "superjson";
-import { ZodError } from "zod";
+import { z, ZodError } from "zod";
 import { redis } from "~/server/upstash";
 import { Ratelimit } from "@upstash/ratelimit";
 import { log } from "next-axiom";
+import { env } from "~/env.mjs";
+import { Duration } from "~/types";
 
 /**
  * 1. CONTEXT
@@ -38,6 +40,17 @@ type CreateContextOptions = Record<string, never>;
 const createInnerTRPCContext = (_opts: CreateContextOptions) => {
   return {};
 };
+
+function validateDuration(value: string): value is Duration {
+  const durationRegex = /^(\d+)(ms|s|m|h|d)$/;
+  return durationRegex.test(value);
+}
+
+const UPSTASH_RATELIMITER_TIME_INTERVAL: Duration = validateDuration(
+  env.UPSTASH_RATELIMITER_TIME_INTERVAL,
+)
+  ? env.UPSTASH_RATELIMITER_TIME_INTERVAL
+  : "1d";
 
 /**
  * This is the actual context you will use in your router. It will be used to process every request
@@ -90,7 +103,10 @@ const t = initTRPC.context<typeof createTRPCContext>().create({
 
 const ratelimit = new Ratelimit({
   redis,
-  limiter: Ratelimit.slidingWindow(30, "1s"),
+  limiter: Ratelimit.slidingWindow(
+    parseInt(env.UPSTASH_RATELIMITER_TOKENS_PER_TIME),
+    UPSTASH_RATELIMITER_TIME_INTERVAL,
+  ),
   analytics: true,
   prefix: "@upstash/ratelimit",
 });
