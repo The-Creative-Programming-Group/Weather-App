@@ -52,9 +52,7 @@ const LocationSettings = observer(() => {
       toast.error("You must have at least one city");
       return;
     }
-    addedCities$.set((prev) =>
-      prev.filter((value) => value.id !== city.id),
-    );
+    addedCities$.set((prev) => prev.filter((value) => value.id !== city.id));
     if (activeCity$.id.get() === city.id) {
       activeCity$.set(addedCities$.get()[0]);
     }
