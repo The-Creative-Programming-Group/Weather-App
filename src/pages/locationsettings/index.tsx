@@ -13,18 +13,16 @@ import citiesJSON from "~/lib/city-list.json";
 const cities = citiesJSON as ICity[];
 
 const LocationSettings = observer(() => {
-  const [searchValue, setSearchValue] = useState<ICity>(
-      {
-        id: 0,
-        name: "",
-        country: "",
-        state: "",
-        coord: {
-            lon: 0,
-            lat: 0
-        }
-      }
-  ); // searchValue is the value of the input field
+  const [searchValue, setSearchValue] = useState<ICity>({
+    id: 0,
+    name: "",
+    country: "",
+    state: "",
+    coord: {
+      lon: 0,
+      lat: 0,
+    },
+  }); // searchValue is the value of the input field
   const [results, setResults] = useState<ICity[]>([]); // results is the list of cities that match the searchValue
   const [isInputActive, setIsInputActive] = useState<boolean>(true); // activeInput is the input field that is active
   const inputRef = useRef<HTMLInputElement>(null); // inputRef is the ref of the input field
@@ -97,38 +95,38 @@ const LocationSettings = observer(() => {
                     setIsInputActive(false);
                   }}
                   onChange={(event) => {
-                    setSearchValue(prevSearchValue => {
-                        return {
-                            ...prevSearchValue,
-                            id: 0,
-                            name: event.target.value
-                        }
-                        });
+                    setSearchValue((prevSearchValue) => {
+                      return {
+                        ...prevSearchValue,
+                        id: 0,
+                        name: event.target.value,
+                      };
+                    });
                   }}
                   ref={inputRef}
                   onKeyDown={(event) => {
                     if (event.key === "Enter") {
-                        let city: ICity | undefined = {
-                            id: 0,
-                            name: "",
-                            country: "",
-                            state: "",
-                            coord: {
-                                lon: 0,
-                                lat: 0
-                            }
-                        };
-                        if (searchValue.id !== 0 && searchValue.country !== "") {
-                            city = cities.find(
-                                (city: ICity) =>
-                                    city.id === searchValue.id,
-                            );
-                        } else {
-                            city = cities.find(
-                                (city: ICity) =>
-                                    city.name.toLowerCase() === searchValue.name.toLowerCase(),
-                            );
-                        }
+                      let city: ICity | undefined = {
+                        id: 0,
+                        name: "",
+                        country: "",
+                        state: "",
+                        coord: {
+                          lon: 0,
+                          lat: 0,
+                        },
+                      };
+                      if (searchValue.id !== 0 && searchValue.country !== "") {
+                        city = cities.find(
+                          (city: ICity) => city.id === searchValue.id,
+                        );
+                      } else {
+                        city = cities.find(
+                          (city: ICity) =>
+                            city.name.toLowerCase() ===
+                            searchValue.name.toLowerCase(),
+                        );
+                      }
                       if (city) {
                         if (
                           addedCities$
@@ -152,7 +150,9 @@ const LocationSettings = observer(() => {
             {results.map((city: ICity) => {
               if (
                 isInputActive &&
-                city.name.toLowerCase().startsWith(searchValue.name.toLowerCase())
+                city.name
+                  .toLowerCase()
+                  .startsWith(searchValue.name.toLowerCase())
               ) {
                 return (
                   <div
@@ -163,18 +163,19 @@ const LocationSettings = observer(() => {
                     }
                     key={city.id}
                     onMouseDown={() => {
-                      setSearchValue(prevSearchValue => {
+                      setSearchValue((prevSearchValue) => {
                         return {
-                            ...prevSearchValue,
-                            id: city.id,
-                            name: city.name,
-                            country: city.country,
-                            state: city.state,
-                            coord: {
-                                lon: city.coord.lon,
-                                lat: city.coord.lat
-                            }
-                        }});
+                          ...prevSearchValue,
+                          id: city.id,
+                          name: city.name,
+                          country: city.country,
+                          state: city.state,
+                          coord: {
+                            lon: city.coord.lon,
+                            lat: city.coord.lat,
+                          },
+                        };
+                      });
                       setIsInputActive(false);
                       inputRef.current?.blur();
                       // console.log(searchValue);
@@ -235,27 +236,27 @@ const LocationSettings = observer(() => {
             </div>
             <button
               onClick={() => {
-                  let city: ICity | undefined = {
-                      id: 0,
-                      name: "",
-                      country: "",
-                      state: "",
-                      coord: {
-                          lon: 0,
-                          lat: 0
-                      }
-                  };
-                  if (searchValue.id !== 0 && searchValue.country !== "") {
-                      city = cities.find(
-                          (city: ICity) =>
-                              city.id === searchValue.id,
-                      );
-                  } else {
-                      city = cities.find(
-                          (city: ICity) =>
-                              city.name.toLowerCase() === searchValue.name.toLowerCase(),
-                      );
-                  }
+                let city: ICity | undefined = {
+                  id: 0,
+                  name: "",
+                  country: "",
+                  state: "",
+                  coord: {
+                    lon: 0,
+                    lat: 0,
+                  },
+                };
+                if (searchValue.id !== 0 && searchValue.country !== "") {
+                  city = cities.find(
+                    (city: ICity) => city.id === searchValue.id,
+                  );
+                } else {
+                  city = cities.find(
+                    (city: ICity) =>
+                      city.name.toLowerCase() ===
+                      searchValue.name.toLowerCase(),
+                  );
+                }
                 if (city) {
                   if (
                     addedCities$

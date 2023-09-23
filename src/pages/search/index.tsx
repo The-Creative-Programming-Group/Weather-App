@@ -14,18 +14,16 @@ const cities = citiesJSON as ICity[];
 
 const Search = () => {
   const router = useRouter();
-  const [searchValue, setSearchValue] = useState<ICity>(
-      {
-        id: 0,
-        name: "",
-        country: "",
-        state: "",
-        coord: {
-          lon: 0,
-          lat: 0
-        }
-      }
-  ); // searchValue is the value of the input field
+  const [searchValue, setSearchValue] = useState<ICity>({
+    id: 0,
+    name: "",
+    country: "",
+    state: "",
+    coord: {
+      lon: 0,
+      lat: 0,
+    },
+  }); // searchValue is the value of the input field
   const [results, setResults] = useState<ICity[]>([]); // results is the list of cities that match the searchValue
   const [isInputActive, setIsInputActive] = useState<boolean>(true); // activeInput is the input field that is active
   const inputRef = useRef<HTMLInputElement>(null); // inputRef is the ref of the input field
@@ -80,12 +78,12 @@ const Search = () => {
             setIsInputActive(false);
           }}
           onChange={(event) => {
-            setSearchValue(prevSearchValue => {
+            setSearchValue((prevSearchValue) => {
               return {
                 ...prevSearchValue,
                 id: 0,
-                name: event.target.value
-              }
+                name: event.target.value,
+              };
             });
           }}
           ref={inputRef}
@@ -98,25 +96,22 @@ const Search = () => {
                 state: "",
                 coord: {
                   lon: 0,
-                  lat: 0
-                }
+                  lat: 0,
+                },
               };
               if (searchValue.id !== 0 && searchValue.country !== "") {
-                city = cities.find(
-                    (city: ICity) =>
-                        city.id === searchValue.id,
-                );
+                city = cities.find((city: ICity) => city.id === searchValue.id);
               } else {
                 city = cities.find(
-                    (city: ICity) =>
-                        city.name.toLowerCase() === searchValue.name.toLowerCase(),
+                  (city: ICity) =>
+                    city.name.toLowerCase() === searchValue.name.toLowerCase(),
                 );
               }
               if (city) {
                 if (
-                    addedCities$
-                        .get()
-                        .find((value: ICity) => value.id === city!.id)
+                  addedCities$
+                    .get()
+                    .find((value: ICity) => value.id === city!.id)
                 ) {
                   toast.error("City already added");
                 } else {
@@ -146,7 +141,7 @@ const Search = () => {
                 }
                 key={city.id}
                 onMouseDown={() => {
-                  setSearchValue(prevSearchValue => {
+                  setSearchValue((prevSearchValue) => {
                     return {
                       ...prevSearchValue,
                       id: city.id,
@@ -155,9 +150,10 @@ const Search = () => {
                       state: city.state,
                       coord: {
                         lon: city.coord.lon,
-                        lat: city.coord.lat
-                      }
-                    }});
+                        lat: city.coord.lat,
+                      },
+                    };
+                  });
                   setIsInputActive(false);
                   inputRef.current?.blur();
                 }}
@@ -168,7 +164,9 @@ const Search = () => {
                     .map((letter: string, letterIndex: number) => (
                       <span
                         className={
-                          letterIndex < searchValue.name.length ? "font-bold" : ""
+                          letterIndex < searchValue.name.length
+                            ? "font-bold"
+                            : ""
                         }
                         key={letterIndex}
                       >
@@ -182,8 +180,8 @@ const Search = () => {
           }
         })}
         <div className="absolute mt-24 left-1/2 transform -translate-x-1/2 w-full h-96">
-        {searchValue.name.length > 0 ? (
-          <button
+          {searchValue.name.length > 0 ? (
+            <button
               onClick={() => {
                 let city: ICity | undefined = {
                   id: 0,
@@ -192,25 +190,25 @@ const Search = () => {
                   state: "",
                   coord: {
                     lon: 0,
-                    lat: 0
-                  }
+                    lat: 0,
+                  },
                 };
                 if (searchValue.id !== 0 && searchValue.country !== "") {
                   city = cities.find(
-                      (city: ICity) =>
-                          city.id === searchValue.id,
+                    (city: ICity) => city.id === searchValue.id,
                   );
                 } else {
                   city = cities.find(
-                      (city: ICity) =>
-                          city.name.toLowerCase() === searchValue.name.toLowerCase(),
+                    (city: ICity) =>
+                      city.name.toLowerCase() ===
+                      searchValue.name.toLowerCase(),
                   );
                 }
                 if (city) {
                   if (
-                      addedCities$
-                          .get()
-                          .find((value: ICity) => value.id === city!.id)
+                    addedCities$
+                      .get()
+                      .find((value: ICity) => value.id === city!.id)
                   ) {
                     toast.error("City already added");
                   } else {
@@ -222,13 +220,13 @@ const Search = () => {
                   toast.error("City not found");
                 }
               }}
-            className="absolute z-10 bottom-14 right-16 w-44 h-12 text-white bg-[#2d3142] rounded text-2xl hover:shadow-2xl transition duration-500 ease-in-out"
-          >
-            <p>{"Continue ->"}</p>
-          </button>
-        ) : null}
+              className="absolute z-10 bottom-14 right-16 w-44 h-12 text-white bg-[#2d3142] rounded text-2xl hover:shadow-2xl transition duration-500 ease-in-out"
+            >
+              <p>{"Continue ->"}</p>
+            </button>
+          ) : null}
+        </div>
       </div>
-    </div>
     </>
   );
 };
