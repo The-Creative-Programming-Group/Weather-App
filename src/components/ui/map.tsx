@@ -8,16 +8,18 @@ const Map = ({
   position,
   className,
   children,
+  zoom = 7,
 }: {
   position: [number, number];
   className?: string;
   children?: React.ReactNode;
+  zoom?: number;
 }) => {
   // console.log(position);
   return (
     <MapContainer
       center={position}
-      zoom={10}
+      zoom={zoom}
       scrollWheelZoom={false}
       className={className}
     >
