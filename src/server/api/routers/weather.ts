@@ -1,9 +1,5 @@
 import { z } from "zod";
-import {
-  createTRPCRouter,
-  publicProcedure,
-  rateLimitedProcedure,
-} from "~/server/api/trpc";
+import { createTRPCRouter, rateLimitedProcedure } from "~/server/api/trpc";
 import { env } from "~/env.mjs";
 import axios from "axios";
 import { IDailyForecast, IHourlyForecast } from "~/types";
