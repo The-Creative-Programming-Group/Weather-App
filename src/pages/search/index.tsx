@@ -226,7 +226,7 @@ const Search = () => {
               }}
               className="absolute bottom-14 right-16 z-10 h-12 w-44 rounded bg-[#2d3142] text-2xl text-white transition duration-500 ease-in-out hover:shadow-2xl"
             >
-              <p>{"Continue ->"}</p>
+              <p>{translation("continue button")}</p>
             </button>
           ) : null}
         </div>
