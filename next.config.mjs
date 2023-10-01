@@ -1,5 +1,7 @@
 import { withAxiom } from 'next-axiom'
 import withBundleAnalyzer from '@next/bundle-analyzer'
+import pkg from './next-i18next.config.js';
+const { i18n } = pkg;
 
 // create the bundle analyzer config
 const withMyBundleAnalyzer = withBundleAnalyzer({
@@ -15,11 +17,7 @@ const withMyBundleAnalyzer = withBundleAnalyzer({
 /** @type {import("next").NextConfig} */
 const config = withMyBundleAnalyzer(
   withAxiom({
-    reactStrictMode: true,
-    i18n: {
-      locales: ['en'],
-      defaultLocale: 'en'
-    }
-  })
-)
+      reactStrictMode: true,
+      i18n
+  }));
 export default config

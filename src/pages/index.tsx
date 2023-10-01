@@ -3,8 +3,12 @@ import Head from "next/head";
 import Link from "next/link";
 import Image from "next/image";
 import background from "~/assets/background.png";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import { useTranslation } from "next-i18next";
 
 const PublicHome: NextPage = () => {
+  const { t: translation } = useTranslation("common");
+
   return (
     <>
       <Head>
@@ -24,11 +28,19 @@ const PublicHome: NextPage = () => {
           href="/search"
           className="mt-4 rounded-lg bg-[#2d3142] px-5 py-4 text-4xl text-white transition duration-500 ease-in-out hover:shadow-2xl"
         >
-          Find your location
+          {translation("start button")}
         </Link>
       </div>
     </>
   );
 };
+
+export async function getStaticProps({ locale }: { locale: string }) {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, ["common"])),
+    },
+  };
+}
 
 export default PublicHome;

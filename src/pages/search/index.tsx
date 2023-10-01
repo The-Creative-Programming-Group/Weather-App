@@ -9,6 +9,8 @@ import citiesJSON from "~/lib/city-list.json";
 import "react-toastify/dist/ReactToastify.css";
 import { ICity } from "~/types";
 import { useRouter } from "next/router";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import { useTranslation } from "next-i18next";
 
 const cities = citiesJSON as ICity[];
 
@@ -27,6 +29,8 @@ const Search = () => {
   const [results, setResults] = useState<ICity[]>([]); // results is the list of cities that match the searchValue
   const [isInputActive, setIsInputActive] = useState<boolean>(true); // activeInput is the input field that is active
   const inputRef = useRef<HTMLInputElement>(null); // inputRef is the ref of the input field
+
+  const { t: translation } = useTranslation("search");
 
   useEffect(() => {
     if (searchValue.name === "") {
@@ -68,7 +72,7 @@ const Search = () => {
         <input
           className="w-5/12 border-8 border-l-0 border-solid border-[#2d3142] bg-[#383b53] pb-0.5 pl-3 pt-0.5 text-xl text-white outline-0"
           autoFocus
-          placeholder="Search for your location"
+          placeholder={translation("search input placeholder")}
           type="text"
           onFocus={() => {
             setIsInputActive(true);
@@ -230,5 +234,13 @@ const Search = () => {
     </>
   );
 };
+
+export async function getStaticProps({ locale }: { locale: string }) {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, ["search"])),
+    },
+  };
+}
 
 export default Search;
