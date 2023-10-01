@@ -185,13 +185,26 @@ export const weatherRouter = createTRPCRouter({
 
       if (hourlyResult.status === "fulfilled") {
         try {
-          hourlyData = HourlyWeatherSchema.parse(hourlyResult.value.data);
-          // console.log(hourlyData);
+          let data = hourlyResult.value.data;
+
+          if (!data) {
+            throw new Error("Air quality data is undefined");
+          }
+
+          // log.info("Hourly data without the filter and unparsed", data);
+
+          data.hourly.precipitation_probability =
+            data.hourly.precipitation_probability.filter(
+              (value) => value !== null,
+            );
+
+          hourlyData = HourlyWeatherSchema.parse(data);
+          // log.info("Parsed and filtered hourly data", hourlyData);
         } catch (error) {
           if (error instanceof z.ZodError) {
-            log.error("Zod Errors", error.issues);
+            log.error("Zod Errors in the hourly weather", error.issues);
           } else {
-            console.error("Error", error);
+            console.error("Else Error", error);
           }
         }
       } else {
@@ -208,9 +221,9 @@ export const weatherRouter = createTRPCRouter({
           );
         } catch (error) {
           if (error instanceof z.ZodError) {
-            log.error("Zod Errors", error.issues);
+            log.error("Zod Errors in the present weather", error.issues);
           } else {
-            console.error(error);
+            console.error("Else Error", error);
           }
         }
       } else {
@@ -228,6 +241,8 @@ export const weatherRouter = createTRPCRouter({
             throw new Error("Air quality data is undefined");
           }
 
+          // log.info("Air quality data without the filter and unparsed", data);
+
           data.hourly.pm10 = data.hourly.pm10.filter((value) => value !== null);
           data.hourly.pm2_5 = data.hourly.pm2_5.filter(
             (value) => value !== null,
@@ -239,9 +254,9 @@ export const weatherRouter = createTRPCRouter({
           presentAirQuality = PresentAirQualitySchema.parse(data);
         } catch (error) {
           if (error instanceof z.ZodError) {
-            log.error("Zod Errors", error.issues);
+            log.error("Zod Errors in the air quality", error.issues);
           } else {
-            console.error(error);
+            console.error("Else Error", error);
           }
         }
       } else {
