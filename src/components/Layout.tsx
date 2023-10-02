@@ -32,21 +32,22 @@ const Layout: React.FC<LayoutProps> = ({ title, children, footer }) => {
       <header className="flex items-center justify-around bg-[#2d3142] p-2 text-white">
         <Link href="/home" className="flex">
           <AiFillHome className="mr-1.5 md:text-2xl" />
-          <p>Home</p>
+          <p>{translation("menu home")}</p>
         </Link>
         <Link href="/locationsettings" className="flex">
           <FaMapMarkedAlt className="mr-1.5 md:text-2xl" />
-          <p>Locations</p>
+          <p>{translation("menu locations")}</p>
         </Link>
         <h1 className="text-base font-semibold md:text-4xl md:font-normal">
           <Link href="/home">Weather.io</Link>
         </h1>
         <Link href="/settings" className="flex">
-          <IoIosSettings className="mr-1.5 md:text-2xl" /> <p>Settings</p>
+          <IoIosSettings className="mr-1.5 md:text-2xl" />{" "}
+          <p>{translation("menu settings")}</p>
         </Link>
         <Link href="/contact" className="flex">
           <IoMdContact className="mr-1.5 md:text-2xl" />
-          <p>Contact</p>
+          <p>{translation("menu contact")}</p>
         </Link>
       </header>
       <main className="min-h-screen">
@@ -67,7 +68,7 @@ const Layout: React.FC<LayoutProps> = ({ title, children, footer }) => {
           <div className="mr-72 flex w-full justify-center">
             {" "}
             <Link href="/legal" className="flex justify-center underline">
-              Legal
+              {translation("footer legal")}
             </Link>
           </div>
           <div className="absolute right-0 mr-12 flex w-1/4 items-center justify-between">

@@ -1,4 +1,9 @@
 {
   "start button": "Find your location",
-  "share button": "Share"
+  "share button": "Share",
+  "menu home": "Home",
+  "menu locations": "Locations",
+  "menu settings": "Settings",
+  "menu contact": "Contact",
+  "footer legal": "Legal"
 }

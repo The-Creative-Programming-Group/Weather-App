@@ -1,4 +1,9 @@
 {
   "start button": "Suche deinen Standort",
-  "share button": "Teilen"
+  "share button": "Teilen",
+  "menu home": "Start",
+  "menu locations": "Orte",
+  "menu settings": "Einstellungen",
+  "menu contact": "Kontakt",
+  "footer legal": "Rechtliches"
 }
