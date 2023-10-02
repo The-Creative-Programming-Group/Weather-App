@@ -22,7 +22,8 @@ const Settings = observer(() => {
     router.push(router.pathname, router.asPath, { locale });
   };
 
-  const { t: translation } = useTranslation("settings");
+  const { t: translationSettings } = useTranslation("settings");
+  const { t: translationCommon } = useTranslation("common");
 
   const doneImage = "/assets/done.png";
 
@@ -45,7 +46,7 @@ const Settings = observer(() => {
           <hr className="mt-9 h-1.5 w-4/12 rounded bg-[#2d3142]" />
           <div className="m-5 flex flex-col justify-center">
             <h2 className="text-basic font-bold">
-              {translation("temperature units")}
+              {translationSettings("temperature units")}
             </h2>
             <button
               className={`${normalButtonClass} ${
@@ -73,74 +74,86 @@ const Settings = observer(() => {
 
           <div className="m-5 flex flex-col justify-center">
             <h2 className="text-basic font-bold">
-              {translation("wind speed units")}
+              {translationSettings("wind speed units")}
             </h2>
             <button
               className={`${normalButtonClass} ${
-                windSpeedUnit$.get() === "Miles per hour" ? "border-2" : ""
+                windSpeedUnit$.get() === "miles per hour" ? "border-2" : ""
               }`}
-              onClick={() => handleSpeedUnitClick("Miles per hour")}
+              onClick={() => handleSpeedUnitClick("miles per hour")}
             >
-              <p className={styles.buttontext}>Miles per hour (mph)</p>
-              {windSpeedUnit$.get() === "Miles per hour" && (
+              <p className={styles.buttontext}>
+                {translationCommon("miles per hour")} (mph)
+              </p>
+              {windSpeedUnit$.get() === "miles per hour" && (
                 <RxCheck width={20} height={20} className="h-9 w-9" />
               )}
             </button>
             <button
               className={`${normalButtonClass} ${
-                windSpeedUnit$.get() === "Kilometers per hour" ? "border-2" : ""
+                windSpeedUnit$.get() === "kilometers per hour" ? "border-2" : ""
               }`}
-              onClick={() => handleSpeedUnitClick("Kilometers per hour")}
+              onClick={() => handleSpeedUnitClick("kilometers per hour")}
             >
-              <p className={styles.buttontext}>Kilometers per hour (km/h)</p>
-              {windSpeedUnit$.get() === "Kilometers per hour" && (
+              <p className={styles.buttontext}>
+                {translationCommon("kilometers per hour")} (km/h)
+              </p>
+              {windSpeedUnit$.get() === "kilometers per hour" && (
                 <RxCheck width={20} height={20} className="h-9 w-9" />
               )}
             </button>
             <button
               className={`${normalButtonClass} ${
-                windSpeedUnit$.get() === "Knots" ? "border-2" : ""
+                windSpeedUnit$.get() === "knots" ? "border-2" : ""
               }`}
-              onClick={() => handleSpeedUnitClick("Knots")}
+              onClick={() => handleSpeedUnitClick("knots")}
             >
-              <p className={styles.buttontext}>Knots</p>
-              {windSpeedUnit$.get() === "Knots" && (
+              <p className={styles.buttontext}>{translationCommon("knots")}</p>
+              {windSpeedUnit$.get() === "knots" && (
                 <RxCheck width={20} height={20} className="h-9 w-9" />
               )}
             </button>
             <button
               className={`${normalButtonClass} ${
-                windSpeedUnit$.get() === "Meters per second" ? "border-2" : ""
+                windSpeedUnit$.get() === "meters per second" ? "border-2" : ""
               }`}
-              onClick={() => handleSpeedUnitClick("Meters per second")}
+              onClick={() => handleSpeedUnitClick("meters per second")}
             >
-              <p className={styles.buttontext}>Meters per second (m/s)</p>
-              {windSpeedUnit$.get() === "Meters per second" && (
+              <p className={styles.buttontext}>
+                {translationCommon("meters per second")} (m/s)
+              </p>
+              {windSpeedUnit$.get() === "meters per second" && (
                 <RxCheck width={20} height={20} className="h-9 w-9" />
               )}
             </button>
             <button
               className={`${normalButtonClass} ${
-                windSpeedUnit$.get() === "Beaufort" ? "border-2" : ""
+                windSpeedUnit$.get() === "beaufort" ? "border-2" : ""
               }`}
-              onClick={() => handleSpeedUnitClick("Beaufort")}
+              onClick={() => handleSpeedUnitClick("beaufort")}
             >
-              <p className={styles.buttontext}>Beaufort</p>
-              {windSpeedUnit$.get() === "Beaufort" && (
+              <p className={styles.buttontext}>
+                {translationCommon("beaufort")}
+              </p>
+              {windSpeedUnit$.get() === "beaufort" && (
                 <RxCheck width={20} height={20} className="h-9 w-9" />
               )}
             </button>
           </div>
 
           <div className="m-5 flex flex-col justify-center">
-            <h2 className="text-basic font-bold">{translation("language")}</h2>
+            <h2 className="text-basic font-bold">
+              {translationSettings("language")}
+            </h2>
             <button
               className={`${normalButtonClass} ${
                 locale === "en" ? "border-2" : ""
               }`}
               onClick={() => changeLocale("en")}
             >
-              <p className={styles.buttontext}>{translation("english")}</p>
+              <p className={styles.buttontext}>
+                {translationSettings("english")}
+              </p>
               {locale === "en" && (
                 <RxCheck width={20} height={20} className="h-9 w-9" />
               )}
@@ -151,7 +164,9 @@ const Settings = observer(() => {
               }`}
               onClick={() => changeLocale("de")}
             >
-              <p className={styles.buttontext}>{translation("german")}</p>
+              <p className={styles.buttontext}>
+                {translationSettings("german")}
+              </p>
               {locale === "de" && (
                 <RxCheck width={20} height={20} className="h-9 w-9" />
               )}

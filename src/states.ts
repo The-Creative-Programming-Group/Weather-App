@@ -35,13 +35,15 @@ persistObservable(temperatureUnit$, {
 });
 
 export type WindSpeedUnitType =
-  | "Miles per hour"
-  | "Kilometers per hour"
-  | "Knots"
-  | "Meters per second"
-  | "Beaufort";
+  | "miles per hour"
+  | "kilometers per hour"
+  | "knots"
+  | "meters per second"
+  | "beaufort";
 
-export const windSpeedUnit$ = observable<WindSpeedUnitType>("Miles per hour");
+export const windSpeedUnit$ = observable<WindSpeedUnitType>(
+  "kilometers per hour",
+);
 
 persistObservable(windSpeedUnit$, {
   local: "windSpeedUnit",

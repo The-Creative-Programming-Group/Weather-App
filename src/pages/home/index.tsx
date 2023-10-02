@@ -53,19 +53,19 @@ function convertWindSpeed(
   let convertedSpeed: number = 0;
 
   switch (unit) {
-    case "Miles per hour":
+    case "miles per hour":
       convertedSpeed = speedInMetersPerSecond * 2.23694;
       break;
-    case "Kilometers per hour":
+    case "kilometers per hour":
       convertedSpeed = speedInMetersPerSecond * 3.6;
       break;
-    case "Knots":
+    case "knots":
       convertedSpeed = speedInMetersPerSecond * 1.94384;
       break;
-    case "Meters per second":
+    case "meters per second":
       convertedSpeed = speedInMetersPerSecond;
       break;
-    case "Beaufort":
+    case "beaufort":
       if (speedInMetersPerSecond < 0.3) {
         convertedSpeed = 0; // Calm
       } else if (speedInMetersPerSecond < 1.6) {
@@ -98,7 +98,8 @@ const InternalHome = observer(() => {
         : `${Math.round((weatherData.data?.temperature * 9) / 5 - 459.67)}°F`;
   }
 
-  const { t: translation } = useTranslation("home");
+  const { t: translationHome } = useTranslation("home");
+  const { t: translationCommon } = useTranslation("common");
 
   type WeatherStateType =
     | "Sunny"
@@ -312,14 +313,14 @@ const InternalHome = observer(() => {
                       hourlyForecast.time
                   ) {
                     isSunsetOrSunrise = true;
-                    sunEvent = translation("sunset");
+                    sunEvent = translationHome("sunset");
                   } else if (
                     weatherData.data.sunrise &&
                     dayjs(weatherData.data.sunrise).hour() ===
                       hourlyForecast.time
                   ) {
                     isSunsetOrSunrise = true;
-                    sunEvent = translation("sunrise");
+                    sunEvent = translationHome("sunrise");
                   }
 
                   if (hourlyForecast.time === currentHour) {
@@ -370,7 +371,7 @@ const InternalHome = observer(() => {
             <>
               <div className="col-span-3 row-span-6 flex flex-col rounded-xl bg-gray-400">
                 <div className="flex w-full items-center justify-between pb-2 pl-5 pr-3 pt-2 text-xl">
-                  {translation("9 day forecast")}{" "}
+                  {translationHome("9 day forecast")}{" "}
                   <HoverCard>
                     <HoverCardTrigger asChild>
                       <Button className="w-10 rounded-full p-1.5">
@@ -395,7 +396,7 @@ const InternalHome = observer(() => {
                   (dailyForecast: IDailyForecast, index: number) => {
                     let day;
                     if (index === 0) {
-                      day = translation("today");
+                      day = translationHome("today");
                     } else {
                       day = new Date(dailyForecast.date).toLocaleString(
                         locale,
@@ -454,7 +455,7 @@ const InternalHome = observer(() => {
           {weatherData.data?.precipitationProbabilities ? (
             <div className="col-span-4 col-start-4 row-span-1 rounded-md bg-gray-400 pb-2">
               <div className="mt-1.5 flex justify-between pl-4 pr-3 text-xl">
-                {translation("precipitation")}{" "}
+                {translationHome("precipitation")}{" "}
                 <HoverCard>
                   <HoverCardTrigger asChild>
                     <Button className="w-10 rounded-full p-1.5">
@@ -503,7 +504,9 @@ const InternalHome = observer(() => {
                       className="mt-1 flex w-24 flex-col items-center justify-center"
                       key={key}
                     >
-                      <div className="text-sm">{translation(key.slice(2))}</div>
+                      <div className="text-sm">
+                        {translationHome(key.slice(2))}
+                      </div>
                       <WiRaindrop className={raindropClass} />
                       <div className="-mt-4 text-xl">{value}%</div>
                     </div>
@@ -518,7 +521,7 @@ const InternalHome = observer(() => {
           {weatherData.data?.feels_like ? (
             <div className="col-span-2 col-start-4 row-span-2 row-start-2 rounded-md bg-gray-400">
               <div className="mt-1.5 flex justify-between pl-4 pr-3 text-xl">
-                {translation("feels like")}{" "}
+                {translationHome("feels like")}{" "}
                 <HoverCard>
                   <HoverCardTrigger asChild>
                     <Button className="w-10 rounded-full p-1.5">
@@ -543,14 +546,14 @@ const InternalHome = observer(() => {
                 </div>
                 <div className="text-sm font-medium text-gray-500">
                   {weatherData.data.feels_like > 309
-                    ? translation("feels like phrase very warm")
+                    ? translationHome("feels like phrase very warm")
                     : weatherData.data.feels_like > 299
-                    ? translation("feels like phrase warm")
+                    ? translationHome("feels like phrase warm")
                     : weatherData.data.feels_like > 279
-                    ? translation("feels like phrase moderate")
+                    ? translationHome("feels like phrase moderate")
                     : weatherData.data.feels_like > 269
-                    ? translation("feels like phrase cold")
-                    : translation("feels like phrase very cold")}
+                    ? translationHome("feels like phrase cold")
+                    : translationHome("feels like phrase very cold")}
                 </div>
               </div>
             </div>
@@ -561,22 +564,22 @@ const InternalHome = observer(() => {
           {weatherData.data?.air_quality ? (
             <div className="col-span-1 col-start-4 row-span-3 row-start-4 rounded-md bg-gray-400">
               <div className="ml-2 mt-1.5 text-xl">
-                {translation("air quality")}
+                {translationHome("air quality")}
               </div>
               <div className="relative mb-2 ml-3.5 mt-2 flex h-64 items-center">
                 <div className="text-md mt-2 font-medium">
                   {weatherData.data?.air_quality.toPrecision(2)} <br />
                   {weatherData.data?.air_quality > 90
-                    ? translation("air quality text very poor")
+                    ? translationHome("air quality text very poor")
                     : weatherData.data?.air_quality > 70
-                    ? translation("air quality text poor")
+                    ? translationHome("air quality text poor")
                     : weatherData.data?.air_quality > 50
-                    ? translation("air quality text fair")
+                    ? translationHome("air quality text fair")
                     : weatherData.data?.air_quality > 30
-                    ? translation("air quality text moderate")
+                    ? translationHome("air quality text moderate")
                     : weatherData.data?.air_quality > 10
-                    ? translation("air quality text good")
-                    : translation("air quality text excellent")}
+                    ? translationHome("air quality text good")
+                    : translationHome("air quality text excellent")}
                 </div>
                 <div className="absolute right-3 h-64 w-3 rounded-md bg-gradient-to-t from-red-500 to-green-800">
                   <div
@@ -593,7 +596,7 @@ const InternalHome = observer(() => {
           {weatherData.data?.visibility ? (
             <div className="col-span-2 col-start-6 row-span-2 row-start-2 rounded-md bg-gray-400">
               <div className="mt-1.5 flex justify-between pl-4 pr-3 text-xl">
-                {translation("visibility")}{" "}
+                {translationHome("visibility")}{" "}
                 <HoverCard>
                   <HoverCardTrigger asChild>
                     <Button className="w-10 rounded-full p-1.5">
@@ -623,7 +626,7 @@ const InternalHome = observer(() => {
           {weatherData.data?.wind_speed && weatherData.data?.wind_pressure ? (
             <div className="col-span-3 col-start-5 row-span-3 row-start-4 rounded-md bg-gray-400">
               <div className="mt-1.5 flex w-full justify-between pl-4 pr-3 text-xl">
-                {translation("wind pressure")}{" "}
+                {translationHome("wind pressure")}{" "}
                 <HoverCard>
                   <HoverCardTrigger asChild>
                     <Button className="w-10 rounded-full p-1.5">
@@ -654,20 +657,20 @@ const InternalHome = observer(() => {
                 <BsWind className="mt-5 h-32 w-32" />
                 <div className="mt-9 flex gap-10 text-xl">
                   <div>
-                    {translation("pressure")}
+                    {translationHome("pressure")}
                     <div className="mt-2">
                       {weatherData.data.wind_pressure.toPrecision(2)} Pa
                     </div>
                   </div>
                   <div>
-                    {translation("speed")}
+                    {translationHome("speed")}
                     {weatherData.data?.wind_speed ? (
                       <div className="mt-2">
                         {convertWindSpeed(
                           weatherData.data.wind_speed,
                           windSpeedUnit$.get(),
                         ).toPrecision(2)}{" "}
-                        {windSpeedUnit$.get()}
+                        {translationCommon(windSpeedUnit$.get())}
                       </div>
                     ) : (
                       "Loading..."

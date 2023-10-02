@@ -5,5 +5,11 @@
   "menu locations": "Orte",
   "menu settings": "Einstellungen",
   "menu contact": "Kontakt",
-  "footer legal": "Rechtliches"
+  "footer legal": "Rechtliches",
+
+  "miles per hour": "Meilen pro Stunde",
+  "kilometers per hour": "Kilometer pro Stunde",
+  "knots": "Knoten",
+  "meters per second": "Meter pro Sekunde",
+  "beaufort": "Beaufort"
 }
