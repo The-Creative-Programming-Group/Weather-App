@@ -38,10 +38,10 @@ const Settings = observer(() => {
 
   return (
     <>
-      <Layout title="Settings">
+      <Layout title={translationCommon("menu settings")}>
         <div className="flex w-full flex-col items-center">
           <h1 className="mt-10 flex justify-center text-4xl font-bold">
-            Settings
+            {translationCommon("menu settings")}
           </h1>
           <hr className="mt-9 h-1.5 w-4/12 rounded bg-[#2d3142]" />
           <div className="m-5 flex flex-col justify-center">

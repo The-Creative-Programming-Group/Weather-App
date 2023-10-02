@@ -10,6 +10,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { ICity } from "~/types";
 import citiesJSON from "~/lib/city-list.json";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import { useTranslation } from "next-i18next";
 
 const cities = citiesJSON as ICity[];
 
@@ -27,6 +28,9 @@ const LocationSettings = observer(() => {
   const [results, setResults] = useState<ICity[]>([]); // results is the list of cities that match the searchValue
   const [isInputActive, setIsInputActive] = useState<boolean>(true); // activeInput is the input field that is active
   const inputRef = useRef<HTMLInputElement>(null); // inputRef is the ref of the input field
+
+  const { t: translationLocationSettings } = useTranslation("locationsettings");
+  const { t: translationCommon } = useTranslation("common");
 
   useEffect(() => {
     if (searchValue.name === "") {
@@ -60,10 +64,10 @@ const LocationSettings = observer(() => {
   return (
     <>
       <ToastContainer />
-      <Layout title="Location Settings">
+      <Layout title={translationCommon("menu locations")}>
         <div className="flex w-full flex-col items-center">
           <h1 className="mt-24 flex justify-center text-3xl font-bold">
-            Location settings
+            {translationCommon("menu locations")}
           </h1>
           <hr className="mt-3 h-1.5 w-4/12 rounded bg-[#2d3142]" />
           <div
@@ -72,9 +76,11 @@ const LocationSettings = observer(() => {
           >
             <div
               id="styles-setup"
-              className="flex w-full flex-col items-center"
+              className="flex w-4/12 flex-col items-center"
             >
-              <label className="mb-2 mr-131 font-bold">Add new location</label>
+              <label className="mb-2 w-full text-left font-bold">
+                {translationLocationSettings("add new location")}
+              </label>
               <div className="flex w-full justify-center">
                 <Image
                   className="w-12 transform border-b-2 border-black bg-[#d8d5db] pb-3 pl-3 pt-3"
@@ -84,9 +90,11 @@ const LocationSettings = observer(() => {
                   height={56}
                 />
                 <input
-                  className="w-4/12 border-b-2 border-black bg-[#d8d5db] pb-0.5 pl-3 pt-0.5 text-xl font-bold text-black outline-0"
+                  className="w-full border-b-2 border-black bg-[#d8d5db] pb-0.5 pl-3 pt-0.5 text-xl font-bold text-black outline-0"
                   autoFocus
-                  placeholder="Search for your location"
+                  placeholder={translationLocationSettings(
+                    "search input placeholder",
+                  )}
                   type="text"
                   onFocus={() => {
                     setIsInputActive(true);
@@ -276,7 +284,7 @@ const LocationSettings = observer(() => {
               }}
               className="mb-2.5 mt-2.5 rounded border-solid bg-[#2d3142] p-2 font-bold text-white"
             >
-              Add New Location
+              {translationLocationSettings("add new location button")}
             </button>
           </div>
         </div>
@@ -288,7 +296,7 @@ const LocationSettings = observer(() => {
 export async function getStaticProps({ locale }: { locale: string }) {
   return {
     props: {
-      ...(await serverSideTranslations(locale, ["common"])),
+      ...(await serverSideTranslations(locale, ["locationsettings", "common"])),
     },
   };
 }
