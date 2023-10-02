@@ -101,16 +101,7 @@ const InternalHome = observer(() => {
   const { t: translationHome } = useTranslation("home");
   const { t: translationCommon } = useTranslation("common");
 
-  type WeatherStateType =
-    | "Sunny"
-    | "Very Cloudy"
-    | "Cloudy"
-    | "Rainy"
-    | "Stormy"
-    | "Snowy"
-    | "Windy"
-    | React.ReactNode
-    | undefined;
+  type WeatherStateType = string | React.ReactNode | undefined;
 
   type TimeType =
     | { hour: number; day?: undefined; icons: boolean }
@@ -123,7 +114,7 @@ const InternalHome = observer(() => {
           if (icons) {
             return <FaCloudShowersHeavy className="h-12 w-12" />;
           }
-          return "Stormy";
+          return translationHome("weather state stormy");
         }
       }
       if (weatherData.data?.hourlyForecast[hour]?.snowfall) {
@@ -131,7 +122,7 @@ const InternalHome = observer(() => {
           if (icons) {
             return <FaCloudMeatball className="h-12 w-12" />;
           }
-          return "Snowy";
+          return translationHome("weather state snowy");
         }
       }
       if (weatherData.data?.hourlyForecast[hour]?.rain) {
@@ -139,7 +130,7 @@ const InternalHome = observer(() => {
           if (icons) {
             return <FaCloudRain className="h-12 w-12" />;
           }
-          return "Rainy";
+          return translationHome("weather state rainy");
         }
       }
       if (weatherData.data?.hourlyForecast[hour]?.cloudcover) {
@@ -148,7 +139,7 @@ const InternalHome = observer(() => {
             if (icons) {
               return <FaCloud className="h-12 w-12" />;
             }
-            return "Very Cloudy";
+            return translationHome("weather state very cloudy");
           } else {
             if (weatherData.data) {
               if (
@@ -158,12 +149,12 @@ const InternalHome = observer(() => {
                 if (icons) {
                   return <FaCloudSun className="h-12 w-12" />;
                 }
-                return "Cloudy";
+                return translationHome("weather state cloudy");
               } else {
                 if (icons) {
                   return <FaCloudMoon className="h-12 w-12" />;
                 }
-                return "Cloudy";
+                return translationHome("weather state cloudy");
               }
             }
           }
@@ -173,7 +164,7 @@ const InternalHome = observer(() => {
             if (icons) {
               return <FaWind className="h-12 w-12" />;
             }
-            return "Windy";
+            return translationHome("weather state windy");
           }
         }
       }
@@ -183,7 +174,7 @@ const InternalHome = observer(() => {
           if (icons) {
             return <FaCloudShowersHeavy className="h-12 w-12" />;
           }
-          return "Stormy";
+          return translationHome("weather state stormy");
         }
       }
       if (weatherData.data?.dailyForecast[day]?.snowfall) {
@@ -191,7 +182,7 @@ const InternalHome = observer(() => {
           if (icons) {
             return <FaCloudMeatball className="h-12 w-12" />;
           }
-          return "Snowy";
+          return translationHome("weather state snowy");
         }
       }
       if (weatherData.data?.dailyForecast[day]?.rain) {
@@ -199,7 +190,7 @@ const InternalHome = observer(() => {
           if (icons) {
             return <FaCloudRain className="h-12 w-12" />;
           }
-          return "Rainy";
+          return translationHome("weather state rainy");
         }
       }
       if (weatherData.data?.dailyForecast[day]?.cloudcover) {
@@ -208,12 +199,12 @@ const InternalHome = observer(() => {
             if (icons) {
               return <FaCloud className="h-12 w-12" />;
             }
-            return "Cloudy";
+            return translationHome("weather state cloudy");
           } else {
             if (icons) {
               return <FaCloudSun className="h-12 w-12" />;
             }
-            return "Cloudy";
+            return translationHome("weather state cloudy");
           }
         }
       }
@@ -222,7 +213,7 @@ const InternalHome = observer(() => {
           if (icons) {
             return <FaWind className="h-12 w-12" />;
           }
-          return "Windy";
+          return translationHome("weather state windy");
         }
       }
     }
@@ -242,7 +233,7 @@ const InternalHome = observer(() => {
       // console.log("Sunny", hour, day);
       return <FaSun className="h-12 w-12" />;
     }
-    return "Sunny";
+    return translationHome("weather state sunny");
   };
 
   const mapPosition: [number, number] = [

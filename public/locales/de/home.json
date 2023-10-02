@@ -28,5 +28,13 @@
   "air quality text excellent": "Sehr gut",
 
   "sunset": "Sonnenuntergang",
-  "sunrise": "Sonnenaufgang"
+  "sunrise": "Sonnenaufgang",
+
+  "weather state stormy": "Stürmisch",
+  "weather state snowy": "Schnee",
+  "weather state rainy": "Regen",
+  "weather state very cloudy": "Stark bewölkt",
+  "weather state cloudy": "Bewölkt",
+  "weather state windy": "Windig",
+  "weather state sunny": "Sonnig"
 }

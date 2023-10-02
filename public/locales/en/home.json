@@ -28,5 +28,13 @@
   "air quality text excellent": "Excellent",
 
   "sunset": "Sunset",
-  "sunrise": "Sunrise"
+  "sunrise": "Sunrise",
+
+  "weather state stormy": "Stormy",
+  "weather state snowy": "Snowy",
+  "weather state rainy": "Rainy",
+  "weather state very cloudy": "Very Cloudy",
+  "weather state cloudy": "Cloudy",
+  "weather state windy": "Windy",
+  "weather state sunny": "Sunny"
 }
