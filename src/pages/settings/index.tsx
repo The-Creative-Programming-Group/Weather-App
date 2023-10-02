@@ -43,7 +43,7 @@ const Settings = observer(() => {
           <h1 className="mt-10 flex justify-center text-4xl font-bold">
             {translationCommon("menu settings")}
           </h1>
-          <hr className="mt-9 h-1.5 w-4/12 rounded bg-[#2d3142]" />
+          <hr className="mt-3 h-1.5 w-6/12 rounded bg-[#2d3142] md:w-4/12" />
           <div className="m-5 flex flex-col justify-center">
             <h2 className="text-basic font-bold">
               {translationSettings("temperature units")}
