@@ -13,9 +13,20 @@
   "noon": "Mittag",
   "afternoon": "Nachmittag",
   "night": "Nacht",
+
   "feels like phrase very warm": "Die Sonne probiert sich abzukühlen!",
   "feels like phrase warm": "Dein Eis schmilzt dir davon!",
   "feels like phrase moderate": "Perfektes Wetter für einen Spaziergang!",
   "feels like phrase cold": "Sogar Pinguine bestellen sich eine heiße Schokolade!",
-  "feels like phrase very cold": "Auch die Schneemänner frieren!"
+  "feels like phrase very cold": "Auch die Schneemänner frieren!",
+
+  "air quality text very poor": "Sehr schlecht",
+  "air quality text poor": "Schlecht",
+  "air quality text fair": "Mäßig",
+  "air quality text moderate": "Mittel",
+  "air quality text good": "Gut",
+  "air quality text excellent": "Sehr gut",
+
+  "sunset": "Sonnenuntergang",
+  "sunrise": "Sonnenaufgang"
 }

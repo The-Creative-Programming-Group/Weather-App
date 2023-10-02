@@ -13,9 +13,20 @@
   "noon": "Noon",
   "afternoon": "Afternoon",
   "night": "Night",
+
   "feels like phrase very warm": "The sun is likely trying to cool down!",
   "feels like phrase warm": "Even ice cream finds warmth too much!",
   "feels like phrase moderate": "So moderate, even Goldilocks would approve!",
   "feels like phrase cold": "Penguins are ordering hot chocolate due to the chill!",
-  "feels like phrase very cold": "Today's frosty weather is making even snowmen shiver!"
+  "feels like phrase very cold": "Today's frosty weather is making even snowmen shiver!",
+
+  "air quality text very poor": "Very Poor",
+  "air quality text poor": "Poor",
+  "air quality text fair": "Fair",
+  "air quality text moderate": "Moderate",
+  "air quality text good": "Good",
+  "air quality text excellent": "Excellent",
+
+  "sunset": "Sunset",
+  "sunrise": "Sunrise"
 }

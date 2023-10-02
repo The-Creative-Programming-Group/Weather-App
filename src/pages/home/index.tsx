@@ -312,14 +312,14 @@ const InternalHome = observer(() => {
                       hourlyForecast.time
                   ) {
                     isSunsetOrSunrise = true;
-                    sunEvent = "Sunset";
+                    sunEvent = translation("sunset");
                   } else if (
                     weatherData.data.sunrise &&
                     dayjs(weatherData.data.sunrise).hour() ===
                       hourlyForecast.time
                   ) {
                     isSunsetOrSunrise = true;
-                    sunEvent = "Sunrise";
+                    sunEvent = translation("sunrise");
                   }
 
                   if (hourlyForecast.time === currentHour) {
@@ -335,7 +335,7 @@ const InternalHome = observer(() => {
                   }
                   return (
                     <div
-                      className="m-4 flex w-20 flex-col items-center"
+                      className="m-2 flex w-32 flex-col items-center"
                       key={index}
                     >
                       <div className="mt-1.5 font-semibold">{time}</div>
@@ -567,16 +567,16 @@ const InternalHome = observer(() => {
                 <div className="text-md mt-2 font-medium">
                   {weatherData.data?.air_quality.toPrecision(2)} <br />
                   {weatherData.data?.air_quality > 90
-                    ? "Very Poor"
+                    ? translation("air quality text very poor")
                     : weatherData.data?.air_quality > 70
-                    ? "Poor"
+                    ? translation("air quality text poor")
                     : weatherData.data?.air_quality > 50
-                    ? "Fair"
+                    ? translation("air quality text fair")
                     : weatherData.data?.air_quality > 30
-                    ? "Moderate"
+                    ? translation("air quality text moderate")
                     : weatherData.data?.air_quality > 10
-                    ? "Good"
-                    : "Excellent"}
+                    ? translation("air quality text good")
+                    : translation("air quality text excellent")}
                 </div>
                 <div className="absolute right-3 h-64 w-3 rounded-md bg-gradient-to-t from-red-500 to-green-800">
                   <div

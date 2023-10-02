@@ -144,7 +144,7 @@ const Layout: React.FC<LayoutProps> = ({ title, children, footer }) => {
           <div className="mr-72 flex w-full justify-center">
             {" "}
             <Link href="/legal" className="flex justify-center underline">
-              Legal
+              {translation("footer legal")}
             </Link>
           </div>
           <div className="absolute right-0 mr-12 flex w-1/4 items-center justify-between">
