@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import Layout from "~/components/Layout";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
 const ContactUs = () => {
   type SendButtonTextType = "Send" | "Sent";
@@ -34,8 +35,8 @@ const ContactUs = () => {
             Contact Us
           </h1>
           <hr className="mt-3 h-1.5 w-9/12 rounded bg-[#2d3142] md:w-5/12" />
-          <div className="mt-5 ml-5 mr-5 mb-2 flex flex-col md:w-1/3 md:flex-row">
-            <div className="mb-2 flex w-60 flex-col md:mr-4 md:mb-0 md:w-full">
+          <div className="mb-2 ml-5 mr-5 mt-5 flex flex-col md:w-1/3 md:flex-row">
+            <div className="mb-2 flex w-60 flex-col md:mb-0 md:mr-4 md:w-full">
               <label className="ml-2">First name</label>
               <input
                 className="h-10 w-full rounded-md bg-[#d7d5db] pl-2"
@@ -78,5 +79,13 @@ const ContactUs = () => {
     </>
   );
 };
+
+export async function getStaticProps({ locale }: { locale: string }) {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, ["common"])),
+    },
+  };
+}
 
 export default ContactUs;

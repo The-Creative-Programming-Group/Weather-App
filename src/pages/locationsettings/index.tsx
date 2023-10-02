@@ -9,6 +9,7 @@ import search2Image from "~/assets/search2.png";
 import "react-toastify/dist/ReactToastify.css";
 import { ICity } from "~/types";
 import citiesJSON from "~/lib/city-list.json";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
 const cities = citiesJSON as ICity[];
 
@@ -73,7 +74,7 @@ const LocationSettings = observer(() => {
               id="styles-setup"
               className="flex w-full flex-col items-center"
             >
-              <label className="mr-131 mb-2 font-bold">Add new location</label>
+              <label className="mb-2 mr-131 font-bold">Add new location</label>
               <div className="flex w-full justify-center">
                 <Image
                   className="w-12 transform border-b-2 border-black bg-[#d8d5db] pb-3 pl-3 pt-3"
@@ -158,7 +159,7 @@ const LocationSettings = observer(() => {
                   <div
                     className={
                       isInputActive
-                        ? "flex justify-between w-36/100 h-auto border-b-2 border-gray-400 bg-[#d8d5db] p-5 hover: cursor-pointer"
+                        ? "hover: flex h-auto w-36/100 cursor-pointer justify-between border-b-2 border-gray-400 bg-[#d8d5db] p-5"
                         : "hidden"
                     }
                     key={city.id}
@@ -202,15 +203,15 @@ const LocationSettings = observer(() => {
                 );
               }
             })}
-            <div className="w-full flex justify-center mt-2">
-              <div className=" w-36/100 block">
+            <div className="mt-2 flex w-full justify-center">
+              <div className=" block w-36/100">
                 {addedCities$.get().map((city: ICity) => {
                   return (
                     <div
                       className={
                         activeCity$.id.get() === city.id
-                          ? "bg-[#d8d5db] p-2 border-2 border-black mt-2 hover: cursor-pointer flex justify-between"
-                          : "bg-[#d8d5db] p-2 border border-solid border-black mt-2 hover: cursor-pointer flex justify-between"
+                          ? "hover: mt-2 flex cursor-pointer justify-between border-2 border-black bg-[#d8d5db] p-2"
+                          : "hover: mt-2 flex cursor-pointer justify-between border border-solid border-black bg-[#d8d5db] p-2"
                       }
                       key={city.id}
                     >
@@ -218,7 +219,7 @@ const LocationSettings = observer(() => {
                         onClick={() => {
                           setToActiveCity(city);
                         }}
-                        className="w-full flex justify-between mr-5"
+                        className="mr-5 flex w-full justify-between"
                       >
                         <span>{city.name}</span>{" "}
                         <span className="text-gray-500">{city.country}</span>
@@ -273,7 +274,7 @@ const LocationSettings = observer(() => {
                   toast.error("City not found");
                 }
               }}
-              className="mt-2.5 mb-2.5 rounded border-solid bg-[#2d3142] p-2 font-bold text-white"
+              className="mb-2.5 mt-2.5 rounded border-solid bg-[#2d3142] p-2 font-bold text-white"
             >
               Add New Location
             </button>
@@ -283,5 +284,13 @@ const LocationSettings = observer(() => {
     </>
   );
 });
+
+export async function getStaticProps({ locale }: { locale: string }) {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, ["common"])),
+    },
+  };
+}
 
 export default LocationSettings;

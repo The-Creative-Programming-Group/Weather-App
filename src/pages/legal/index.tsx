@@ -1,12 +1,13 @@
 import React from "react";
 import Layout from "~/components/Layout";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
 const legal = () => {
   return (
     <>
       <Layout title="Impressum">
-        <div className="flex flex-col items-center w-full mt-10">
-          <p className="font-bold text-3xl">Legal Notice</p>
+        <div className="mt-10 flex w-full flex-col items-center">
+          <p className="text-3xl font-bold">Legal Notice</p>
           <p className="mt-2.5">
             Information according to § 5 TMG (Telemedia Act)
           </p>
@@ -29,5 +30,13 @@ const legal = () => {
     </>
   );
 };
+
+export async function getStaticProps({ locale }: { locale: string }) {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, ["common"])),
+    },
+  };
+}
 
 export default legal;

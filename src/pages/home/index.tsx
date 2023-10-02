@@ -37,6 +37,9 @@ import {
 import { Button } from "~/components/ui/button";
 import { InfoIcon, LinkIcon } from "lucide-react";
 import Link from "next/link";
+import { useRouter } from "next/router";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import { useTranslation } from "next-i18next";
 
 const Map = dynamic(() => import("~/components/ui/map"), { ssr: false });
 
@@ -81,6 +84,7 @@ function convertWindSpeed(
 }
 
 const InternalHome = observer(() => {
+  const { locale } = useRouter();
   const weatherData = api.weather.getWeather.useQuery(
     { coordinates: activeCity$.coord.get(), timezone: dayjs.tz.guess() },
     // The cache (stale time) is not yet working if you refresh the page
@@ -93,6 +97,8 @@ const InternalHome = observer(() => {
         ? `${Math.round(weatherData.data?.temperature - 273.15)}°C`
         : `${Math.round((weatherData.data?.temperature * 9) / 5 - 459.67)}°F`;
   }
+
+  const { t: translation } = useTranslation("home");
 
   type WeatherStateType =
     | "Sunny"
@@ -364,7 +370,7 @@ const InternalHome = observer(() => {
             <>
               <div className="col-span-3 row-span-6 flex flex-col rounded-xl bg-gray-400">
                 <div className="flex w-full items-center justify-between pb-2 pl-5 pr-3 pt-2 text-xl">
-                  9-Day Forecast{" "}
+                  {translation("9 day forecast")}{" "}
                   <HoverCard>
                     <HoverCardTrigger asChild>
                       <Button className="w-10 rounded-full p-1.5">
@@ -389,10 +395,10 @@ const InternalHome = observer(() => {
                   (dailyForecast: IDailyForecast, index: number) => {
                     let day;
                     if (index === 0) {
-                      day = "Today";
+                      day = translation("today");
                     } else {
                       day = new Date(dailyForecast.date).toLocaleString(
-                        "en-us",
+                        locale,
                         {
                           weekday: "long",
                         },
@@ -403,7 +409,7 @@ const InternalHome = observer(() => {
                         className="mb-2 ml-5 mr-5 flex items-center border-t-2 border-black"
                         key={index}
                       >
-                        <div className="mt-2 w-36 text-2xl">{day}</div>
+                        <div className="mt-2 w-44 text-2xl">{day}</div>
                         <div className="mt-2 w-12">
                           {weatherState({ day: index, icons: true })}
                         </div>
@@ -448,7 +454,7 @@ const InternalHome = observer(() => {
           {weatherData.data?.precipitationProbabilities ? (
             <div className="col-span-4 col-start-4 row-span-1 rounded-md bg-gray-400 pb-2">
               <div className="mt-1.5 flex justify-between pl-4 pr-3 text-xl">
-                Precipitation{" "}
+                {translation("precipitation")}{" "}
                 <HoverCard>
                   <HoverCardTrigger asChild>
                     <Button className="w-10 rounded-full p-1.5">
@@ -497,9 +503,7 @@ const InternalHome = observer(() => {
                       className="mt-1 flex w-24 flex-col items-center justify-center"
                       key={key}
                     >
-                      <div className="text-sm">
-                        {key.charAt(2).toUpperCase() + key.slice(3)}
-                      </div>
+                      <div className="text-sm">{translation(key.slice(2))}</div>
                       <WiRaindrop className={raindropClass} />
                       <div className="-mt-4 text-xl">{value}%</div>
                     </div>
@@ -514,7 +518,7 @@ const InternalHome = observer(() => {
           {weatherData.data?.feels_like ? (
             <div className="col-span-2 col-start-4 row-span-2 row-start-2 rounded-md bg-gray-400">
               <div className="mt-1.5 flex justify-between pl-4 pr-3 text-xl">
-                Feels like{" "}
+                {translation("feels like")}{" "}
                 <HoverCard>
                   <HoverCardTrigger asChild>
                     <Button className="w-10 rounded-full p-1.5">
@@ -556,7 +560,9 @@ const InternalHome = observer(() => {
 
           {weatherData.data?.air_quality ? (
             <div className="col-span-1 col-start-4 row-span-3 row-start-4 rounded-md bg-gray-400">
-              <div className="ml-2 mt-1.5 text-xl">Air quality</div>
+              <div className="ml-2 mt-1.5 text-xl">
+                {translation("air quality")}
+              </div>
               <div className="relative mb-2 ml-3.5 mt-2 flex h-64 items-center">
                 <div className="text-md mt-2 font-medium">
                   {weatherData.data?.air_quality.toPrecision(2)} <br />
@@ -587,7 +593,7 @@ const InternalHome = observer(() => {
           {weatherData.data?.visibility ? (
             <div className="col-span-2 col-start-6 row-span-2 row-start-2 rounded-md bg-gray-400">
               <div className="mt-1.5 flex justify-between pl-4 pr-3 text-xl">
-                Visibility{" "}
+                {translation("visibility")}{" "}
                 <HoverCard>
                   <HoverCardTrigger asChild>
                     <Button className="w-10 rounded-full p-1.5">
@@ -617,7 +623,7 @@ const InternalHome = observer(() => {
           {weatherData.data?.wind_speed && weatherData.data?.wind_pressure ? (
             <div className="col-span-3 col-start-5 row-span-3 row-start-4 rounded-md bg-gray-400">
               <div className="mt-1.5 flex w-full justify-between pl-4 pr-3 text-xl">
-                Wind & Pressure
+                {translation("wind pressure")}{" "}
                 <HoverCard>
                   <HoverCardTrigger asChild>
                     <Button className="w-10 rounded-full p-1.5">
@@ -648,13 +654,13 @@ const InternalHome = observer(() => {
                 <BsWind className="mt-5 h-32 w-32" />
                 <div className="mt-9 flex gap-10 text-xl">
                   <div>
-                    Pressure
+                    {translation("pressure")}
                     <div className="mt-2">
                       {weatherData.data.wind_pressure.toPrecision(2)} Pa
                     </div>
                   </div>
                   <div>
-                    Speed
+                    {translation("speed")}
                     {weatherData.data?.wind_speed ? (
                       <div className="mt-2">
                         {convertWindSpeed(
@@ -681,5 +687,13 @@ const InternalHome = observer(() => {
     </Layout>
   );
 });
+
+export async function getStaticProps({ locale }: { locale: string }) {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, ["home", "common"])),
+    },
+  };
+}
 
 export default InternalHome;

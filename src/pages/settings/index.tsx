@@ -9,6 +9,7 @@ import {
 } from "~/states";
 import { observer } from "@legendapp/state/react-components";
 import { RxCheck } from "react-icons/rx";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
 const Settings = observer(() => {
   const doneImage = "/assets/done.png";
@@ -25,12 +26,12 @@ const Settings = observer(() => {
   return (
     <>
       <Layout title="Settings">
-        <div className="flex flex-col items-center w-full">
-          <h1 className="flex mt-10 justify-center text-4xl font-bold">
+        <div className="flex w-full flex-col items-center">
+          <h1 className="mt-10 flex justify-center text-4xl font-bold">
             Settings
           </h1>
-          <hr className="w-4/12 h-1.5 bg-[#2d3142] mt-9 rounded" />
-          <div className="flex flex-col justify-center m-5">
+          <hr className="mt-9 h-1.5 w-4/12 rounded bg-[#2d3142]" />
+          <div className="m-5 flex flex-col justify-center">
             <h2 className="text-basic font-bold">Temperature units</h2>
             <button
               className={`${normalButtonClass} ${
@@ -40,7 +41,7 @@ const Settings = observer(() => {
             >
               <p className={styles.buttontext}>Celsius (°C)</p>
               {temperatureUnit$.get() === "Celsius" && (
-                <RxCheck width={20} height={20} className="w-9 h-9" />
+                <RxCheck width={20} height={20} className="h-9 w-9" />
               )}
             </button>
             <button
@@ -51,12 +52,12 @@ const Settings = observer(() => {
             >
               <p className={styles.buttontext}>Fahrenheit (°F)</p>
               {temperatureUnit$.get() === "Fahrenheit" && (
-                <RxCheck width={20} height={20} className="w-9 h-9" />
+                <RxCheck width={20} height={20} className="h-9 w-9" />
               )}
             </button>
           </div>
 
-          <div className="flex flex-col justify-center m-5">
+          <div className="m-5 flex flex-col justify-center">
             <h2 className="text-basic font-bold">Wind speed units</h2>
             <button
               className={`${normalButtonClass} ${
@@ -66,7 +67,7 @@ const Settings = observer(() => {
             >
               <p className={styles.buttontext}>Miles per hour (mph)</p>
               {windSpeedUnit$.get() === "Miles per hour" && (
-                <RxCheck width={20} height={20} className="w-9 h-9" />
+                <RxCheck width={20} height={20} className="h-9 w-9" />
               )}
             </button>
             <button
@@ -77,7 +78,7 @@ const Settings = observer(() => {
             >
               <p className={styles.buttontext}>Kilometers per hour (km/h)</p>
               {windSpeedUnit$.get() === "Kilometers per hour" && (
-                <RxCheck width={20} height={20} className="w-9 h-9" />
+                <RxCheck width={20} height={20} className="h-9 w-9" />
               )}
             </button>
             <button
@@ -88,7 +89,7 @@ const Settings = observer(() => {
             >
               <p className={styles.buttontext}>Knots</p>
               {windSpeedUnit$.get() === "Knots" && (
-                <RxCheck width={20} height={20} className="w-9 h-9" />
+                <RxCheck width={20} height={20} className="h-9 w-9" />
               )}
             </button>
             <button
@@ -99,7 +100,7 @@ const Settings = observer(() => {
             >
               <p className={styles.buttontext}>Meters per second (m/s)</p>
               {windSpeedUnit$.get() === "Meters per second" && (
-                <RxCheck width={20} height={20} className="w-9 h-9" />
+                <RxCheck width={20} height={20} className="h-9 w-9" />
               )}
             </button>
             <button
@@ -110,7 +111,7 @@ const Settings = observer(() => {
             >
               <p className={styles.buttontext}>Beaufort</p>
               {windSpeedUnit$.get() === "Beaufort" && (
-                <RxCheck width={20} height={20} className="w-9 h-9" />
+                <RxCheck width={20} height={20} className="h-9 w-9" />
               )}
             </button>
           </div>
@@ -119,5 +120,13 @@ const Settings = observer(() => {
     </>
   );
 });
+
+export async function getStaticProps({ locale }: { locale: string }) {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, ["common"])),
+    },
+  };
+}
 
 export default Settings;

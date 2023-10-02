@@ -9,6 +9,7 @@ import dicsiluksProfile from "~/assets/dicsiluks-profile.webp";
 import jakobProfile from "~/assets/jakob-profile.webp";
 import fabiusProfile from "~/assets/fabius-profile.jpg";
 import jakeProfile from "~/assets/jake-profile.png";
+import { useTranslation } from "next-i18next";
 
 interface LayoutProps {
   title?: string;
@@ -16,7 +17,11 @@ interface LayoutProps {
   footer?: "white" | "normal";
 }
 
+/* If you use this component,
+   you have to add the i18n translation SSR stuff to the getStaticProps function of the page
+   you use this component in. */
 const Layout: React.FC<LayoutProps> = ({ title, children, footer }) => {
+  const { t: translation } = useTranslation("common");
   return (
     <>
       <Head>
@@ -46,162 +51,162 @@ const Layout: React.FC<LayoutProps> = ({ title, children, footer }) => {
       </header>
       <main className="min-h-screen">
         <div>
-          <button className="top-36 absolute right-16 bg-[#2d3142] text-amber-50 p-2 rounded flex">
+          <button className="absolute right-16 top-36 flex rounded bg-[#2d3142] p-2 text-amber-50">
             {" "}
-            <FaShare className="mr-1.5 mt-1" /> Share
+            <FaShare className="mr-1.5 mt-1" /> {translation("share button")}
           </button>
         </div>
         {children}
       </main>
       {footer == "white" ? (
-        <footer className="absolute w-full bg-[#adacb5] text-xl text-black flex h-24 items-center">
+        <footer className="absolute flex h-24 w-full items-center bg-[#adacb5] text-xl text-black">
           <div className="ml-5 w-52">© - Weather.io</div>
           <Link href="https://github.com/The-Creative-Programming-Group/Weather-App">
-            <AiFillGithub className="ml-5 text-3xl hover:text-gray-400 transition duration-500 ease-in-out" />
+            <AiFillGithub className="ml-5 text-3xl transition duration-500 ease-in-out hover:text-gray-400" />
           </Link>
-          <div className="flex justify-center w-full mr-72">
+          <div className="mr-72 flex w-full justify-center">
             {" "}
             <Link href="/legal" className="flex justify-center underline">
               Legal
             </Link>
           </div>
-          <div className="absolute mr-12 flex justify-between items-center w-1/4 right-0">
-            <div className="text-sm w-28">Made with ♥️ by</div>
+          <div className="absolute right-0 mr-12 flex w-1/4 items-center justify-between">
+            <div className="w-28 text-sm">Made with ♥️ by</div>
             <div className="flex flex-col items-center">
               <Link
                 href="https://www.roessner.tech"
-                className="relative group inline-block"
+                className="group relative inline-block"
               >
                 <Image
                   src={jakobProfile}
                   alt="Jakob's logo"
                   width="50"
                   height="50"
-                  className="rounded-full transition-transform transform duration-300 group-hover:-translate-x-2 group-hover:scale-105"
+                  className="transform rounded-full transition-transform duration-300 group-hover:-translate-x-2 group-hover:scale-105"
                 />
               </Link>
               <p className="text-sm">Founder</p>
             </div>
-            <div className="flex flex-col items-center ml-6">
+            <div className="ml-6 flex flex-col items-center">
               <Link
                 href="https://github.com/dicsiluks"
-                className="relative group inline-block"
+                className="group relative inline-block"
               >
                 <Image
                   src={dicsiluksProfile}
                   alt="dicsiluks' logo"
                   width="50"
                   height="50"
-                  className="rounded-full transition-transform transform duration-300 group-hover:-translate-x-2 group-hover:scale-105"
+                  className="transform rounded-full transition-transform duration-300 group-hover:-translate-x-2 group-hover:scale-105"
                 />
               </Link>
               <p className="text-sm">Designer</p>
             </div>
-            <div className="flex flex-col items-center ml-6">
+            <div className="ml-6 flex flex-col items-center">
               <Link
                 href="https://www.schurig.tech"
-                className="relative group inline-block"
+                className="group relative inline-block"
               >
                 <Image
                   src={fabiusProfile}
                   alt="Fabius' logo"
                   width="50"
                   height="50"
-                  className="rounded-full transition-transform transform duration-300 group-hover:-translate-x-2 group-hover:scale-105"
+                  className="transform rounded-full transition-transform duration-300 group-hover:-translate-x-2 group-hover:scale-105"
                 />
               </Link>
               <p className="text-sm">Engineer</p>
             </div>
-            <div className="flex flex-col items-center ml-6">
+            <div className="ml-6 flex flex-col items-center">
               <Link
                 href="https://github.com/dongjin2008"
-                className="relative group inline-block"
+                className="group relative inline-block"
               >
                 <Image
                   src={jakeProfile}
                   alt="Jake's logo"
                   width="50"
                   height="50"
-                  className="rounded-full transition-transform transform duration-300 group-hover:-translate-x-2 group-hover:scale-105"
+                  className="transform rounded-full transition-transform duration-300 group-hover:-translate-x-2 group-hover:scale-105"
                 />
               </Link>
-              <p className="text-sm text-center">Designer & Engineer</p>
+              <p className="text-center text-sm">Designer & Engineer</p>
             </div>
           </div>
         </footer>
       ) : (
-        <footer className="absolute w-full bg-[#2d3142] text-xl text-white flex h-24 items-center">
+        <footer className="absolute flex h-24 w-full items-center bg-[#2d3142] text-xl text-white">
           <div className="ml-5 w-52">© - Weather.io</div>
           <Link href="https://github.com/The-Creative-Programming-Group/Weather-App">
-            <AiFillGithub className="ml-5 text-3xl hover:text-gray-400 transition duration-500 ease-in-out" />
+            <AiFillGithub className="ml-5 text-3xl transition duration-500 ease-in-out hover:text-gray-400" />
           </Link>
-          <div className="flex justify-center w-full mr-72">
+          <div className="mr-72 flex w-full justify-center">
             {" "}
             <Link href="/legal" className="flex justify-center underline">
               Legal
             </Link>
           </div>
-          <div className="absolute mr-12 flex justify-between items-center w-1/4 right-0">
-            <div className="text-sm w-28">Made with ♥️ by</div>
+          <div className="absolute right-0 mr-12 flex w-1/4 items-center justify-between">
+            <div className="w-28 text-sm">Made with ♥️ by</div>
             <div className="flex flex-col items-center">
               <Link
                 href="https://www.roessner.tech"
-                className="relative group inline-block"
+                className="group relative inline-block"
               >
                 <Image
                   src={jakobProfile}
                   alt="Jakob's logo"
                   width="50"
                   height="50"
-                  className="rounded-full transition-transform transform duration-300 group-hover:-translate-x-2 group-hover:scale-105"
+                  className="transform rounded-full transition-transform duration-300 group-hover:-translate-x-2 group-hover:scale-105"
                 />
               </Link>
               <p className="text-sm">Founder</p>
             </div>
-            <div className="flex flex-col items-center ml-6">
+            <div className="ml-6 flex flex-col items-center">
               <Link
                 href="https://github.com/dicsiluks"
-                className="relative group inline-block"
+                className="group relative inline-block"
               >
                 <Image
                   src={dicsiluksProfile}
                   alt="dicsiluks' logo"
                   width="50"
                   height="50"
-                  className="rounded-full transition-transform transform duration-300 group-hover:-translate-x-2 group-hover:scale-105"
+                  className="transform rounded-full transition-transform duration-300 group-hover:-translate-x-2 group-hover:scale-105"
                 />
               </Link>
               <p className="text-sm">Designer</p>
             </div>
-            <div className="flex flex-col items-center ml-6">
+            <div className="ml-6 flex flex-col items-center">
               <Link
                 href="https://www.schurig.tech"
-                className="relative group inline-block"
+                className="group relative inline-block"
               >
                 <Image
                   src={fabiusProfile}
                   alt="Fabius' logo"
                   width="50"
                   height="50"
-                  className="rounded-full transition-transform transform duration-300 group-hover:-translate-x-2 group-hover:scale-105"
+                  className="transform rounded-full transition-transform duration-300 group-hover:-translate-x-2 group-hover:scale-105"
                 />
               </Link>
               <p className="text-sm">Engineer</p>
             </div>
-            <div className="flex flex-col items-center ml-6">
+            <div className="ml-6 flex flex-col items-center">
               <Link
                 href="https://github.com/dongjin2008"
-                className="relative group inline-block"
+                className="group relative inline-block"
               >
                 <Image
                   src={jakeProfile}
                   alt="Jake's logo"
                   width="50"
                   height="50"
-                  className="rounded-full transition-transform transform duration-300 group-hover:-translate-x-2 group-hover:scale-105"
+                  className="transform rounded-full transition-transform duration-300 group-hover:-translate-x-2 group-hover:scale-105"
                 />
               </Link>
-              <p className="text-sm text-center">Designer & Engineer</p>
+              <p className="text-center text-sm">Designer & Engineer</p>
             </div>
           </div>
         </footer>
