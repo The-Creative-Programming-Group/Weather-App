@@ -10,8 +10,20 @@ import {
 import { observer } from "@legendapp/state/react-components";
 import { RxCheck } from "react-icons/rx";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import { useRouter } from "next/router";
+import { useTranslation } from "next-i18next";
 
 const Settings = observer(() => {
+  const { locale } = useRouter();
+
+  const router = useRouter();
+
+  const changeLocale = (locale: string) => {
+    router.push(router.pathname, router.asPath, { locale });
+  };
+
+  const { t: translation } = useTranslation("settings");
+
   const doneImage = "/assets/done.png";
 
   const handleTemperatureUnitClick = (unit: TemperatureUnitType) => {
@@ -32,7 +44,9 @@ const Settings = observer(() => {
           </h1>
           <hr className="mt-9 h-1.5 w-4/12 rounded bg-[#2d3142]" />
           <div className="m-5 flex flex-col justify-center">
-            <h2 className="text-basic font-bold">Temperature units</h2>
+            <h2 className="text-basic font-bold">
+              {translation("temperature units")}
+            </h2>
             <button
               className={`${normalButtonClass} ${
                 temperatureUnit$.get() === "Celsius" ? "border-2" : ""
@@ -58,7 +72,9 @@ const Settings = observer(() => {
           </div>
 
           <div className="m-5 flex flex-col justify-center">
-            <h2 className="text-basic font-bold">Wind speed units</h2>
+            <h2 className="text-basic font-bold">
+              {translation("wind speed units")}
+            </h2>
             <button
               className={`${normalButtonClass} ${
                 windSpeedUnit$.get() === "Miles per hour" ? "border-2" : ""
@@ -115,6 +131,32 @@ const Settings = observer(() => {
               )}
             </button>
           </div>
+
+          <div className="m-5 flex flex-col justify-center">
+            <h2 className="text-basic font-bold">{translation("language")}</h2>
+            <button
+              className={`${normalButtonClass} ${
+                locale === "en" ? "border-2" : ""
+              }`}
+              onClick={() => changeLocale("en")}
+            >
+              <p className={styles.buttontext}>{translation("english")}</p>
+              {locale === "en" && (
+                <RxCheck width={20} height={20} className="h-9 w-9" />
+              )}
+            </button>
+            <button
+              className={`${normalButtonClass} ${
+                locale === "de" ? "border-2" : ""
+              }`}
+              onClick={() => changeLocale("de")}
+            >
+              <p className={styles.buttontext}>{translation("german")}</p>
+              {locale === "de" && (
+                <RxCheck width={20} height={20} className="h-9 w-9" />
+              )}
+            </button>
+          </div>
         </div>
       </Layout>
     </>
@@ -124,7 +166,7 @@ const Settings = observer(() => {
 export async function getStaticProps({ locale }: { locale: string }) {
   return {
     props: {
-      ...(await serverSideTranslations(locale, ["common"])),
+      ...(await serverSideTranslations(locale, ["settings", "common"])),
     },
   };
 }
