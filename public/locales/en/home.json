@@ -12,5 +12,10 @@
   "morning": "Morning",
   "noon": "Noon",
   "afternoon": "Afternoon",
-  "night": "Night"
+  "night": "Night",
+  "feels like phrase very warm": "The sun is likely trying to cool down!",
+  "feels like phrase warm": "Even ice cream finds warmth too much!",
+  "feels like phrase moderate": "So moderate, even Goldilocks would approve!",
+  "feels like phrase cold": "Penguins are ordering hot chocolate due to the chill!",
+  "feels like phrase very cold": "Today's frosty weather is making even snowmen shiver!"
 }

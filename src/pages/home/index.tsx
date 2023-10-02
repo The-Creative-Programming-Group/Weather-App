@@ -543,14 +543,14 @@ const InternalHome = observer(() => {
                 </div>
                 <div className="text-sm font-medium text-gray-500">
                   {weatherData.data.feels_like > 309
-                    ? "The sun is likely trying to cool down!"
+                    ? translation("feels like phrase very warm")
                     : weatherData.data.feels_like > 299
-                    ? "Even ice cream finds warmth too much!"
+                    ? translation("feels like phrase warm")
                     : weatherData.data.feels_like > 279
-                    ? "So moderate, even Goldilocks would approve!"
+                    ? translation("feels like phrase moderate")
                     : weatherData.data.feels_like > 269
-                    ? "Penguins are ordering hot chocolate due to the chill!"
-                    : "Today's frosty weather is making even snowmen shiver!"}
+                    ? translation("feels like phrase cold")
+                    : translation("feels like phrase very cold")}
                 </div>
               </div>
             </div>

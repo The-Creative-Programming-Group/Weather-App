@@ -12,5 +12,10 @@
   "morning": "Morgen",
   "noon": "Mittag",
   "afternoon": "Nachmittag",
-  "night": "Nacht"
+  "night": "Nacht",
+  "feels like phrase very warm": "Die Sonne probiert sich abzukühlen!",
+  "feels like phrase warm": "Dein Eis schmilzt dir davon!",
+  "feels like phrase moderate": "Perfektes Wetter für einen Spaziergang!",
+  "feels like phrase cold": "Sogar Pinguine bestellen sich eine heiße Schokolade!",
+  "feels like phrase very cold": "Auch die Schneemänner frieren!"
 }
