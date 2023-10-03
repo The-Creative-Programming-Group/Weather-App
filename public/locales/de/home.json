@@ -8,6 +8,7 @@
   "air quality": "Luftqualität",
   "pressure": "Luftdruck",
   "speed": "Geschwindigkeit",
+
   "early morning": "Früh",
   "morning": "Morgen",
   "noon": "Mittag",
@@ -36,5 +37,9 @@
   "weather state very cloudy": "Stark bewölkt",
   "weather state cloudy": "Bewölkt",
   "weather state windy": "Windig",
-  "weather state sunny": "Sonnig"
+  "weather state sunny": "Sonnig",
+
+  "now": "Jetzt",
+  "early hour time ending": ":00",
+  "late hour time ending": ":00"
 }

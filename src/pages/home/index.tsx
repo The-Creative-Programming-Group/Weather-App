@@ -315,15 +315,20 @@ const InternalHome = observer(() => {
                   }
 
                   if (hourlyForecast.time === currentHour) {
-                    time = "Now";
+                    time = translationHome("now");
                   } else if (hourlyForecast.time === 12) {
-                    time = "12PM";
+                    time = "12" + translationHome("late hour time ending");
                   } else if (hourlyForecast.time > 12) {
-                    time = `${hourlyForecast.time - 12}PM`;
+                    time =
+                      hourlyForecast.time -
+                      12 +
+                      translationHome("late hour time ending");
                   } else if (hourlyForecast.time === 0) {
-                    time = `12AM`;
+                    time = "12" + translationHome("early hour time ending");
                   } else {
-                    time = `${hourlyForecast.time}AM`;
+                    time =
+                      hourlyForecast.time +
+                      translationHome("early hour time ending");
                   }
                   return (
                     <div

@@ -8,6 +8,7 @@
   "air quality": "Air Quality",
   "pressure": "Pressure",
   "speed": "Speed",
+
   "early morning": "Early Morning",
   "morning": "Morning",
   "noon": "Noon",
@@ -36,5 +37,9 @@
   "weather state very cloudy": "Very Cloudy",
   "weather state cloudy": "Cloudy",
   "weather state windy": "Windy",
-  "weather state sunny": "Sunny"
+  "weather state sunny": "Sunny",
+
+  "now": "Now",
+  "early hour time ending": "AM",
+  "late hour time ending": "PM"
 }
