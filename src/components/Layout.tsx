@@ -14,13 +14,12 @@ import { useTranslation } from "next-i18next";
 interface LayoutProps {
   title?: string;
   children: React.ReactNode;
-  footer?: "white" | "normal";
 }
 
 /* If you use this component,
    you have to add the i18n translation SSR stuff to the getStaticProps function of the page
    you use this component in. */
-const Layout: React.FC<LayoutProps> = ({ title, children, footer }) => {
+const Layout: React.FC<LayoutProps> = ({ title, children }) => {
   const { t: translation } = useTranslation("common");
   return (
     <>
@@ -59,159 +58,26 @@ const Layout: React.FC<LayoutProps> = ({ title, children, footer }) => {
         </div>
         {children}
       </main>
-      {footer == "white" ? (
-        <footer className="absolute flex h-24 w-full items-center bg-[#adacb5] text-xl text-black">
-          <div className="ml-5 w-52">© - Weather.io</div>
+      <footer className="absolute flex h-24 w-full items-center justify-between bg-[#2d3142] text-xl text-white">
+        <div className="flex gap-4">
+          <div className="ml-2">© - Weather.io</div>
           <Link href="https://github.com/The-Creative-Programming-Group/Weather-App">
-            <AiFillGithub className="ml-5 text-3xl transition duration-500 ease-in-out hover:text-gray-400" />
+            <AiFillGithub className="text-3xl transition duration-500 ease-in-out hover:text-gray-400" />
           </Link>
-          <div className="mr-72 flex w-full justify-center">
-            {" "}
-            <Link href="/legal" className="flex justify-center underline">
-              {translation("footer legal")}
-            </Link>
-          </div>
-          <div className="absolute right-0 mr-12 flex w-1/4 items-center justify-between">
-            <div className="w-28 text-sm">Made with ♥️ by</div>
-            <div className="flex flex-col items-center">
-              <Link
-                href="https://www.roessner.tech"
-                className="group relative inline-block"
-              >
-                <Image
-                  src={jakobProfile}
-                  alt="Jakob's logo"
-                  width="50"
-                  height="50"
-                  className="transform rounded-full transition-transform duration-300 group-hover:-translate-x-2 group-hover:scale-105"
-                />
-              </Link>
-              <p className="text-sm">Founder</p>
-            </div>
-            <div className="ml-6 flex flex-col items-center">
-              <Link
-                href="https://github.com/dicsiluks"
-                className="group relative inline-block"
-              >
-                <Image
-                  src={dicsiluksProfile}
-                  alt="dicsiluks' logo"
-                  width="50"
-                  height="50"
-                  className="transform rounded-full transition-transform duration-300 group-hover:-translate-x-2 group-hover:scale-105"
-                />
-              </Link>
-              <p className="text-sm">Designer</p>
-            </div>
-            <div className="ml-6 flex flex-col items-center">
-              <Link
-                href="https://www.schurig.tech"
-                className="group relative inline-block"
-              >
-                <Image
-                  src={fabiusProfile}
-                  alt="Fabius' logo"
-                  width="50"
-                  height="50"
-                  className="transform rounded-full transition-transform duration-300 group-hover:-translate-x-2 group-hover:scale-105"
-                />
-              </Link>
-              <p className="text-sm">Engineer</p>
-            </div>
-            <div className="ml-6 flex flex-col items-center">
-              <Link
-                href="https://github.com/dongjin2008"
-                className="group relative inline-block"
-              >
-                <Image
-                  src={jakeProfile}
-                  alt="Jake's logo"
-                  width="50"
-                  height="50"
-                  className="transform rounded-full transition-transform duration-300 group-hover:-translate-x-2 group-hover:scale-105"
-                />
-              </Link>
-              <p className="text-center text-sm">Designer & Engineer</p>
-            </div>
-          </div>
-        </footer>
-      ) : (
-        <footer className="absolute flex h-24 w-full items-center bg-[#2d3142] text-xl text-white">
-          <div className="ml-5 w-52">© - Weather.io</div>
-          <Link href="https://github.com/The-Creative-Programming-Group/Weather-App">
-            <AiFillGithub className="ml-5 text-3xl transition duration-500 ease-in-out hover:text-gray-400" />
+        </div>
+        <div className="flex justify-center">
+          {" "}
+          <Link href="/legal" className="flex justify-center underline">
+            {translation("footer legal")}
           </Link>
-          <div className="mr-72 flex w-full justify-center">
-            {" "}
-            <Link href="/legal" className="flex justify-center underline">
-              {translation("footer legal")}
-            </Link>
-          </div>
-          <div className="absolute right-0 mr-12 flex w-1/4 items-center justify-between">
-            <div className="w-28 text-sm">Made with ♥️ by</div>
-            <div className="flex flex-col items-center">
-              <Link
-                href="https://www.roessner.tech"
-                className="group relative inline-block"
-              >
-                <Image
-                  src={jakobProfile}
-                  alt="Jakob's logo"
-                  width="50"
-                  height="50"
-                  className="transform rounded-full transition-transform duration-300 group-hover:-translate-x-2 group-hover:scale-105"
-                />
-              </Link>
-              <p className="text-sm">Founder</p>
-            </div>
-            <div className="ml-6 flex flex-col items-center">
-              <Link
-                href="https://github.com/dicsiluks"
-                className="group relative inline-block"
-              >
-                <Image
-                  src={dicsiluksProfile}
-                  alt="dicsiluks' logo"
-                  width="50"
-                  height="50"
-                  className="transform rounded-full transition-transform duration-300 group-hover:-translate-x-2 group-hover:scale-105"
-                />
-              </Link>
-              <p className="text-sm">Designer</p>
-            </div>
-            <div className="ml-6 flex flex-col items-center">
-              <Link
-                href="https://www.schurig.tech"
-                className="group relative inline-block"
-              >
-                <Image
-                  src={fabiusProfile}
-                  alt="Fabius' logo"
-                  width="50"
-                  height="50"
-                  className="transform rounded-full transition-transform duration-300 group-hover:-translate-x-2 group-hover:scale-105"
-                />
-              </Link>
-              <p className="text-sm">Engineer</p>
-            </div>
-            <div className="ml-6 flex flex-col items-center">
-              <Link
-                href="https://github.com/dongjin2008"
-                className="group relative inline-block"
-              >
-                <Image
-                  src={jakeProfile}
-                  alt="Jake's logo"
-                  width="50"
-                  height="50"
-                  className="transform rounded-full transition-transform duration-300 group-hover:-translate-x-2 group-hover:scale-105"
-                />
-              </Link>
-              <p className="text-center text-sm">Designer & Engineer</p>
-            </div>
-          </div>
-        </footer>
-      )}
+        </div>
+        <div className="mr-2 flex justify-center">
+          {" "}
+          <Link href="/contributors" className="flex justify-center underline">
+            {translation("footer contributors")}
+          </Link>
+        </div>
+      </footer>
     </>
   );
 };
