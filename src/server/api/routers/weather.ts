@@ -128,13 +128,16 @@ function calculateAirQualityIndex(
   pm25: number,
   nitrogenDioxide: number,
 ): number {
+  // log.info("start running calculateAirQualityIndex");
   const maxPm10Value = 100;
   const maxPm25Value = 71;
   const maxNitrogenDioxideValue = 601;
 
-  const aqiPm10 = pm10 <= maxPm10Value ? (pm10 / maxPm10Value) * 100 : 100;
-  const aqiPm25 = pm25 <= maxPm25Value ? (pm25 / maxPm25Value) * 100 : 100;
-  const aqiNitrogenDioxide =
+  const aqiPm10: number =
+    pm10 <= maxPm10Value ? (pm10 / maxPm10Value) * 100 : 100;
+  const aqiPm25: number =
+    pm25 <= maxPm25Value ? (pm25 / maxPm25Value) * 100 : 100;
+  const aqiNitrogenDioxide: number =
     nitrogenDioxide <= maxNitrogenDioxideValue
       ? (nitrogenDioxide / maxNitrogenDioxideValue) * 100
       : 100;

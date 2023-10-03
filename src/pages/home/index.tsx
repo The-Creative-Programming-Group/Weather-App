@@ -401,12 +401,12 @@ const InternalHome = observer(() => {
                         className="mb-2 ml-5 mr-5 flex items-center border-t-2 border-black"
                         key={index}
                       >
-                        <div className="mt-2 w-44 text-2xl">{day}</div>
-                        <div className="mt-2 w-12">
+                        <div className="mt-2 w-40 text-2xl">{day}</div>
+                        <div className="mt-2 w-16">
                           {weatherState({ day: index, icons: true })}
                         </div>
                         {dailyForecast.temperatureDay ? (
-                          <div className="ml-8 mt-2 text-2xl">
+                          <div className="mt-2 w-20 text-2xl">
                             {temperatureUnit$.get() === "Celsius"
                               ? `${Math.round(
                                   dailyForecast.temperatureDay - 273.15,
@@ -420,7 +420,7 @@ const InternalHome = observer(() => {
                           "Not available"
                         )}
                         {dailyForecast.temperatureNight ? (
-                          <div className="ml-8 mt-2 text-2xl text-gray-700">
+                          <div className="mt-2 w-20 text-2xl text-gray-700">
                             {temperatureUnit$.get() === "Celsius"
                               ? `${Math.round(
                                   dailyForecast.temperatureNight - 273.15,
@@ -558,7 +558,7 @@ const InternalHome = observer(() => {
                 {translationHome("air quality")}
               </div>
               <div className="relative mb-2 ml-3.5 mt-2 flex h-64 items-center">
-                <div className="text-md mt-2 font-medium">
+                <div className="text-md mt-2 w-20 font-medium">
                   {weatherData.data?.air_quality.toPrecision(2)} <br />
                   {weatherData.data?.air_quality > 90
                     ? translationHome("air quality text very poor")
@@ -575,7 +575,13 @@ const InternalHome = observer(() => {
                 <div className="absolute right-3 h-64 w-3 rounded-md bg-gradient-to-t from-red-500 to-green-800">
                   <div
                     className="relative h-3 w-full rounded-xl bg-black"
-                    style={{ top: `${weatherData.data?.air_quality}%` }}
+                    style={{
+                      top: `${
+                        weatherData.data.air_quality > 80
+                          ? weatherData.data.air_quality - 3
+                          : weatherData.data.air_quality
+                      }%`,
+                    }}
                   ></div>
                 </div>
               </div>
