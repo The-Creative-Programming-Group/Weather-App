@@ -12,13 +12,13 @@ import { IDailyForecast, IHourlyForecast } from "~/types";
 import {
   FaCloud,
   FaCloudMeatball,
+  FaCloudMoon,
   FaCloudRain,
   FaCloudShowersHeavy,
-  FaSun,
-  FaMoon,
-  FaWind,
   FaCloudSun,
-  FaCloudMoon,
+  FaMoon,
+  FaSun,
+  FaWind,
 } from "react-icons/fa6";
 import { WiRaindrop } from "react-icons/wi";
 import cn from "classnames";

@@ -10,7 +10,7 @@
 import { initTRPC, TRPCError } from "@trpc/server";
 import { type CreateNextContextOptions } from "@trpc/server/adapters/next";
 import superjson from "superjson";
-import { z, ZodError } from "zod";
+import { ZodError } from "zod";
 import { redis } from "~/server/upstash";
 import { Ratelimit } from "@upstash/ratelimit";
 import { log } from "next-axiom";
@@ -114,7 +114,7 @@ const ratelimit = new Ratelimit({
 const rateLimitMiddleware = t.middleware(async ({ ctx, next }) => {
   const identifier = ctx.ip;
   if (typeof identifier !== "string") {
-    log.warn("Rate limit identifier is not a string", { identifier });
+    log.error("Rate limit identifier is not a string", { identifier });
     return next();
   }
   // log.debug("identifier", identifier);

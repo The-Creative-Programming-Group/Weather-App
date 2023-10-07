@@ -7,6 +7,7 @@ import React from "react";
 import { Analytics } from "@vercel/analytics/react";
 import { AxiomWebVitals } from "next-axiom";
 import { appWithTranslation } from "next-i18next";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 // Next font inter
 
@@ -20,6 +21,7 @@ const MyApp: AppType = ({ Component, pageProps }) => {
       </main>
       <Analytics />
       <AxiomWebVitals />
+      <ReactQueryDevtools initialIsOpen={false} />
     </>
   );
 };
