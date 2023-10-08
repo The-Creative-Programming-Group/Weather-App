@@ -1,4 +1,4 @@
-import {z} from 'zod'
+import { z } from 'zod'
 
 /**
  * Specify your server-side environment variables schema here. This way you can ensure the app isn't
@@ -37,7 +37,7 @@ const processEnv = {
     process.env.UPSTASH_RATELIMITER_TOKENS_PER_TIME,
   UPSTASH_RATELIMITER_TIME_INTERVAL:
     process.env.UPSTASH_RATELIMITER_TIME_INTERVAL,
-  RESEND_API_KEY: process.env.RESEND_API_KEY,
+  RESEND_API_KEY: process.env.RESEND_API_KEY
   // NEXT_PUBLIC_CLIENTVAR: process.env.NEXT_PUBLIC_CLIENTVAR,
 }
 
