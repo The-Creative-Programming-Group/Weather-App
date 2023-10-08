@@ -101,6 +101,15 @@ const t = initTRPC.context<typeof createTRPCContext>().create({
  * @see https://trpc.io/docs/router
  */
 
+/* log.debug("UPSTASH_RATELIMITER_TIME_INTERVAL", {
+  UPSTASH_RATELIMITER_TIME_INTERVAL,
+});
+log.debug("UPSTASH_RATELIMITER_TOKENS_PER_TIME", {
+  UPSTASH_RATELIMITER_TOKENS_PER_TIME: parseInt(
+    env.UPSTASH_RATELIMITER_TOKENS_PER_TIME,
+  ),
+}); */
+
 const ratelimit = new Ratelimit({
   redis,
   limiter: Ratelimit.slidingWindow(
@@ -111,13 +120,13 @@ const ratelimit = new Ratelimit({
   prefix: "@upstash/ratelimit",
 });
 
-const rateLimitMiddleware = t.middleware(async ({ ctx, next }) => {
-  const identifier = ctx.ip;
+const rateLimitMiddleware = t.middleware(async ({ ctx, path, next }) => {
+  const identifier = `${ctx.ip}:${path}`;
   if (typeof identifier !== "string") {
     log.error("Rate limit identifier is not a string", { identifier });
     return next();
   }
-  // log.debug("identifier", identifier);
+  // log.debug("identifier", { identifier });
   const { success } = await ratelimit.limit(identifier);
   if (!success) {
     log.warn("Rate limit exceeded", { ip: identifier });
