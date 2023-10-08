@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Head from "next/head";
 import Image from "next/image";
 import { activeCity$, addedCities$ } from "~/states";
@@ -30,7 +30,8 @@ const Search = () => {
   const [isInputActive, setIsInputActive] = useState<boolean>(true); // activeInput is the input field that is active
   const inputRef = useRef<HTMLInputElement>(null); // inputRef is the ref of the input field
 
-  const { t: translation } = useTranslation("search");
+  const { t: translationCommon } = useTranslation("common");
+  const { t: translationSearch } = useTranslation("search");
 
   useEffect(() => {
     if (searchValue.name === "") {
@@ -50,7 +51,7 @@ const Search = () => {
     <>
       <ToastContainer />
       <Head>
-        <title>Search - Weather.io</title>
+        <title>{translationCommon("search page title")}</title>
         <meta name="description" content="An faboulus weather website" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
@@ -72,7 +73,7 @@ const Search = () => {
         <input
           className="w-5/12 border-8 border-l-0 border-solid border-[#2d3142] bg-[#383b53] pb-0.5 pl-3 pt-0.5 text-xl text-white outline-0"
           autoFocus
-          placeholder={translation("search input placeholder")}
+          placeholder={translationSearch("search input placeholder")}
           type="text"
           onFocus={() => {
             setIsInputActive(true);
@@ -226,7 +227,7 @@ const Search = () => {
               }}
               className="absolute bottom-14 right-16 z-10 h-12 w-44 rounded bg-[#2d3142] text-2xl text-white transition duration-500 ease-in-out hover:shadow-2xl"
             >
-              <p>{translation("continue button")}</p>
+              <p>{translationSearch("continue button")}</p>
             </button>
           ) : null}
         </div>
@@ -238,7 +239,7 @@ const Search = () => {
 export async function getStaticProps({ locale }: { locale: string }) {
   return {
     props: {
-      ...(await serverSideTranslations(locale, ["search"])),
+      ...(await serverSideTranslations(locale, ["common", "search"])),
     },
   };
 }
