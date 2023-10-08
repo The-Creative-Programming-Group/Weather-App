@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import Layout from "~/components/Layout";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useTranslation } from "next-i18next";
-import { toast, ToastContainer } from "react-toastify";
+import { Id, toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
@@ -12,6 +12,8 @@ import { api } from "~/lib/utils/api";
 const ContactUs = () => {
   const { t: translationContact } = useTranslation("contact");
   const { t: translationCommon } = useTranslation("common");
+
+  const [toastId, setToastId] = useState<Id>("");
 
   const ContactValidator = z.object({
     firstName: z
@@ -34,7 +36,19 @@ const ContactUs = () => {
   type ContactValidatorType = z.infer<typeof ContactValidator>;
 
   const mutation = api.email.sendContactEmail.useMutation({
+    onMutate: () => {
+      let toastIdTmp = toast(
+        translationContact("sending email loading toast"),
+        {
+          autoClose: false,
+          isLoading: true,
+        },
+      );
+      setToastId(toastIdTmp);
+    },
+
     onSuccess: () => {
+      toast.dismiss(toastId);
       reset();
       toast.success(translationContact("sent toast"));
     },

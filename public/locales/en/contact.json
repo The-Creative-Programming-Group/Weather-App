@@ -7,6 +7,8 @@
   "message": "Message",
 
   "sent toast": "Message sent!",
+  "sending email loading toast": "Sending email...",
+
   "invalid email": "Invalid email address",
   "at least 2 characters": "This field must contain at least 2 characters",
   "at least 10 characters": "This field must contain at least 10 characters"
