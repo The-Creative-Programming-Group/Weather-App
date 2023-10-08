@@ -20,7 +20,7 @@ const ContactUs = () => {
 
   useEffect(() => {
     if (sendButtonTextRef.current == undefined) return;
-    if (sendButtonText === "Send") return;
+    if (sendButtonText === translationContact("send button")) return;
     sendButtonTextRef.current.animate(
       {
         opacity: [0, 1],
