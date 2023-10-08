@@ -128,7 +128,7 @@ function calculateAirQualityIndex(
   pm25: number,
   nitrogenDioxide: number,
 ): number {
-  // log.info("start running calculateAirQualityIndex");
+  // log.debug("start running calculateAirQualityIndex");
   const maxPm10Value = 100;
   const maxPm25Value = 71;
   const maxNitrogenDioxideValue = 601;
@@ -142,9 +142,9 @@ function calculateAirQualityIndex(
       ? (nitrogenDioxide / maxNitrogenDioxideValue) * 100
       : 100;
 
-  // console.log("aqiPm10", aqiPm10);
-  // console.log("aqiPm25", aqiPm25);
-  // console.log("aqiNitrogenDioxide", aqiNitrogenDioxide);
+  // log.debug("aqiPm10", { aqiPm10 });
+  // log.debug("aqiPm25", { aqiPm25 });
+  // log.debug("aqiNitrogenDioxide", { aqiNitrogenDioxide });
   return Math.max(aqiPm10, aqiPm25, aqiNitrogenDioxide);
 }
 
@@ -190,7 +190,7 @@ export const weatherRouter = createTRPCRouter({
             throw new Error("Air quality data is undefined");
           }
 
-          // log.info("Hourly data without the filter and unparsed", data);
+          // log.debug("Hourly data without the filter and unparsed", data);
 
           data.hourly.precipitation_probability =
             data.hourly.precipitation_probability.filter(
@@ -198,12 +198,12 @@ export const weatherRouter = createTRPCRouter({
             );
 
           hourlyData = HourlyWeatherSchema.parse(data);
-          // log.info("Parsed and filtered hourly data", hourlyData);
+          // log.debug("Parsed and filtered hourly data", hourlyData);
         } catch (error) {
           if (error instanceof z.ZodError) {
             log.error("Zod Errors in the hourly weather", error.issues);
           } else {
-            console.error("Else Error", error);
+            log.error("Else Error in the hourly weather", { error });
           }
         }
       } else {
@@ -222,7 +222,7 @@ export const weatherRouter = createTRPCRouter({
           if (error instanceof z.ZodError) {
             log.error("Zod Errors in the present weather", error.issues);
           } else {
-            console.error("Else Error", error);
+            log.error("Else Error in the present weather", { error });
           }
         }
       } else {
@@ -240,7 +240,7 @@ export const weatherRouter = createTRPCRouter({
             throw new Error("Air quality data is undefined");
           }
 
-          // log.info("Air quality data without the filter and unparsed", data);
+          // log.debug("Air quality data without the filter and unparsed", data);
 
           data.hourly.pm10 = data.hourly.pm10.filter((value) => value !== null);
           data.hourly.pm2_5 = data.hourly.pm2_5.filter(
@@ -255,7 +255,7 @@ export const weatherRouter = createTRPCRouter({
           if (error instanceof z.ZodError) {
             log.error("Zod Errors in the air quality", error.issues);
           } else {
-            console.error("Else Error", error);
+            log.error("Else Error in the air quality", { error });
           }
         }
       } else {
