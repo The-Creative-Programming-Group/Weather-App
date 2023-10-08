@@ -1,4 +1,4 @@
-import { z } from 'zod'
+import {z} from 'zod'
 
 /**
  * Specify your server-side environment variables schema here. This way you can ensure the app isn't
@@ -10,7 +10,8 @@ const server = z.object({
   UPSTASH_REDIS_REST_URL: z.string().min(1).url(),
   UPSTASH_REDIS_REST_TOKEN: z.string().min(1),
   UPSTASH_RATELIMITER_TOKENS_PER_TIME: z.string().min(1),
-  UPSTASH_RATELIMITER_TIME_INTERVAL: z.string().min(1)
+  UPSTASH_RATELIMITER_TIME_INTERVAL: z.string().min(1),
+  RESEND_API_KEY: z.string().min(1)
 })
 
 /**
@@ -35,7 +36,8 @@ const processEnv = {
   UPSTASH_RATELIMITER_TOKENS_PER_TIME:
     process.env.UPSTASH_RATELIMITER_TOKENS_PER_TIME,
   UPSTASH_RATELIMITER_TIME_INTERVAL:
-    process.env.UPSTASH_RATELIMITER_TIME_INTERVAL
+    process.env.UPSTASH_RATELIMITER_TIME_INTERVAL,
+  RESEND_API_KEY: process.env.RESEND_API_KEY,
   // NEXT_PUBLIC_CLIENTVAR: process.env.NEXT_PUBLIC_CLIENTVAR,
 }
 

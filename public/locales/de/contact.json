@@ -4,5 +4,10 @@
   "first name": "Vorname",
   "last name": "Nachname",
   "email": "Email",
-  "message": "Nachricht"
+  "message": "Nachricht",
+
+  "sent toast": "Nachricht gesendet",
+  "invalid email": "Ungültige Email",
+  "at least 2 characters": "Dieses Feld muss mindestens 2 Zeichen enthalten",
+  "at least 10 characters": "Dieses Feld muss mindestens 10 Zeichen enthalten"
 }
