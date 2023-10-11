@@ -52,7 +52,7 @@ const LocationSettings = observer(() => {
 
   const removeCityFromAddedCities = (city: ICity) => {
     if (addedCities$.get().length === 1) {
-      toast.error("You must have at least one city");
+      toast.error(translationLocationSettings("at least one city toast"));
       return;
     }
     addedCities$.set((prev) => prev.filter((value) => value.id !== city.id));
@@ -143,14 +143,22 @@ const LocationSettings = observer(() => {
                             .find((value: ICity) => value.id === city!.id)
                         ) {
                           activeCity$.set(city);
-                          toast.success("Switched to city");
+                          toast.success(
+                            translationLocationSettings(
+                              "switched to city toast",
+                            ),
+                          );
                         } else {
                           addedCities$.push(city);
                           activeCity$.set(city);
-                          toast.success("City added");
+                          toast.success(
+                            translationLocationSettings("added city toast"),
+                          );
                         }
                       } else {
-                        toast.error("City not found");
+                        toast.error(
+                          translationLocationSettings("city not found toast"),
+                        );
                       }
                     }
                   }}
@@ -274,14 +282,20 @@ const LocationSettings = observer(() => {
                       .find((value: ICity) => value.id === city!.id)
                   ) {
                     activeCity$.set(city);
-                    toast.success("Switched to city");
+                    toast.success(
+                      translationLocationSettings("switched to city toast"),
+                    );
                   } else {
                     addedCities$.push(city);
                     activeCity$.set(city);
-                    toast.success("City added");
+                    toast.success(
+                      translationLocationSettings("added city toast"),
+                    );
                   }
                 } else {
-                  toast.error("City not found");
+                  toast.error(
+                    translationLocationSettings("city not found toast"),
+                  );
                 }
               }}
               className="mb-2.5 mt-2.5 rounded border-solid bg-[#2d3142] p-2 font-bold text-white"

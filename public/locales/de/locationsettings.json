@@ -1,5 +1,10 @@
 {
   "add new location": "Füge einen neuen Ort hinzu",
   "add new location button": "Hinzufügen",
-  "search input placeholder": "Suche deinen Standort"
+  "search input placeholder": "Suche deinen Standort",
+
+  "at least one city toast": "Du musst mindestens eine Stadt haben",
+  "switched to city toast": "Stadt gewechselt!",
+  "added city toast": "Neue Stadt hinzugefügt!",
+  "city not found toast": "Stadt nicht gefunden!"
 }

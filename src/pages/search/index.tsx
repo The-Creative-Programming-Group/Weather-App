@@ -32,6 +32,7 @@ const Search = () => {
 
   const { t: translationCommon } = useTranslation("common");
   const { t: translationSearch } = useTranslation("search");
+  const { t: translationLocationSettings } = useTranslation("locationsettings");
 
   useEffect(() => {
     if (searchValue.name === "") {
@@ -119,7 +120,6 @@ const Search = () => {
                     .find((value: ICity) => value.id === city!.id)
                 ) {
                   activeCity$.set(city);
-                  toast.success("Switched to city");
                   router.push("/home");
                 } else {
                   addedCities$.push(city);
@@ -127,7 +127,9 @@ const Search = () => {
                   router.push("/home");
                 }
               } else {
-                toast.error("City not found");
+                toast.error(
+                  translationLocationSettings("city not found toast"),
+                );
               }
             }
           }}
@@ -218,7 +220,6 @@ const Search = () => {
                       .find((value: ICity) => value.id === city!.id)
                   ) {
                     activeCity$.set(city);
-                    toast.success("Switched to city");
                     router.push("/home");
                   } else {
                     addedCities$.push(city);
@@ -226,7 +227,9 @@ const Search = () => {
                     router.push("/home");
                   }
                 } else {
-                  toast.error("City not found");
+                  toast.error(
+                    translationLocationSettings("city not found toast"),
+                  );
                 }
               }}
               className="absolute bottom-14 right-16 z-10 h-12 w-44 rounded bg-[#2d3142] text-2xl text-white transition duration-500 ease-in-out hover:shadow-2xl"
@@ -243,7 +246,11 @@ const Search = () => {
 export async function getStaticProps({ locale }: { locale: string }) {
   return {
     props: {
-      ...(await serverSideTranslations(locale, ["common", "search"])),
+      ...(await serverSideTranslations(locale, [
+        "common",
+        "search",
+        "locationsettings",
+      ])),
     },
   };
 }
