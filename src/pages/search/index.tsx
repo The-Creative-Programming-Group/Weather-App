@@ -118,7 +118,9 @@ const Search = () => {
                     .get()
                     .find((value: ICity) => value.id === city!.id)
                 ) {
-                  toast.error("City already added");
+                  activeCity$.set(city);
+                  toast.success("Switched to city");
+                  router.push("/home");
                 } else {
                   addedCities$.push(city);
                   activeCity$.set(city);
@@ -215,7 +217,9 @@ const Search = () => {
                       .get()
                       .find((value: ICity) => value.id === city!.id)
                   ) {
-                    toast.error("City already added");
+                    activeCity$.set(city);
+                    toast.success("Switched to city");
+                    router.push("/home");
                   } else {
                     addedCities$.push(city);
                     activeCity$.set(city);

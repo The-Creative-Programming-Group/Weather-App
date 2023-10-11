@@ -1,10 +1,10 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Layout from "~/components/Layout";
 import { activeCity$, addedCities$ } from "~/states";
 import Image from "next/image";
 import { RxCross2 } from "react-icons/rx";
 import { observer } from "@legendapp/state/react-components";
-import { ToastContainer, toast } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 import search2Image from "~/assets/search2.png";
 import "react-toastify/dist/ReactToastify.css";
 import { ICity } from "~/types";
@@ -142,7 +142,8 @@ const LocationSettings = observer(() => {
                             .get()
                             .find((value: ICity) => value.id === city!.id)
                         ) {
-                          toast.error("City already added");
+                          activeCity$.set(city);
+                          toast.success("Switched to city");
                         } else {
                           addedCities$.push(city);
                           activeCity$.set(city);
@@ -272,7 +273,8 @@ const LocationSettings = observer(() => {
                       .get()
                       .find((value: ICity) => value.id === city!.id)
                   ) {
-                    toast.error("City already added");
+                    activeCity$.set(city);
+                    toast.success("Switched to city");
                   } else {
                     addedCities$.push(city);
                     activeCity$.set(city);
