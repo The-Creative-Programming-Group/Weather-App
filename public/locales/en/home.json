@@ -41,5 +41,15 @@
 
   "now": "Now",
   "early hour time ending": "AM",
-  "late hour time ending": "PM"
+  "late hour time ending": "PM",
+
+  "9 day forecast card content": "The forecast for the next 9 days. <br />The <span class=\"font-semibold\">temperatures</span> are the average temperatures for the day. One for the day and one for the night.",
+
+  "precipitation card title": "Current Precipitation",
+
+  "feels like card content": "This temperature parameter accounts for the human perception of weather",
+
+  "visibility card title": "Current Visibility",
+
+  "wind pressure card title": "Current Wind & Pressure"
 }

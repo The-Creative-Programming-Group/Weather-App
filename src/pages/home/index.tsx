@@ -40,6 +40,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useTranslation } from "next-i18next";
+import ReactHtmlParser from "react-html-parser";
 
 const Map = dynamic(() => import("~/components/ui/map"), { ssr: false });
 
@@ -376,15 +377,12 @@ const InternalHome = observer(() => {
                     </HoverCardTrigger>
                     <HoverCardContent className="w-80">
                       <span className="font-semibold underline">
-                        9-Day Forecast:
+                        {translationHome("9 day forecast")}:
                       </span>
                       <br /> <br />
-                      The forecast for the next 9 days. <br />
-                      The <span className="font-semibold">
-                        temperatures
-                      </span>{" "}
-                      are the average temperatures for the day. One for the day
-                      and one for the night.
+                      {ReactHtmlParser(
+                        translationHome("9 day forecast card content"),
+                      )}
                     </HoverCardContent>
                   </HoverCard>
                 </div>
@@ -458,21 +456,40 @@ const InternalHome = observer(() => {
                       <InfoIcon className="h-full w-full" />
                     </Button>
                   </HoverCardTrigger>
-                  <HoverCardContent className="w-80">
+                  <HoverCardContent className="w-96">
                     <span className="font-semibold underline">
-                      Current Precipitation:
+                      {translationHome("precipitation card title")}:
                     </span>
                     <br /> <br />
-                    <span className="font-semibold">Early morning:</span> 12AM -
-                    5AM
+                    <span className="font-semibold">
+                      {translationHome("early morning")}:
+                    </span>{" "}
+                    12{translationHome("early hour time ending")} - 5
+                    {translationHome("early hour time ending")}
                     <br />
-                    <span className="font-semibold">Morning:</span> 6AM - 10AM
+                    <span className="font-semibold">
+                      {translationHome("morning")}:
+                    </span>{" "}
+                    6{translationHome("early hour time ending")} - 9
+                    {translationHome("early hour time ending")}
                     <br />
-                    <span className="font-semibold">Afternoon:</span> 11AM - 2PM
+                    <span className="font-semibold">
+                      {translationHome("noon")}:
+                    </span>{" "}
+                    10{translationHome("early hour time ending")} - 2
+                    {translationHome("late hour time ending")}
                     <br />
-                    <span className="font-semibold">Evening:</span> 3PM - 7PM
+                    <span className="font-semibold">
+                      {translationHome("afternoon")}:
+                    </span>{" "}
+                    3{translationHome("late hour time ending")} - 7
+                    {translationHome("late hour time ending")}
                     <br />
-                    <span className="font-semibold">Night:</span> 8PM - 11PM
+                    <span className="font-semibold">
+                      {translationHome("night")}:
+                    </span>{" "}
+                    8{translationHome("late hour time ending")} - 11
+                    {translationHome("late hour time ending")}
                   </HoverCardContent>
                 </HoverCard>
               </div>
@@ -525,10 +542,13 @@ const InternalHome = observer(() => {
                     </Button>
                   </HoverCardTrigger>
                   <HoverCardContent className="w-80">
-                    <span className="font-semibold underline">Feels like:</span>
+                    <span className="font-semibold underline">
+                      {translationHome("feels like")}:
+                    </span>
                     <br /> <br />
-                    This temperature parameter accounts for the human perception
-                    of weather
+                    {ReactHtmlParser(
+                      translationHome("feels like card content"),
+                    )}
                   </HoverCardContent>
                 </HoverCard>
               </div>
@@ -607,7 +627,7 @@ const InternalHome = observer(() => {
                   </HoverCardTrigger>
                   <HoverCardContent className="w-80">
                     <span className="font-semibold underline">
-                      Current Visibility:
+                      {translationHome("visibility card title")}:
                     </span>
                     <br /> <br />
                     100% = 10km
@@ -637,10 +657,13 @@ const InternalHome = observer(() => {
                   </HoverCardTrigger>
                   <HoverCardContent className="w-80">
                     <span className="font-semibold underline">
-                      Current Wind & Pressure
+                      {translationHome("wind pressure card title")}:
                     </span>{" "}
                     <br /> <br />
-                    <span className="font-semibold">Wind Speed:</span> In{" "}
+                    <span className="font-semibold">
+                      {translationHome("pressure")}:
+                    </span>{" "}
+                    In{" "}
                     <Link
                       className="underline"
                       href="https://en.wikipedia.org/wiki/Pascal_(unit)"
@@ -650,8 +673,9 @@ const InternalHome = observer(() => {
                     </Link>
                     <br />
                     <span className="font-semibold">
-                      Wind Pressure:
-                    </span> In {windSpeedUnit$.get()}
+                      {translationHome("speed")}:
+                    </span>{" "}
+                    In {translationCommon(windSpeedUnit$.get())}
                   </HoverCardContent>
                 </HoverCard>
               </div>
