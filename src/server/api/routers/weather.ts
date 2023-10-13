@@ -468,7 +468,7 @@ export const weatherRouter = createTRPCRouter({
 
       const timeSlots: { slot: string; start: number; end: number }[] = [
         { slot: "1 early morning", start: 0, end: 5 },
-        { slot: "2 morning", start: 6, end: 10 },
+        { slot: "2 morning", start: 6, end: 9 },
         { slot: "3 noon", start: 10, end: 14 },
         { slot: "4 afternoon", start: 15, end: 19 },
         { slot: "5 night", start: 20, end: 23 },
