@@ -10,7 +10,6 @@ import { appWithTranslation } from "next-i18next";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 // Next font inter
-
 const inter = Inter({ subsets: ["latin-ext"] });
 
 const MyApp: AppType = ({ Component, pageProps }) => {
