@@ -1,7 +1,7 @@
-import { observable } from "@legendapp/state";
-import { persistObservable } from "@legendapp/state/persist";
-import { ObservablePersistLocalStorage } from "@legendapp/state/persist-plugins/local-storage";
-import { ICity } from "~/types";
+import {observable} from "@legendapp/state";
+import {persistObservable} from "@legendapp/state/persist";
+import {ObservablePersistLocalStorage} from "@legendapp/state/persist-plugins/local-storage";
+import {ICity} from "~/types";
 
 // See Legend Documentation for more information about the state management
 // If you want more information stored in the state, you can change the input into an object
@@ -13,25 +13,25 @@ export const activeCity$ = observable<ICity>({
   country: "",
 });
 
-persistObservable(activeCity$, {
+persistObservable<ICity>(activeCity$, {
   local: "activeCity",
-  persistLocal: ObservablePersistLocalStorage,
+  pluginLocal: ObservablePersistLocalStorage,
 });
 
 export const addedCities$ = observable<ICity[]>([]);
 
-persistObservable(addedCities$, {
+persistObservable<ICity[]>(addedCities$, {
   local: "addedCities",
-  persistLocal: ObservablePersistLocalStorage,
+  pluginLocal: ObservablePersistLocalStorage,
 });
 
 export type TemperatureUnitType = "Celsius" | "Fahrenheit";
 
 export const temperatureUnit$ = observable<TemperatureUnitType>("Celsius");
 
-persistObservable(temperatureUnit$, {
+persistObservable<TemperatureUnitType>(temperatureUnit$, {
   local: "temperatureUnit",
-  persistLocal: ObservablePersistLocalStorage,
+  pluginLocal: ObservablePersistLocalStorage,
 });
 
 export type WindSpeedUnitType =
@@ -45,7 +45,7 @@ export const windSpeedUnit$ = observable<WindSpeedUnitType>(
   "kilometers per hour",
 );
 
-persistObservable(windSpeedUnit$, {
+persistObservable<WindSpeedUnitType>(windSpeedUnit$, {
   local: "windSpeedUnit",
-  persistLocal: ObservablePersistLocalStorage,
+  pluginLocal: ObservablePersistLocalStorage,
 });

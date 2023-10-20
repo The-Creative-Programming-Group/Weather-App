@@ -1,16 +1,16 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, {useEffect, useRef, useState} from "react";
 import Layout from "~/components/Layout";
-import { activeCity$, addedCities$ } from "~/states";
+import {activeCity$, addedCities$} from "~/states";
 import Image from "next/image";
-import { RxCross2 } from "react-icons/rx";
-import { observer } from "@legendapp/state/react-components";
-import { toast, ToastContainer } from "react-toastify";
+import {RxCross2} from "react-icons/rx";
+import {observer} from "@legendapp/state/react";
+import {toast, ToastContainer} from "react-toastify";
 import search2Image from "~/assets/search2.png";
 import "react-toastify/dist/ReactToastify.css";
-import { ICity } from "~/types";
+import {ICity} from "~/types";
 import citiesJSON from "~/lib/city-list.json";
-import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import { useTranslation } from "next-i18next";
+import {serverSideTranslations} from "next-i18next/serverSideTranslations";
+import {useTranslation} from "next-i18next";
 
 const cities = citiesJSON as ICity[];
 
