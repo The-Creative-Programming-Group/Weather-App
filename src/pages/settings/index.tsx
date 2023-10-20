@@ -1,12 +1,17 @@
 import React from "react";
 import Layout from "~/components/Layout";
 import styles from "./settings.module.css";
-import {temperatureUnit$, type TemperatureUnitType, windSpeedUnit$, type WindSpeedUnitType,} from "~/states";
-import {observer} from "@legendapp/state/react";
-import {RxCheck} from "react-icons/rx";
-import {serverSideTranslations} from "next-i18next/serverSideTranslations";
-import {useRouter} from "next/router";
-import {useTranslation} from "next-i18next";
+import {
+  temperatureUnit$,
+  type TemperatureUnitType,
+  windSpeedUnit$,
+  type WindSpeedUnitType,
+} from "~/states";
+import { observer } from "@legendapp/state/react";
+import { RxCheck } from "react-icons/rx";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import { useRouter } from "next/router";
+import { useTranslation } from "next-i18next";
 
 const Settings = observer(() => {
   const { locale } = useRouter();

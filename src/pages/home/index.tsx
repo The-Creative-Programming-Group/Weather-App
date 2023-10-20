@@ -1,8 +1,13 @@
 import React from "react";
 import Layout from "~/components/Layout";
-import {api} from "~/lib/utils/api";
-import {activeCity$, temperatureUnit$, windSpeedUnit$, WindSpeedUnitType,} from "~/states";
-import {IDailyForecast, IHourlyForecast} from "~/types";
+import { api } from "~/lib/utils/api";
+import {
+  activeCity$,
+  temperatureUnit$,
+  windSpeedUnit$,
+  WindSpeedUnitType,
+} from "~/states";
+import { IDailyForecast, IHourlyForecast } from "~/types";
 import {
   FaCloud,
   FaCloudMeatball,
@@ -14,24 +19,28 @@ import {
   FaSun,
   FaWind,
 } from "react-icons/fa6";
-import {WiRaindrop} from "react-icons/wi";
+import { WiRaindrop } from "react-icons/wi";
 import cn from "classnames";
-import {PiSunglasses} from "react-icons/pi";
-import {BsWind} from "react-icons/bs";
-import {Skeleton} from "~/components/ui/skeleton";
+import { PiSunglasses } from "react-icons/pi";
+import { BsWind } from "react-icons/bs";
+import { Skeleton } from "~/components/ui/skeleton";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 import timezone from "dayjs/plugin/timezone";
 import dynamic from "next/dynamic";
-import {HoverCard, HoverCardContent, HoverCardTrigger,} from "~/components/ui/hover-card";
-import {Button} from "~/components/ui/button";
-import {InfoIcon, LinkIcon} from "lucide-react";
+import {
+  HoverCard,
+  HoverCardContent,
+  HoverCardTrigger,
+} from "~/components/ui/hover-card";
+import { Button } from "~/components/ui/button";
+import { InfoIcon, LinkIcon } from "lucide-react";
 import Link from "next/link";
-import {useRouter} from "next/router";
-import {serverSideTranslations} from "next-i18next/serverSideTranslations";
-import {useTranslation} from "next-i18next";
+import { useRouter } from "next/router";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import { useTranslation } from "next-i18next";
 import ReactHtmlParser from "react-html-parser";
-import {observer} from "@legendapp/state/react";
+import { observer } from "@legendapp/state/react";
 
 const Map = dynamic(() => import("~/components/ui/map"), { ssr: false });
 
