@@ -60,9 +60,11 @@ const UPSTASH_RATELIMITER_TIME_INTERVAL: Duration = validateDuration(
  */
 export const createTRPCContext = (_opts: CreateNextContextOptions) => {
   const ip = _opts.req.headers["x-forwarded-for"] as string;
+  let res = _opts.res;
   return {
     ...createInnerTRPCContext({}),
     ip,
+    res,
   };
 };
 
@@ -125,6 +127,11 @@ const rateLimitMiddleware = t.middleware(async ({ ctx, path, next }) => {
   // log.debug("identifier", { identifier });
   const { success, remaining } = await ratelimit.limit(identifier);
   // log.debug("remaining", { remaining });
+  ctx.res.setHeader(
+    "X-RateLimit-Limit",
+    env.UPSTASH_RATELIMITER_TOKENS_PER_TIME,
+  );
+  ctx.res.setHeader("X-RateLimit-Remaining", remaining);
   if (!success) {
     log.warn("Rate limit exceeded", { ip: identifier });
     throw new TRPCError({
