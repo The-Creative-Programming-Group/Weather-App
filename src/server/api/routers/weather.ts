@@ -1,11 +1,15 @@
 import { z } from "zod";
-import {
-  createTRPCRouter,
-  publicProcedure,
-  rateLimitedProcedure,
-} from "~/server/api/trpc";
+import { createTRPCRouter, rateLimitedProcedure } from "~/server/api/trpc";
 import { env } from "~/env.mjs";
 import axios from "axios";
+import { IDailyForecast, IHourlyForecast } from "~/types";
+import { log } from "next-axiom";
+import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc";
+import timezone from "dayjs/plugin/timezone";
+
+dayjs.extend(utc);
+dayjs.extend(timezone);
 
 /**
  * Zod schemas provide runtime data validation ensuring type safety,
@@ -27,6 +31,8 @@ const HourlyWeatherSchema = z.object({
     showers: z.string(),
     snowfall: z.string(),
     precipitation_probability: z.string(),
+    cloudcover: z.string(),
+    windspeed_10m: z.string(),
   }),
   hourly: z.object({
     time: z.array(z.string()),
@@ -35,6 +41,8 @@ const HourlyWeatherSchema = z.object({
     showers: z.array(z.number()),
     snowfall: z.array(z.number()),
     precipitation_probability: z.array(z.number()),
+    cloudcover: z.array(z.number()),
+    windspeed_10m: z.array(z.number()),
   }),
 });
 
@@ -61,23 +69,18 @@ const PresentWeatherSchema = z.object({
     temp_max: z.number(),
     pressure: z.number(),
     humidity: z.number(),
-    sea_level: z.number(),
-    grnd_level: z.number(),
   }),
+  // Visibility, meter. The maximum value of the visibility is 10 km
   visibility: z.number(),
   wind: z.object({
     speed: z.number(),
     deg: z.number(),
-    gust: z.number(),
   }),
   clouds: z.object({
     all: z.number(),
   }),
   dt: z.number(),
   sys: z.object({
-    type: z.number(),
-    id: z.number(),
-    country: z.string(),
     sunrise: z.number(),
     sunset: z.number(),
   }),
@@ -105,6 +108,7 @@ const PresentAirQualitySchema = z.object({
     time: z.array(z.string()),
     pm10: z.array(z.number()),
     pm2_5: z.array(z.number()),
+    nitrogen_dioxide: z.array(z.number()),
   }),
 });
 
@@ -115,16 +119,33 @@ type PresentAirQuality = z.infer<typeof PresentAirQualitySchema> | undefined;
  *
  * @param {number} pm10 - The PM10 value in micrograms per cubic meter (µg/m³).
  * @param {number} pm25 - The PM2.5 value in micrograms per cubic meter (µg/m³).
+ * @param {number} nitrogenDioxide - The nitrogen dioxide value in micrograms per cubic meter (µg/m³).
  *
  * @return {number} The calculated Air Quality Index (AQI) between 0 and 100.
  */
-function calculateAirQualityIndex(pm10: number, pm25: number): number {
-  const scaleFactor = 500.4;
+function calculateAirQualityIndex(
+  pm10: number,
+  pm25: number,
+  nitrogenDioxide: number,
+): number {
+  // log.debug("start running calculateAirQualityIndex");
+  const maxPm10Value = 100;
+  const maxPm25Value = 71;
+  const maxNitrogenDioxideValue = 601;
 
-  const aqiPm10 = (pm10 / scaleFactor) * 100;
-  const aqiPm25 = (pm25 / scaleFactor) * 100;
+  const aqiPm10: number =
+    pm10 <= maxPm10Value ? (pm10 / maxPm10Value) * 100 : 100;
+  const aqiPm25: number =
+    pm25 <= maxPm25Value ? (pm25 / maxPm25Value) * 100 : 100;
+  const aqiNitrogenDioxide: number =
+    nitrogenDioxide <= maxNitrogenDioxideValue
+      ? (nitrogenDioxide / maxNitrogenDioxideValue) * 100
+      : 100;
 
-  return Math.max(aqiPm10, aqiPm25);
+  // log.debug("aqiPm10", { aqiPm10 });
+  // log.debug("aqiPm25", { aqiPm25 });
+  // log.debug("aqiNitrogenDioxide", { aqiNitrogenDioxide });
+  return Math.max(aqiPm10, aqiPm25, aqiNitrogenDioxide);
 }
 
 export const weatherRouter = createTRPCRouter({
@@ -133,143 +154,193 @@ export const weatherRouter = createTRPCRouter({
       z.object({
         coordinates: z.object({
           lat: z.number().min(-90).max(90),
-          lon: z.number().min(0).max(180),
+          lon: z.number().min(-180).max(180),
         }),
+        timezone: z.string(),
       }),
     )
-    .query(async ({ input }) => {
+    .query(async ({ input, ctx }) => {
+      log.info("User requested weather data for coordinates", {
+        coordinates: input.coordinates,
+        timezone: input.timezone,
+        user: ctx.ip,
+      });
       // OpenWeatherMap API
       const urlWeather = `https://api.openweathermap.org/data/2.5/weather?lat=${input.coordinates.lat}&lon=${input.coordinates.lon}&appid=${env.OPEN_WEATHER_API_KEY}`;
       // Open Meteo
-      const urlHourlyForecast = `https://api.open-meteo.com/v1/forecast?latitude=${input.coordinates.lat}&longitude=${input.coordinates.lon}&hourly=temperature_2m,rain,showers,snowfall,precipitation_probability&forecast_days=7`;
-      const urlAirQuality = `https://air-quality-api.open-meteo.com/v1/air-quality?latitude=${input.coordinates.lat}&longitude=${input.coordinates.lon}&hourly=pm10,pm2_5`;
+      const urlHourlyForecast = `https://api.open-meteo.com/v1/forecast?latitude=${input.coordinates.lat}&longitude=${input.coordinates.lon}&hourly=temperature_2m,rain,showers,snowfall,precipitation_probability,cloudcover,windspeed_10m&forecast_days=9&timezone=${input.timezone}`;
+      const urlAirQuality = `https://air-quality-api.open-meteo.com/v1/air-quality?latitude=${input.coordinates.lat}&longitude=${input.coordinates.lon}&hourly=pm10,pm2_5,nitrogen_dioxide`;
 
-      // Hourly Weather Forecast from Open Meteo
+      let [hourlyResult, presentWeatherResult, presentAirQualityResult] =
+        await Promise.allSettled([
+          axios.get<HourlyWeather>(urlHourlyForecast),
+          axios.get<PresentWeather>(urlWeather),
+          axios.get<PresentAirQuality>(urlAirQuality),
+        ]);
+
       let hourlyData: HourlyWeather = undefined;
-
-      try {
-        const hourlyWeatherData = await axios.get<HourlyWeather>(
-          urlHourlyForecast,
-        );
-        hourlyData = HourlyWeatherSchema.parse(hourlyWeatherData.data);
-      } catch (error) {
-        if (error instanceof z.ZodError) {
-          console.log("Zod Errors", error.issues);
-        } else {
-          console.error(error);
-        }
-      }
-
-      // Present Weather from OpenWeatherMap
       let presentWeather: PresentWeather = undefined;
-
-      try {
-        const weatherData = await axios.get<PresentWeather>(urlWeather);
-        presentWeather = PresentWeatherSchema.parse(weatherData.data);
-      } catch (error) {
-        if (error instanceof z.ZodError) {
-          console.log("Zod Errors", error.issues);
-        } else {
-          console.error(error);
-        }
-      }
-
-      // Present Air Quality from Open Meteo
       let presentAirQuality: PresentAirQuality = undefined;
 
-      try {
-        const airQualityData = await axios.get<PresentAirQuality>(
-          urlAirQuality,
-        );
-        presentAirQuality = PresentAirQualitySchema.parse(airQualityData.data);
-      } catch (error) {
-        if (error instanceof z.ZodError) {
-          console.log("Zod Errors", error.issues);
-        } else {
-          console.error(error);
+      if (hourlyResult.status === "fulfilled") {
+        try {
+          let data = hourlyResult.value.data;
+
+          if (!data) {
+            throw new Error("Air quality data is undefined");
+          }
+
+          // log.debug("Hourly data without the filter and unparsed", data);
+
+          data.hourly.precipitation_probability =
+            data.hourly.precipitation_probability.filter(
+              (value) => value !== null,
+            );
+
+          hourlyData = HourlyWeatherSchema.parse(data);
+          // log.debug("Parsed and filtered hourly data", hourlyData);
+        } catch (error) {
+          if (error instanceof z.ZodError) {
+            log.error("Zod Errors in the hourly weather", error.issues);
+          } else {
+            log.error("Else Error in the hourly weather", { error });
+          }
         }
+      } else {
+        log.error("Hourly weather data request failed", {
+          status: hourlyResult.status,
+          reason: hourlyResult.reason,
+        });
+      }
+
+      if (presentWeatherResult.status === "fulfilled") {
+        try {
+          presentWeather = PresentWeatherSchema.parse(
+            presentWeatherResult.value.data,
+          );
+        } catch (error) {
+          if (error instanceof z.ZodError) {
+            log.error("Zod Errors in the present weather", error.issues);
+          } else {
+            log.error("Else Error in the present weather", { error });
+          }
+        }
+      } else {
+        log.error("Present weather data request failed", {
+          status: presentWeatherResult.status,
+          reason: presentWeatherResult.reason,
+        });
+      }
+
+      if (presentAirQualityResult.status === "fulfilled") {
+        try {
+          let data = presentAirQualityResult.value.data;
+
+          if (!data) {
+            throw new Error("Air quality data is undefined");
+          }
+
+          // log.debug("Air quality data without the filter and unparsed", data);
+
+          data.hourly.pm10 = data.hourly.pm10.filter((value) => value !== null);
+          data.hourly.pm2_5 = data.hourly.pm2_5.filter(
+            (value) => value !== null,
+          );
+          data.hourly.nitrogen_dioxide = data.hourly.nitrogen_dioxide.filter(
+            (value) => value !== null,
+          );
+
+          presentAirQuality = PresentAirQualitySchema.parse(data);
+        } catch (error) {
+          if (error instanceof z.ZodError) {
+            log.error("Zod Errors in the air quality", error.issues);
+          } else {
+            log.error("Else Error in the air quality", { error });
+          }
+        }
+      } else {
+        log.error("Present air quality data request failed", {
+          status: presentAirQualityResult.status,
+          reason: presentAirQualityResult.reason,
+        });
       }
 
       let presentAirQualityIndex: number | undefined = undefined;
 
       if (
         presentAirQuality?.hourly.pm10[0] &&
-        presentAirQuality?.hourly.pm2_5[0]
+        presentAirQuality?.hourly.pm2_5[0] &&
+        presentAirQuality?.hourly.nitrogen_dioxide[0]
       ) {
         presentAirQualityIndex = calculateAirQualityIndex(
           presentAirQuality.hourly.pm10[0],
           presentAirQuality.hourly.pm2_5[0],
+          presentAirQuality.hourly.nitrogen_dioxide[0],
         );
-      }
-
-      interface IHourlyForecast {
-        // Hour of current day
-        time: number;
-        // In Kelvin
-        temperature: number | undefined;
-        // In millimeters
-        rain: number | undefined;
-        // In millimeters
-        showers: number | undefined;
-        // In centimeters
-        snowfall: number | undefined;
       }
 
       const hourlyForecast: IHourlyForecast[] = [];
 
-      const currentHour = new Date().getUTCHours();
+      const currentHour = dayjs().tz(input.timezone).hour();
       for (let i = currentHour; i < currentHour + 15; i++) {
         const temperature = hourlyData?.hourly.temperature_2m[i];
         const rain = hourlyData?.hourly.rain[i];
         const showers = hourlyData?.hourly.showers[i];
         const snowfall = hourlyData?.hourly.snowfall[i];
+        const cloudcover = hourlyData?.hourly.cloudcover[i];
+        const windSpeed = hourlyData?.hourly.windspeed_10m[i];
+        // console.log(cloudcover);
 
-        const j = i % 24;
+        const time = i % 24;
 
         hourlyForecast.push({
-          time: j,
+          time,
           temperature: temperature ? temperature + 273.15 : undefined,
-          rain: rain,
-          showers: showers,
-          snowfall: snowfall,
+          rain,
+          showers,
+          snowfall,
+          cloudcover,
+          windSpeed,
         });
-      }
-
-      interface IDailyForecast {
-        // Day of current week (starts with 0 (current day))
-        day: number;
-        // In Kelvin day and night
-        temperature: number | undefined;
-        // In millimeters
-        rain: number | undefined;
-        // In millimeters
-        showers: number | undefined;
-        // In centimeters
-        snowfall: number | undefined;
       }
 
       const dailyForecast: IDailyForecast[] = [];
 
       if (hourlyData) {
-        for (let i = 0; i < 7; i++) {
+        for (let i = 0; i < 9; i++) {
           // console.log("i", i);
-          let temperatureSum = 0;
+          let temperatureSumDay = 0;
+          let temperatureSumNight = 0;
           let rainSum = 0;
           let showersSum = 0;
           let snowfallSum = 0;
+          let cloudcoverSum = 0;
+          let windSpeedSum = 0;
 
-          let temperatureCount = 0;
+          let temperatureCountDay = 0;
+          let temperatureCountNight = 0;
           let rainCount = 0;
           let showersCount = 0;
           let snowfallCount = 0;
+          let cloudcoverCount = 0;
+          let windSpeedCount = 0;
 
           for (let j = 24 * i; j < 24 * (i + 1); j++) {
             // console.log("j", j);
             if (hourlyData.hourly.temperature_2m[j] !== undefined) {
-              temperatureSum += hourlyData.hourly.temperature_2m[j]!;
-              temperatureCount++;
-              // console.log(hourlyData.hourly.temperature_2m[j]!);
-              // console.log("temperatureSum", temperatureSum);
+              if (j % 24 > 6 && j % 24 < 19) {
+                temperatureSumDay += hourlyData.hourly.temperature_2m[j]!;
+                // console.log("j", j);
+                temperatureCountDay++;
+                // console.log(hourlyData.hourly.temperature_2m[j]!);
+                // console.log("temperatureSumDay", temperatureSumDay);
+              } else {
+                temperatureSumNight += hourlyData.hourly.temperature_2m[j]!;
+                // console.log("j", j);
+                temperatureCountNight++;
+                // console.log(hourlyData.hourly.temperature_2m[j]!);
+                // console.log("temperatureSumNight", temperatureSumNight);
+              }
             } else {
               console.log("undefined value temperature: ", j);
             }
@@ -300,6 +371,20 @@ export const weatherRouter = createTRPCRouter({
             } else {
               console.log("undefined value snowfall: ", j);
             }
+
+            if (hourlyData.hourly.cloudcover[j] !== undefined) {
+              cloudcoverSum += hourlyData.hourly.cloudcover[j]!;
+              cloudcoverCount++;
+              // console.log(hourlyData.hourly.cloudcover[j]!);
+              // console.log("cloudcoverSum", cloudcoverSum);
+            }
+
+            if (hourlyData.hourly.windspeed_10m[j] !== undefined) {
+              windSpeedSum += hourlyData.hourly.windspeed_10m[j]!;
+              windSpeedCount++;
+              // console.log(hourlyData.hourly.cloudcover[j]!);
+              // console.log("cloudcoverSum", cloudcoverSum);
+            }
           }
 
           /*
@@ -313,26 +398,37 @@ export const weatherRouter = createTRPCRouter({
             console.log("snowfallCount", snowfallCount);
             */
 
-          const temperatureAverage = temperatureSum / (temperatureCount || 1);
+          const temperatureAverageDay =
+            temperatureSumDay / (temperatureCountDay || 1);
+          const temperatureAverageNight =
+            temperatureSumNight / (temperatureCountNight || 1);
           const rainAverage = rainSum / (rainCount || 1);
           const showersAverage = showersSum / (showersCount || 1);
           const snowfallAverage = snowfallSum / (snowfallCount || 1);
+          const cloudcoverAverage = cloudcoverSum / (cloudcoverCount || 1);
+          const windSpeedAverage = windSpeedSum / (windSpeedCount || 1);
 
           /*
-            console.log("temperatureAverage", temperatureAverage);
+            console.log("temperatureAverageDay", temperatureAverageDay);
+            console.log("temperatureAverageNight", temperatureAverageNight);
             console.log("rainAverage", rainAverage);
             console.log("showersAverage", showersAverage);
             console.log("snowfallAverage", snowfallAverage);
             */
 
           dailyForecast.push({
-            day: i,
-            temperature: temperatureCount
-              ? temperatureAverage + 273.15
+            date: new Date(new Date().setDate(new Date().getDate() + i)),
+            temperatureDay: temperatureCountDay
+              ? temperatureAverageDay + 273.15
+              : undefined,
+            temperatureNight: temperatureCountNight
+              ? temperatureAverageNight + 273.15
               : undefined,
             rain: rainCount ? rainAverage : undefined,
             showers: showersCount ? showersAverage : undefined,
             snowfall: snowfallCount ? snowfallAverage : undefined,
+            cloudcover: cloudcoverCount ? cloudcoverAverage : undefined,
+            windSpeed: windSpeedCount ? windSpeedAverage : undefined,
           });
         }
       }
@@ -372,7 +468,7 @@ export const weatherRouter = createTRPCRouter({
 
       const timeSlots: { slot: string; start: number; end: number }[] = [
         { slot: "1 early morning", start: 0, end: 5 },
-        { slot: "2 morning", start: 6, end: 10 },
+        { slot: "2 morning", start: 6, end: 9 },
         { slot: "3 noon", start: 10, end: 14 },
         { slot: "4 afternoon", start: 15, end: 19 },
         { slot: "5 night", start: 20, end: 23 },
@@ -387,14 +483,26 @@ export const weatherRouter = createTRPCRouter({
       });
 
       return {
-        time: new Date(),
+        time: {
+          time: dayjs().tz(input.timezone).format(),
+          timezone: input.timezone,
+        },
         // Present weather in Kelvin NOT daily average
         temperature: presentWeather?.main.temp,
+        // In Kelvin
+        highestTemperature:
+          Math.max(...(hourlyData?.hourly.temperature_2m.slice(0, 23) ?? [])) +
+          273.15,
+        // In Kelvin
+        minimumTemperature:
+          Math.min(...(hourlyData?.hourly.temperature_2m.slice(0, 23) ?? [])) +
+          273.15,
+        // Present weather in Kelvin
         feels_like: presentWeather?.main.feels_like,
         // In meters per second
         wind_speed: presentWeather?.wind.speed,
         // Calculates the wind pressure in Pa
-        wind_pressure: presentWeather
+        wind_pressure: presentWeather?.wind.speed
           ? 0.5 * 1.225 * Math.pow(presentWeather.wind.speed, 2)
           : undefined,
         // Index from 0 to 100
@@ -403,11 +511,24 @@ export const weatherRouter = createTRPCRouter({
         visibility: presentWeather
           ? presentWeather.visibility / 100
           : undefined,
+        // In percentages
         precipitationProbabilities: hourlyData
           ? precipitationProbabilities
           : undefined,
         hourlyForecast,
         dailyForecast,
+        // In percentages
+        cloudcover: hourlyForecast[0]?.cloudcover,
+        // Dayjs timestamp
+        sunrise: dayjs
+          .unix(presentWeather?.sys.sunrise ?? 0)
+          .tz(input.timezone)
+          .format(),
+        // Dayjs timestamp
+        sunset: dayjs
+          .unix(presentWeather?.sys.sunset ?? 0)
+          .tz(input.timezone)
+          .format(),
       };
     }),
 });

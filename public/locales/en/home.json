@@ -1,0 +1,55 @@
+{
+  "today": "Today",
+  "9 day forecast": "9 Day Forecast",
+  "precipitation": "Precipitation",
+  "feels like": "Feels Like",
+  "visibility": "Visibility",
+  "wind pressure": "Wind & Pressure",
+  "air quality": "Air Quality",
+  "pressure": "Pressure",
+  "speed": "Speed",
+
+  "early morning": "Early Morning",
+  "morning": "Morning",
+  "noon": "Noon",
+  "afternoon": "Afternoon",
+  "night": "Night",
+
+  "feels like phrase very warm": "The sun is likely trying to cool down!",
+  "feels like phrase warm": "Even ice cream finds warmth too much!",
+  "feels like phrase moderate": "So moderate, even Goldilocks would approve!",
+  "feels like phrase cold": "Penguins are ordering hot chocolate due to the chill!",
+  "feels like phrase very cold": "Today's frosty weather is making even snowmen shiver!",
+
+  "air quality text very poor": "Very Poor",
+  "air quality text poor": "Poor",
+  "air quality text fair": "Fair",
+  "air quality text moderate": "Moderate",
+  "air quality text good": "Good",
+  "air quality text excellent": "Excellent",
+
+  "sunset": "Sunset",
+  "sunrise": "Sunrise",
+
+  "weather state stormy": "Stormy",
+  "weather state snowy": "Snowy",
+  "weather state rainy": "Rainy",
+  "weather state very cloudy": "Very Cloudy",
+  "weather state cloudy": "Cloudy",
+  "weather state windy": "Windy",
+  "weather state sunny": "Sunny",
+
+  "now": "Now",
+  "early hour time ending": "AM",
+  "late hour time ending": "PM",
+
+  "9 day forecast card content": "The forecast for the next 9 days. <br />The <span class=\"font-semibold\">temperatures</span> are the average temperatures for the day. One for the day and one for the night.",
+
+  "precipitation card title": "Current Precipitation",
+
+  "feels like card content": "This temperature parameter accounts for the human perception of weather",
+
+  "visibility card title": "Current Visibility",
+
+  "wind pressure card title": "Current Wind & Pressure"
+}

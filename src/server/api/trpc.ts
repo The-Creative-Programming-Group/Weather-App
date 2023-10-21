@@ -13,6 +13,9 @@ import superjson from "superjson";
 import { ZodError } from "zod";
 import { redis } from "~/server/upstash";
 import { Ratelimit } from "@upstash/ratelimit";
+import { log } from "next-axiom";
+import { env } from "~/env.mjs";
+import { Duration } from "~/types";
 
 /**
  * 1. CONTEXT
@@ -38,6 +41,17 @@ const createInnerTRPCContext = (_opts: CreateContextOptions) => {
   return {};
 };
 
+function validateDuration(value: string): value is Duration {
+  const durationRegex = /^(\d+)(ms|s|m|h|d)$/;
+  return durationRegex.test(value);
+}
+
+const UPSTASH_RATELIMITER_TIME_INTERVAL: Duration = validateDuration(
+  env.UPSTASH_RATELIMITER_TIME_INTERVAL,
+)
+  ? env.UPSTASH_RATELIMITER_TIME_INTERVAL
+  : "1d";
+
 /**
  * This is the actual context you will use in your router. It will be used to process every request
  * that goes through your tRPC endpoint.
@@ -56,7 +70,7 @@ export const createTRPCContext = (_opts: CreateNextContextOptions) => {
  * 2. INITIALIZATION
  *
  * This is where the tRPC API is initialized, connecting the context and transformer. We also parse
- * ZodErrors so that you get typesafety on the frontend if your procedure fails due to validation
+ * ZodErrors so that you get typesafe on the frontend if your procedure fails due to validation
  * errors on the backend.
  */
 
@@ -87,22 +101,32 @@ const t = initTRPC.context<typeof createTRPCContext>().create({
  * @see https://trpc.io/docs/router
  */
 
+/* log.debug("UPSTASH_RATELIMITER_TIME_INTERVAL", {
+  UPSTASH_RATELIMITER_TIME_INTERVAL,
+});
+log.debug("UPSTASH_RATELIMITER_TOKENS_PER_TIME", {
+  UPSTASH_RATELIMITER_TOKENS_PER_TIME: parseInt(
+    env.UPSTASH_RATELIMITER_TOKENS_PER_TIME,
+  ),
+}); */
+
 const ratelimit = new Ratelimit({
   redis,
-  limiter: Ratelimit.slidingWindow(1, "1h"),
+  limiter: Ratelimit.slidingWindow(
+    parseInt(env.UPSTASH_RATELIMITER_TOKENS_PER_TIME),
+    UPSTASH_RATELIMITER_TIME_INTERVAL,
+  ),
   analytics: true,
   prefix: "@upstash/ratelimit",
 });
 
-const rateLimitMiddleware = t.middleware(async ({ ctx, next }) => {
-  const identifier = ctx.ip;
-  if (typeof identifier !== "string") {
-    console.error("No identifier");
-    return next();
-  }
-  // console.log("identifier", identifier);
-  const { success } = await ratelimit.limit(identifier);
+const rateLimitMiddleware = t.middleware(async ({ ctx, path, next }) => {
+  const identifier = `${ctx.ip}:${path}`;
+  // log.debug("identifier", { identifier });
+  const { success, remaining } = await ratelimit.limit(identifier);
+  // log.debug("remaining", { remaining });
   if (!success) {
+    log.warn("Rate limit exceeded", { ip: identifier });
     throw new TRPCError({
       code: "INTERNAL_SERVER_ERROR",
       message: "Rate limit exceeded",
