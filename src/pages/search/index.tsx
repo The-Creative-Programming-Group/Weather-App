@@ -20,7 +20,7 @@ const Search = () => {
     id: 0,
     name: "",
     country: "",
-    state: "",
+    region: "",
     coord: {
       lon: 0,
       lat: 0,
@@ -84,7 +84,7 @@ const Search = () => {
             setIsInputActive(false);
           }}
           onChange={(event) => {
-            setSearchValue((prevSearchValue) => {
+            setSearchValue((prevSearchValue): ICity => {
               return {
                 ...prevSearchValue,
                 id: 0,
@@ -99,7 +99,7 @@ const Search = () => {
                 id: 0,
                 name: "",
                 country: "",
-                state: "",
+                region: "",
                 coord: {
                   lon: 0,
                   lat: 0,
@@ -150,13 +150,13 @@ const Search = () => {
                 }
                 key={city.id}
                 onMouseDown={() => {
-                  setSearchValue((prevSearchValue) => {
+                  setSearchValue((prevSearchValue): ICity => {
                     return {
                       ...prevSearchValue,
                       id: city.id,
                       name: city.name,
                       country: city.country,
-                      state: city.state,
+                      region: city.region,
                       coord: {
                         lon: city.coord.lon,
                         lat: city.coord.lat,
@@ -196,7 +196,7 @@ const Search = () => {
                   id: 0,
                   name: "",
                   country: "",
-                  state: "",
+                  region: "",
                   coord: {
                     lon: 0,
                     lat: 0,

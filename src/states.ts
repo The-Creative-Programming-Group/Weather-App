@@ -9,7 +9,7 @@ export const activeCity$ = observable<ICity>({
   id: 1,
   name: "",
   coord: { lat: 0, lon: 0 },
-  state: "",
+  region: "",
   country: "",
 });
 

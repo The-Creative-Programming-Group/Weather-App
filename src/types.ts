@@ -41,7 +41,7 @@ export interface ICity {
     lon: number;
     lat: number;
   };
-  state: string;
+  region: string;
   country: string;
 }
 
