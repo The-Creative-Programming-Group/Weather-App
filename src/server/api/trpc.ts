@@ -60,9 +60,11 @@ const UPSTASH_RATELIMITER_TIME_INTERVAL: Duration = validateDuration(
  */
 export const createTRPCContext = (_opts: CreateNextContextOptions) => {
   const ip = _opts.req.headers["x-forwarded-for"] as string;
+  const remaining = _opts.req.headers["x-ratelimit-remaining"] as string;
   return {
     ...createInnerTRPCContext({}),
     ip,
+    remaining,
   };
 };
 
@@ -70,7 +72,7 @@ export const createTRPCContext = (_opts: CreateNextContextOptions) => {
  * 2. INITIALIZATION
  *
  * This is where the tRPC API is initialized, connecting the context and transformer. We also parse
- * ZodErrors so that you get typesafety on the frontend if your procedure fails due to validation
+ * ZodErrors so that you get typesafe on the frontend if your procedure fails due to validation
  * errors on the backend.
  */
 
@@ -122,12 +124,10 @@ const ratelimit = new Ratelimit({
 
 const rateLimitMiddleware = t.middleware(async ({ ctx, path, next }) => {
   const identifier = `${ctx.ip}:${path}`;
-  if (typeof identifier !== "string") {
-    log.error("Rate limit identifier is not a string", { identifier });
-    return next();
-  }
   // log.debug("identifier", { identifier });
-  const { success } = await ratelimit.limit(identifier);
+  const { success, remaining } = await ratelimit.limit(identifier);
+  // log.debug("remaining", { remaining });
+  ctx.remaining = remaining.toString();
   if (!success) {
     log.warn("Rate limit exceeded", { ip: identifier });
     throw new TRPCError({
