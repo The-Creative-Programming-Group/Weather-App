@@ -62,78 +62,86 @@ const Search = () => {
         className="absolute -z-10 h-full w-full object-cover"
         fill
       />
-      <div id="styles-setup" className="mt-80 flex w-full justify-center">
-        <Image
-          className="w-1/36 transform border-8 border-r-0 border-solid border-[#2d3142] bg-[#383b53] pb-3 pl-3 pt-3"
-          src={search1Image}
-          alt="search-icon"
-          width={56}
-          height={56}
-        />
+      <div className="flex w-full items-center justify-center">
+        <div
+          id="styles-setup"
+          className="mt-80 flex w-5/12 justify-center border-8 border-solid border-[#2d3142]"
+        >
+          <Image
+            className="w-8 transform bg-[#383b53] pb-3 pl-3 pt-3 md:w-12"
+            src={search1Image}
+            alt="search-icon"
+            width={56}
+            height={56}
+          />
 
-        <input
-          className="w-5/12 border-8 border-l-0 border-solid border-[#2d3142] bg-[#383b53] pb-0.5 pl-3 pt-0.5 text-xl text-white outline-0"
-          autoFocus
-          placeholder={translationSearch("search input placeholder")}
-          type="text"
-          onFocus={() => {
-            setIsInputActive(true);
-          }}
-          value={searchValue.name}
-          onBlur={() => {
-            setIsInputActive(false);
-          }}
-          onChange={(event) => {
-            setSearchValue((prevSearchValue): ICity => {
-              return {
-                ...prevSearchValue,
-                id: 0,
-                name: event.target.value,
-              };
-            });
-          }}
-          ref={inputRef}
-          onKeyDown={(event) => {
-            if (event.key === "Enter") {
-              let city: ICity | undefined = {
-                id: 0,
-                name: "",
-                country: "",
-                region: "",
-                coord: {
-                  lon: 0,
-                  lat: 0,
-                },
-              };
-              if (searchValue.id !== 0 && searchValue.country !== "") {
-                city = cities.find((city: ICity) => city.id === searchValue.id);
-              } else {
-                city = cities.find(
-                  (city: ICity) =>
-                    city.name.toLowerCase() === searchValue.name.toLowerCase(),
-                );
-              }
-              if (city) {
-                if (
-                  addedCities$
-                    .get()
-                    .find((value: ICity) => value.id === city!.id)
-                ) {
-                  activeCity$.set(city);
-                  router.push("/home");
+          <input
+            className="w-full bg-[#383b53] pb-0.5 pl-3 pt-0.5 text-xl text-white outline-0"
+            autoFocus
+            placeholder={translationSearch("search input placeholder")}
+            type="text"
+            onFocus={() => {
+              setIsInputActive(true);
+            }}
+            value={searchValue.name}
+            onBlur={() => {
+              setIsInputActive(false);
+            }}
+            onChange={(event) => {
+              setSearchValue((prevSearchValue): ICity => {
+                return {
+                  ...prevSearchValue,
+                  id: 0,
+                  name: event.target.value,
+                };
+              });
+            }}
+            ref={inputRef}
+            onKeyDown={(event) => {
+              if (event.key === "Enter") {
+                let city: ICity | undefined = {
+                  id: 0,
+                  name: "",
+                  country: "",
+                  region: "",
+                  coord: {
+                    lon: 0,
+                    lat: 0,
+                  },
+                };
+                if (searchValue.id !== 0 && searchValue.country !== "") {
+                  city = cities.find(
+                    (city: ICity) => city.id === searchValue.id,
+                  );
                 } else {
-                  addedCities$.push(city);
-                  activeCity$.set(city);
-                  router.push("/home");
+                  city = cities.find(
+                    (city: ICity) =>
+                      city.name.toLowerCase() ===
+                      searchValue.name.toLowerCase(),
+                  );
                 }
-              } else {
-                toast.error(
-                  translationLocationSettings("city not found toast"),
-                );
+                if (city) {
+                  if (
+                    addedCities$
+                      .get()
+                      .find((value: ICity) => value.id === city!.id)
+                  ) {
+                    activeCity$.set(city);
+                    router.push("/home");
+                  } else {
+                    addedCities$.push(city);
+                    activeCity$.set(city);
+                    router.push("/home");
+                  }
+                } else {
+                  toast.error(
+                    translationLocationSettings("city not found toast"),
+                  );
+                }
               }
-            }
-          }}
-        />
+            }}
+          />
+        </div>
       </div>
       <div className="flex flex-col items-center">
         {results.map((city: ICity) => {
@@ -145,7 +153,7 @@ const Search = () => {
               <div
                 className={
                   isInputActive
-                    ? "z-20 flex h-auto w-12+5/12 cursor-pointer justify-between border-b-2 border-gray-400 bg-[#383b53] p-5 text-amber-50"
+                    ? "z-20 flex h-auto w-5/12 cursor-pointer justify-between border-b-2 border-gray-400 bg-[#383b53] p-5 text-amber-50"
                     : "hidden"
                 }
                 key={city.id}

@@ -1,4 +1,5 @@
 import { type Config } from "tailwindcss";
+
 export default {
   darkMode: ["class"],
   content: [
@@ -88,8 +89,7 @@ export default {
       },
       width: {
         "36/100": "36% ",
-        "1/36": "2.6%",
-        "12+5/12": "44.2%",
+        "2/36": "5.555555555555555%",
         "screen-xl": "1280px",
       },
     },
