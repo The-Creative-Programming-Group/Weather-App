@@ -17,7 +17,7 @@ const PublicHome: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
         <meta
           property="og:image"
-          content="https://weatherio1.vercel.app/_next/image?url=%2Fopengraph-image.png&w=640&q=75"
+          content="https://weatherio1.vercel.app/_next/image?url=%2Fog-image.png&w=640&q=75"
         />
       </Head>
       <Image
