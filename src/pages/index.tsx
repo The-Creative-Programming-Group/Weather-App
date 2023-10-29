@@ -5,6 +5,7 @@ import Image from "next/image";
 import background from "~/assets/background.png";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useTranslation } from "next-i18next";
+import ogImage from "~/assets/og-image.png";
 
 const PublicHome: NextPage = () => {
   const { t: translation } = useTranslation("common");
@@ -15,6 +16,7 @@ const PublicHome: NextPage = () => {
         <title>Weather.io</title>
         <meta name="description" content="An faboulus weather website" />
         <link rel="icon" href="/favicon.ico" />
+          <meta property="og:image" content="public/opengraph-image.png" />
       </Head>
       <Image
         src={background}
