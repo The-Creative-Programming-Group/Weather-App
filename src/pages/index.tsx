@@ -7,14 +7,17 @@ import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useTranslation } from "next-i18next";
 import { activeCity$ } from "~/states";
 import { useRouter } from "next/router";
+import { useLayoutEffect } from "react";
 
 const PublicHome: NextPage = () => {
   const { t: translation } = useTranslation("common");
   const router = useRouter();
 
-  if (activeCity$.id.get() !== 0 && activeCity$.name.get() !== "") {
-    router.push("/home");
-  }
+  useLayoutEffect(() => {
+    if (activeCity$.id.get() !== 0 && activeCity$.name.get() !== "") {
+      router.push("/home");
+    }
+  });
 
   return (
     <>

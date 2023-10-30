@@ -48,6 +48,39 @@ const Search = () => {
     );
   }, [searchValue]);
 
+  const searchCity = () => {
+    let city: ICity | undefined = {
+      id: 0,
+      name: "",
+      country: "",
+      region: "",
+      coord: {
+        lon: 0,
+        lat: 0,
+      },
+    };
+    if (searchValue.id !== 0 && searchValue.country !== "") {
+      city = cities.find((city: ICity) => city.id === searchValue.id);
+    } else {
+      city = cities.find(
+        (city: ICity) =>
+          city.name.toLowerCase() === searchValue.name.toLowerCase(),
+      );
+    }
+    if (city) {
+      if (addedCities$.get().find((value: ICity) => value.id === city!.id)) {
+        activeCity$.set(city);
+        router.push("/home");
+      } else {
+        addedCities$.push(city);
+        activeCity$.set(city);
+        router.push("/home");
+      }
+    } else {
+      toast.error(translationLocationSettings("city not found toast"));
+    }
+  };
+
   return (
     <>
       <ToastContainer />
@@ -99,45 +132,7 @@ const Search = () => {
             ref={inputRef}
             onKeyDown={(event) => {
               if (event.key === "Enter") {
-                let city: ICity | undefined = {
-                  id: 0,
-                  name: "",
-                  country: "",
-                  region: "",
-                  coord: {
-                    lon: 0,
-                    lat: 0,
-                  },
-                };
-                if (searchValue.id !== 0 && searchValue.country !== "") {
-                  city = cities.find(
-                    (city: ICity) => city.id === searchValue.id,
-                  );
-                } else {
-                  city = cities.find(
-                    (city: ICity) =>
-                      city.name.toLowerCase() ===
-                      searchValue.name.toLowerCase(),
-                  );
-                }
-                if (city) {
-                  if (
-                    addedCities$
-                      .get()
-                      .find((value: ICity) => value.id === city!.id)
-                  ) {
-                    activeCity$.set(city);
-                    router.push("/home");
-                  } else {
-                    addedCities$.push(city);
-                    activeCity$.set(city);
-                    router.push("/home");
-                  }
-                } else {
-                  toast.error(
-                    translationLocationSettings("city not found toast"),
-                  );
-                }
+                searchCity();
               }
             }}
           />
@@ -200,45 +195,7 @@ const Search = () => {
           {searchValue.name.length > 0 ? (
             <button
               onClick={() => {
-                let city: ICity | undefined = {
-                  id: 0,
-                  name: "",
-                  country: "",
-                  region: "",
-                  coord: {
-                    lon: 0,
-                    lat: 0,
-                  },
-                };
-                if (searchValue.id !== 0 && searchValue.country !== "") {
-                  city = cities.find(
-                    (city: ICity) => city.id === searchValue.id,
-                  );
-                } else {
-                  city = cities.find(
-                    (city: ICity) =>
-                      city.name.toLowerCase() ===
-                      searchValue.name.toLowerCase(),
-                  );
-                }
-                if (city) {
-                  if (
-                    addedCities$
-                      .get()
-                      .find((value: ICity) => value.id === city!.id)
-                  ) {
-                    activeCity$.set(city);
-                    router.push("/home");
-                  } else {
-                    addedCities$.push(city);
-                    activeCity$.set(city);
-                    router.push("/home");
-                  }
-                } else {
-                  toast.error(
-                    translationLocationSettings("city not found toast"),
-                  );
-                }
+                searchCity();
               }}
               className="absolute bottom-14 right-16 z-10 h-12 w-44 rounded bg-[#2d3142] text-2xl text-white transition duration-500 ease-in-out hover:shadow-2xl"
             >

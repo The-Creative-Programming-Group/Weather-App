@@ -46,10 +46,6 @@ const LocationSettings = observer(() => {
     );
   }, [searchValue]);
 
-  const setToActiveCity = (city: ICity) => {
-    activeCity$.set(city);
-  };
-
   const removeCityFromAddedCities = (city: ICity) => {
     if (addedCities$.get().length === 1) {
       toast.error(translationLocationSettings("at least one city toast"));
@@ -58,6 +54,39 @@ const LocationSettings = observer(() => {
     addedCities$.set((prev) => prev.filter((value) => value.id !== city.id));
     if (activeCity$.id.get() === city.id) {
       activeCity$.set(addedCities$.get()[0]);
+    }
+  };
+
+  const searchCity = () => {
+    let city: ICity | undefined = {
+      id: 0,
+      name: "",
+      country: "",
+      region: "",
+      coord: {
+        lon: 0,
+        lat: 0,
+      },
+    };
+    if (searchValue.id !== 0 && searchValue.country !== "") {
+      city = cities.find((city: ICity) => city.id === searchValue.id);
+    } else {
+      city = cities.find(
+        (city: ICity) =>
+          city.name.toLowerCase() === searchValue.name.toLowerCase(),
+      );
+    }
+    if (city) {
+      if (addedCities$.get().find((value: ICity) => value.id === city!.id)) {
+        activeCity$.set(city);
+        toast.success(translationLocationSettings("switched to city toast"));
+      } else {
+        addedCities$.push(city);
+        activeCity$.set(city);
+        toast.success(translationLocationSettings("added city toast"));
+      }
+    } else {
+      toast.error(translationLocationSettings("city not found toast"));
     }
   };
 
@@ -115,51 +144,7 @@ const LocationSettings = observer(() => {
                   ref={inputRef}
                   onKeyDown={(event) => {
                     if (event.key === "Enter") {
-                      let city: ICity | undefined = {
-                        id: 0,
-                        name: "",
-                        country: "",
-                        region: "",
-                        coord: {
-                          lon: 0,
-                          lat: 0,
-                        },
-                      };
-                      if (searchValue.id !== 0 && searchValue.country !== "") {
-                        city = cities.find(
-                          (city: ICity) => city.id === searchValue.id,
-                        );
-                      } else {
-                        city = cities.find(
-                          (city: ICity) =>
-                            city.name.toLowerCase() ===
-                            searchValue.name.toLowerCase(),
-                        );
-                      }
-                      if (city) {
-                        if (
-                          addedCities$
-                            .get()
-                            .find((value: ICity) => value.id === city!.id)
-                        ) {
-                          activeCity$.set(city);
-                          toast.success(
-                            translationLocationSettings(
-                              "switched to city toast",
-                            ),
-                          );
-                        } else {
-                          addedCities$.push(city);
-                          activeCity$.set(city);
-                          toast.success(
-                            translationLocationSettings("added city toast"),
-                          );
-                        }
-                      } else {
-                        toast.error(
-                          translationLocationSettings("city not found toast"),
-                        );
-                      }
+                      searchCity();
                     }
                   }}
                 />
@@ -234,7 +219,7 @@ const LocationSettings = observer(() => {
                     >
                       <div
                         onClick={() => {
-                          setToActiveCity(city);
+                          activeCity$.set(city);
                         }}
                         className="mr-5 flex w-full justify-between"
                       >
@@ -254,49 +239,7 @@ const LocationSettings = observer(() => {
             </div>
             <button
               onClick={() => {
-                let city: ICity | undefined = {
-                  id: 0,
-                  name: "",
-                  country: "",
-                  region: "",
-                  coord: {
-                    lon: 0,
-                    lat: 0,
-                  },
-                };
-                if (searchValue.id !== 0 && searchValue.country !== "") {
-                  city = cities.find(
-                    (city: ICity) => city.id === searchValue.id,
-                  );
-                } else {
-                  city = cities.find(
-                    (city: ICity) =>
-                      city.name.toLowerCase() ===
-                      searchValue.name.toLowerCase(),
-                  );
-                }
-                if (city) {
-                  if (
-                    addedCities$
-                      .get()
-                      .find((value: ICity) => value.id === city!.id)
-                  ) {
-                    activeCity$.set(city);
-                    toast.success(
-                      translationLocationSettings("switched to city toast"),
-                    );
-                  } else {
-                    addedCities$.push(city);
-                    activeCity$.set(city);
-                    toast.success(
-                      translationLocationSettings("added city toast"),
-                    );
-                  }
-                } else {
-                  toast.error(
-                    translationLocationSettings("city not found toast"),
-                  );
-                }
+                searchCity();
               }}
               className="mb-2.5 mt-2.5 rounded border-solid bg-[#2d3142] p-2 font-bold text-white"
             >
