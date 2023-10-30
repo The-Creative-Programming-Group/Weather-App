@@ -92,13 +92,13 @@ const Search = () => {
       <Image
         src={background}
         alt="background"
-        className="absolute -z-10 h-full w-full object-cover"
+        className="-z-10 object-cover"
         fill
       />
       <div className="flex w-full items-center justify-center">
         <div
           id="styles-setup"
-          className="mt-80 flex w-5/12 justify-center border-8 border-solid border-[#2d3142]"
+          className="mt-80 flex w-9/12 justify-center border-8 border-solid border-[#2d3142] md:w-5/12"
         >
           <Image
             className="w-8 transform bg-[#383b53] pb-3 pl-3 pt-3 md:w-12"
@@ -148,7 +148,7 @@ const Search = () => {
               <div
                 className={
                   isInputActive
-                    ? "z-20 flex h-auto w-5/12 cursor-pointer justify-between border-b-2 border-gray-400 bg-[#383b53] p-5 text-amber-50"
+                    ? "z-20 flex h-auto w-9/12 cursor-pointer justify-between border-b-2 border-gray-400 bg-[#383b53] p-5 text-amber-50 md:w-5/12"
                     : "hidden"
                 }
                 key={city.id}
@@ -191,7 +191,7 @@ const Search = () => {
             );
           }
         })}
-        <div className="absolute left-1/2 mt-24 h-96 w-full -translate-x-1/2 transform">
+        <div className="absolute left-1/2 mt-24 h-1/6 w-full -translate-x-1/2 md:transform">
           {searchValue.name.length > 0 ? (
             <button
               onClick={() => {

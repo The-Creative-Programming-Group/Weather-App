@@ -33,7 +33,7 @@ const PublicHome: NextPage = () => {
       <Image
         src={background}
         alt="background"
-        className="absolute -z-10 h-full w-full object-cover"
+        className="-z-10 object-cover"
         fill
       />
       <div className="relative flex h-screen flex-col items-center justify-center gap-12">
