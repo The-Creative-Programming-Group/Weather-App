@@ -37,10 +37,10 @@ const PublicHome: NextPage = () => {
         fill
       />
       <div className="relative flex h-screen flex-col items-center justify-center gap-12">
-        <h1 className="text-8xl">Weather.io</h1>
+        <h1 className="text-5xl md:text-8xl">Weather.io</h1>
         <Link
           href="/search"
-          className="mt-4 rounded-lg bg-[#2d3142] px-5 py-4 text-4xl text-white transition duration-500 ease-in-out hover:shadow-2xl"
+          className="mt-4 rounded-lg bg-[#2d3142] px-3 py-2 text-2xl text-white transition duration-500 ease-in-out hover:shadow-2xl md:px-5 md:py-4 md:text-4xl"
         >
           {translation("start button")}
         </Link>
