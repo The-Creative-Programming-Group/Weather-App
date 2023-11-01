@@ -101,7 +101,7 @@ const Search = () => {
           className="mt-80 flex w-9/12 justify-center border-8 border-solid border-[#2d3142] md:w-5/12"
         >
           <Image
-            className="w-8 transform bg-[#383b53] pb-3 pl-3 pt-3 md:w-12"
+            className="transform bg-[#383b53] pb-3 pl-3 pt-3 md:w-12"
             src={search1Image}
             alt="search-icon"
             width={56}

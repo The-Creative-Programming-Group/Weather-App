@@ -127,7 +127,7 @@ const ContactUs = () => {
               />
             </div>
             <input className="hidden" {...register("testMessage")} />
-            <button className="h-9 w-60 rounded border-solid bg-[#2d3142] font-bold text-white">
+            <button className="mb-8 h-9 w-60 rounded border-solid bg-[#2d3142] font-bold text-white">
               <div>{translationContact("send button")}</div>
             </button>
           </form>
