@@ -4,17 +4,17 @@ import { IoIosSettings, IoMdContact } from "react-icons/io";
 import { FaMapMarkedAlt, FaShare } from "react-icons/fa";
 import { AiFillGithub, AiFillHome } from "react-icons/ai";
 import Link from "next/link";
-import Image from "next/image";
-import dicsiluksProfile from "~/assets/dicsiluks-profile.webp";
-import jakobProfile from "~/assets/jakob-profile.webp";
-import fabiusProfile from "~/assets/fabius-profile.jpg";
-import jakeProfile from "~/assets/jake-profile.png";
 import { useTranslation } from "next-i18next";
 
 interface LayoutProps {
   title?: string;
   children: React.ReactNode;
 }
+
+const getBaseUrl = () => {
+  if (process.env.VERCEL_URL) return `https://${process.env.VERCEL_URL}`; // SSR should use vercel url
+  return `http://localhost:${process.env.PORT ?? 3000}`; // dev SSR should use localhost
+};
 
 /* If you use this component,
    you have to add the i18n translation SSR stuff to the getStaticProps function of the page
@@ -27,6 +27,10 @@ const Layout: React.FC<LayoutProps> = ({ title, children }) => {
         <title>{title ? title + " - Weather.io" : "Weather.io"}</title>
         <meta name="description" content="An faboulus weather website" />
         <link rel="icon" href="/favicon.ico" />
+        <meta
+          property="og:image"
+          content={`${getBaseUrl()}/_next/image?url=%2Fog-image.png&w=640&q=75`}
+        />
       </Head>
       <header className="flex items-center justify-around bg-[#2d3142] p-2 text-white">
         <Link href="/home" className="flex">
