@@ -9,6 +9,12 @@ import { activeCity$ } from "~/states";
 import { useRouter } from "next/router";
 import { useLayoutEffect } from "react";
 
+const getBaseUrl = () => {
+  if (typeof window !== "undefined") return ""; // browser should use relative url
+  if (process.env.VERCEL_URL) return `https://${process.env.VERCEL_URL}`; // SSR should use vercel url
+  return `http://localhost:${process.env.PORT ?? 3000}`; // dev SSR should use localhost
+};
+
 const PublicHome: NextPage = () => {
   const { t: translation } = useTranslation("common");
   const router = useRouter();
@@ -27,7 +33,7 @@ const PublicHome: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
         <meta
           property="og:image"
-          content="https://weatherio1.vercel.app/_next/image?url=%2Fog-image.png&w=640&q=75"
+          content={`${getBaseUrl()}/_next/image?url=%2Fog-image.png&w=640&q=75`}
         />
       </Head>
       <Image
