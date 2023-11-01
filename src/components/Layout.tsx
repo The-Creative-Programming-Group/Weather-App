@@ -11,11 +11,6 @@ interface LayoutProps {
   children: React.ReactNode;
 }
 
-const getBaseUrl = () => {
-  if (process.env.VERCEL_URL) return `https://${process.env.VERCEL_URL}`; // SSR should use vercel url
-  return `http://localhost:${process.env.PORT ?? 3000}`; // dev SSR should use localhost
-};
-
 /* If you use this component,
    you have to add the i18n translation SSR stuff to the getStaticProps function of the page
    you use this component in. */
@@ -29,7 +24,7 @@ const Layout: React.FC<LayoutProps> = ({ title, children }) => {
         <link rel="icon" href="/favicon.ico" />
         <meta
           property="og:image"
-          content={`${getBaseUrl()}/_next/image?url=%2Fog-image.png&w=640&q=75`}
+          content="/_next/image?url=%2Fog-image.png&w=640&q=75"
         />
       </Head>
       <header className="flex items-center justify-around bg-[#2d3142] p-2 text-white">
