@@ -25,7 +25,7 @@ export const emailRouter = createTRPCRouter({
         message: input.message,
         user: ctx.ip,
       });
-      return await resend.sendEmail({
+      return await resend.emails.send({
         from: "onbording@resend.dev",
         to: "jakob.roessner@outlook.de",
         subject: "Form Email from Weather.io",
