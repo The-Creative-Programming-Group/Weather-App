@@ -107,6 +107,7 @@ const LocationSettings = observer(() => {
               id="styles-setup"
               className="flex w-8/12 flex-col items-center md:w-6/12"
             >
+              {/* I added the padding right because else on small screens the text would be under the share button */}
               <label className="mb-2 w-full pr-16 text-left font-bold">
                 {translationLocationSettings("add new location")}
               </label>
