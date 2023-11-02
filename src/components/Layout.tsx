@@ -79,11 +79,11 @@ const Layout: React.FC<LayoutProps> = ({ title, children }) => {
             </Link>
           </div>
         )}
-        <button className="absolute right-16 mt-36 flex rounded bg-[#2d3142] p-2 text-amber-50">
-          {" "}
-          <FaShare className="mr-1.5 mt-1" /> {translation("share button")}
-        </button>
       </header>
+      <button className="absolute right-5 mt-28 flex rounded bg-[#2d3142] p-2 text-amber-50 md:right-16">
+        {" "}
+        <FaShare className="mr-1.5 mt-1" /> {translation("share button")}
+      </button>
       <main className="min-h-screen">{children}</main>
       <footer className="flex h-24 w-full items-center justify-between bg-[#2d3142] text-base text-white md:text-xl">
         <div className="flex items-center gap-3 md:gap-4">

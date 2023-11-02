@@ -105,7 +105,7 @@ const LocationSettings = observer(() => {
           >
             <div
               id="styles-setup"
-              className="flex w-4/12 flex-col items-center"
+              className="flex w-8/12 flex-col items-center md:w-6/12"
             >
               <label className="mb-2 w-full text-left font-bold">
                 {translationLocationSettings("add new location")}
@@ -161,7 +161,7 @@ const LocationSettings = observer(() => {
                   <div
                     className={
                       isInputActive
-                        ? "hover: flex h-auto w-36/100 cursor-pointer justify-between border-b-2 border-gray-400 bg-[#d8d5db] p-5"
+                        ? "hover: flex h-auto w-8/12 cursor-pointer justify-between border-b-2 border-gray-400 bg-[#d8d5db] p-5 md:w-6/12"
                         : "hidden"
                     }
                     key={city.id}
@@ -206,7 +206,7 @@ const LocationSettings = observer(() => {
               }
             })}
             <div className="mt-2 flex w-full justify-center">
-              <div className=" block w-36/100">
+              <div className="block w-8/12 md:w-6/12">
                 {addedCities$.get().map((city: ICity) => {
                   return (
                     <div
@@ -229,7 +229,7 @@ const LocationSettings = observer(() => {
                       <div className="flex">
                         <RxCross2
                           onClick={() => removeCityFromAddedCities(city)}
-                          className="mr-5 mt-1"
+                          className="mr-2 mt-1 md:mr-5"
                         />
                       </div>
                     </div>
