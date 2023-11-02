@@ -55,7 +55,7 @@ const Layout: React.FC<LayoutProps> = ({ title, children }) => {
         <div className="flex items-center">
           {!navbarOpen && <Menu onClick={() => setNavbarOpen(true)} />}
           {navbarOpen && <X onClick={() => setNavbarOpen(false)} />}
-          <h1 className="ml-2.5 text-base font-semibold">
+          <h1 className="ml-2.5 text-xl font-semibold">
             <Link href="/home">Weather.io</Link>
           </h1>
         </div>
