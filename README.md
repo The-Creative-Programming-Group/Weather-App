@@ -1,4 +1,10 @@
-# How to start
+# Weather.io
+
+This is a simple weather app,
+which uses the [OpenWeatherMap API](https://openweathermap.org/api) and [Open Meteo API](https://open-meteo.com)
+to fetch the current weather data for a given city.
+
+## How to start
 
 After you installed pnpm (you can look here at the [installation guid](https://pnpm.io/installation)), you can run the following command:
 `pnpm install` <br>
