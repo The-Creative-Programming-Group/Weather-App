@@ -98,18 +98,18 @@ const Search = () => {
       <div className="flex w-full items-center justify-center">
         <div
           id="styles-setup"
-          className="mt-80 flex w-9/12 justify-center border-8 border-solid border-[#2d3142] md:w-5/12"
+          className="mt-80 flex w-9/12 justify-center border-8 border-solid border-[#2d3142] md:w-6/12"
         >
           <Image
-            className="transform bg-[#383b53] pb-3 pl-3 pt-3 md:w-12"
+            className="transform bg-[#383b53] pb-1.5 pl-1.5 pt-1.5 md:w-12 md:pb-3 md:pl-3 md:pt-3"
             src={search1Image}
             alt="search-icon"
-            width={56}
-            height={56}
+            width={40}
+            height={40}
           />
 
           <input
-            className="w-full bg-[#383b53] pb-0.5 pl-3 pt-0.5 text-xl text-white outline-0"
+            className="w-full bg-[#383b53] pl-1.5 text-xl text-white outline-0 md:pb-0.5 md:pl-3 md:pt-0.5"
             autoFocus
             placeholder={translationSearch("search input placeholder")}
             type="text"
@@ -148,7 +148,7 @@ const Search = () => {
               <div
                 className={
                   isInputActive
-                    ? "z-20 flex h-auto w-9/12 cursor-pointer justify-between border-b-2 border-gray-400 bg-[#383b53] p-5 text-amber-50 md:w-5/12"
+                    ? "z-20 flex h-auto w-9/12 cursor-pointer justify-between border-b-2 border-gray-400 bg-[#383b53] p-5 text-amber-50 md:w-6/12"
                     : "hidden"
                 }
                 key={city.id}
