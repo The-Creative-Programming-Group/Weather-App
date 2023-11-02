@@ -7,7 +7,7 @@ This will install all the dependencies for the project.
 After that you can run the following command, to look at the current state (with your own changes) of the project:
 `pnpm dev`
 
-## What's next? Which technologies are used? 
+## What's next? Which technologies are used?
 
 We try to keep this project as simple as possible, so you can start with just the scaffolding we set up for you, and add additional things later when they become necessary.
 
