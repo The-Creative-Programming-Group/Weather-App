@@ -107,7 +107,7 @@ const LocationSettings = observer(() => {
               id="styles-setup"
               className="flex w-8/12 flex-col items-center md:w-6/12"
             >
-              <label className="mb-2 w-full text-left font-bold">
+              <label className="mb-2 w-full pr-16 text-left font-bold">
                 {translationLocationSettings("add new location")}
               </label>
               <div className="flex w-full justify-center">
