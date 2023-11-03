@@ -24,69 +24,69 @@ const Contributors = () => {
         <div className="pb-6 pt-6 text-3xl">
           {ReactHtmlParser(translationContributors("made with love text"))}
         </div>
-        <div className="flex gap-12">
-          <div className="flex flex-col items-center">
+        <div className="flex flex-wrap justify-center gap-12">
+          <div className="flex w-16 flex-col items-center gap-2 md:w-20">
             <Link
               href="https://www.roessner.tech"
-              className="group relative inline-block"
+              className="group relative inline-block aspect-square w-10 md:w-20"
             >
               <Image
                 src={jakobProfile}
                 alt="Jakob's logo"
-                width="70"
-                height="70"
+                fill
                 className="transform rounded-full transition-transform duration-300 group-hover:-translate-x-2 group-hover:scale-105"
               />
             </Link>
-            <p className="text-xl">{translationContributors("founder")}</p>
+            <p className="flex text-center text-base md:text-xl">
+              {translationContributors("founder")}
+            </p>
           </div>
-          <div className="flex flex-col items-center">
+          <div className="flex w-16 flex-col items-center gap-2 md:w-20">
             <Link
               href="https://github.com/dicsiluks"
-              className="group relative inline-block"
+              className="group relative inline-block aspect-square w-10 md:w-20"
             >
               <Image
                 src={dicsiluksProfile}
                 alt="dicsiluks' logo"
-                width="70"
-                height="70"
+                fill
                 className="transform rounded-full transition-transform duration-300 group-hover:-translate-x-2 group-hover:scale-105"
               />
             </Link>
-            <p className="text-xl">{translationContributors("designer")}</p>
+            <p className="flex text-center text-base md:text-xl">
+              {translationContributors("designer")}
+            </p>
           </div>
-          <div className="flex w-20 flex-col items-center">
+          <div className="flex w-16 flex-col items-center gap-2 md:w-20">
             <Link
               href="https://www.schurig.tech"
-              className="group relative inline-block"
+              className="group relative inline-block aspect-square w-10 md:w-20"
             >
               <Image
                 src={fabiusProfile}
                 alt="Fabius' logo"
-                width="70"
-                height="70"
+                fill
                 className="transform rounded-full transition-transform duration-300 group-hover:-translate-x-2 group-hover:scale-105"
               />
             </Link>
-            <p className="flex text-center text-xl">
+            <p className="flex text-center text-base md:text-xl">
               {translationContributors("designer")} &{" "}
               {translationContributors("engineer")}
             </p>
           </div>
-          <div className="flex w-20 flex-col items-center">
+          <div className="flex w-16 flex-col items-center gap-2 md:w-20">
             <Link
               href="https://github.com/dongjin2008"
-              className="group relative inline-block"
+              className="group relative inline-block aspect-square w-10 md:w-20"
             >
               <Image
                 src={jakeProfile}
                 alt="Jake's logo"
-                width="70"
-                height="70"
+                fill
                 className="transform rounded-full transition-transform duration-300 group-hover:-translate-x-2 group-hover:scale-105"
               />
             </Link>
-            <p className="flex text-center text-xl">
+            <p className="flex text-center text-base md:text-xl">
               {translationContributors("designer")} &{" "}
               {translationContributors("engineer")}
             </p>
