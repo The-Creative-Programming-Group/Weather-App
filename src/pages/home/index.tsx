@@ -371,7 +371,10 @@ const InternalHome = observer(() => {
                   {translationHome("9 day forecast")}{" "}
                   <HoverCard>
                     <HoverCardTrigger asChild>
-                      <Button className="w-10 rounded-full p-1.5">
+                      <Button
+                        className="w-10 rounded-full p-1.5"
+                        aria-label="Infos over forecast card"
+                      >
                         <InfoIcon className="h-full w-full" />
                       </Button>
                     </HoverCardTrigger>
@@ -452,7 +455,10 @@ const InternalHome = observer(() => {
                 {translationHome("precipitation")}{" "}
                 <HoverCard>
                   <HoverCardTrigger asChild>
-                    <Button className="w-10 rounded-full p-1.5">
+                    <Button
+                      className="w-10 rounded-full p-1.5"
+                      aria-label="Infos over precipitation card"
+                    >
                       <InfoIcon className="h-full w-full" />
                     </Button>
                   </HoverCardTrigger>
@@ -537,7 +543,10 @@ const InternalHome = observer(() => {
                 {translationHome("feels like")}{" "}
                 <HoverCard>
                   <HoverCardTrigger asChild>
-                    <Button className="w-10 rounded-full p-1.5">
+                    <Button
+                      className="w-10 rounded-full p-1.5"
+                      aria-label="Infos over feels like card"
+                    >
                       <InfoIcon className="h-full w-full" />
                     </Button>
                   </HoverCardTrigger>
@@ -621,7 +630,10 @@ const InternalHome = observer(() => {
                 {translationHome("visibility")}{" "}
                 <HoverCard>
                   <HoverCardTrigger asChild>
-                    <Button className="w-10 rounded-full p-1.5">
+                    <Button
+                      className="w-10 rounded-full p-1.5"
+                      aria-label="Infos over visibility card"
+                    >
                       <InfoIcon className="h-full w-full" />
                     </Button>
                   </HoverCardTrigger>
@@ -651,7 +663,10 @@ const InternalHome = observer(() => {
                 {translationHome("wind pressure")}{" "}
                 <HoverCard>
                   <HoverCardTrigger asChild>
-                    <Button className="w-10 rounded-full p-1.5">
+                    <Button
+                      className="w-10 rounded-full p-1.5"
+                      aria-label="Infos over wind pressure card"
+                    >
                       <InfoIcon className="h-full w-full" />
                     </Button>
                   </HoverCardTrigger>
