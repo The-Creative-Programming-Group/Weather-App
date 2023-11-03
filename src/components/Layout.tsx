@@ -88,7 +88,10 @@ const Layout: React.FC<LayoutProps> = ({ title, children }) => {
       <footer className="flex h-24 w-full items-center justify-between bg-[#2d3142] text-base text-white md:text-xl">
         <div className="flex items-center gap-3 md:gap-4">
           <div className="ml-2">© - Weather.io</div>
-          <Link href="https://github.com/The-Creative-Programming-Group/Weather-App">
+          <Link
+            href="https://github.com/The-Creative-Programming-Group/Weather-App"
+            aria-label="Link to the GitHub Repo of this Website"
+          >
             <AiFillGithub className="text-3xl transition duration-500 ease-in-out hover:text-gray-400" />
           </Link>
         </div>
