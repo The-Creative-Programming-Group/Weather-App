@@ -105,7 +105,7 @@ const LocationSettings = observer(() => {
           >
             <div
               id="styles-setup"
-              className="flex w-8/12 flex-col items-center md:w-6/12"
+              className="flex w-8/12 flex-col items-center md:w-5/12"
             >
               {/* I added the padding right because else on small screens the text would be under the share button */}
               <label className="mb-2 w-full pr-16 text-left font-bold">
@@ -162,7 +162,7 @@ const LocationSettings = observer(() => {
                   <div
                     className={
                       isInputActive
-                        ? "hover: flex h-auto w-8/12 cursor-pointer justify-between border-b-2 border-gray-400 bg-[#d8d5db] p-5 md:w-6/12"
+                        ? "hover: flex h-auto w-8/12 cursor-pointer justify-between border-b-2 border-gray-400 bg-[#d8d5db] p-5 md:w-5/12"
                         : "hidden"
                     }
                     key={city.id}
@@ -207,7 +207,7 @@ const LocationSettings = observer(() => {
               }
             })}
             <div className="mt-2 flex w-full justify-center">
-              <div className="block w-8/12 md:w-6/12">
+              <div className="block w-8/12 md:w-5/12">
                 {addedCities$.get().map((city: ICity) => {
                   return (
                     <div
