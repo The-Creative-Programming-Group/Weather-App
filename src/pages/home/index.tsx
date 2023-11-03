@@ -41,6 +41,7 @@ import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useTranslation } from "next-i18next";
 import ReactHtmlParser from "react-html-parser";
 import { observer } from "@legendapp/state/react";
+import { ScrollArea, ScrollBar } from "~/components/ui/scroll-area";
 
 const Map = dynamic(() => import("~/components/ui/map"), { ssr: false });
 
@@ -173,7 +174,7 @@ const InternalHome = observer(() => {
       if (weatherData.data?.dailyForecast[day]?.showers) {
         if (weatherData.data.dailyForecast[day]!.showers! > 0) {
           if (icons) {
-            return <FaCloudShowersHeavy className="h-12 w-12" />;
+            return <FaCloudShowersHeavy className="h-full w-full" />;
           }
           return translationHome("weather state stormy");
         }
@@ -181,7 +182,7 @@ const InternalHome = observer(() => {
       if (weatherData.data?.dailyForecast[day]?.snowfall) {
         if (weatherData.data.dailyForecast[day]!.snowfall! > 0) {
           if (icons) {
-            return <FaCloudMeatball className="h-12 w-12" />;
+            return <FaCloudMeatball className="h-full w-full" />;
           }
           return translationHome("weather state snowy");
         }
@@ -189,7 +190,7 @@ const InternalHome = observer(() => {
       if (weatherData.data?.dailyForecast[day]?.rain) {
         if (weatherData.data.dailyForecast[day]!.rain! > 0) {
           if (icons) {
-            return <FaCloudRain className="h-12 w-12" />;
+            return <FaCloudRain className="h-full w-full" />;
           }
           return translationHome("weather state rainy");
         }
@@ -198,12 +199,12 @@ const InternalHome = observer(() => {
         if (weatherData.data.dailyForecast[day]!.cloudcover! > 40) {
           if (weatherData.data.dailyForecast[day!]!.cloudcover! > 60) {
             if (icons) {
-              return <FaCloud className="h-12 w-12" />;
+              return <FaCloud className="h-full w-full" />;
             }
             return translationHome("weather state cloudy");
           } else {
             if (icons) {
-              return <FaCloudSun className="h-12 w-12" />;
+              return <FaCloudSun className="h-full w-full" />;
             }
             return translationHome("weather state cloudy");
           }
@@ -212,7 +213,7 @@ const InternalHome = observer(() => {
       if (weatherData.data?.dailyForecast[day]?.windSpeed) {
         if (weatherData.data.dailyForecast[day]!.windSpeed! >= 20) {
           if (icons) {
-            return <FaWind className="h-12 w-12" />;
+            return <FaWind className="h-full w-full" />;
           }
           return translationHome("weather state windy");
         }
@@ -245,8 +246,10 @@ const InternalHome = observer(() => {
   return (
     <Layout>
       <div className="mt-24 flex flex-col items-center">
-        <h1 className="text-7xl">{activeCity$.name.get()}</h1>
-        <h1 className="mt-3 text-7xl text-gray-500">
+        <h1 className="text-center text-6xl md:text-7xl">
+          {activeCity$.name.get()}
+        </h1>
+        <h1 className="mt-3 text-6xl text-gray-500 md:text-7xl">
           {temperature ? temperature : <Skeleton className="h-20 w-36" />}
         </h1>
         <p className="mt-3 text-xl">
@@ -290,80 +293,83 @@ const InternalHome = observer(() => {
         </div>
       </div>
       <div className="mt-12 flex flex-col items-center">
-        <div className="flex max-w-screen-xl justify-evenly rounded-md bg-gray-400">
-          {weatherData.data?.hourlyForecast ? (
-            <>
-              {weatherData.data.hourlyForecast.map(
-                (hourlyForecast: IHourlyForecast, index: number) => {
-                  let time;
-                  let isSunsetOrSunrise = false;
-                  let sunEvent = "";
-                  const currentHour = new Date().getHours();
-                  if (
-                    weatherData.data.sunset &&
-                    dayjs(weatherData.data.sunset).hour() ===
-                      hourlyForecast.time
-                  ) {
-                    isSunsetOrSunrise = true;
-                    sunEvent = translationHome("sunset");
-                  } else if (
-                    weatherData.data.sunrise &&
-                    dayjs(weatherData.data.sunrise).hour() ===
-                      hourlyForecast.time
-                  ) {
-                    isSunsetOrSunrise = true;
-                    sunEvent = translationHome("sunrise");
-                  }
+        <ScrollArea className="w-9/12 rounded-md">
+          <div className="flex w-max justify-evenly rounded-md bg-gray-400">
+            {weatherData.data?.hourlyForecast ? (
+              <>
+                {weatherData.data.hourlyForecast.map(
+                  (hourlyForecast: IHourlyForecast, index: number) => {
+                    let time;
+                    let isSunsetOrSunrise = false;
+                    let sunEvent = "";
+                    const currentHour = new Date().getHours();
+                    if (
+                      weatherData.data.sunset &&
+                      dayjs(weatherData.data.sunset).hour() ===
+                        hourlyForecast.time
+                    ) {
+                      isSunsetOrSunrise = true;
+                      sunEvent = translationHome("sunset");
+                    } else if (
+                      weatherData.data.sunrise &&
+                      dayjs(weatherData.data.sunrise).hour() ===
+                        hourlyForecast.time
+                    ) {
+                      isSunsetOrSunrise = true;
+                      sunEvent = translationHome("sunrise");
+                    }
 
-                  if (hourlyForecast.time === currentHour) {
-                    time = translationHome("now");
-                  } else if (hourlyForecast.time === 12) {
-                    time = "12" + translationHome("late hour time ending");
-                  } else if (hourlyForecast.time > 12) {
-                    time =
-                      hourlyForecast.time -
-                      12 +
-                      translationHome("late hour time ending");
-                  } else if (hourlyForecast.time === 0) {
-                    time = "12" + translationHome("early hour time ending");
-                  } else {
-                    time =
-                      hourlyForecast.time +
-                      translationHome("early hour time ending");
-                  }
-                  return (
-                    <div
-                      className="m-2 flex w-32 flex-col items-center"
-                      key={index}
-                    >
-                      <div className="mt-1.5 font-semibold">{time}</div>
-                      {isSunsetOrSunrise && (
-                        <div className="mt-1.5">{sunEvent}</div>
-                      )}
-                      {weatherState({ hour: index, icons: true })}
-                      {hourlyForecast.temperature ? (
-                        <div>
-                          {temperatureUnit$.get() === "Celsius"
-                            ? `${Math.round(
-                                hourlyForecast.temperature - 273.15,
-                              )}°C`
-                            : `${Math.round(
-                                (hourlyForecast.temperature * 9) / 5 - 459.67,
-                              )}°F`}
-                        </div>
-                      ) : (
-                        "Not available"
-                      )}
-                    </div>
-                  );
-                },
-              )}
-            </>
-          ) : (
-            <Skeleton className="h-36 w-screen-xl" />
-          )}
-        </div>
-        <div className="grid-rows-7 mb-6 mt-6 grid max-w-screen-xl grid-cols-9 gap-6">
+                    if (hourlyForecast.time === currentHour) {
+                      time = translationHome("now");
+                    } else if (hourlyForecast.time === 12) {
+                      time = "12" + translationHome("late hour time ending");
+                    } else if (hourlyForecast.time > 12) {
+                      time =
+                        hourlyForecast.time -
+                        12 +
+                        translationHome("late hour time ending");
+                    } else if (hourlyForecast.time === 0) {
+                      time = "12" + translationHome("early hour time ending");
+                    } else {
+                      time =
+                        hourlyForecast.time +
+                        translationHome("early hour time ending");
+                    }
+                    return (
+                      <div
+                        className="m-2 flex w-16 flex-col items-center md:m-4"
+                        key={index}
+                      >
+                        <div className="mt-1.5 font-semibold">{time}</div>
+                        {isSunsetOrSunrise && (
+                          <div className="mt-1.5">{sunEvent}</div>
+                        )}
+                        {weatherState({ hour: index, icons: true })}
+                        {hourlyForecast.temperature ? (
+                          <div>
+                            {temperatureUnit$.get() === "Celsius"
+                              ? `${Math.round(
+                                  hourlyForecast.temperature - 273.15,
+                                )}°C`
+                              : `${Math.round(
+                                  (hourlyForecast.temperature * 9) / 5 - 459.67,
+                                )}°F`}
+                          </div>
+                        ) : (
+                          "Not available"
+                        )}
+                      </div>
+                    );
+                  },
+                )}
+              </>
+            ) : (
+              <Skeleton className="h-36 w-9/12" />
+            )}
+          </div>
+          <ScrollBar orientation="horizontal" />
+        </ScrollArea>
+        <div className="grid-rows-7 mb-6 mt-6 grid w-9/12 grid-cols-9 gap-6">
           {weatherData.data?.dailyForecast ? (
             <>
               <div className="col-span-3 row-span-6 flex flex-col rounded-xl bg-gray-400">
@@ -404,15 +410,17 @@ const InternalHome = observer(() => {
                     }
                     return (
                       <div
-                        className="mb-2 ml-5 mr-5 flex items-center border-t-2 border-black"
+                        className="mb-2 ml-5 mr-5 flex w-11/12 items-center border-t-2 border-black"
                         key={index}
                       >
-                        <div className="mt-2 w-40 text-2xl">{day}</div>
-                        <div className="mt-2 w-16">
+                        <div className="mt-2 w-2/5 text-base md:text-xl xl:text-2xl">
+                          {day}
+                        </div>
+                        <div className="mt-2 w-1/5 pl-0.5 md:pl-3 xl:pr-5">
                           {weatherState({ day: index, icons: true })}
                         </div>
                         {dailyForecast.temperatureDay ? (
-                          <div className="mt-2 w-20 text-2xl">
+                          <div className="mt-2 w-1/5 text-base md:text-xl xl:text-2xl">
                             {temperatureUnit$.get() === "Celsius"
                               ? `${Math.round(
                                   dailyForecast.temperatureDay - 273.15,
@@ -426,7 +434,7 @@ const InternalHome = observer(() => {
                           "Not available"
                         )}
                         {dailyForecast.temperatureNight ? (
-                          <div className="mt-2 w-20 text-2xl text-gray-700">
+                          <div className="mt-2 w-1/5 text-2xl text-gray-700">
                             {temperatureUnit$.get() === "Celsius"
                               ? `${Math.round(
                                   dailyForecast.temperatureNight - 273.15,
