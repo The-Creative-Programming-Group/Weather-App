@@ -84,11 +84,12 @@ const ContactUs = () => {
                 {errors.firstName && (
                   <p className="text-red-500">{errors.firstName.message}</p>
                 )}
-                <label className="ml-2">
+                <label className="ml-2" htmlFor="firstname">
                   {translationContact("first name")}
                 </label>
                 <input
                   className="h-10 w-full rounded-md bg-[#d7d5db] pl-2"
+                  id="firstname"
                   autoFocus
                   {...register("firstName")}
                 />
@@ -97,11 +98,12 @@ const ContactUs = () => {
                 {errors.lastName && (
                   <p className="text-red-500">{errors.lastName.message}</p>
                 )}
-                <label className="ml-2">
+                <label className="ml-2" htmlFor="lastname">
                   {translationContact("last name")}
                 </label>
                 <input
                   className="h-10 w-full rounded-md bg-[#d8d5db] pl-2"
+                  id="lastname"
                   {...register("lastName")}
                 />
               </div>
@@ -110,9 +112,12 @@ const ContactUs = () => {
               {errors.email && (
                 <p className="text-red-500">{errors.email.message}</p>
               )}
-              <label className="ml-2">{translationContact("email")}</label>
+              <label className="ml-2" htmlFor="email">
+                {translationContact("email")}
+              </label>
               <input
                 className="h-10 w-full rounded-md bg-[#d8d5db] pl-2"
+                id="email"
                 {...register("email")}
               />
             </div>
@@ -120,9 +125,12 @@ const ContactUs = () => {
               {errors.message && (
                 <p className="text-red-500">{errors.message.message}</p>
               )}
-              <label className="ml-2">{translationContact("message")}</label>
+              <label className="ml-2" htmlFor="message">
+                {translationContact("message")}
+              </label>
               <textarea
                 className="h-64 w-full resize-none rounded-md bg-[#d8d5db] pl-2"
+                id="message"
                 {...register("message")}
               />
             </div>
