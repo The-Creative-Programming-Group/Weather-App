@@ -75,7 +75,6 @@ export default {
         "accordion-up": "accordion-up 0.2s ease-out",
       },
       width: {
-        "36/100": "36% ",
         "screen-xl": "1280px",
       },
     },
