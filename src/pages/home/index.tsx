@@ -293,82 +293,80 @@ const InternalHome = observer(() => {
         </div>
       </div>
       <div className="mt-12 flex flex-col items-center">
-        <ScrollArea className="w-11/12 rounded-md xl:w-9/12">
-          <div className="relative flex w-full justify-evenly rounded-md bg-gray-400">
-            {weatherData.data?.hourlyForecast ? (
-              <>
-                {weatherData.data.hourlyForecast.map(
-                  (hourlyForecast: IHourlyForecast, index: number) => {
-                    let time;
-                    let isSunsetOrSunrise = false;
-                    let sunEvent = "";
-                    const currentHour = new Date().getHours();
-                    if (
-                      weatherData.data.sunset &&
-                      dayjs(weatherData.data.sunset).hour() ===
-                        hourlyForecast.time
-                    ) {
-                      isSunsetOrSunrise = true;
-                      sunEvent = translationHome("sunset");
-                    } else if (
-                      weatherData.data.sunrise &&
-                      dayjs(weatherData.data.sunrise).hour() ===
-                        hourlyForecast.time
-                    ) {
-                      isSunsetOrSunrise = true;
-                      sunEvent = translationHome("sunrise");
-                    }
+        {weatherData.data?.hourlyForecast ? (
+          <ScrollArea className="w-11/12 rounded-md xl:w-9/12">
+            <div className="relative flex w-full justify-evenly rounded-md bg-gray-400">
+              {weatherData.data.hourlyForecast.map(
+                (hourlyForecast: IHourlyForecast, index: number) => {
+                  let time;
+                  let isSunsetOrSunrise = false;
+                  let sunEvent = "";
+                  const currentHour = new Date().getHours();
+                  if (
+                    weatherData.data.sunset &&
+                    dayjs(weatherData.data.sunset).hour() ===
+                      hourlyForecast.time
+                  ) {
+                    isSunsetOrSunrise = true;
+                    sunEvent = translationHome("sunset");
+                  } else if (
+                    weatherData.data.sunrise &&
+                    dayjs(weatherData.data.sunrise).hour() ===
+                      hourlyForecast.time
+                  ) {
+                    isSunsetOrSunrise = true;
+                    sunEvent = translationHome("sunrise");
+                  }
 
-                    if (hourlyForecast.time === currentHour) {
-                      time = translationHome("now");
-                    } else if (hourlyForecast.time === 12) {
-                      time = "12" + translationHome("late hour time ending");
-                    } else if (hourlyForecast.time > 12) {
-                      time =
-                        hourlyForecast.time -
-                        12 +
-                        translationHome("late hour time ending");
-                    } else if (hourlyForecast.time === 0) {
-                      time = "12" + translationHome("early hour time ending");
-                    } else {
-                      time =
-                        hourlyForecast.time +
-                        translationHome("early hour time ending");
-                    }
-                    return (
-                      <div
-                        className="m-2 flex w-16 flex-col items-center md:m-4"
-                        key={index}
-                      >
-                        <div className="mt-1.5 font-semibold">{time}</div>
-                        {isSunsetOrSunrise && (
-                          <div className="mt-1.5">{sunEvent}</div>
-                        )}
-                        {weatherState({ hour: index, icons: true })}
-                        {hourlyForecast.temperature ? (
-                          <div>
-                            {temperatureUnit$.get() === "Celsius"
-                              ? `${Math.round(
-                                  hourlyForecast.temperature - 273.15,
-                                )}°C`
-                              : `${Math.round(
-                                  (hourlyForecast.temperature * 9) / 5 - 459.67,
-                                )}°F`}
-                          </div>
-                        ) : (
-                          "Not available"
-                        )}
-                      </div>
-                    );
-                  },
-                )}
-              </>
-            ) : (
-              <Skeleton className="h-36 w-11/12 xl:w-9/12" />
-            )}
-          </div>
-          <ScrollBar orientation="horizontal" />
-        </ScrollArea>
+                  if (hourlyForecast.time === currentHour) {
+                    time = translationHome("now");
+                  } else if (hourlyForecast.time === 12) {
+                    time = "12" + translationHome("late hour time ending");
+                  } else if (hourlyForecast.time > 12) {
+                    time =
+                      hourlyForecast.time -
+                      12 +
+                      translationHome("late hour time ending");
+                  } else if (hourlyForecast.time === 0) {
+                    time = "12" + translationHome("early hour time ending");
+                  } else {
+                    time =
+                      hourlyForecast.time +
+                      translationHome("early hour time ending");
+                  }
+                  return (
+                    <div
+                      className="m-2 flex w-16 flex-col items-center md:m-4"
+                      key={index}
+                    >
+                      <div className="mt-1.5 font-semibold">{time}</div>
+                      {isSunsetOrSunrise && (
+                        <div className="mt-1.5">{sunEvent}</div>
+                      )}
+                      {weatherState({ hour: index, icons: true })}
+                      {hourlyForecast.temperature ? (
+                        <div>
+                          {temperatureUnit$.get() === "Celsius"
+                            ? `${Math.round(
+                                hourlyForecast.temperature - 273.15,
+                              )}°C`
+                            : `${Math.round(
+                                (hourlyForecast.temperature * 9) / 5 - 459.67,
+                              )}°F`}
+                        </div>
+                      ) : (
+                        "Not available"
+                      )}
+                    </div>
+                  );
+                },
+              )}
+            </div>
+            <ScrollBar orientation="horizontal" />
+          </ScrollArea>
+        ) : (
+          <Skeleton className="h-36 w-11/12 xl:w-9/12" />
+        )}
         <div className="grid-rows-7 mb-6 mt-6 grid w-11/12 grid-cols-9 gap-6 xl:w-9/12">
           {weatherData.data?.dailyForecast ? (
             <>
@@ -458,7 +456,7 @@ const InternalHome = observer(() => {
               </div>
             </>
           ) : (
-            <Skeleton className="col-span-3 row-span-6 w-96" />
+            <Skeleton className="col-span-3 row-span-6 w-full" />
           )}
 
           {weatherData.data?.precipitationProbabilities ? (
@@ -633,7 +631,7 @@ const InternalHome = observer(() => {
               </div>
             </div>
           ) : (
-            <Skeleton className="col-span-1 col-start-4 row-span-3 row-start-4" />
+            <Skeleton className="col-span-2 col-start-4 row-span-3 row-start-4 xl:col-span-1 xl:col-start-4" />
           )}
 
           {weatherData.data?.visibility ? (
@@ -733,7 +731,7 @@ const InternalHome = observer(() => {
               </div>
             </div>
           ) : (
-            <Skeleton className="col-span-3 col-start-5 row-span-3 row-start-4 h-96 w-96" />
+            <Skeleton className="col-span-2 col-start-6 row-span-3 row-start-4 h-96 w-full xl:col-span-3 xl:col-start-5" />
           )}
           <div className="z-0 col-span-2 col-start-8 row-span-6 rounded-md bg-gray-400">
             <Map position={mapPosition} className="h-full w-full rounded-md" />
