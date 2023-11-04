@@ -20,7 +20,7 @@ const legal = () => {
           <p className="mt-1">
             15755, Teupitz ST Tornow, {translationLegal("germany")}
           </p>
-          <p className="mt-14 w-7/12 md:w-4/12 xl:ml-7">
+          <p className="mb-4 mt-14 w-7/12 md:w-4/12 xl:ml-7">
             {translationLegal("main text")}
           </p>
         </div>
