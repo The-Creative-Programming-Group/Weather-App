@@ -74,3 +74,14 @@
     @apply bg-background text-foreground;
   }
 }
+
+.fade-effect::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 1rem;
+  width: 40px;
+  background: linear-gradient(to right, rgba(255, 255, 255, 0), rgb(156, 163, 175) 100%);
+  pointer-events: none;
+}
