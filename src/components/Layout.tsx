@@ -6,16 +6,22 @@ import { AiFillGithub, AiFillHome } from "react-icons/ai";
 import Link from "next/link";
 import { useTranslation } from "next-i18next";
 import { Menu, X } from "lucide-react";
+import { cn } from "~/lib/utils";
 
 interface LayoutProps {
   title?: string;
   children: React.ReactNode;
+  classNameShareButton?: string;
 }
 
 /* If you use this component,
    you have to add the i18n translation SSR stuff to the getStaticProps function of the page
    you use this component in. */
-const Layout: React.FC<LayoutProps> = ({ title, children }) => {
+const Layout: React.FC<LayoutProps> = ({
+  title,
+  children,
+  classNameShareButton,
+}) => {
   const [navbarOpen, setNavbarOpen] = useState(false);
 
   const { t: translation } = useTranslation("common");
@@ -80,7 +86,12 @@ const Layout: React.FC<LayoutProps> = ({ title, children }) => {
           </div>
         )}
       </header>
-      <button className="absolute right-5 mt-28 flex rounded bg-[#2d3142] p-2 text-amber-50 md:right-16">
+      <button
+        className={cn(
+          "absolute right-5 mt-28 flex rounded bg-[#2d3142] p-2 text-amber-50 md:right-16",
+          classNameShareButton,
+        )}
+      >
         {" "}
         <FaShare className="mr-1.5 mt-1" /> {translation("share button")}
       </button>

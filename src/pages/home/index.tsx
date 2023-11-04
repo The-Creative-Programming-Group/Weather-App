@@ -244,7 +244,7 @@ const InternalHome = observer(() => {
   ];
 
   return (
-    <Layout>
+    <Layout classNameShareButton="mt-44">
       <div className="mt-24 flex flex-col items-center">
         <h1 className="text-center text-6xl md:text-7xl">
           {activeCity$.name.get()}
@@ -293,8 +293,8 @@ const InternalHome = observer(() => {
         </div>
       </div>
       <div className="mt-12 flex flex-col items-center">
-        <ScrollArea className="w-9/12 rounded-md">
-          <div className="flex w-max justify-evenly rounded-md bg-gray-400">
+        <ScrollArea className="w-11/12 rounded-md xl:w-9/12">
+          <div className="relative flex w-full justify-evenly rounded-md bg-gray-400">
             {weatherData.data?.hourlyForecast ? (
               <>
                 {weatherData.data.hourlyForecast.map(
@@ -364,12 +364,12 @@ const InternalHome = observer(() => {
                 )}
               </>
             ) : (
-              <Skeleton className="h-36 w-9/12" />
+              <Skeleton className="h-36 w-11/12 xl:w-9/12" />
             )}
           </div>
           <ScrollBar orientation="horizontal" />
         </ScrollArea>
-        <div className="grid-rows-7 mb-6 mt-6 grid w-9/12 grid-cols-9 gap-6">
+        <div className="grid-rows-7 mb-6 mt-6 grid w-11/12 grid-cols-9 gap-6 xl:w-9/12">
           {weatherData.data?.dailyForecast ? (
             <>
               <div className="col-span-3 row-span-6 flex flex-col rounded-xl bg-gray-400">
@@ -395,62 +395,66 @@ const InternalHome = observer(() => {
                     </HoverCardContent>
                   </HoverCard>
                 </div>
-                {weatherData.data.dailyForecast.map(
-                  (dailyForecast: IDailyForecast, index: number) => {
-                    let day;
-                    if (index === 0) {
-                      day = translationHome("today");
-                    } else {
-                      day = new Date(dailyForecast.date).toLocaleString(
-                        locale,
-                        {
-                          weekday: "long",
-                        },
+                <div className="flex h-full flex-col justify-evenly">
+                  {weatherData.data.dailyForecast.map(
+                    (dailyForecast: IDailyForecast, index: number) => {
+                      let day;
+                      if (index === 0) {
+                        day = translationHome("today");
+                      } else {
+                        day = new Date(dailyForecast.date).toLocaleString(
+                          locale,
+                          {
+                            weekday: "long",
+                          },
+                        );
+                      }
+                      return (
+                        <div
+                          className="ml-3 mr-5 flex w-11/12 items-center justify-between border-t-2 border-black pl-2"
+                          key={index}
+                        >
+                          <div className="mt-2 w-2/5 text-base xl:text-2xl">
+                            {day}
+                          </div>
+                          <div className="mt-2 w-1/5 xl:pl-1 xl:pr-4">
+                            {weatherState({ day: index, icons: true })}
+                          </div>
+                          <div className="flex w-1/5 flex-col items-center justify-around xl:w-2/5 xl:flex-row">
+                            {dailyForecast.temperatureDay ? (
+                              <div className="mt-2 text-base xl:text-2xl">
+                                {temperatureUnit$.get() === "Celsius"
+                                  ? `${Math.round(
+                                      dailyForecast.temperatureDay - 273.15,
+                                    )}°C`
+                                  : `${Math.round(
+                                      (dailyForecast.temperatureDay * 9) / 5 -
+                                        459.67,
+                                    )}°F`}
+                              </div>
+                            ) : (
+                              "Not available"
+                            )}
+                            {dailyForecast.temperatureNight ? (
+                              <div className="mt-2 text-base text-gray-700 xl:text-2xl">
+                                {temperatureUnit$.get() === "Celsius"
+                                  ? `${Math.round(
+                                      dailyForecast.temperatureNight - 273.15,
+                                    )}°C`
+                                  : `${Math.round(
+                                      (dailyForecast.temperatureNight * 9) / 5 -
+                                        459.67,
+                                    )}°F`}
+                              </div>
+                            ) : (
+                              "Not available"
+                            )}
+                          </div>
+                        </div>
                       );
-                    }
-                    return (
-                      <div
-                        className="mb-2 ml-5 mr-5 flex w-11/12 items-center border-t-2 border-black"
-                        key={index}
-                      >
-                        <div className="mt-2 w-2/5 text-base md:text-xl xl:text-2xl">
-                          {day}
-                        </div>
-                        <div className="mt-2 w-1/5 pl-0.5 md:pl-3 xl:pr-5">
-                          {weatherState({ day: index, icons: true })}
-                        </div>
-                        {dailyForecast.temperatureDay ? (
-                          <div className="mt-2 w-1/5 text-base md:text-xl xl:text-2xl">
-                            {temperatureUnit$.get() === "Celsius"
-                              ? `${Math.round(
-                                  dailyForecast.temperatureDay - 273.15,
-                                )}°C`
-                              : `${Math.round(
-                                  (dailyForecast.temperatureDay * 9) / 5 -
-                                    459.67,
-                                )}°F`}
-                          </div>
-                        ) : (
-                          "Not available"
-                        )}
-                        {dailyForecast.temperatureNight ? (
-                          <div className="mt-2 w-1/5 text-2xl text-gray-700">
-                            {temperatureUnit$.get() === "Celsius"
-                              ? `${Math.round(
-                                  dailyForecast.temperatureNight - 273.15,
-                                )}°C`
-                              : `${Math.round(
-                                  (dailyForecast.temperatureNight * 9) / 5 -
-                                    459.67,
-                                )}°F`}
-                          </div>
-                        ) : (
-                          "Not available"
-                        )}
-                      </div>
-                    );
-                  },
-                )}
+                    },
+                  )}
+                </div>
               </div>
             </>
           ) : (
@@ -514,8 +518,8 @@ const InternalHome = observer(() => {
                   let raindropClass = "";
                   if (value !== undefined && value !== null) {
                     raindropClass = cn(
-                      "w-20",
-                      "h-20",
+                      "w-full",
+                      "h-full",
                       "-mt-2",
                       { "opacity-5": value === 0 },
                       { "opacity-10": value > 0 && value <= 10 },
@@ -531,7 +535,7 @@ const InternalHome = observer(() => {
                       className="mt-1 flex w-24 flex-col items-center justify-center"
                       key={key}
                     >
-                      <div className="text-sm">
+                      <div className="text-xs xl:text-sm">
                         {translationHome(key.slice(2))}
                       </div>
                       <WiRaindrop className={raindropClass} />
@@ -570,7 +574,7 @@ const InternalHome = observer(() => {
                 </HoverCard>
               </div>
               <div className="mb-1 ml-4 mt-1.5">
-                <div className="flex text-5xl">
+                <div className="flex text-3xl xl:text-5xl">
                   {temperatureUnit$.get() === "Celsius"
                     ? `${Math.round(weatherData.data?.feels_like - 273.15)}°C`
                     : `${Math.round(
@@ -595,11 +599,11 @@ const InternalHome = observer(() => {
           )}
 
           {weatherData.data?.air_quality ? (
-            <div className="col-span-1 col-start-4 row-span-3 row-start-4 rounded-md bg-gray-400">
+            <div className="col-span-2 col-start-4 row-span-3 row-start-4 rounded-md bg-gray-400 xl:col-span-1 xl:col-start-4">
               <div className="ml-2 mt-1.5 text-xl">
                 {translationHome("air quality")}
               </div>
-              <div className="relative mb-2 ml-3.5 mt-2 flex h-64 items-center">
+              <div className="relative mb-2 mt-2 flex h-64 items-center justify-center xl:ml-3.5 xl:justify-normal">
                 <div className="text-md mt-2 w-20 font-medium">
                   {weatherData.data?.air_quality.toPrecision(2)} <br />
                   {weatherData.data?.air_quality > 90
@@ -614,9 +618,9 @@ const InternalHome = observer(() => {
                     ? translationHome("air quality text good")
                     : translationHome("air quality text excellent")}
                 </div>
-                <div className="absolute right-3 h-64 w-3 rounded-md bg-gradient-to-t from-red-500 to-green-800">
+                <div className="relative h-64 w-4 rounded-xl bg-gradient-to-t from-red-500 to-green-800 xl:absolute xl:right-3 xl:w-3 xl:rounded-md">
                   <div
-                    className="relative h-3 w-full rounded-xl bg-black"
+                    className="relative h-4 w-full rounded-xl bg-black xl:h-3"
                     style={{
                       top: `${
                         weatherData.data.air_quality > 80
@@ -654,9 +658,9 @@ const InternalHome = observer(() => {
                   </HoverCardContent>
                 </HoverCard>
               </div>
-              <div className="flex items-center">
-                <PiSunglasses className="ml-4 mt-2 h-16 w-16" />
-                <div className="ml-4 mt-2 text-5xl">
+              <div className="flex w-full items-center">
+                <PiSunglasses className="ml-4 mt-2 h-full w-full" />
+                <div className="ml-4 mt-2 text-3xl xl:text-5xl">
                   {weatherData.data?.visibility}%
                 </div>
               </div>
@@ -666,7 +670,7 @@ const InternalHome = observer(() => {
           )}
 
           {weatherData.data?.wind_speed && weatherData.data?.wind_pressure ? (
-            <div className="col-span-3 col-start-5 row-span-3 row-start-4 rounded-md bg-gray-400">
+            <div className="col-span-2 col-start-6 row-span-3 row-start-4 rounded-md bg-gray-400 xl:col-span-3 xl:col-start-5">
               <div className="mt-1.5 flex w-full justify-between pl-4 pr-3 text-xl">
                 {translationHome("wind pressure")}{" "}
                 <HoverCard>
@@ -702,16 +706,16 @@ const InternalHome = observer(() => {
                   </HoverCardContent>
                 </HoverCard>
               </div>
-              <div className="ml-9 flex flex-col">
-                <BsWind className="mt-5 h-32 w-32" />
-                <div className="mt-9 flex gap-10 text-xl">
+              <div className="ml-3 flex h-full w-full flex-col xl:ml-9">
+                <BsWind className="mt-5 h-auto w-10/12 xl:h-32 xl:w-32" />
+                <div className="mb-9 mt-0 flex flex-col gap-5 text-xs xl:mb-0 xl:mt-9 xl:flex-row xl:gap-10 xl:text-xl">
                   <div>
                     {translationHome("pressure")}
                     <div className="mt-2">
                       {weatherData.data.wind_pressure.toPrecision(2)} Pa
                     </div>
                   </div>
-                  <div>
+                  <div className="pr-2">
                     {translationHome("speed")}
                     {weatherData.data?.wind_speed ? (
                       <div className="mt-2">
