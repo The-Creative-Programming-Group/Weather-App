@@ -8,11 +8,9 @@ import { toast, ToastContainer } from "react-toastify";
 import search2Image from "~/assets/search2.png";
 import "react-toastify/dist/ReactToastify.css";
 import { ICity } from "~/types";
-import citiesJSON from "~/lib/city-list.json";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useTranslation } from "next-i18next";
-
-const cities = citiesJSON as ICity[];
+import { api } from "~/lib/utils/api";
 
 const LocationSettings = observer(() => {
   const [searchValue, setSearchValue] = useState<ICity>({
@@ -32,19 +30,29 @@ const LocationSettings = observer(() => {
   const { t: translationLocationSettings } = useTranslation("locationsettings");
   const { t: translationCommon } = useTranslation("common");
 
+  const { data: findCitiesByNameData = [], status: findCitiesByNameStatus } =
+    api.search.findCitiesByName.useQuery({
+      name: searchValue.name,
+    });
+
+  const { data: findCityByIdData = [], status: findCityByIdStatus } =
+    api.search.findCityById.useQuery({
+      id: searchValue.id,
+    });
+
+  const { data: findCityByNameData = [], status: findCityByNameStatus } =
+    api.search.findCityByName.useQuery({
+      name: searchValue.name,
+    });
+
   useEffect(() => {
     if (searchValue.name === "") {
       setResults([]);
       return;
     }
-    setResults(
-      cities
-        .filter((city: ICity) =>
-          city.name.toLowerCase().includes(searchValue.name.toLowerCase()),
-        )
-        .slice(0, 4),
-    );
-  }, [searchValue]);
+    if (!findCitiesByNameData || findCitiesByNameStatus !== "success") return;
+    setResults(findCitiesByNameData);
+  }, [searchValue, findCitiesByNameData, findCitiesByNameStatus]);
 
   const removeCityFromAddedCities = (city: ICity) => {
     if (addedCities$.get().length === 1) {
@@ -81,12 +89,19 @@ const LocationSettings = observer(() => {
       };
     } else {
       if (searchValue.id !== 0 && searchValue.country !== "") {
-        city = cities.find((city: ICity) => city.id === searchValue.id);
+        if (!Array.isArray(findCityByIdData)) {
+          city = findCityByIdData.city;
+        } else {
+          toast.error(translationLocationSettings("city not found toast"));
+          return;
+        }
       } else {
-        city = cities.find(
-          (city: ICity) =>
-            city.name.toLowerCase() === searchValue.name.toLowerCase(),
-        );
+        if (!Array.isArray(findCityByNameData)) {
+          city = findCityByNameData.city;
+        } else {
+          toast.error(translationLocationSettings("city not found toast"));
+          return;
+        }
       }
     }
 
