@@ -68,14 +68,28 @@ const LocationSettings = observer(() => {
         lat: 0,
       },
     };
-    if (searchValue.id !== 0 && searchValue.country !== "") {
-      city = cities.find((city: ICity) => city.id === searchValue.id);
+    if (searchValue.id === -1) {
+      city = {
+        id: -1,
+        name: searchValue.name,
+        country: "",
+        region: "",
+        coord: {
+          lon: searchValue.coord.lon,
+          lat: searchValue.coord.lat,
+        },
+      };
     } else {
-      city = cities.find(
-        (city: ICity) =>
-          city.name.toLowerCase() === searchValue.name.toLowerCase(),
-      );
+      if (searchValue.id !== 0 && searchValue.country !== "") {
+        city = cities.find((city: ICity) => city.id === searchValue.id);
+      } else {
+        city = cities.find(
+          (city: ICity) =>
+            city.name.toLowerCase() === searchValue.name.toLowerCase(),
+        );
+      }
     }
+
     if (city) {
       if (addedCities$.get().find((value: ICity) => value.id === city!.id)) {
         activeCity$.set(city);
@@ -238,6 +252,31 @@ const LocationSettings = observer(() => {
                 })}
               </div>
             </div>
+            <button
+              className="mt-2.5 rounded bg-[#2d3142] p-2 font-bold text-white transition duration-500 ease-in-out hover:shadow-2xl"
+              onClick={() => {
+                if (navigator.geolocation) {
+                  navigator.geolocation.getCurrentPosition(async (position) => {
+                    const latitude = position.coords.latitude;
+                    const longitude = position.coords.longitude;
+                    const city: ICity = {
+                      id: -1,
+                      name: translationLocationSettings("my city"),
+                      country: "",
+                      region: "",
+                      coord: {
+                        lon: longitude,
+                        lat: latitude,
+                      },
+                    };
+
+                    setSearchValue(city);
+                  });
+                }
+              }}
+            >
+              {translationLocationSettings("my city button")}
+            </button>
             <button
               onClick={() => {
                 searchCity();

@@ -6,5 +6,8 @@
   "at least one city toast": "You must have at least one city",
   "switched to city toast": "Switched to city!",
   "added city toast": "Added new city!",
-  "city not found toast": "City not found!"
+  "city not found toast": "City not found!",
+
+  "my city button": "Choose my city",
+  "my city": "My city"
 }

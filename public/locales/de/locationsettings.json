@@ -6,5 +6,8 @@
   "at least one city toast": "Du musst mindestens eine Stadt haben",
   "switched to city toast": "Stadt gewechselt!",
   "added city toast": "Neue Stadt hinzugefügt!",
-  "city not found toast": "Stadt nicht gefunden!"
+  "city not found toast": "Stadt nicht gefunden!",
+
+  "my city button": "Meine Stadt auswählen",
+  "my city": "Meine Stadt"
 }

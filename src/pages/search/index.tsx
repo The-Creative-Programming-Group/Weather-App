@@ -59,14 +59,28 @@ const Search = () => {
         lat: 0,
       },
     };
-    if (searchValue.id !== 0 && searchValue.country !== "") {
-      city = cities.find((city: ICity) => city.id === searchValue.id);
+    if (searchValue.id === -1) {
+      city = {
+        id: -1,
+        name: searchValue.name,
+        country: "",
+        region: "",
+        coord: {
+          lon: searchValue.coord.lon,
+          lat: searchValue.coord.lat,
+        },
+      };
     } else {
-      city = cities.find(
-        (city: ICity) =>
-          city.name.toLowerCase() === searchValue.name.toLowerCase(),
-      );
+      if (searchValue.id !== 0 && searchValue.country !== "") {
+        city = cities.find((city: ICity) => city.id === searchValue.id);
+      } else {
+        city = cities.find(
+          (city: ICity) =>
+            city.name.toLowerCase() === searchValue.name.toLowerCase(),
+        );
+      }
     }
+
     if (city) {
       if (addedCities$.get().find((value: ICity) => value.id === city!.id)) {
         activeCity$.set(city);
@@ -192,12 +206,37 @@ const Search = () => {
           }
         })}
         <div className="absolute left-1/2 mt-24 h-1/6 w-full -translate-x-1/2 md:transform">
+          <button
+            className="absolute bottom-14 right-16 z-10 w-52 rounded bg-[#2d3142] pb-2 pt-2 text-2xl text-white transition duration-500 ease-in-out hover:shadow-2xl"
+            onClick={() => {
+              if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(async (position) => {
+                  const latitude = position.coords.latitude;
+                  const longitude = position.coords.longitude;
+                  const city: ICity = {
+                    id: -1,
+                    name: translationSearch("my city"),
+                    country: "",
+                    region: "",
+                    coord: {
+                      lon: longitude,
+                      lat: latitude,
+                    },
+                  };
+
+                  setSearchValue(city);
+                });
+              }
+            }}
+          >
+            {translationSearch("my city button")}
+          </button>
           {searchValue.name.length > 0 ? (
             <button
               onClick={() => {
                 searchCity();
               }}
-              className="absolute bottom-14 right-16 z-10 h-12 w-44 rounded bg-[#2d3142] text-2xl text-white transition duration-500 ease-in-out hover:shadow-2xl"
+              className="absolute bottom-0 right-16 z-10 h-12 w-44 rounded bg-[#2d3142] text-2xl text-white transition duration-500 ease-in-out hover:shadow-2xl"
             >
               <p>{translationSearch("continue button")}</p>
             </button>
