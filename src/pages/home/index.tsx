@@ -336,7 +336,7 @@ const InternalHome = observer(() => {
                   }
                   return (
                     <div
-                      className="m-2 flex w-16 flex-col items-center md:m-4"
+                      className="m-3 flex flex-col items-center md:m-6"
                       key={index}
                     >
                       <div className="mt-1.5 font-semibold">{time}</div>
