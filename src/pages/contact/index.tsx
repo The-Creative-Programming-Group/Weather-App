@@ -67,7 +67,10 @@ const ContactUs = () => {
   return (
     <>
       <ToastContainer />
-      <Layout title={translationCommon("menu contact")}>
+      <Layout
+        title={translationCommon("menu contact")}
+        classNameShareButton="mt-24 md:mt-28"
+      >
         <div className="flex w-full flex-col items-center">
           <h1 className="mt-10 flex justify-center text-4xl font-bold">
             {translationCommon("menu contact")}

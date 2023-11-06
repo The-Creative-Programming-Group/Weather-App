@@ -15,7 +15,10 @@ const Contributors = () => {
   const { t: translationContributors } = useTranslation("contributors");
 
   return (
-    <Layout title={translationCommon("footer contributors")}>
+    <Layout
+      title={translationCommon("footer contributors")}
+      classNameShareButton="mt-20 md:mt-28"
+    >
       <div className="flex w-full flex-col items-center">
         <h1 className="mt-10 flex justify-center text-4xl font-bold">
           {translationCommon("footer contributors")}
