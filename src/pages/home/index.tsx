@@ -76,7 +76,25 @@ function convertWindSpeed(
         convertedSpeed = 2; // Light breeze
       } else if (speedInMetersPerSecond < 5.5) {
         convertedSpeed = 3; // Gentle breeze
-      } // The scale continues up to force 12 - hurricane
+      } else if (speedInMetersPerSecond < 8) {
+        convertedSpeed = 4; // Moderate breeze
+      } else if (speedInMetersPerSecond < 10.8) {
+        convertedSpeed = 5; // Fresh breeze
+      } else if (speedInMetersPerSecond < 13.9) {
+        convertedSpeed = 6; // Strong breeze
+      } else if (speedInMetersPerSecond < 17.2) {
+        convertedSpeed = 7; // High wind
+      } else if (speedInMetersPerSecond < 20.8) {
+        convertedSpeed = 8; // Gale
+      } else if (speedInMetersPerSecond < 24.5) {
+        convertedSpeed = 9; // Strong gale
+      } else if (speedInMetersPerSecond < 28.5) {
+        convertedSpeed = 10; // Storm
+      } else if (speedInMetersPerSecond < 32.7) {
+        convertedSpeed = 11; // Violent storm
+      } else {
+        convertedSpeed = 12; // Hurricane
+      }
       break;
     default:
       throw new Error("Invalid unit for wind speed");
