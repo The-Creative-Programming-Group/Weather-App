@@ -230,7 +230,7 @@ const Search = () => {
                   const longitude = position.coords.longitude;
                   const city: ICity = {
                     id: -1,
-                    name: translationSearch("my city"),
+                    name: translationCommon("my city"),
                     country: "",
                     region: "",
                     coord: {

@@ -276,7 +276,7 @@ const LocationSettings = observer(() => {
                     const longitude = position.coords.longitude;
                     const city: ICity = {
                       id: -1,
-                      name: translationLocationSettings("my city"),
+                      name: translationCommon("my city"),
                       country: "",
                       region: "",
                       coord: {
