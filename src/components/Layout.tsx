@@ -66,7 +66,7 @@ const Layout: React.FC<LayoutProps> = ({
           </h1>
         </div>
         {navbarOpen && (
-          <div className="z-10 flex flex-col gap-2">
+          <div className="z-10 flex w-full flex-col gap-2 whitespace-nowrap">
             <Link href="/home" className="mt-2 flex items-center">
               <AiFillHome className="mr-1.5" />
               <p>{translation("menu home")}</p>
