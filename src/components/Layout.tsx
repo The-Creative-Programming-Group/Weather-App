@@ -96,7 +96,7 @@ const Layout: React.FC<LayoutProps> = ({
         <FaShare className="mr-1.5 mt-1" /> {translation("share button")}
       </button>
       <main className="min-h-screen">{children}</main>
-      <footer className="flex h-24 w-full items-center justify-between bg-[#2d3142] text-base text-white md:text-xl">
+      <footer className="flex h-24 w-full items-center justify-between bg-[#2d3142] pr-2 text-base text-white md:text-xl">
         <div className="flex items-center gap-3 md:gap-4">
           <div className="ml-2">© - Weather.io</div>
           <Link
@@ -106,7 +106,7 @@ const Layout: React.FC<LayoutProps> = ({
             <AiFillGithub className="text-3xl transition duration-500 ease-in-out hover:text-gray-400" />
           </Link>
         </div>
-        <div className="mr-2 flex flex-col gap-2 md:w-96 md:flex-row md:justify-between">
+        <div className="flex flex-col gap-2 md:w-96 md:flex-row md:justify-between">
           <div className="flex justify-center">
             {" "}
             <Link href="/legal" className="flex justify-center underline">
