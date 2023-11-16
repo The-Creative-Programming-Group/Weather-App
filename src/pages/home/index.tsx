@@ -449,7 +449,7 @@ const InternalHome = observer(() => {
             <ScrollBar orientation="horizontal" />
           </ScrollArea>
         ) : (
-          <Skeleton className="h-36 w-11/12 xl:w-9/12" />
+          <Skeleton className="block h-36 w-11/12 md:hidden xl:w-9/12" />
         )}
         <div className="grid-rows-7 mb-6 mt-6 grid w-11/12 grid-cols-9 gap-6 xl:w-9/12">
           {weatherData.data?.dailyForecast ? (
@@ -677,7 +677,7 @@ const InternalHome = observer(() => {
               </div>
             </div>
           ) : (
-            <Skeleton className="col-span-5 row-span-2 row-start-2 h-32" />
+            <Skeleton className="col-span-5 row-span-2 row-start-2 h-32 md:col-span-2 md:col-start-4" />
           )}
 
           {weatherData.data?.air_quality ? (
@@ -715,7 +715,7 @@ const InternalHome = observer(() => {
               </div>
             </div>
           ) : (
-            <Skeleton className="col-span-2 col-start-4 row-span-3 row-start-4 xl:col-span-1 xl:col-start-4" />
+            <Skeleton className="col-span-5 row-span-3 row-start-4 md:col-span-2 md:col-start-4 xl:col-span-1 xl:col-start-4" />
           )}
 
           {weatherData.data?.visibility ? (
@@ -748,7 +748,7 @@ const InternalHome = observer(() => {
               </div>
             </div>
           ) : (
-            <Skeleton className="col-span-2 col-start-6 row-span-2 row-start-2" />
+            <Skeleton className="col-span-4 col-start-6 row-span-2 row-start-2 md:col-span-2 md:col-start-6" />
           )}
 
           {weatherData.data?.wind_speed && weatherData.data?.wind_pressure ? (
@@ -815,10 +815,15 @@ const InternalHome = observer(() => {
               </div>
             </div>
           ) : (
-            <Skeleton className="col-span-2 col-start-6 row-span-3 row-start-4 h-96 w-full xl:col-span-3 xl:col-start-5" />
+            <Skeleton className="col-span-4 col-start-6 row-span-3 row-start-4 h-96 w-full md:col-span-2 md:col-start-6 xl:col-span-3 xl:col-start-5" />
           )}
           <div className="col-span-2 col-start-8 row-span-6 hidden rounded-md bg-gray-400 md:block">
-            <Map position={mapPosition} className="h-full w-full rounded-md" />
+            <div className="h-full w-full">
+              <Map
+                position={mapPosition}
+                className="h-full w-full rounded-md"
+              />
+            </div>
           </div>
         </div>
         <div className="mb-6 block h-96 w-11/12 rounded-md md:hidden">
