@@ -132,7 +132,7 @@ const InternalHome = observer(() => {
       if (weatherData.data?.hourlyForecast[hour]?.showers) {
         if (weatherData.data.hourlyForecast[hour]!.showers! > 0) {
           if (icons) {
-            return <FaCloudShowersHeavy className="h-12 w-12" />;
+            return <FaCloudShowersHeavy className="h-full w-full" />;
           }
           return translationHome("weather state stormy");
         }
@@ -140,7 +140,7 @@ const InternalHome = observer(() => {
       if (weatherData.data?.hourlyForecast[hour]?.snowfall) {
         if (weatherData.data.hourlyForecast[hour]!.snowfall! > 0) {
           if (icons) {
-            return <FaCloudMeatball className="h-12 w-12" />;
+            return <FaCloudMeatball className="h-full w-full" />;
           }
           return translationHome("weather state snowy");
         }
@@ -148,7 +148,7 @@ const InternalHome = observer(() => {
       if (weatherData.data?.hourlyForecast[hour]?.rain) {
         if (weatherData.data.hourlyForecast[hour]!.rain! > 0) {
           if (icons) {
-            return <FaCloudRain className="h-12 w-12" />;
+            return <FaCloudRain className="h-full w-full" />;
           }
           return translationHome("weather state rainy");
         }
@@ -157,7 +157,7 @@ const InternalHome = observer(() => {
         if (weatherData.data.hourlyForecast[hour]!.cloudcover! > 40) {
           if (weatherData.data.hourlyForecast[hour!]!.cloudcover! > 60) {
             if (icons) {
-              return <FaCloud className="h-12 w-12" />;
+              return <FaCloud className="h-full w-full" />;
             }
             return translationHome("weather state very cloudy");
           } else {
@@ -167,12 +167,12 @@ const InternalHome = observer(() => {
                 weatherData.data.hourlyForecast[hour!]!.time > 6
               ) {
                 if (icons) {
-                  return <FaCloudSun className="h-12 w-12" />;
+                  return <FaCloudSun className="h-full w-full" />;
                 }
                 return translationHome("weather state cloudy");
               } else {
                 if (icons) {
-                  return <FaCloudMoon className="h-12 w-12" />;
+                  return <FaCloudMoon className="h-full w-full" />;
                 }
                 return translationHome("weather state cloudy");
               }
@@ -182,7 +182,7 @@ const InternalHome = observer(() => {
         if (weatherData.data?.dailyForecast[hour]?.windSpeed) {
           if (weatherData.data.dailyForecast[hour]!.windSpeed! >= 20) {
             if (icons) {
-              return <FaWind className="h-12 w-12" />;
+              return <FaWind className="h-full w-full" />;
             }
             return translationHome("weather state windy");
           }
@@ -244,14 +244,14 @@ const InternalHome = observer(() => {
           weatherData.data.hourlyForecast[hour]!.time > 6
         ) {
           // console.log("Sunny", hour, day)
-          return <FaSun className="h-12 w-12" />;
+          return <FaSun className="h-full w-full" />;
         } else {
-          return <FaMoon className="h-12 w-12" />;
+          return <FaMoon className="h-full w-full" />;
         }
       }
     } else if (icons && hour === undefined) {
       // console.log("Sunny", hour, day);
-      return <FaSun className="h-12 w-12" />;
+      return <FaSun className="h-full w-full" />;
     }
     return translationHome("weather state sunny");
   };
@@ -317,7 +317,7 @@ const InternalHome = observer(() => {
       </div>
       <div className="mt-12 flex flex-col items-center">
         {weatherData.data?.hourlyForecast ? (
-          <ScrollArea className="w-11/12 rounded-md xl:w-9/12">
+          <ScrollArea className="mb-5 w-11/12 rounded-md xl:w-9/12">
             <div className="relative flex w-full justify-evenly rounded-md bg-gray-400">
               {weatherData.data.hourlyForecast.map(
                 (hourlyForecast: IHourlyForecast, index: number) => {
@@ -366,7 +366,9 @@ const InternalHome = observer(() => {
                       {isSunsetOrSunrise && (
                         <div className="mt-1.5">{sunEvent}</div>
                       )}
-                      {weatherState({ hour: index, icons: true })}
+                      <div className="h-12 w-12">
+                        {weatherState({ hour: index, icons: true })}
+                      </div>
                       {hourlyForecast.temperature ? (
                         <div>
                           {temperatureUnit$.get() === "Celsius"
@@ -388,12 +390,71 @@ const InternalHome = observer(() => {
             <ScrollBar orientation="horizontal" />
           </ScrollArea>
         ) : (
+          <Skeleton className="mb-5 h-36 w-11/12 xl:w-9/12" />
+        )}
+        {weatherData.data?.dailyForecast ? (
+          <ScrollArea className="w-11/12 rounded-md xl:w-9/12">
+            <div className="relative flex w-full justify-evenly rounded-md bg-gray-400 md:hidden">
+              {weatherData.data.dailyForecast.map(
+                (dailyForecast: IDailyForecast, index: number) => {
+                  let day;
+                  if (index === 0) {
+                    day = translationHome("today");
+                  } else {
+                    day = new Date(dailyForecast.date).toLocaleString(locale, {
+                      weekday: "long",
+                    });
+                  }
+                  return (
+                    <div
+                      className="m-3 flex flex-col items-center md:m-6"
+                      key={index}
+                    >
+                      <div className="mt-1.5 font-semibold">{day}</div>
+                      <div className="h-12 w-12">
+                        {weatherState({ day: index, icons: true })}
+                      </div>
+                      {dailyForecast.temperatureDay ? (
+                        <div>
+                          {temperatureUnit$.get() === "Celsius"
+                            ? `${Math.round(
+                                dailyForecast.temperatureDay - 273.15,
+                              )}°C`
+                            : `${Math.round(
+                                (dailyForecast.temperatureDay * 9) / 5 - 459.67,
+                              )}°F`}
+                        </div>
+                      ) : (
+                        "Not available"
+                      )}
+                      {dailyForecast.temperatureNight ? (
+                        <div className="text-gray-700">
+                          {temperatureUnit$.get() === "Celsius"
+                            ? `${Math.round(
+                                dailyForecast.temperatureNight - 273.15,
+                              )}°C`
+                            : `${Math.round(
+                                (dailyForecast.temperatureNight * 9) / 5 -
+                                  459.67,
+                              )}°F`}
+                        </div>
+                      ) : (
+                        "Not available"
+                      )}
+                    </div>
+                  );
+                },
+              )}
+            </div>
+            <ScrollBar orientation="horizontal" />
+          </ScrollArea>
+        ) : (
           <Skeleton className="h-36 w-11/12 xl:w-9/12" />
         )}
         <div className="grid-rows-7 mb-6 mt-6 grid w-11/12 grid-cols-9 gap-6 xl:w-9/12">
           {weatherData.data?.dailyForecast ? (
             <>
-              <div className="col-span-3 row-span-6 flex flex-col rounded-xl bg-gray-400">
+              <div className="col-span-3 row-span-6 hidden flex-col rounded-xl bg-gray-400 md:flex">
                 <div className="flex w-full items-center justify-between pb-2 pl-5 pr-3 pt-2 text-xl">
                   {translationHome("9 day forecast")}{" "}
                   <HoverCard>
@@ -479,11 +540,11 @@ const InternalHome = observer(() => {
               </div>
             </>
           ) : (
-            <Skeleton className="col-span-3 row-span-6 w-full" />
+            <Skeleton className="col-span-3 row-span-6 hidden w-full md:block" />
           )}
 
           {weatherData.data?.precipitationProbabilities ? (
-            <div className="col-span-4 col-start-4 row-span-1 rounded-md bg-gray-400 pb-2">
+            <div className="col-span-9 row-span-1 rounded-md bg-gray-400 pb-2 md:col-span-4 md:col-start-4">
               <div className="mt-1.5 flex justify-between pl-4 pr-3 text-xl">
                 {translationHome("precipitation")}{" "}
                 <HoverCard>
@@ -560,18 +621,18 @@ const InternalHome = observer(() => {
                         {translationHome(key.slice(2))}
                       </div>
                       <WiRaindrop className={raindropClass} />
-                      <div className="-mt-4 text-xl">{value}%</div>
+                      <div className="-mt-4 text-base md:text-xl">{value}%</div>
                     </div>
                   );
                 })}
               </div>
             </div>
           ) : (
-            <Skeleton className="col-span-4 col-start-4 row-span-1 h-32 w-full" />
+            <Skeleton className="col-span-9 row-span-1 h-32 w-full md:col-span-4 md:col-start-4" />
           )}
 
           {weatherData.data?.feels_like ? (
-            <div className="col-span-2 col-start-4 row-span-2 row-start-2 rounded-md bg-gray-400">
+            <div className="col-span-5 row-span-2 row-start-2 rounded-md bg-gray-400 md:col-span-2 md:col-start-4">
               <div className="mt-1.5 flex justify-between pl-4 pr-3 text-xl">
                 {translationHome("feels like")}{" "}
                 <HoverCard>
@@ -616,11 +677,11 @@ const InternalHome = observer(() => {
               </div>
             </div>
           ) : (
-            <Skeleton className="col-span-2 col-start-4 row-span-2 row-start-2 h-32" />
+            <Skeleton className="col-span-5 row-span-2 row-start-2 h-32" />
           )}
 
           {weatherData.data?.air_quality ? (
-            <div className="col-span-2 col-start-4 row-span-3 row-start-4 rounded-md bg-gray-400 xl:col-span-1 xl:col-start-4">
+            <div className="col-span-5 row-span-3 row-start-4 rounded-md bg-gray-400 md:col-span-2 md:col-start-4 xl:col-span-1 xl:col-start-4">
               <div className="ml-2 mt-1.5 text-xl">
                 {translationHome("air quality")}
               </div>
@@ -658,7 +719,7 @@ const InternalHome = observer(() => {
           )}
 
           {weatherData.data?.visibility ? (
-            <div className="col-span-2 col-start-6 row-span-2 row-start-2 rounded-md bg-gray-400">
+            <div className="col-span-4 col-start-6 row-span-2 row-start-2 rounded-md bg-gray-400 md:col-span-2 md:col-start-6">
               <div className="mt-1.5 flex justify-between pl-4 pr-3 text-xl">
                 {translationHome("visibility")}{" "}
                 <HoverCard>
@@ -691,7 +752,7 @@ const InternalHome = observer(() => {
           )}
 
           {weatherData.data?.wind_speed && weatherData.data?.wind_pressure ? (
-            <div className="col-span-2 col-start-6 row-span-3 row-start-4 rounded-md bg-gray-400 xl:col-span-3 xl:col-start-5">
+            <div className="col-span-4 col-start-6 row-span-3 row-start-4 rounded-md bg-gray-400 md:col-span-2 md:col-start-6 xl:col-span-3 xl:col-start-5">
               <div className="mt-1.5 flex w-full justify-between pl-4 pr-3 text-xl">
                 {translationHome("wind pressure")}{" "}
                 <HoverCard>
@@ -756,9 +817,12 @@ const InternalHome = observer(() => {
           ) : (
             <Skeleton className="col-span-2 col-start-6 row-span-3 row-start-4 h-96 w-full xl:col-span-3 xl:col-start-5" />
           )}
-          <div className="z-0 col-span-2 col-start-8 row-span-6 rounded-md bg-gray-400">
+          <div className="col-span-2 col-start-8 row-span-6 hidden rounded-md bg-gray-400 md:block">
             <Map position={mapPosition} className="h-full w-full rounded-md" />
           </div>
+        </div>
+        <div className="mb-6 block h-96 w-11/12 rounded-md md:hidden">
+          <Map position={mapPosition} className="h-full w-full rounded-md" />
         </div>
       </div>
     </Layout>
