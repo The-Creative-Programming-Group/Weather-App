@@ -37,15 +37,13 @@ const Search = () => {
       name: searchValue.name,
     });
 
-  const { data: findCityByIdData = [], status: findCityByIdStatus } =
-    api.search.findCityById.useQuery({
-      id: searchValue.id,
-    });
+  const { data: findCityByIdData = [] } = api.search.findCityById.useQuery({
+    id: searchValue.id,
+  });
 
-  const { data: findCityByNameData = [], status: findCityByNameStatus } =
-    api.search.findCityByName.useQuery({
-      name: searchValue.name,
-    });
+  const { data: findCityByNameData = [] } = api.search.findCityByName.useQuery({
+    name: searchValue.name,
+  });
 
   useEffect(() => {
     if (searchValue.name === "") {
@@ -99,11 +97,11 @@ const Search = () => {
     if (city) {
       if (addedCities$.get().find((value: ICity) => value.id === city!.id)) {
         activeCity$.set(city);
-        router.push("/home");
+        void router.push("/home");
       } else {
         addedCities$.push(city);
         activeCity$.set(city);
-        router.push("/home");
+        void router.push("/home");
       }
     } else {
       toast.error(translationLocationSettings("city not found toast"));
