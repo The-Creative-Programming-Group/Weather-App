@@ -663,7 +663,7 @@ const InternalHome = observer(() => {
                         (weatherData.data?.feels_like * 9) / 5 - 459.67,
                       )}°F`}
                 </div>
-                <div className="text-sm font-medium text-gray-500">
+                <div className="text-sm font-medium text-gray-700">
                   {weatherData.data.feels_like > 309
                     ? translationHome("feels like phrase very warm")
                     : weatherData.data.feels_like > 299
