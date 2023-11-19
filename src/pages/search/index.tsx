@@ -40,13 +40,15 @@ const Search = () => {
       name: searchValue.name,
     });
 
-  const { data: findCityByIdData = [] } = api.search.findCityById.useQuery({
-    id: searchValue.id,
-  });
+  const { data: findCityByIdData = [], status: findCityByIdStatus } =
+    api.search.findCityById.useQuery({
+      id: searchValue.id,
+    });
 
-  const { data: findCityByNameData = [] } = api.search.findCityByName.useQuery({
-    name: searchValue.name,
-  });
+  const { data: findCityByNameData = [], status: findCityByNameStatus } =
+    api.search.findCityByName.useQuery({
+      name: searchValue.name,
+    });
 
   useEffect(() => {
     if (searchValue.name === "") {
@@ -82,6 +84,11 @@ const Search = () => {
       };
     } else {
       if (searchValue.id !== 0 && searchValue.country !== "") {
+        console.log("hi");
+        if (findCityByIdStatus === "loading") {
+          toast.error(translationLocationSettings("try again toast"));
+          return;
+        }
         if (!Array.isArray(findCityByIdData)) {
           city = findCityByIdData.city;
         } else {
@@ -89,7 +96,14 @@ const Search = () => {
           return;
         }
       } else {
+        console.log("hi");
+        if (findCityByNameStatus === "loading") {
+          toast.error(translationLocationSettings("try again toast"));
+          return;
+        }
+        console.log("hi 2");
         if (!Array.isArray(findCityByNameData)) {
+          console.log("hi 3");
           city = findCityByNameData.city;
         } else {
           toast.error(translationLocationSettings("city not found toast"));

@@ -89,6 +89,10 @@ const LocationSettings = observer(() => {
       };
     } else {
       if (searchValue.id !== 0 && searchValue.country !== "") {
+        if (findCityByIdStatus === "loading") {
+          toast.error(translationLocationSettings("try again toast"));
+          return;
+        }
         if (!Array.isArray(findCityByIdData)) {
           city = findCityByIdData.city;
         } else {
@@ -96,6 +100,10 @@ const LocationSettings = observer(() => {
           return;
         }
       } else {
+        if (findCityByNameStatus === "loading") {
+          toast.error(translationLocationSettings("try again toast"));
+          return;
+        }
         if (!Array.isArray(findCityByNameData)) {
           city = findCityByNameData.city;
         } else {
