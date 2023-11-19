@@ -32,6 +32,9 @@ const Search = () => {
   const { t: translationSearch } = useTranslation("search");
   const { t: translationLocationSettings } = useTranslation("locationsettings");
 
+  /*
+  Fetches on every change in the search Value the cities that match the search value
+   */
   const { data: findCitiesByNameData = [], status: findCitiesByNameStatus } =
     api.search.findCitiesByName.useQuery({
       name: searchValue.name,
