@@ -236,42 +236,44 @@ const Search = () => {
             );
           }
         })}
-        <div className="mt-12 flex h-1/6 w-full flex-col items-center gap-4 md:transform">
-          <button
-            className="z-10 w-52 rounded border-2 bg-white pb-2 pt-2 text-2xl text-[#2d3142] transition duration-500 ease-in-out hover:shadow-2xl"
-            onClick={() => {
-              if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(async (position) => {
-                  const latitude = position.coords.latitude;
-                  const longitude = position.coords.longitude;
-                  const city: ICity = {
-                    id: -1,
-                    name: translationCommon("my city"),
-                    country: "",
-                    region: "",
-                    coord: {
-                      lon: longitude,
-                      lat: latitude,
-                    },
-                  };
-
-                  setSearchValue(city);
-                });
-              }
-            }}
-          >
-            {translationSearch("my city button")}
-          </button>
-          {searchValue.name.length > 0 ? (
+        <div className="mt-12 flex h-1/6 w-full justify-center md:transform">
+          <div className="flex w-max flex-col items-center gap-4">
             <button
+              className="z-10 w-full rounded border-2 bg-white p-2 pb-2 pt-2 text-2xl text-[#2d3142] transition duration-500 ease-in-out hover:shadow-2xl"
               onClick={() => {
-                searchCity();
+                if (navigator.geolocation) {
+                  navigator.geolocation.getCurrentPosition(async (position) => {
+                    const latitude = position.coords.latitude;
+                    const longitude = position.coords.longitude;
+                    const city: ICity = {
+                      id: -1,
+                      name: translationCommon("my city"),
+                      country: "",
+                      region: "",
+                      coord: {
+                        lon: longitude,
+                        lat: latitude,
+                      },
+                    };
+
+                    setSearchValue(city);
+                  });
+                }
               }}
-              className="z-10 h-12 w-44 rounded border-2 border-black bg-[#2d3142] text-2xl text-white transition duration-500 ease-in-out hover:shadow-2xl"
             >
-              <p>{translationSearch("continue button")}</p>
+              {translationSearch("my city button")}
             </button>
-          ) : null}
+            {searchValue.name.length > 0 ? (
+              <button
+                onClick={() => {
+                  searchCity();
+                }}
+                className="z-10 flex h-12 w-full items-center justify-center rounded border-2 border-black bg-[#2d3142] p-2 text-2xl text-white transition duration-500 ease-in-out hover:shadow-2xl"
+              >
+                <p>{translationSearch("continue button")}</p>
+              </button>
+            ) : null}
+          </div>
         </div>
       </div>
     </>

@@ -275,39 +275,43 @@ const LocationSettings = observer(() => {
                 })}
               </div>
             </div>
-            <button
-              className="mt-2.5 rounded border-2 bg-white p-2 font-bold text-[#2d3142] transition duration-500 ease-in-out hover:shadow-2xl"
-              onClick={() => {
-                if (navigator.geolocation) {
-                  navigator.geolocation.getCurrentPosition(async (position) => {
-                    const latitude = position.coords.latitude;
-                    const longitude = position.coords.longitude;
-                    const city: ICity = {
-                      id: -1,
-                      name: translationCommon("my city"),
-                      country: "",
-                      region: "",
-                      coord: {
-                        lon: longitude,
-                        lat: latitude,
-                      },
-                    };
+            <div className="flex w-max flex-col">
+              <button
+                className="mt-2.5 rounded border-2 bg-white p-2 font-bold text-[#2d3142] transition duration-500 ease-in-out hover:shadow-2xl"
+                onClick={() => {
+                  if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(
+                      async (position) => {
+                        const latitude = position.coords.latitude;
+                        const longitude = position.coords.longitude;
+                        const city: ICity = {
+                          id: -1,
+                          name: translationCommon("my city"),
+                          country: "",
+                          region: "",
+                          coord: {
+                            lon: longitude,
+                            lat: latitude,
+                          },
+                        };
 
-                    setSearchValue(city);
-                  });
-                }
-              }}
-            >
-              {translationLocationSettings("my city button")}
-            </button>
-            <button
-              onClick={() => {
-                searchCity();
-              }}
-              className="mb-2.5 mt-2.5 rounded border-2 border-black bg-[#2d3142] p-2 font-bold text-white"
-            >
-              {translationLocationSettings("add new location button")}
-            </button>
+                        setSearchValue(city);
+                      },
+                    );
+                  }
+                }}
+              >
+                {translationLocationSettings("my city button")}
+              </button>
+              <button
+                onClick={() => {
+                  searchCity();
+                }}
+                className="mb-2.5 mt-2.5 rounded border-2 border-black bg-[#2d3142] p-2 font-bold text-white"
+              >
+                {translationLocationSettings("add new location button")}
+              </button>
+            </div>
           </div>
         </div>
       </Layout>
