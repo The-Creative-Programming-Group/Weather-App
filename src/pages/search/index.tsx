@@ -57,7 +57,7 @@ const Search = () => {
     setResults(findCitiesByNameData);
   }, [searchValue, findCitiesByNameData, findCitiesByNameStatus]);
 
-  // Gets called if the user clicks on the continue button or presses enter
+  // Gets called if the user clicks on the "continue" button or press enter
   const searchCity = () => {
     let city: ICity | undefined = {
       id: 0,
