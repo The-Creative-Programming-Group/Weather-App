@@ -236,9 +236,9 @@ const Search = () => {
             );
           }
         })}
-        <div className="absolute left-1/2 mt-24 h-1/6 w-full -translate-x-1/2 md:transform">
+        <div className="mt-12 flex h-1/6 w-full flex-col items-center gap-4 md:transform">
           <button
-            className="absolute bottom-14 right-16 z-10 w-52 rounded bg-[#2d3142] pb-2 pt-2 text-2xl text-white transition duration-500 ease-in-out hover:shadow-2xl"
+            className="z-10 w-52 rounded border-2 bg-white pb-2 pt-2 text-2xl text-[#2d3142] transition duration-500 ease-in-out hover:shadow-2xl"
             onClick={() => {
               if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(async (position) => {
@@ -267,7 +267,7 @@ const Search = () => {
               onClick={() => {
                 searchCity();
               }}
-              className="absolute bottom-0 right-16 z-10 h-12 w-44 rounded bg-[#2d3142] text-2xl text-white transition duration-500 ease-in-out hover:shadow-2xl"
+              className="z-10 h-12 w-44 rounded border-2 border-black bg-[#2d3142] text-2xl text-white transition duration-500 ease-in-out hover:shadow-2xl"
             >
               <p>{translationSearch("continue button")}</p>
             </button>

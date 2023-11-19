@@ -88,7 +88,7 @@ const Layout: React.FC<LayoutProps> = ({
       </header>
       <button
         className={cn(
-          "absolute right-5 mt-28 flex rounded bg-[#2d3142] p-2 text-amber-50 md:right-16",
+          "absolute right-5 mt-28 flex rounded border-2 border-black bg-[#2d3142] p-2 text-amber-50 md:right-16",
           classNameShareButton,
         )}
       >
