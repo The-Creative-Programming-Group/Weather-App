@@ -132,7 +132,6 @@ const Search = () => {
       <Head>
         <title>{translationCommon("search page title")}</title>
         <meta name="description" content="An faboulus weather website" />
-        <link rel="icon" href="/favicon.ico" />
       </Head>
       <Image
         src={background}

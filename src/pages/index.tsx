@@ -24,7 +24,6 @@ const PublicHome: NextPage = () => {
       <Head>
         <title>Weather.io</title>
         <meta name="description" content="An faboulus weather website" />
-        <link rel="icon" href="/favicon.ico" />
         <meta
           property="og:image"
           content="/_next/image?url=%2Fog-image.png&w=640&q=75"
