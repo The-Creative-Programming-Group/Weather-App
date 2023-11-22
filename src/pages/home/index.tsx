@@ -5,9 +5,9 @@ import {
   activeCity$,
   temperatureUnit$,
   windSpeedUnit$,
-  WindSpeedUnitType,
+  type WindSpeedUnitType,
 } from "~/states";
-import { IDailyForecast, IHourlyForecast } from "~/types";
+import { type IDailyForecast, type IHourlyForecast } from "~/types";
 import {
   FaCloud,
   FaCloudMeatball,
@@ -52,7 +52,7 @@ function convertWindSpeed(
   speedInMetersPerSecond: number,
   unit: WindSpeedUnitType,
 ): number {
-  let convertedSpeed: number = 0;
+  let convertedSpeed = 0;
 
   switch (unit) {
     case "miles per hour":
@@ -155,7 +155,7 @@ const InternalHome = observer(() => {
       }
       if (weatherData.data?.hourlyForecast[hour]?.cloudcover) {
         if (weatherData.data.hourlyForecast[hour]!.cloudcover! > 40) {
-          if (weatherData.data.hourlyForecast[hour!]!.cloudcover! > 60) {
+          if (weatherData.data.hourlyForecast[hour]!.cloudcover! > 60) {
             if (icons) {
               return <FaCloud className="h-full w-full" />;
             }
@@ -163,8 +163,8 @@ const InternalHome = observer(() => {
           } else {
             if (weatherData.data) {
               if (
-                weatherData.data.hourlyForecast[hour!]!.time < 19 &&
-                weatherData.data.hourlyForecast[hour!]!.time > 6
+                weatherData.data.hourlyForecast[hour]!.time < 19 &&
+                weatherData.data.hourlyForecast[hour]!.time > 6
               ) {
                 if (icons) {
                   return <FaCloudSun className="h-full w-full" />;
@@ -215,7 +215,7 @@ const InternalHome = observer(() => {
       }
       if (weatherData.data?.dailyForecast[day]?.cloudcover) {
         if (weatherData.data.dailyForecast[day]!.cloudcover! > 40) {
-          if (weatherData.data.dailyForecast[day!]!.cloudcover! > 60) {
+          if (weatherData.data.dailyForecast[day]!.cloudcover! > 60) {
             if (icons) {
               return <FaCloud className="h-full w-full" />;
             }
@@ -667,12 +667,12 @@ const InternalHome = observer(() => {
                   {weatherData.data.feels_like > 309
                     ? translationHome("feels like phrase very warm")
                     : weatherData.data.feels_like > 299
-                    ? translationHome("feels like phrase warm")
-                    : weatherData.data.feels_like > 279
-                    ? translationHome("feels like phrase moderate")
-                    : weatherData.data.feels_like > 269
-                    ? translationHome("feels like phrase cold")
-                    : translationHome("feels like phrase very cold")}
+                      ? translationHome("feels like phrase warm")
+                      : weatherData.data.feels_like > 279
+                        ? translationHome("feels like phrase moderate")
+                        : weatherData.data.feels_like > 269
+                          ? translationHome("feels like phrase cold")
+                          : translationHome("feels like phrase very cold")}
                 </div>
               </div>
             </div>
@@ -691,14 +691,14 @@ const InternalHome = observer(() => {
                   {weatherData.data?.air_quality > 90
                     ? translationHome("air quality text very poor")
                     : weatherData.data?.air_quality > 70
-                    ? translationHome("air quality text poor")
-                    : weatherData.data?.air_quality > 50
-                    ? translationHome("air quality text fair")
-                    : weatherData.data?.air_quality > 30
-                    ? translationHome("air quality text moderate")
-                    : weatherData.data?.air_quality > 10
-                    ? translationHome("air quality text good")
-                    : translationHome("air quality text excellent")}
+                      ? translationHome("air quality text poor")
+                      : weatherData.data?.air_quality > 50
+                        ? translationHome("air quality text fair")
+                        : weatherData.data?.air_quality > 30
+                          ? translationHome("air quality text moderate")
+                          : weatherData.data?.air_quality > 10
+                            ? translationHome("air quality text good")
+                            : translationHome("air quality text excellent")}
                 </div>
                 <div className="relative h-64 w-4 rounded-xl bg-gradient-to-t from-red-500 to-green-800 xl:absolute xl:right-3 xl:w-3 xl:rounded-md">
                   <div
@@ -751,7 +751,8 @@ const InternalHome = observer(() => {
             <Skeleton className="col-span-4 col-start-6 row-span-2 row-start-2 md:col-span-2 md:col-start-6" />
           )}
 
-          {weatherData.data?.wind_speed && weatherData.data?.wind_pressure ? (
+          {weatherData.data?.wind_speed !== undefined &&
+          weatherData.data?.wind_pressure !== undefined ? (
             <div className="col-span-4 col-start-6 row-span-3 row-start-4 rounded-md bg-gray-400 md:col-span-2 md:col-start-6 xl:col-span-3 xl:col-start-5">
               <div className="mt-1.5 flex w-full justify-between pl-4 pr-3 text-xl">
                 {translationHome("wind pressure")}{" "}
@@ -799,17 +800,13 @@ const InternalHome = observer(() => {
                   </div>
                   <div className="pr-2">
                     {translationHome("speed")}
-                    {weatherData.data?.wind_speed ? (
-                      <div className="mt-2">
-                        {convertWindSpeed(
-                          weatherData.data.wind_speed,
-                          windSpeedUnit$.get(),
-                        ).toPrecision(2)}{" "}
-                        {translationCommon(windSpeedUnit$.get())}
-                      </div>
-                    ) : (
-                      "Loading..."
-                    )}
+                    <div className="mt-2 pr-1 xl:pr-8">
+                      {convertWindSpeed(
+                        weatherData.data.wind_speed,
+                        windSpeedUnit$.get(),
+                      ).toPrecision(2)}{" "}
+                      {translationCommon(windSpeedUnit$.get())}
+                    </div>
                   </div>
                 </div>
               </div>

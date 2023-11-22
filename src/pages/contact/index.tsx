@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Layout from "~/components/Layout";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useTranslation } from "next-i18next";
-import { Id, toast, ToastContainer } from "react-toastify";
+import { type Id, toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
@@ -37,7 +37,7 @@ const ContactUs = () => {
 
   const mutation = api.email.sendContactEmail.useMutation({
     onMutate: () => {
-      let toastIdTmp = toast(
+      const toastIdTmp = toast(
         translationContact("sending email loading toast"),
         {
           autoClose: false,
@@ -77,9 +77,11 @@ const ContactUs = () => {
           </h1>
           <hr className="mt-3 h-1.5 w-6/12 rounded bg-[#2d3142] md:w-4/12" />
           <form
-            onSubmit={handleSubmit(() => {
-              mutation.mutate(getValues());
-            })}
+            onSubmit={
+              void handleSubmit(() => {
+                mutation.mutate(getValues());
+              })
+            }
             className="flex w-full flex-col items-center"
           >
             <div className="mb-2 ml-5 mr-5 mt-5 flex flex-col md:w-1/3 md:flex-row">

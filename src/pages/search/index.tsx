@@ -6,7 +6,7 @@ import { toast, ToastContainer } from "react-toastify";
 import search1Image from "~/assets/search1.png";
 import background from "~/assets/background.png";
 import "react-toastify/dist/ReactToastify.css";
-import { ICity } from "~/types";
+import { type ICity } from "~/types";
 import { useRouter } from "next/router";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useTranslation } from "next-i18next";
@@ -241,7 +241,7 @@ const Search = () => {
               className="z-10 w-full rounded border-2 bg-white p-2 pb-2 pt-2 text-2xl text-[#2d3142] transition duration-500 ease-in-out hover:shadow-2xl"
               onClick={() => {
                 if (navigator.geolocation) {
-                  navigator.geolocation.getCurrentPosition(async (position) => {
+                  navigator.geolocation.getCurrentPosition((position) => {
                     const latitude = position.coords.latitude;
                     const longitude = position.coords.longitude;
                     const city: ICity = {

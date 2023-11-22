@@ -7,7 +7,7 @@ import { observer } from "@legendapp/state/react";
 import { toast, ToastContainer } from "react-toastify";
 import search2Image from "~/assets/search2.png";
 import "react-toastify/dist/ReactToastify.css";
-import { ICity } from "~/types";
+import { type ICity } from "~/types";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useTranslation } from "next-i18next";
 import { api } from "~/lib/utils/api";
@@ -280,24 +280,22 @@ const LocationSettings = observer(() => {
                 className="mt-2.5 rounded border-2 bg-white p-2 font-bold text-[#2d3142] transition duration-500 ease-in-out hover:shadow-2xl"
                 onClick={() => {
                   if (navigator.geolocation) {
-                    navigator.geolocation.getCurrentPosition(
-                      async (position) => {
-                        const latitude = position.coords.latitude;
-                        const longitude = position.coords.longitude;
-                        const city: ICity = {
-                          id: -1,
-                          name: translationCommon("my city"),
-                          country: "",
-                          region: "",
-                          coord: {
-                            lon: longitude,
-                            lat: latitude,
-                          },
-                        };
+                    navigator.geolocation.getCurrentPosition((position) => {
+                      const latitude = position.coords.latitude;
+                      const longitude = position.coords.longitude;
+                      const city: ICity = {
+                        id: -1,
+                        name: translationCommon("my city"),
+                        country: "",
+                        region: "",
+                        coord: {
+                          lon: longitude,
+                          lat: latitude,
+                        },
+                      };
 
-                        setSearchValue(city);
-                      },
-                    );
+                      setSearchValue(city);
+                    });
                   }
                 }}
               >

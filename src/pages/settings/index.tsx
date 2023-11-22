@@ -19,13 +19,11 @@ const Settings = observer(() => {
   const router = useRouter();
 
   const changeLocale = (locale: string) => {
-    router.push(router.pathname, router.asPath, { locale });
+    void router.push(router.pathname, router.asPath, { locale });
   };
 
   const { t: translationSettings } = useTranslation("settings");
   const { t: translationCommon } = useTranslation("common");
-
-  const doneImage = "/assets/done.png";
 
   const handleTemperatureUnitClick = (unit: TemperatureUnitType) => {
     temperatureUnit$.set(unit);

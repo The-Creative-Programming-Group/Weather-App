@@ -3,7 +3,7 @@ import Layout from "~/components/Layout";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useTranslation } from "next-i18next";
 
-const legal = () => {
+const Legal = () => {
   const { t: translationCommon } = useTranslation("common");
   const { t: translationLegal } = useTranslation("legal");
 
@@ -37,4 +37,4 @@ export async function getStaticProps({ locale }: { locale: string }) {
   };
 }
 
-export default legal;
+export default Legal;

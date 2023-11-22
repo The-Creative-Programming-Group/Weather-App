@@ -22,12 +22,13 @@
     }
   },
   "include": [
-    "_eslintrc.cjs",
+    ".eslintrc.cjs",
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
     "**/*.cjs",
-    "**/*.mjs"
+    "**/*.mjs",
+    ".next/types/**/*.ts",
   ],
   "exclude": ["node_modules"]
 }

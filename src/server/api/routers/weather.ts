@@ -2,7 +2,7 @@ import { z } from "zod";
 import { createTRPCRouter, rateLimitedProcedure } from "~/server/api/trpc";
 import { env } from "~/env.mjs";
 import axios from "axios";
-import { IDailyForecast, IHourlyForecast } from "~/types";
+import { type IDailyForecast, type IHourlyForecast } from "~/types";
 import { log } from "next-axiom";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
@@ -171,7 +171,7 @@ export const weatherRouter = createTRPCRouter({
       const urlHourlyForecast = `https://api.open-meteo.com/v1/forecast?latitude=${input.coordinates.lat}&longitude=${input.coordinates.lon}&hourly=temperature_2m,rain,showers,snowfall,precipitation_probability,cloudcover,windspeed_10m&forecast_days=9&timezone=${input.timezone}`;
       const urlAirQuality = `https://air-quality-api.open-meteo.com/v1/air-quality?latitude=${input.coordinates.lat}&longitude=${input.coordinates.lon}&hourly=pm10,pm2_5,nitrogen_dioxide`;
 
-      let [hourlyResult, presentWeatherResult, presentAirQualityResult] =
+      const [hourlyResult, presentWeatherResult, presentAirQualityResult] =
         await Promise.allSettled([
           axios.get<HourlyWeather>(urlHourlyForecast),
           axios.get<PresentWeather>(urlWeather),
@@ -184,7 +184,7 @@ export const weatherRouter = createTRPCRouter({
 
       if (hourlyResult.status === "fulfilled") {
         try {
-          let data = hourlyResult.value.data;
+          const data = hourlyResult.value.data;
 
           if (!data) {
             throw new Error("Air quality data is undefined");
@@ -209,7 +209,10 @@ export const weatherRouter = createTRPCRouter({
       } else {
         log.error("Hourly weather data request failed", {
           status: hourlyResult.status,
-          reason: hourlyResult.reason,
+          reason:
+            typeof hourlyResult.reason === "string"
+              ? hourlyResult.reason
+              : "The reason is not a string",
         });
       }
 
@@ -218,6 +221,7 @@ export const weatherRouter = createTRPCRouter({
           presentWeather = PresentWeatherSchema.parse(
             presentWeatherResult.value.data,
           );
+          // log.debug("Parsed present weather data", presentWeather);
         } catch (error) {
           if (error instanceof z.ZodError) {
             log.error("Zod Errors in the present weather", error.issues);
@@ -228,13 +232,16 @@ export const weatherRouter = createTRPCRouter({
       } else {
         log.error("Present weather data request failed", {
           status: presentWeatherResult.status,
-          reason: presentWeatherResult.reason,
+          reason:
+            typeof presentWeatherResult.reason === "string"
+              ? presentWeatherResult.reason
+              : "The reason is not a string",
         });
       }
 
       if (presentAirQualityResult.status === "fulfilled") {
         try {
-          let data = presentAirQualityResult.value.data;
+          const data = presentAirQualityResult.value.data;
 
           if (!data) {
             throw new Error("Air quality data is undefined");
@@ -261,7 +268,10 @@ export const weatherRouter = createTRPCRouter({
       } else {
         log.error("Present air quality data request failed", {
           status: presentAirQualityResult.status,
-          reason: presentAirQualityResult.reason,
+          reason:
+            typeof presentAirQualityResult.reason === "string"
+              ? presentAirQualityResult.reason
+              : "The reason is not a string",
         });
       }
 
@@ -502,9 +512,10 @@ export const weatherRouter = createTRPCRouter({
         // In meters per second
         wind_speed: presentWeather?.wind.speed,
         // Calculates the wind pressure in Pa
-        wind_pressure: presentWeather?.wind.speed
-          ? 0.5 * 1.225 * Math.pow(presentWeather.wind.speed, 2)
-          : undefined,
+        wind_pressure:
+          presentWeather?.wind.speed !== undefined
+            ? 0.5 * 1.225 * Math.pow(presentWeather.wind.speed, 2)
+            : undefined,
         // Index from 0 to 100
         air_quality: presentAirQualityIndex,
         // In percentages

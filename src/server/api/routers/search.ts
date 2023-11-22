@@ -1,7 +1,7 @@
 import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
 import { z } from "zod";
 import citiesJSON from "~/lib/city-list.json";
-import { ICity } from "~/types";
+import { type ICity } from "~/types";
 import { log } from "next-axiom";
 
 const cities = citiesJSON as ICity[];
@@ -13,7 +13,7 @@ export const searchRouter = createTRPCRouter({
         name: z.string().min(0).max(70),
       }),
     )
-    .query(async ({ input, ctx }) => {
+    .query(({ input, ctx }) => {
       log.info("User searched for cities", {
         name: input.name,
         user: ctx.ip,
@@ -31,7 +31,7 @@ export const searchRouter = createTRPCRouter({
         id: z.number(),
       }),
     )
-    .query(async ({ input, ctx }) => {
+    .query(({ input, ctx }) => {
       log.info("User searched for city by id", {
         id: input.id,
         user: ctx.ip,
@@ -44,7 +44,7 @@ export const searchRouter = createTRPCRouter({
         name: z.string().min(0).max(70),
       }),
     )
-    .query(async ({ input, ctx }) => {
+    .query(({ input, ctx }) => {
       log.info("User searched for city by name", {
         name: input.name,
         user: ctx.ip,

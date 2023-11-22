@@ -15,7 +15,7 @@ import { redis } from "~/server/upstash";
 import { Ratelimit } from "@upstash/ratelimit";
 import { log } from "next-axiom";
 import { env } from "~/env.mjs";
-import { Duration } from "~/types";
+import { type Duration } from "~/types";
 
 /**
  * 1. CONTEXT
@@ -60,7 +60,7 @@ const UPSTASH_RATELIMITER_TIME_INTERVAL: Duration = validateDuration(
  */
 export const createTRPCContext = (_opts: CreateNextContextOptions) => {
   const ip = _opts.req.headers["x-forwarded-for"] as string;
-  let res = _opts.res;
+  const res = _opts.res;
   return {
     ...createInnerTRPCContext({}),
     ip,

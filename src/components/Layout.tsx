@@ -108,7 +108,7 @@ const Layout: React.FC<LayoutProps> = ({
         <div className="flex flex-col gap-2 md:w-96 md:flex-row md:justify-between">
           <div className="flex justify-center">
             {" "}
-            <Link href="/legal" className="flex justify-center underline">
+            <Link href="/Legal" className="flex justify-center underline">
               {translation("footer legal")}
             </Link>
           </div>
