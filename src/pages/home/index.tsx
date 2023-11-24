@@ -264,7 +264,7 @@ const InternalHome = observer(() => {
   return (
     <Layout classNameShareButton="mt-44">
       <div className="mt-24 flex flex-col items-center">
-        <h1 className="text-center text-6xl md:text-7xl">
+        <h1 className="text-center text-4xl sm:text-5xl md:text-7xl">
           {activeCity$.name.get() === "My city" ||
           activeCity$.name.get() === "Meine Stadt" ? (
             <>{translationCommon("my city")}</>
