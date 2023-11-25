@@ -342,7 +342,7 @@ const InternalHome = observer(() => {
                   }
 
                   if (hourlyForecast.time === currentHour) {
-                    time = translationHome("now");
+                    time = translationHome("this hour");
                   } else if (hourlyForecast.time === 12) {
                     time = "12" + translationHome("late hour time ending");
                   } else if (hourlyForecast.time > 12) {
