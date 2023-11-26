@@ -16,7 +16,10 @@ const Legal = () => {
           </p>
           <p className="mt-2.5">{translationLegal("information disclaimer")}</p>
           <p className="mt-1">Jakob Rössner</p>
-          <p className="mt-1">+49 1512 5404979</p>
+          <a href="mailto:jakob.roessner@outlook.de" className="mt-1">
+            {" "}
+            jakob.roessner@outlook.de{" "}
+          </a>
           <p className="mt-1">
             15755, Teupitz ST Tornow, {translationLegal("germany")}
           </p>
