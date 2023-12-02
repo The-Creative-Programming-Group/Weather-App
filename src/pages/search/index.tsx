@@ -153,7 +153,7 @@ const Search = () => {
           />
 
           <input
-            className="w-full bg-[#383b53] pl-1.5 text-xl text-white outline-0 md:pb-0.5 md:pl-3 md:pt-0.5"
+            className="w-full bg-[#383b53] pl-1.5 text-xl text-white outline-none md:pb-0.5 md:pl-3 md:pt-0.5"
             autoFocus
             placeholder={translationSearch("search input placeholder")}
             type="text"

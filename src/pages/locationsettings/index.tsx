@@ -157,7 +157,7 @@ const LocationSettings = observer(() => {
                   height={56}
                 />
                 <input
-                  className="w-full border-b-2 border-black bg-[#d8d5db] pb-0.5 pl-3 pt-0.5 text-xl font-bold text-black outline-0"
+                  className="w-full border-b-2 border-black bg-[#d8d5db] pb-0.5 pl-3 pt-0.5 text-xl font-bold text-black outline-none"
                   autoFocus
                   placeholder={translationLocationSettings(
                     "search input placeholder",
