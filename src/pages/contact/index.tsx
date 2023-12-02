@@ -5,7 +5,7 @@ import { useTranslation } from "next-i18next";
 import { type Id, toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { z } from "zod";
-import { useForm } from "react-hook-form";
+import { type SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { api } from "~/lib/utils/api";
 
@@ -57,12 +57,15 @@ const ContactUs = () => {
   const {
     register,
     handleSubmit,
-    getValues,
     formState: { errors },
     reset,
   } = useForm<ContactValidatorType>({
     resolver: zodResolver(ContactValidator),
   });
+
+  const onSubmit: SubmitHandler<ContactValidatorType> = (data) => {
+    mutation.mutate(data);
+  };
 
   return (
     <>
@@ -77,11 +80,9 @@ const ContactUs = () => {
           </h1>
           <hr className="mt-3 h-1.5 w-6/12 rounded bg-[#2d3142] md:w-4/12" />
           <form
-            onSubmit={
-              void handleSubmit(() => {
-                mutation.mutate(getValues());
-              })
-            }
+            // If you add a void, before the handleSubmit, it will not work, idk why. - Jakob
+            // eslint-disable-next-line @typescript-eslint/no-misused-promises
+            onSubmit={handleSubmit(onSubmit)}
             className="flex w-full flex-col items-center"
           >
             <div className="mb-2 ml-5 mr-5 mt-5 flex flex-col md:w-1/3 md:flex-row">
@@ -123,6 +124,7 @@ const ContactUs = () => {
               <input
                 className="h-10 w-full rounded-md bg-[#d8d5db] pl-2"
                 id="email"
+                autoComplete="email"
                 {...register("email")}
               />
             </div>
@@ -140,7 +142,10 @@ const ContactUs = () => {
               />
             </div>
             <input className="hidden" {...register("testMessage")} />
-            <button className="mb-8 rounded border-2 border-solid border-black bg-[#2d3142] pb-2 pl-4 pr-4 pt-2 font-bold text-white">
+            <button
+              className="mb-8 rounded border-2 border-solid border-black bg-[#2d3142] pb-2 pl-4 pr-4 pt-2 font-bold text-white"
+              type="submit"
+            >
               <div>{translationContact("send button")}</div>
             </button>
           </form>
