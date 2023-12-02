@@ -27,8 +27,8 @@ dependencies:
     specifier: ^1.0.2
     version: 1.0.2(@types/react@18.2.37)(react@18.2.0)
   "@react-email/components":
-    specifier: ^0.0.11
-    version: 0.0.11(@types/react@18.2.37)(react@18.2.0)
+    specifier: ^0.0.12
+    version: 0.0.12(@types/react@18.2.37)(react@18.2.0)
   "@react-email/html":
     specifier: ^0.0.6
     version: 0.0.6(react@18.2.0)
@@ -2940,10 +2940,10 @@ packages:
       react: 18.2.0
     dev: false
 
-  /@react-email/components@0.0.11(@types/react@18.2.37)(react@18.2.0):
+  /@react-email/components@0.0.12(@types/react@18.2.37)(react@18.2.0):
     resolution:
       {
-        integrity: sha512-wj9Sra/AGQvadb3ZABz44ll9Fb9FvXPEmODXRWbNRSc8pJTFGWorrsm4M/yj8dnewd4HtnbLkV1eDOvuiLAVLA==,
+        integrity: sha512-siVu1xcMV3u14aBIIMWQKVma/EC9TitRYf9tOL1bNXhMFtJhY4ozBudF0Lk4Gm5p8Dn9ZeitoenKiJ5XiVXrdg==,
       }
     engines: { node: ">=18.0.0" }
     peerDependencies:
@@ -2964,12 +2964,11 @@ packages:
       "@react-email/render": 0.0.9
       "@react-email/row": 0.0.6(react@18.2.0)
       "@react-email/section": 0.0.10(react@18.2.0)
-      "@react-email/tailwind": 0.0.12(react@18.2.0)
+      "@react-email/tailwind": 0.0.13(react@18.2.0)
       "@react-email/text": 0.0.6(react@18.2.0)
       react: 18.2.0
     transitivePeerDependencies:
       - "@types/react"
-      - ts-node
     dev: false
 
   /@react-email/container@0.0.10(react@18.2.0):
@@ -3117,10 +3116,10 @@ packages:
       react: 18.2.0
     dev: false
 
-  /@react-email/tailwind@0.0.12(react@18.2.0):
+  /@react-email/tailwind@0.0.13(react@18.2.0):
     resolution:
       {
-        integrity: sha512-s8Ch7GL30qRKScn9NWwItMqxjtzbyUtCnXfC6sL2YTVtulbfvZZ06W+aA0S6f7fdrVlOOlQzZuK/sVaQCHhcSw==,
+        integrity: sha512-uC/nSBau//LYq0ZJea5jO9ZNyLvgJ04Wl9wx63jw26ye+f2nKqQ2gO9OQcpNrEzSvjQXlUXa5rpV/9ZtMGSJHA==,
       }
     engines: { node: ">=18.0.0" }
     peerDependencies:
@@ -3128,9 +3127,6 @@ packages:
     dependencies:
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
-      tw-to-css: 0.0.12
-    transitivePeerDependencies:
-      - ts-node
     dev: false
 
   /@react-email/text@0.0.6(react@18.2.0):
@@ -5668,13 +5664,6 @@ packages:
       is-extendable: 0.1.1
     dev: false
 
-  /extend@3.0.2:
-    resolution:
-      {
-        integrity: sha512-fjquC59cD7CyW6urNXK0FBufkZcoiGG80wTuPujX590cB5Ttln20E2UB4S/WARVqhXffZl2LNgS+gQdPIIim/g==,
-      }
-    dev: false
-
   /fast-deep-equal@3.1.3:
     resolution:
       {
@@ -7674,20 +7663,6 @@ packages:
     engines: { node: ">= 6" }
     dev: false
 
-  /postcss-css-variables@0.18.0(postcss@8.4.31):
-    resolution:
-      {
-        integrity: sha512-lYS802gHbzn1GI+lXvy9MYIYDuGnl1WB4FTKoqMQqJ3Mab09A7a/1wZvGTkCEZJTM8mSbIyb1mJYn8f0aPye0Q==,
-      }
-    peerDependencies:
-      postcss: ^8.2.6
-    dependencies:
-      balanced-match: 1.0.2
-      escape-string-regexp: 1.0.5
-      extend: 3.0.2
-      postcss: 8.4.31
-    dev: false
-
   /postcss-import@15.1.0(postcss@8.4.31):
     resolution:
       {
@@ -8803,41 +8778,6 @@ packages:
       tailwindcss: 3.3.5
     dev: false
 
-  /tailwindcss@3.3.2:
-    resolution:
-      {
-        integrity: sha512-9jPkMiIBXvPc2KywkraqsUfbfj+dHDb+JPWtSJa9MLFdrPyazI7q6WX2sUrm7R9eVR7qqv3Pas7EvQFzxKnI6w==,
-      }
-    engines: { node: ">=14.0.0" }
-    hasBin: true
-    dependencies:
-      "@alloc/quick-lru": 5.2.0
-      arg: 5.0.2
-      chokidar: 3.5.3
-      didyoumean: 1.2.2
-      dlv: 1.1.3
-      fast-glob: 3.3.1
-      glob-parent: 6.0.2
-      is-glob: 4.0.3
-      jiti: 1.19.1
-      lilconfig: 2.1.0
-      micromatch: 4.0.5
-      normalize-path: 3.0.0
-      object-hash: 3.0.0
-      picocolors: 1.0.0
-      postcss: 8.4.31
-      postcss-import: 15.1.0(postcss@8.4.31)
-      postcss-js: 4.0.1(postcss@8.4.31)
-      postcss-load-config: 4.0.1(postcss@8.4.31)
-      postcss-nested: 6.0.1(postcss@8.4.31)
-      postcss-selector-parser: 6.0.11
-      postcss-value-parser: 4.2.0
-      resolve: 1.22.2
-      sucrase: 3.34.0
-    transitivePeerDependencies:
-      - ts-node
-    dev: false
-
   /tailwindcss@3.3.5:
     resolution:
       {
@@ -9056,20 +8996,6 @@ packages:
       {
         integrity: sha512-336iVw3rtn2BUK7ORdIAHTyxHGRIHVReokCR3XjbckJMK7ms8FysBfhLR8IXnAgy7T0PTPNBWKiH514FOW/WSg==,
       }
-    dev: false
-
-  /tw-to-css@0.0.12:
-    resolution:
-      {
-        integrity: sha512-rQAsQvOtV1lBkyCw+iypMygNHrShYAItES5r8fMsrhhaj5qrV2LkZyXc8ccEH+u5bFjHjQ9iuxe90I7Kykf6pw==,
-      }
-    engines: { node: ">=16.0.0" }
-    dependencies:
-      postcss: 8.4.31
-      postcss-css-variables: 0.18.0(postcss@8.4.31)
-      tailwindcss: 3.3.2
-    transitivePeerDependencies:
-      - ts-node
     dev: false
 
   /type-check@0.4.0:
