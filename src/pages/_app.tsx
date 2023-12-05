@@ -17,6 +17,10 @@ const MyApp: AppType = ({ Component, pageProps }) => {
   return (
     <>
       <Head>
+        <meta
+          name="google-site-verification"
+          content="CS1KT9NHuQNxYoO-nTeSkqI_kThuGx7dEAw4VJ6AD8I"
+        />
         <link rel="icon" href="/favicon.ico" />
         <meta name="theme-color" content="#2d3142" />
         <link rel="manifest" href="/manifest.json" />
