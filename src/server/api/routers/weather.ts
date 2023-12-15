@@ -473,6 +473,12 @@ export const weatherRouter = createTRPCRouter({
           return (probabilities[startIndex]! + probabilities[endIndex]!) / 2;
         }
 
+        /* log.debug("getTimeSlotAverage", {
+          startIndex,
+          endIndex,
+          probabilities,
+        }); */
+
         return undefined;
       };
 

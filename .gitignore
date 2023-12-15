@@ -55,3 +55,8 @@ yarn-error.log*
 # CodeStream ignored files
 /../../Weather-App\.idea/codestream.xml
 /.fleet
+
+/public/sw.js
+/public/sw.js.map
+/public/workbox-*.js
+/public/workbox-*.js.map

@@ -380,7 +380,7 @@ const InternalHome = observer(() => {
                               )}°F`}
                         </div>
                       ) : (
-                        "Not available"
+                        translationHome("not available")
                       )}
                     </div>
                   );
@@ -425,7 +425,7 @@ const InternalHome = observer(() => {
                               )}°F`}
                         </div>
                       ) : (
-                        "Not available"
+                        translationHome("not available")
                       )}
                       {dailyForecast.temperatureNight ? (
                         <div className="text-gray-700">
@@ -439,7 +439,7 @@ const InternalHome = observer(() => {
                               )}°F`}
                         </div>
                       ) : (
-                        "Not available"
+                        translationHome("not available")
                       )}
                     </div>
                   );
@@ -515,7 +515,7 @@ const InternalHome = observer(() => {
                                     )}°F`}
                               </div>
                             ) : (
-                              "Not available"
+                              translationHome("not available")
                             )}
                             {dailyForecast.temperatureNight ? (
                               <div className="mt-2 text-base text-gray-700 xl:text-2xl">
@@ -529,7 +529,7 @@ const InternalHome = observer(() => {
                                     )}°F`}
                               </div>
                             ) : (
-                              "Not available"
+                              translationHome("not available")
                             )}
                           </div>
                         </div>
@@ -597,7 +597,7 @@ const InternalHome = observer(() => {
                 {Object.entries(
                   weatherData.data.precipitationProbabilities,
                 ).map(([key, value]) => {
-                  let raindropClass = "";
+                  let raindropClass = "h-full w-full -mt-2";
                   if (value !== undefined && value !== null) {
                     raindropClass = cn(
                       "w-full",
@@ -621,7 +621,15 @@ const InternalHome = observer(() => {
                         {translationHome(key.slice(2))}
                       </div>
                       <WiRaindrop className={raindropClass} />
-                      <div className="-mt-4 text-base md:text-xl">{value}%</div>
+                      {value !== undefined && value !== null ? (
+                        <div className="-mt-4 text-center text-base md:text-xl">
+                          {value}%
+                        </div>
+                      ) : (
+                        <div className="-mt-4 text-center text-base md:text-xl">
+                          {translationHome("not available")}
+                        </div>
+                      )}
                     </div>
                   );
                 })}
