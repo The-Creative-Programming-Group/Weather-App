@@ -25,6 +25,23 @@ const Layout: React.FC<LayoutProps> = ({
   const [navbarOpen, setNavbarOpen] = useState(false);
 
   const { t: translation } = useTranslation("common");
+
+  const handleShare = async () => {
+    const title = document.title;
+    const url = window.location.href;
+    const text = translation("share text"); // Replace this with your specific text
+
+    if (navigator.share) {
+      try {
+        await navigator.share({ title, text, url });
+      } catch (error) {
+        console.error("Something went wrong sharing the page", error);
+      }
+    } else {
+      console.log("Web Share API is not supported in your browser");
+    }
+  };
+
   return (
     <>
       <Head>
@@ -90,6 +107,7 @@ const Layout: React.FC<LayoutProps> = ({
           "absolute right-5 mt-28 flex rounded border-2 border-black bg-[#2d3142] p-2 text-amber-50 md:right-16",
           classNameShareButton,
         )}
+        onClick={handleShare}
       >
         {" "}
         <FaShare className="mr-1.5 mt-1" /> {translation("share button")}
