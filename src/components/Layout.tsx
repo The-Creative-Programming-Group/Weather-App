@@ -61,9 +61,12 @@ const Layout: React.FC<LayoutProps> = ({
           <FaMapMarkedAlt className="mr-1.5 text-2xl" />
           <p>{translation("menu locations")}</p>
         </Link>
-        <h1 className="text-base font-semibold md:text-4xl md:font-normal">
-          <Link href="/home">Weather.io</Link>
-        </h1>
+        <Link href="/home" className="flex flex-col items-center">
+          <h1 className="text-base font-semibold md:text-2xl md:font-normal">
+            {translation("title")}
+          </h1>
+          <p>{translation("location")}</p>
+        </Link>
         <Link href="/settings" className="flex">
           <IoIosSettings className="mr-1.5 text-2xl" />{" "}
           <p>{translation("menu settings")}</p>
@@ -77,12 +80,16 @@ const Layout: React.FC<LayoutProps> = ({
         <div className="flex items-center">
           {!navbarOpen && <Menu onClick={() => setNavbarOpen(true)} />}
           {navbarOpen && <X onClick={() => setNavbarOpen(false)} />}
-          <h1 className="ml-2.5 text-xl font-semibold">
-            <Link href="/home">Weather.io</Link>
-          </h1>
+          <Link
+            href="/home"
+            className="ml-2.5 flex flex-col items-center text-xl font-semibold"
+          >
+            <h1>{translation("title")}</h1>
+            <p className="text-sm font-normal">{translation("location")}</p>
+          </Link>
         </div>
         {navbarOpen && (
-          <div className="z-10 flex w-full flex-col gap-2 whitespace-nowrap">
+          <div className="z-10 mt-2 flex w-full flex-col gap-2 whitespace-nowrap border-t-2">
             <Link href="/home" className="mt-2 flex items-center">
               <AiFillHome className="mr-1.5" />
               <p>{translation("menu home")}</p>
@@ -107,7 +114,7 @@ const Layout: React.FC<LayoutProps> = ({
           "absolute right-5 mt-28 flex rounded border-2 border-black bg-[#2d3142] p-2 text-amber-50 md:right-16",
           classNameShareButton,
         )}
-        onClick={handleShare}
+        onClick={() => handleShare()}
       >
         {" "}
         <FaShare className="mr-1.5 mt-1" /> {translation("share button")}

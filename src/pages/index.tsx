@@ -35,11 +35,14 @@ const PublicHome: NextPage = () => {
         className="-z-10 object-cover"
         fill
       />
-      <div className="relative flex h-screen flex-col items-center justify-center gap-12">
-        <h1 className="text-5xl md:text-8xl">Weather.io</h1>
+      <div className="relative flex h-screen flex-col items-center justify-center gap-6">
+        <div className="flex flex-col items-center gap-3">
+          <h1 className="text-5xl md:text-8xl">{translation("title")}</h1>
+          <h2 className="text-2xl md:text-4xl">{translation("location")}</h2>
+        </div>
         <Link
           href="/search"
-          className="mt-4 rounded-lg bg-[#2d3142] px-3 py-2 text-2xl text-white transition duration-500 ease-in-out hover:shadow-2xl md:px-5 md:py-4 md:text-4xl"
+          className="mt-4 rounded-lg bg-[#2d3142] px-3 py-2 text-xl text-white transition duration-500 ease-in-out hover:shadow-2xl sm:text-2xl md:px-5 md:py-4 md:text-4xl"
         >
           {translation("start button")}
         </Link>
