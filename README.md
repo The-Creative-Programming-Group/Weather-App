@@ -1,10 +1,11 @@
-<img src="public/og-image.png" min-width="400px" max-width="450px" width="400px" align="right" alt="Computer">
+<img src="public/og-image.png" min-width="200px" max-width="250px" width="400px" align="right" alt="Computer">
 
 # Weather.io
 
-This is a simple weather app,
-which uses the [OpenWeatherMap API](https://openweathermap.org/api) and [Open Meteo API](https://open-meteo.com)
-to fetch the current weather data for a given city.
+Weather.io is a simple,
+user-friendly application that fetches
+and displays real-time weather data for any city
+using the [OpenWeatherMap API](https://openweathermap.org/api) and [Open Meteo API](https://open-meteo.com).
 
 ## How to start
 
