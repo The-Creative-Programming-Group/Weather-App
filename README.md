@@ -24,6 +24,9 @@ If you are not familiar with the different technologies used in this project, pl
 - [Next.js](https://nextjs.org)
 - [Tailwind CSS](https://tailwindcss.com)
 - [tRPC](https://trpc.io)
+- [TypeScript](https://www.typescriptlang.org)
+- [OpenWeatherMap API](https://openweathermap.org/api)
+- [Open Meteo API](https://open-meteo.com)
 
 ## Learn More
 
