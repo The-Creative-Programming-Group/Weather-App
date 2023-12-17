@@ -53,28 +53,32 @@ const Layout: React.FC<LayoutProps> = ({
         />
       </Head>
       <header className="hidden items-center justify-around bg-[#2d3142] p-2 text-white md:flex">
-        <Link href="/home" className="flex">
-          <AiFillHome className="mr-1.5 text-2xl" />
-          <p>{translation("menu home")}</p>
-        </Link>
-        <Link href="/locationsettings" className="flex">
-          <FaMapMarkedAlt className="mr-1.5 text-2xl" />
-          <p>{translation("menu locations")}</p>
-        </Link>
+        <div className="flex w-3/5 max-w-3xl justify-around">
+          <Link href="/home" className="flex">
+            <AiFillHome className="mr-1.5 text-2xl" />
+            <p>{translation("menu home")}</p>
+          </Link>
+          <Link href="/locationsettings" className="flex">
+            <FaMapMarkedAlt className="mr-1.5 text-2xl" />
+            <p>{translation("menu locations")}</p>
+          </Link>
+        </div>
         <Link href="/home" className="flex flex-col items-center">
           <h1 className="text-base font-semibold md:text-2xl md:font-normal">
             {translation("title")}
           </h1>
           <p>{translation("location")}</p>
         </Link>
-        <Link href="/settings" className="flex">
-          <IoIosSettings className="mr-1.5 text-2xl" />{" "}
-          <p>{translation("menu settings")}</p>
-        </Link>
-        <Link href="/contact" className="flex">
-          <IoMdContact className="mr-1.5 text-2xl" />
-          <p>{translation("menu contact")}</p>
-        </Link>
+        <div className="flex w-3/5 max-w-3xl justify-around">
+          <Link href="/settings" className="flex">
+            <IoIosSettings className="mr-1.5 text-2xl" />{" "}
+            <p>{translation("menu settings")}</p>
+          </Link>
+          <Link href="/contact" className="flex">
+            <IoMdContact className="mr-1.5 text-2xl" />
+            <p>{translation("menu contact")}</p>
+          </Link>
+        </div>
       </header>
       <header className="bg-[#2d3142] p-2 text-white md:hidden">
         <div className="flex items-center">
