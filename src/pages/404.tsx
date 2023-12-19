@@ -2,6 +2,7 @@ import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import Layout from "~/components/Layout";
 import { useTranslation } from "next-i18next";
 
+// For more information about 404 page, please visit https://nextjs.org/docs/pages/building-your-application/routing/custom-error#404-page
 export default function Custom404() {
   const { t: translation404 } = useTranslation("404");
   const { t: translationCommon } = useTranslation("common");
