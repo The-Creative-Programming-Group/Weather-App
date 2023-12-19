@@ -2,7 +2,8 @@ import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import Layout from "~/components/Layout";
 import { useTranslation } from "next-i18next";
 
-export default function Custom404() {
+// This page is rendered when the user installed the PWA and is offline
+export default function OfflinePage() {
   const { t: translationOffline } = useTranslation("offline");
   const { t: translationCommon } = useTranslation("common");
   return (
