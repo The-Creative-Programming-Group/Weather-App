@@ -451,7 +451,7 @@ const InternalHome = observer(() => {
         ) : (
           <Skeleton className="block h-36 w-11/12 md:hidden xl:w-9/12" />
         )}
-        <div className="grid-rows-7 mb-6 mt-6 grid w-11/12 grid-cols-9 gap-6 xl:w-9/12">
+        <div className="mb-6 mt-6 grid w-11/12 grid-cols-9 grid-rows-7 gap-6 xl:w-9/12">
           {weatherData.data?.dailyForecast ? (
             <>
               <div className="col-span-3 row-span-6 hidden flex-col rounded-xl bg-gray-400 md:flex">
@@ -690,7 +690,7 @@ const InternalHome = observer(() => {
 
           {weatherData.data?.air_quality ? (
             <div className="col-span-5 row-span-3 row-start-4 rounded-md bg-gray-400 md:col-span-2 md:col-start-4 xl:col-span-1 xl:col-start-4">
-              <div className="ml-2 mt-1.5 text-xl">
+              <div className="ml-2 mt-1.5 hyphens-auto break-words text-xl">
                 {translationHome("air quality")}
               </div>
               <div className="relative mb-2 mt-2 flex h-64 items-center justify-center xl:ml-3.5 xl:justify-normal">
@@ -797,7 +797,7 @@ const InternalHome = observer(() => {
                   </HoverCardContent>
                 </HoverCard>
               </div>
-              <div className="ml-3 flex h-full w-full flex-col xl:ml-9">
+              <div className="ml-3 flex h-full w-full flex-col xl:ml-4">
                 <BsWind className="mt-5 h-auto w-10/12 xl:h-32 xl:w-32" />
                 <div className="mb-9 mt-0 flex flex-col gap-5 text-xs xl:mb-0 xl:mt-9 xl:flex-row xl:gap-10 xl:text-xl">
                   <div>
