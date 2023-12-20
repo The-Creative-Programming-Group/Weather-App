@@ -3,6 +3,8 @@ export interface IHourlyForecast {
   time: number;
   // In Kelvin
   temperature: number | undefined;
+  // In Kelvin
+  apparentTemperature: number | undefined;
   // In millimeters
   rain: number | undefined;
   // In millimeters

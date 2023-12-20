@@ -37,6 +37,7 @@ const HourlyWeatherSchema = z.object({
   hourly: z.object({
     time: z.array(z.string()),
     temperature_2m: z.array(z.number()),
+    apparent_temperature: z.array(z.number()),
     rain: z.array(z.number()),
     showers: z.array(z.number()),
     snowfall: z.array(z.number()),
@@ -168,7 +169,7 @@ export const weatherRouter = createTRPCRouter({
       // OpenWeatherMap API
       const urlWeather = `https://api.openweathermap.org/data/2.5/weather?lat=${input.coordinates.lat}&lon=${input.coordinates.lon}&appid=${env.OPEN_WEATHER_API_KEY}`;
       // Open Meteo
-      const urlHourlyForecast = `https://api.open-meteo.com/v1/forecast?latitude=${input.coordinates.lat}&longitude=${input.coordinates.lon}&hourly=temperature_2m,rain,showers,snowfall,precipitation_probability,cloudcover,windspeed_10m&forecast_days=9&timezone=${input.timezone}`;
+      const urlHourlyForecast = `https://api.open-meteo.com/v1/forecast?latitude=${input.coordinates.lat}&longitude=${input.coordinates.lon}&hourly=temperature_2m,rain,showers,snowfall,precipitation_probability,cloudcover,windspeed_10m,apparent_temperature&forecast_days=9&timezone=${input.timezone}`;
       const urlAirQuality = `https://air-quality-api.open-meteo.com/v1/air-quality?latitude=${input.coordinates.lat}&longitude=${input.coordinates.lon}&hourly=pm10,pm2_5,nitrogen_dioxide`;
 
       const [hourlyResult, presentWeatherResult, presentAirQualityResult] =
@@ -294,6 +295,7 @@ export const weatherRouter = createTRPCRouter({
       const currentHour = dayjs().tz(input.timezone).hour();
       for (let i = currentHour; i < currentHour + 15; i++) {
         const temperature = hourlyData?.hourly.temperature_2m[i];
+        const apparentTemperature = hourlyData?.hourly.apparent_temperature[i];
         const rain = hourlyData?.hourly.rain[i];
         const showers = hourlyData?.hourly.showers[i];
         const snowfall = hourlyData?.hourly.snowfall[i];
@@ -306,6 +308,9 @@ export const weatherRouter = createTRPCRouter({
         hourlyForecast.push({
           time,
           temperature: temperature ? temperature + 273.15 : undefined,
+          apparentTemperature: apparentTemperature
+            ? apparentTemperature + 273.15
+            : undefined,
           rain,
           showers,
           snowfall,
@@ -504,7 +509,9 @@ export const weatherRouter = createTRPCRouter({
           timezone: input.timezone,
         },
         // Present weather in Kelvin NOT daily average
-        temperature: presentWeather?.main.temp,
+        temperature: hourlyForecast[0]?.temperature
+          ? hourlyForecast[0].temperature
+          : presentWeather?.main.temp,
         // In Kelvin
         highestTemperature:
           Math.max(...(hourlyData?.hourly.temperature_2m.slice(0, 23) ?? [])) +
@@ -514,7 +521,9 @@ export const weatherRouter = createTRPCRouter({
           Math.min(...(hourlyData?.hourly.temperature_2m.slice(0, 23) ?? [])) +
           273.15,
         // Present weather in Kelvin
-        feels_like: presentWeather?.main.feels_like,
+        feels_like: hourlyForecast[0]?.apparentTemperature
+          ? hourlyForecast[0].apparentTemperature
+          : presentWeather?.main.feels_like,
         // In meters per second
         wind_speed: presentWeather?.wind.speed,
         // Calculates the wind pressure in Pa
