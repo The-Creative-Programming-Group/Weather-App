@@ -3,6 +3,7 @@ import { z } from "zod";
 import citiesJSON from "~/lib/city-list.json";
 import { type ICity } from "~/types";
 import { log } from "next-axiom";
+import Fuse, { type IFuseOptions } from "fuse.js";
 
 const cities = citiesJSON as ICity[];
 
@@ -19,11 +20,19 @@ export const searchRouter = createTRPCRouter({
         user: ctx.ip,
       });
       if (input.name.length === 0) return [];
-      return cities
-        .filter((city: ICity) =>
-          city.name.toLowerCase().includes(input.name.toLowerCase()),
-        )
-        .slice(0, 4);
+      const options: IFuseOptions<(typeof cities)[number]> = {
+        keys: ["name"], // specify the property to search
+        threshold: 0.6,
+        isCaseSensitive: false,
+        shouldSort: true,
+      };
+
+      const fuse = new Fuse(cities, options);
+
+      return fuse
+        .search(input.name)
+        .slice(0, 5)
+        .map((result) => result.item);
     }),
   findCityById: publicProcedure
     .input(
