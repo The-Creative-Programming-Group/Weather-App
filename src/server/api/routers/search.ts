@@ -2,6 +2,7 @@ import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
 import { z } from "zod";
 import citiesJSON from "../../../lib/city-data/city-list.json";
 import admin1JSON from "../../../lib/city-data/admin1.json";
+import admin2JSON from "../../../lib/city-data/admin2.json";
 import { type ICity } from "~/types";
 import { log } from "next-axiom";
 import Fuse, { type IFuseOptions } from "fuse.js";
@@ -25,8 +26,35 @@ interface IAdminJSON {
 
 const cities = citiesJSON as ICityJSON[];
 const admin1 = admin1JSON as IAdminJSON[];
+const admin2 = admin2JSON as IAdminJSON[];
 
 const addRegionToCity = (city: ICityJSON): ICity => {
+  if (city.admin1 === "" || city.country === "") {
+    console.log(city);
+    return {
+      ...city,
+      region: "",
+    };
+  }
+  if (city.admin2 !== "") {
+    const regionCode = city.country + "." + city.admin1 + "." + city.admin2;
+    const region = admin2.find((region) => region.code === regionCode);
+
+    if (!region) {
+      const regionCode = city.country + "." + city.admin1;
+      const region = admin1.find((region) => region.code === regionCode);
+
+      return {
+        ...city,
+        region: region ? region.name : "",
+      };
+    }
+
+    return {
+      ...city,
+      region: region ? region.name : "",
+    };
+  }
   const regionCode = city.country + "." + city.admin1;
   const region = admin1.find((region) => region.code === regionCode);
 
