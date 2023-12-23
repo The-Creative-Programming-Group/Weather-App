@@ -451,7 +451,7 @@ const InternalHome = observer(() => {
         ) : (
           <Skeleton className="block h-36 w-11/12 md:hidden xl:w-9/12" />
         )}
-        <div className="mb-6 mt-6 grid w-11/12 grid-cols-9 grid-rows-7 gap-6 xl:w-9/12">
+        <div className="mb-4 mt-6 grid w-11/12 grid-cols-9 grid-rows-6 gap-6 md:mb-6 md:grid-rows-7 xl:w-9/12">
           {weatherData.data?.dailyForecast ? (
             <>
               <div className="col-span-3 row-span-6 hidden flex-col rounded-xl bg-gray-400 md:flex">
