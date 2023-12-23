@@ -685,7 +685,7 @@ const InternalHome = observer(() => {
               </div>
             </div>
           ) : (
-            <Skeleton className="col-span-5 row-span-2 row-start-2 h-32 md:col-span-2 md:col-start-4" />
+            <Skeleton className="col-span-5 row-span-2 row-start-2 md:col-span-2 md:col-start-4" />
           )}
 
           {weatherData.data?.air_quality ? (
@@ -820,7 +820,7 @@ const InternalHome = observer(() => {
               </div>
             </div>
           ) : (
-            <Skeleton className="col-span-4 col-start-6 row-span-3 row-start-4 h-96 w-full md:col-span-2 md:col-start-6 xl:col-span-3 xl:col-start-5" />
+            <Skeleton className="col-span-4 col-start-6 row-span-3 row-start-4 w-full md:col-span-2 md:col-start-6 xl:col-span-3 xl:col-start-5" />
           )}
           <div className="z-0 col-span-2 col-start-8 row-span-6 hidden rounded-md bg-gray-400 md:block">
             <div className="h-full w-full">
