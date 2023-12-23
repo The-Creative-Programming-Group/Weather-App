@@ -20,7 +20,7 @@ const config = {
     ],
     '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^_' }]
   },
-  ignorePatterns: ['src/lib/renamejsonproperties.js']
+  ignorePatterns: ['src/lib/city-data/renamejsonproperties.js', "src/lib/city-data/convert.js", "src/lib/city-data/download.js"]
 }
 
 module.exports = config

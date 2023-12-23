@@ -33,8 +33,8 @@ dependencies:
     specifier: ^0.0.7
     version: 0.0.7(react@18.2.0)
   '@tanstack/react-query-devtools':
-    specifier: ^5.14.1
-    version: 5.14.1(@tanstack/react-query@4.36.1)(react@18.2.0)
+    specifier: ^5.14.5
+    version: 5.14.5(@tanstack/react-query@4.36.1)(react@18.2.0)
   '@total-typescript/ts-reset':
     specifier: ^0.5.1
     version: 0.5.1
@@ -48,8 +48,8 @@ dependencies:
     specifier: ^10.44.1
     version: 10.44.1
   '@types/eslint':
-    specifier: ^8.44.9
-    version: 8.44.9
+    specifier: ^8.56.0
+    version: 8.56.0
   '@types/leaflet':
     specifier: ^1.9.8
     version: 1.9.8
@@ -117,8 +117,8 @@ dependencies:
     specifier: ^0.1.2
     version: 0.1.2
   lucide-react:
-    specifier: ^0.298.0
-    version: 0.298.0(react@18.2.0)
+    specifier: ^0.300.0
+    version: 0.300.0(react@18.2.0)
   next:
     specifier: ^14.0.4
     version: 14.0.4(@babel/core@7.23.3)(react-dom@18.2.0)(react@18.2.0)
@@ -168,8 +168,8 @@ dependencies:
     specifier: ^2.2.1
     version: 2.2.1
   tailwind-merge:
-    specifier: ^2.1.0
-    version: 2.1.0
+    specifier: ^2.2.0
+    version: 2.2.0
   tailwindcss:
     specifier: ^3.4.0
     version: 3.4.0
@@ -1926,7 +1926,7 @@ packages:
       '@types/react-dom':
         optional: true
     dependencies:
-      '@babel/runtime': 7.23.2
+      '@babel/runtime': 7.23.5
       '@radix-ui/react-primitive': 1.0.3(@types/react-dom@18.2.18)(@types/react@18.2.45)(react-dom@18.2.0)(react@18.2.0)
       '@types/react': 18.2.45
       '@types/react-dom': 18.2.18
@@ -2206,7 +2206,7 @@ packages:
       '@types/react':
         optional: true
     dependencies:
-      '@babel/runtime': 7.23.2
+      '@babel/runtime': 7.23.5
       '@radix-ui/react-use-callback-ref': 1.0.1(@types/react@18.2.45)(react@18.2.0)
       '@types/react': 18.2.45
       react: 18.2.0
@@ -2235,7 +2235,7 @@ packages:
       '@types/react':
         optional: true
     dependencies:
-      '@babel/runtime': 7.23.2
+      '@babel/runtime': 7.23.5
       '@radix-ui/rect': 1.0.1
       '@types/react': 18.2.45
       react: 18.2.0
@@ -2250,7 +2250,7 @@ packages:
       '@types/react':
         optional: true
     dependencies:
-      '@babel/runtime': 7.23.2
+      '@babel/runtime': 7.23.5
       '@radix-ui/react-use-layout-effect': 1.0.1(@types/react@18.2.45)(react@18.2.0)
       '@types/react': 18.2.45
       react: 18.2.0
@@ -2259,7 +2259,7 @@ packages:
   /@radix-ui/rect@1.0.1:
     resolution: {integrity: sha512-fyrgCaedtvMg9NK3en0pnOYJdtfwxUcNolezkNPUsoX57X8oQk+NkqcvzHXD2uKNij6GXmWU9NDru2IWjrO4BQ==}
     dependencies:
-      '@babel/runtime': 7.23.2
+      '@babel/runtime': 7.23.5
     dev: false
 
   /@react-email/body@0.0.4(react@18.2.0):
@@ -2549,17 +2549,17 @@ packages:
     resolution: {integrity: sha512-DJSilV5+ytBP1FbFcEJovv4rnnm/CokuVvrBEtW/Va9DvuJ3HksbXUJEpI0aV1KtuL4ZoO9AVE6PyNLzF7tLeA==}
     dev: false
 
-  /@tanstack/query-devtools@5.13.5:
-    resolution: {integrity: sha512-effSYz9AWcZ6sNd+c8LCBYFIuDZApoCTXEpRlEYChBZpMz9QUUVMLToThwCyUY49+T5pANL3XxgZf3HV7hwJlg==}
+  /@tanstack/query-devtools@5.14.5:
+    resolution: {integrity: sha512-xM8BQbE4FBAVEPr8t6MFbOJP+canDFz0hcY9Ho+5Z4LQciC60wE+7ZALx5n3InP4R7IELx8AodS5G3KYzBAwCg==}
     dev: false
 
-  /@tanstack/react-query-devtools@5.14.1(@tanstack/react-query@4.36.1)(react@18.2.0):
-    resolution: {integrity: sha512-8fuQs0AMQk8D66JUYqdYA33fOObevuWwm1atOnPbtV8PvIscaU0i/cNTqCl1Y10rgbR/QsqxQSJGBZ5TxxBrlA==}
+  /@tanstack/react-query-devtools@5.14.5(@tanstack/react-query@4.36.1)(react@18.2.0):
+    resolution: {integrity: sha512-aDntW1dWc/feVUYwVqfM/r5OXa3RN06VhtYrTYW9fhj0Ks2dJw6Diknh9VpYqhI+gJrhVID95Rv/ZzS6W2lANA==}
     peerDependencies:
-      '@tanstack/react-query': ^5.14.1
+      '@tanstack/react-query': ^5.14.2
       react: ^18.0.0
     dependencies:
-      '@tanstack/query-devtools': 5.13.5
+      '@tanstack/query-devtools': 5.14.5
       '@tanstack/react-query': 4.36.1(react-dom@18.2.0)(react@18.2.0)
       react: 18.2.0
     dev: false
@@ -2645,12 +2645,12 @@ packages:
   /@types/eslint-scope@3.7.7:
     resolution: {integrity: sha512-MzMFlSLBqNF2gcHWO0G1vP/YQyfvrxZ0bF+u7mzUdZ1/xK4A4sru+nraZz5i3iEIk1l1uyicaDVTB4QbbEkAYg==}
     dependencies:
-      '@types/eslint': 8.44.9
+      '@types/eslint': 8.56.0
       '@types/estree': 1.0.0
     dev: false
 
-  /@types/eslint@8.44.9:
-    resolution: {integrity: sha512-6yBxcvwnnYoYT1Uk2d+jvIfsuP4mb2EdIxFnrPABj5a/838qe5bGkNLFOiipX4ULQ7XVQvTxOh7jO+BTAiqsEw==}
+  /@types/eslint@8.56.0:
+    resolution: {integrity: sha512-FlsN0p4FhuYRjIxpbdXovvHQhtlG05O1GG/RNWvdAxTboR438IOTwmrY/vLA+Xfgg06BTkP045M3vpFwTMv1dg==}
     dependencies:
       '@types/estree': 1.0.0
       '@types/json-schema': 7.0.13
@@ -5257,8 +5257,8 @@ packages:
       yallist: 4.0.0
     dev: false
 
-  /lucide-react@0.298.0(react@18.2.0):
-    resolution: {integrity: sha512-tWoxZ663Zf/n8VxXTHnTJsU/w1ysWT1LORnIL1pzqElFdSqBhWbZeJ3sLdCZ5FpzpbkpkYEtluhuTyG2BTDYNQ==}
+  /lucide-react@0.300.0(react@18.2.0):
+    resolution: {integrity: sha512-rQxUUCmWAvNLoAsMZ5j04b2+OJv6UuNLYMY7VK0eVlm4aTwUEjEEHc09/DipkNIlhXUSDn2xoyIzVT0uh7dRsg==}
     peerDependencies:
       react: ^16.5.1 || ^17.0.0 || ^18.0.0
     dependencies:
@@ -6486,8 +6486,8 @@ packages:
       tslib: 2.5.0
     dev: false
 
-  /tailwind-merge@2.1.0:
-    resolution: {integrity: sha512-l11VvI4nSwW7MtLSLYT4ldidDEUwQAMWuSHk7l4zcXZDgnCRa0V3OdCwFfM7DCzakVXMNRwAeje9maFFXT71dQ==}
+  /tailwind-merge@2.2.0:
+    resolution: {integrity: sha512-SqqhhaL0T06SW59+JVNfAqKdqLs0497esifRrZ7jOaefP3o64fdFNDMrAQWZFMxTLJPiHVjRLUywT8uFz1xNWQ==}
     dependencies:
       '@babel/runtime': 7.23.5
     dev: false

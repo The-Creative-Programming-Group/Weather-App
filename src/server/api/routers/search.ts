@@ -1,11 +1,40 @@
 import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
 import { z } from "zod";
-import citiesJSON from "~/lib/city-list.json";
+import citiesJSON from "../../../lib/city-data/city-list.json";
+import admin1JSON from "../../../lib/city-data/admin1.json";
 import { type ICity } from "~/types";
 import { log } from "next-axiom";
 import Fuse, { type IFuseOptions } from "fuse.js";
 
-const cities = citiesJSON as ICity[];
+interface ICityJSON {
+  id: number;
+  name: string;
+  admin1: string;
+  admin2: string;
+  country: string;
+  coord: {
+    lon: number;
+    lat: number;
+  };
+}
+
+interface IAdminJSON {
+  code: string;
+  name: string;
+}
+
+const cities = citiesJSON as ICityJSON[];
+const admin1 = admin1JSON as IAdminJSON[];
+
+const addRegionToCity = (city: ICityJSON): ICity => {
+  const regionCode = city.country + "." + city.admin1;
+  const region = admin1.find((region) => region.code === regionCode);
+
+  return {
+    ...city,
+    region: region ? region.name : "",
+  };
+};
 
 export const searchRouter = createTRPCRouter({
   findCitiesByName: publicProcedure
@@ -14,7 +43,7 @@ export const searchRouter = createTRPCRouter({
         name: z.string().min(0).max(70),
       }),
     )
-    .query(({ input, ctx }) => {
+    .query(({ input, ctx }): ICity[] => {
       log.info("User searched for cities", {
         name: input.name,
         user: ctx.ip,
@@ -32,7 +61,7 @@ export const searchRouter = createTRPCRouter({
       return fuse
         .search(input.name)
         .slice(0, 5)
-        .map((result) => result.item);
+        .map((result) => addRegionToCity(result.item));
     }),
   findCityById: publicProcedure
     .input(
@@ -40,12 +69,14 @@ export const searchRouter = createTRPCRouter({
         id: z.number(),
       }),
     )
-    .query(({ input, ctx }) => {
+    .query(({ input, ctx }): { city: ICity | undefined } => {
       log.info("User searched for city by id", {
         id: input.id,
         user: ctx.ip,
       });
-      return { city: cities.find((city: ICity) => city.id === input.id) };
+      const city = cities.find((city) => city.id === input.id);
+      if (!city) return { city: undefined };
+      return { city: addRegionToCity(city) };
     }),
   findCityByName: publicProcedure
     .input(
@@ -53,16 +84,17 @@ export const searchRouter = createTRPCRouter({
         name: z.string().min(0).max(70),
       }),
     )
-    .query(({ input, ctx }) => {
+    .query(({ input, ctx }): { city: undefined | ICity } => {
       log.info("User searched for city by name", {
         name: input.name,
         user: ctx.ip,
       });
       if (input.name.length === 0) return { city: undefined };
-      return {
-        city: cities.find(
-          (city: ICity) => city.name.toLowerCase() === input.name.toLowerCase(),
-        ),
-      };
+      const city = cities.find(
+        (city: ICityJSON) =>
+          city.name.toLowerCase() === input.name.toLowerCase(),
+      );
+      if (!city) return { city: undefined };
+      return { city: addRegionToCity(city) };
     }),
 });

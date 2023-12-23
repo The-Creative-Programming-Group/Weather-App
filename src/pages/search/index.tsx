@@ -230,7 +230,10 @@ const Search = () => {
                       </span>
                     ))}
                 </p>
-                {city.country}
+                <div className="flex gap-3">
+                  <div>{city.region}</div>
+                  <div>{city.country}</div>
+                </div>
               </div>
             );
           }

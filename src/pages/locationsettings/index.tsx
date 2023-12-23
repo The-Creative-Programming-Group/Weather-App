@@ -238,7 +238,10 @@ const LocationSettings = observer(() => {
                           </span>
                         ))}
                     </p>
-                    {city.country}
+                    <div className="flex gap-3">
+                      <div>{city.region}</div>
+                      <div>{city.country}</div>
+                    </div>
                   </div>
                 );
               }
@@ -262,7 +265,10 @@ const LocationSettings = observer(() => {
                         className="mr-5 flex w-full justify-between"
                       >
                         <span>{city.name}</span>{" "}
-                        <span className="text-gray-500">{city.country}</span>
+                        <div className="flex gap-3">
+                          <span className="text-gray-500">{city.region}</span>{" "}
+                          <span className="text-gray-500">{city.country}</span>
+                        </div>
                       </div>
                       <div className="flex">
                         <RxCross2
