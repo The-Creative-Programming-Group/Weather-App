@@ -695,7 +695,10 @@ const InternalHome = observer(() => {
               </div>
               <div className="relative mb-2 mt-2 flex h-64 items-center justify-center xl:ml-3.5 xl:justify-normal">
                 <div className="text-md mt-2 w-20 font-medium">
-                  {weatherData.data?.air_quality.toPrecision(2)} <br />
+                  {weatherData.data?.air_quality !== 100
+                    ? weatherData.data?.air_quality.toPrecision(2)
+                    : "100"}{" "}
+                  <br />
                   {weatherData.data?.air_quality > 90
                     ? translationHome("air quality text very poor")
                     : weatherData.data?.air_quality > 70

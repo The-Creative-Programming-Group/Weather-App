@@ -290,6 +290,8 @@ export const weatherRouter = createTRPCRouter({
         );
       }
 
+      // log.debug("presentAirQualityIndex", { presentAirQualityIndex });
+
       const hourlyForecast: IHourlyForecast[] = [];
 
       const currentHour = dayjs().tz(input.timezone).hour();
