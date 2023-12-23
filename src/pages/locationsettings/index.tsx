@@ -142,7 +142,7 @@ const LocationSettings = observer(() => {
           >
             <div
               id="styles-setup"
-              className="flex w-8/12 flex-col items-center md:w-5/12"
+              className="flex w-9/12 flex-col items-center md:w-5/12"
             >
               {/* I added the padding right because else on small screens the text would be under the share button */}
               <label className="mb-2 w-full pr-16 text-left font-bold">
@@ -199,7 +199,7 @@ const LocationSettings = observer(() => {
                   <div
                     className={
                       isInputActive
-                        ? "hover: flex h-auto w-8/12 cursor-pointer justify-between border-b-2 border-gray-400 bg-[#d8d5db] p-5 md:w-5/12"
+                        ? "flex h-auto w-9/12 cursor-pointer items-center justify-between border-b-2 border-gray-400 bg-[#d8d5db] p-5 md:w-5/12"
                         : "hidden"
                     }
                     key={city.id}
@@ -222,7 +222,7 @@ const LocationSettings = observer(() => {
                       // console.log(searchValue);
                     }}
                   >
-                    <p>
+                    <span className="w-1/2">
                       {city.name
                         .split("")
                         .map((letter: string, letterIndex: number) => (
@@ -237,24 +237,26 @@ const LocationSettings = observer(() => {
                             {letter}
                           </span>
                         ))}
-                    </p>
-                    <div className="flex gap-3">
-                      <div>{city.region}</div>
-                      <div>{city.country}</div>
+                    </span>
+                    <div className="flex w-1/2 flex-row-reverse items-center gap-0.5 sm:w-1/4 sm:gap-3">
+                      <span className="text-gray-500">{city.country}</span>
+                      <span className="w-2/3 overflow-hidden overflow-ellipsis text-gray-500 sm:w-full">
+                        {city.region}
+                      </span>{" "}
                     </div>
                   </div>
                 );
               }
             })}
             <div className="mt-2 flex w-full justify-center">
-              <div className="block w-8/12 md:w-5/12">
+              <div className="block w-9/12 md:w-5/12">
                 {addedCities$.get().map((city: ICity) => {
                   return (
                     <div
                       className={
                         activeCity$.id.get() === city.id
-                          ? "hover: mt-2 flex cursor-pointer justify-between border-2 border-black bg-[#d8d5db] p-2"
-                          : "hover: mt-2 flex cursor-pointer justify-between border border-solid border-black bg-[#d8d5db] p-2"
+                          ? "relative mt-2 flex cursor-pointer justify-between border-2 border-black bg-[#d8d5db] p-2"
+                          : "relative mt-2 flex cursor-pointer justify-between border border-solid border-black bg-[#d8d5db] p-2"
                       }
                       key={city.id}
                     >
@@ -262,18 +264,20 @@ const LocationSettings = observer(() => {
                         onClick={() => {
                           activeCity$.set(city);
                         }}
-                        className="mr-5 flex w-full justify-between"
+                        className="mr-5 flex w-full items-center justify-between"
                       >
-                        <span>{city.name}</span>{" "}
-                        <div className="flex gap-3">
-                          <span className="text-gray-500">{city.region}</span>{" "}
+                        <span className="w-1/2">{city.name}</span>{" "}
+                        <div className="flex w-1/2 flex-row-reverse items-center gap-0.5 sm:w-1/4 sm:gap-3">
                           <span className="text-gray-500">{city.country}</span>
+                          <span className="w-2/3 overflow-hidden overflow-ellipsis text-gray-500 sm:w-full">
+                            {city.region}
+                          </span>{" "}
                         </div>
                       </div>
-                      <div className="flex">
+                      <div className="absolute right-0.5 top-1/2 h-5 w-5 -translate-y-1/2">
                         <RxCross2
                           onClick={() => removeCityFromAddedCities(city)}
-                          className="mr-2 mt-1 md:mr-5"
+                          className="h-full w-full"
                         />
                       </div>
                     </div>

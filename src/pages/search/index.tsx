@@ -192,7 +192,7 @@ const Search = () => {
               <div
                 className={
                   isInputActive
-                    ? "z-20 flex h-auto w-9/12 cursor-pointer justify-between border-b-2 border-gray-400 bg-[#383b53] p-5 text-amber-50 md:w-6/12"
+                    ? "z-20 flex h-auto w-9/12 cursor-pointer items-center justify-between border-b-2 border-gray-400 bg-[#383b53] p-5 text-amber-50 md:w-6/12"
                     : "hidden"
                 }
                 key={city.id}
@@ -214,7 +214,7 @@ const Search = () => {
                   inputRef.current?.blur();
                 }}
               >
-                <p>
+                <span>
                   {city.name
                     .split("")
                     .map((letter: string, letterIndex: number) => (
@@ -229,10 +229,12 @@ const Search = () => {
                         {letter}
                       </span>
                     ))}
-                </p>
-                <div className="flex gap-3">
-                  <div>{city.region}</div>
-                  <div>{city.country}</div>
+                </span>
+                <div className="flex w-1/2 flex-row-reverse items-center gap-0.5 sm:w-1/4 sm:gap-3">
+                  <span>{city.country}</span>
+                  <span className="w-2/3 overflow-hidden overflow-ellipsis sm:w-full">
+                    {city.region}
+                  </span>{" "}
                 </div>
               </div>
             );
