@@ -451,10 +451,10 @@ const InternalHome = observer(() => {
         ) : (
           <Skeleton className="block h-36 w-11/12 md:hidden xl:w-9/12" />
         )}
-        <div className="mb-4 mt-6 grid w-11/12 grid-cols-9 grid-rows-6 gap-6 md:mb-6 md:grid-rows-7 xl:w-9/12">
+        <div className="mb-6 mt-6 grid w-11/12 grid-cols-9 grid-rows-4 gap-6 md:mb-6 xl:w-9/12">
           {weatherData.data?.dailyForecast ? (
             <>
-              <div className="col-span-3 row-span-6 hidden flex-col rounded-xl bg-gray-400 md:flex">
+              <div className="col-span-3 row-span-4 hidden flex-col rounded-xl bg-gray-400 md:flex">
                 <div className="flex w-full items-center justify-between pb-2 pl-5 pr-3 pt-2 text-xl">
                   {translationHome("9 day forecast")}{" "}
                   <HoverCard>
@@ -540,7 +540,7 @@ const InternalHome = observer(() => {
               </div>
             </>
           ) : (
-            <Skeleton className="col-span-3 row-span-6 hidden w-full md:block" />
+            <Skeleton className="col-span-3 row-span-4 hidden w-full md:block" />
           )}
 
           {weatherData.data?.precipitationProbabilities ? (
@@ -640,7 +640,7 @@ const InternalHome = observer(() => {
           )}
 
           {weatherData.data?.feels_like ? (
-            <div className="col-span-5 row-span-2 row-start-2 rounded-md bg-gray-400 md:col-span-2 md:col-start-4">
+            <div className="col-span-5 row-span-1 row-start-2 rounded-md bg-gray-400 md:col-span-2 md:col-start-4">
               <div className="mt-1.5 flex justify-between pl-4 pr-3 text-xl">
                 {translationHome("feels like")}{" "}
                 <HoverCard>
@@ -685,11 +685,11 @@ const InternalHome = observer(() => {
               </div>
             </div>
           ) : (
-            <Skeleton className="col-span-5 row-span-2 row-start-2 md:col-span-2 md:col-start-4" />
+            <Skeleton className="col-span-5 row-span-1 row-start-2 md:col-span-2 md:col-start-4" />
           )}
 
           {weatherData.data?.air_quality ? (
-            <div className="col-span-5 row-span-3 row-start-4 rounded-md bg-gray-400 md:col-span-2 md:col-start-4 xl:col-span-1 xl:col-start-4">
+            <div className="col-span-5 row-span-2 row-start-3 rounded-md bg-gray-400 md:col-span-2 md:col-start-4 xl:col-span-1 xl:col-start-4">
               <div className="ml-2 mt-1.5 hyphens-auto break-words text-xl">
                 {translationHome("air quality")}
               </div>
@@ -726,11 +726,11 @@ const InternalHome = observer(() => {
               </div>
             </div>
           ) : (
-            <Skeleton className="col-span-5 row-span-3 row-start-4 md:col-span-2 md:col-start-4 xl:col-span-1 xl:col-start-4" />
+            <Skeleton className="col-span-5 row-span-2 row-start-3 md:col-span-2 md:col-start-4 xl:col-span-1 xl:col-start-4" />
           )}
 
           {weatherData.data?.visibility ? (
-            <div className="col-span-4 col-start-6 row-span-2 row-start-2 rounded-md bg-gray-400 md:col-span-2 md:col-start-6">
+            <div className="col-span-4 col-start-6 row-span-1 row-start-2 rounded-md bg-gray-400 md:col-span-2 md:col-start-6">
               <div className="mt-1.5 flex justify-between pl-4 pr-3 text-xl">
                 {translationHome("visibility")}{" "}
                 <HoverCard>
@@ -759,12 +759,12 @@ const InternalHome = observer(() => {
               </div>
             </div>
           ) : (
-            <Skeleton className="col-span-4 col-start-6 row-span-2 row-start-2 md:col-span-2 md:col-start-6" />
+            <Skeleton className="col-span-4 col-start-6 row-span-1 row-start-2 md:col-span-2 md:col-start-6" />
           )}
 
           {weatherData.data?.wind_speed !== undefined &&
           weatherData.data?.wind_pressure !== undefined ? (
-            <div className="col-span-4 col-start-6 row-span-3 row-start-4 rounded-md bg-gray-400 md:col-span-2 md:col-start-6 xl:col-span-3 xl:col-start-5">
+            <div className="col-span-4 col-start-6 row-span-2 row-start-3 rounded-md bg-gray-400 md:col-span-2 md:col-start-6 xl:col-span-3 xl:col-start-5">
               <div className="mt-1.5 flex w-full justify-between pl-4 pr-3 text-xl">
                 {translationHome("wind pressure")}{" "}
                 <HoverCard>
@@ -823,9 +823,9 @@ const InternalHome = observer(() => {
               </div>
             </div>
           ) : (
-            <Skeleton className="col-span-4 col-start-6 row-span-3 row-start-4 w-full md:col-span-2 md:col-start-6 xl:col-span-3 xl:col-start-5" />
+            <Skeleton className="col-span-4 col-start-6 row-span-2 row-start-3 w-full md:col-span-2 md:col-start-6 xl:col-span-3 xl:col-start-5" />
           )}
-          <div className="z-0 col-span-2 col-start-8 row-span-6 hidden rounded-md bg-gray-400 md:block">
+          <div className="z-0 col-span-2 col-start-8 row-span-4 hidden rounded-md bg-gray-400 md:block">
             <div className="h-full w-full">
               <Map
                 position={mapPosition}
