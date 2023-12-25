@@ -764,7 +764,7 @@ const InternalHome = observer(() => {
 
           {weatherData.data?.wind_speed !== undefined &&
           weatherData.data?.wind_pressure !== undefined ? (
-            <div className="col-span-4 col-start-6 row-span-1 row-start-3 rounded-md bg-gray-400 md:col-span-2 md:col-start-6 xl:col-span-3 xl:col-start-5">
+            <div className="col-span-4 col-start-6 row-span-2 row-start-3 rounded-md bg-gray-400 md:col-span-2 md:col-start-6 xl:col-span-3 xl:col-start-5">
               <div className="mt-1.5 flex w-full justify-between pl-4 pr-3 text-xl">
                 {translationHome("wind pressure")}{" "}
                 <HoverCard>
