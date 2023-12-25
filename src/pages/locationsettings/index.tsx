@@ -11,6 +11,8 @@ import { type ICity } from "~/types";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useTranslation } from "next-i18next";
 import { api } from "~/lib/utils/api";
+import { ClipLoader } from "react-spinners";
+import cn from "classnames";
 
 const LocationSettings = observer(() => {
   const [searchValue, setSearchValue] = useState<ICity>({
@@ -148,7 +150,7 @@ const LocationSettings = observer(() => {
               <label className="mb-2 w-full pr-16 text-left font-bold">
                 {translationLocationSettings("add new location")}
               </label>
-              <div className="flex w-full justify-center">
+              <div className="relative flex w-full justify-center">
                 <Image
                   className="w-12 transform border-b-2 border-black bg-[#d8d5db] pb-3 pl-3 pt-3"
                   src={search2Image}
@@ -157,7 +159,15 @@ const LocationSettings = observer(() => {
                   height={56}
                 />
                 <input
-                  className="w-full border-b-2 border-black bg-[#d8d5db] pb-0.5 pl-3 pt-0.5 text-xl font-bold text-black outline-none"
+                  className={cn(
+                    "w-full border-b-2 border-black bg-[#d8d5db] pb-0.5 pl-3 pt-0.5 text-xl font-bold text-black outline-none",
+                    {
+                      "pr-10":
+                        findCitiesByNameStatus === "loading" &&
+                        inputRef.current?.value &&
+                        inputRef.current?.value.length > 0,
+                    },
+                  )}
                   autoFocus
                   placeholder={translationLocationSettings(
                     "search input placeholder",
@@ -186,6 +196,13 @@ const LocationSettings = observer(() => {
                     }
                   }}
                 />
+                <div className="absolute right-3 top-1/2 mt-0.5 -translate-y-1/2">
+                  {findCitiesByNameStatus === "loading" &&
+                  inputRef.current?.value &&
+                  inputRef.current?.value.length > 0 ? (
+                    <ClipLoader color={"#ffffff"} loading={true} size={20} />
+                  ) : null}
+                </div>
               </div>{" "}
             </div>
             {results.map((city: ICity) => {

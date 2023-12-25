@@ -11,6 +11,8 @@ import { useRouter } from "next/router";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useTranslation } from "next-i18next";
 import { api } from "~/lib/utils/api";
+import { ClipLoader } from "react-spinners";
+import cn from "classnames";
 
 const Search = () => {
   const router = useRouter();
@@ -142,7 +144,7 @@ const Search = () => {
       <div className="flex w-full items-center justify-center">
         <div
           id="styles-setup"
-          className="mt-80 flex w-9/12 justify-center border-8 border-solid border-[#2d3142] md:w-6/12"
+          className="relative mt-80 flex w-9/12 justify-center border-8 border-solid border-[#2d3142] md:w-6/12"
         >
           <Image
             className="transform bg-[#383b53] pb-1.5 pl-1.5 pt-1.5 md:w-12 md:pb-3 md:pl-3 md:pt-3"
@@ -153,7 +155,15 @@ const Search = () => {
           />
 
           <input
-            className="w-full bg-[#383b53] pl-1.5 text-xl text-white outline-none md:pb-0.5 md:pl-3 md:pt-0.5"
+            className={cn(
+              "w-full bg-[#383b53] pl-1.5 pr-10 text-xl text-white outline-none md:pb-0.5 md:pl-3 md:pt-0.5",
+              {
+                "pr-10":
+                  findCitiesByNameStatus === "loading" &&
+                  inputRef.current?.value &&
+                  inputRef.current?.value.length > 0,
+              },
+            )}
             autoFocus
             placeholder={translationSearch("search input placeholder")}
             type="text"
@@ -180,6 +190,13 @@ const Search = () => {
               }
             }}
           />
+          <div className="absolute right-3 top-1/2 mt-0.5 -translate-y-1/2">
+            {findCitiesByNameStatus === "loading" &&
+            inputRef.current?.value &&
+            inputRef.current?.value.length > 0 ? (
+              <ClipLoader color={"#ffffff"} loading={true} size={20} />
+            ) : null}
+          </div>
         </div>
       </div>
       <div className="flex flex-col items-center">
