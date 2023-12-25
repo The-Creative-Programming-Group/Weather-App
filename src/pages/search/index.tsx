@@ -156,7 +156,7 @@ const Search = () => {
 
           <input
             className={cn(
-              "w-full bg-[#383b53] pl-1.5 pr-10 text-xl text-white outline-none md:pb-0.5 md:pl-3 md:pt-0.5",
+              "w-full bg-[#383b53] pl-1.5 text-xl text-white outline-none md:pb-0.5 md:pl-3 md:pt-0.5",
               {
                 "pr-10":
                   findCitiesByNameStatus === "loading" &&
