@@ -505,6 +505,9 @@ export const weatherRouter = createTRPCRouter({
         );
       });
 
+      // For testing purposes
+      // await new Promise((resolve) => setTimeout(resolve, 100000));
+
       return {
         time: {
           time: dayjs().tz(input.timezone).format(),
