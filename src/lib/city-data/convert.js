@@ -1,61 +1,61 @@
-const fs = require("fs");
-const jsonfile = require("jsonfile");
-const readline = require("readline");
+const fs = require('fs')
+const jsonfile = require('jsonfile')
+const readline = require('readline')
 
-const removeDoubleQuotes = (value) => value.replaceAll('"', "");
+const removeDoubleQuotes = (value) => value.replaceAll('"', '')
 
 const txtToJson = (filename, columnNameMapping = {}, jsonFilePath) => {
   return new Promise((resolve, reject) => {
-    console.log(`Converting ${filename}.txt to ${jsonFilePath}`);
-    const txtFilePath = `./${filename}.txt`;
-    jsonFilePath = jsonFilePath || `./${filename}.json`;
-    let entries = [],
-      i = 0,
-      lineValues;
+    console.log(`Converting ${filename}.txt to ${jsonFilePath}`)
+    const txtFilePath = `./${filename}.txt`
+    jsonFilePath = jsonFilePath || `./${filename}.json`
+    const entries = []
+    let i = 0
+    let lineValues
     const mappedColumnIndexes = Object.keys(columnNameMapping).map((index) =>
-      parseInt(index),
-    );
+      parseInt(index)
+    )
 
     readline
       .createInterface({
         input: fs.createReadStream(txtFilePath),
         output: process.stdout,
-        terminal: false,
+        terminal: false
       })
-      .on("line", function (line) {
-        lineValues = line.split("\t");
+      .on('line', function (line) {
+        lineValues = line.split('\t')
         if (i !== 0) {
           entries.push(
             lineValues.reduce((entry, value, valueIndex) => {
               if (mappedColumnIndexes.includes(valueIndex)) {
                 entry[columnNameMapping[valueIndex]] =
-                  removeDoubleQuotes(value);
+                  removeDoubleQuotes(value)
               }
 
-              return entry;
-            }, {}),
-          );
+              return entry
+            }, {})
+          )
         }
-        i++;
+        i++
       })
-      .on("close", function () {
-        console.log(`Writing ${i} entries to ${jsonFilePath}`);
+      .on('close', function () {
+        console.log(`Writing ${i} entries to ${jsonFilePath}`)
         jsonfile.writeFile(
           jsonFilePath,
           entries,
           { spaces: 2 },
           function (err) {
             if (err) {
-              console.error(err);
-              reject(err);
+              console.error(err)
+              reject(err)
             } else {
-              resolve();
+              resolve()
             }
-          },
-        );
-      });
-  });
-};
+          }
+        )
+      })
+  })
+}
 
 // geonameid         : integer id of record in geonames database
 // name              : name of geographical point (utf8) varchar(200)
@@ -78,81 +78,81 @@ const txtToJson = (filename, columnNameMapping = {}, jsonFilePath) => {
 // modification date : date of last modification in yyyy-MM-dd format
 Promise.all([
   txtToJson(
-    "cities1000",
+    'cities1000',
     {
-      0: "id",
-      8: "country",
-      1: "name",
-      4: "lat",
-      5: "lng",
-      10: "admin1",
-      11: "admin2",
+      0: 'id',
+      8: 'country',
+      1: 'name',
+      4: 'lat',
+      5: 'lng',
+      10: 'admin1',
+      11: 'admin2'
     },
-    "./cities.json",
+    './cities.json'
   ),
 
   txtToJson(
-    "admin1CodesASCII",
+    'admin1CodesASCII',
     {
-      0: "code",
-      1: "name",
+      0: 'code',
+      1: 'name'
     },
-    "./admin1.json",
+    './admin1.json'
   ),
 
   txtToJson(
-    "admin2Codes",
+    'admin2Codes',
     {
-      0: "code",
-      1: "name",
+      0: 'code',
+      1: 'name'
     },
-    "./admin2.json",
+    './admin2.json'
   ),
 
   txtToJson(
-    "DE",
+    'DE',
     {
-      0: "alternateNameId",
-      1: "geonameid",
-      2: "isolanguage",
-      3: "alternateName",
-      4: "isPreferredName",
-      5: "isShortName",
-      6: "isColloquial",
-      7: "isHistoric",
-      8: "from",
-      9: "to",
+      0: 'alternateNameId',
+      1: 'geonameid',
+      2: 'isolanguage',
+      3: 'alternateName',
+      4: 'isPreferredName',
+      5: 'isShortName',
+      6: 'isColloquial',
+      7: 'isHistoric',
+      8: 'from',
+      9: 'to'
     },
-    "./DE.json",
-  ),
+    './DE.json'
+  )
 ]).then(() => {
-  console.log("Done creating JSON files");
+  console.log('Done creating JSON files')
 
-  console.log("Starting to add German names to cities.json");
+  console.log('Starting to add German names to cities.json')
 
-  const cities = JSON.parse(fs.readFileSync("./cities.json", "utf8"));
-  const germanNames = JSON.parse(fs.readFileSync("./DE.json", "utf8"));
+  const cities = JSON.parse(fs.readFileSync('./cities.json', 'utf8'))
+  const germanNames = JSON.parse(fs.readFileSync('./DE.json', 'utf8'))
 
   // Add the German names to the cities
   cities.forEach((city) => {
     const germanNameEntry = germanNames.find(
       (entry) =>
         entry.geonameid === city.id &&
-        entry.isolanguage === "de" &&
-        entry.isPreferredName === "1",
-    );
+        entry.isolanguage === 'de' &&
+        entry.isPreferredName === '1'
+    )
     if (germanNameEntry) {
       // console.debug(germanNameEntry);
       const germanCity = {
         ...city,
-        name: germanNameEntry.alternateName,
-      };
-      cities.push(germanCity);
+        name: germanNameEntry.alternateName
+      }
+      cities.push(germanCity)
     }
-  });
+  })
 
   // Write the updated cities back to the cities.json file
-  fs.writeFileSync("./cities.json", JSON.stringify(cities, null, 2), "utf8");
+  fs.writeFileSync('./cities.json', JSON.stringify(cities, null, 2), 'utf8')
 
-  console.log("Done adding German names to cities.json");
-});
+  console.log('Done adding German names to cities.json')
+})
