@@ -10,6 +10,7 @@ import { appWithTranslation } from "next-i18next";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import Head from "next/head";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import { PWALifeCycle } from "~/components/PWALifecycle";
 
 // Next font inter
 const inter = Inter({ subsets: ["latin-ext"] });
@@ -26,6 +27,7 @@ const MyApp: AppType = ({ Component, pageProps }) => {
         <meta name="theme-color" content="#2d3142" />
         <link rel="manifest" href="/manifest.json" />
       </Head>
+      <PWALifeCycle />
       <main className={inter.className}>
         <Component {...pageProps} />
       </main>
