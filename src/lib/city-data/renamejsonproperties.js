@@ -15,10 +15,6 @@ fs.readFile(filePath, "utf8", (err, data) => {
     // Parse the JSON data.
     const jsonData = JSON.parse(data);
 
-    jsonData.forEach((item, index) => {
-      item.id = index + 1;
-    });
-
     // Make the lat and lng into coord
     jsonData.forEach((item) => {
       item.coord = {
@@ -27,6 +23,7 @@ fs.readFile(filePath, "utf8", (err, data) => {
       };
       delete item.lat;
       delete item.lng;
+      item.id = Number(item.id);
     });
 
     // Convert the updated JSON data back to a string.

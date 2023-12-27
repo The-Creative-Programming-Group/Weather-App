@@ -1,8 +1,8 @@
-const http = require('https'); // or 'https' for https:// URLs
-const fs = require('fs');
-const yauzl = require('yauzl');
+const http = require("https"); // or 'https' for https:// URLs
+const fs = require("fs");
+const yauzl = require("yauzl");
 
-const baseURL = 'https://download.geonames.org/export/dump/';
+const baseURL = "https://download.geonames.org/export/dump/";
 const downloadGeonameFile = (filename) => {
   const writeStream = fs.createWriteStream(filename);
   const fileURL = `${baseURL}${filename}`;
@@ -10,43 +10,54 @@ const downloadGeonameFile = (filename) => {
   console.log(`Downloading ${fileURL}`);
   http.get(fileURL, (response) => {
     response.pipe(writeStream);
-    writeStream.on('finish', () => {
+    writeStream.on("finish", () => {
       writeStream.close();
       console.log(`Download complete: ${filename}`);
     });
   });
 };
 
-downloadGeonameFile('admin1CodesASCII.txt');
-downloadGeonameFile('admin2Codes.txt');
+downloadGeonameFile("admin1CodesASCII.txt");
+downloadGeonameFile("admin2Codes.txt");
 
-const txtFilename = 'cities1000.txt';
-const zipFilename = 'cities1000.zip';
-const zipFile = fs.createWriteStream(zipFilename);
-http.get(`${baseURL}${zipFilename}`, (response) => {
-  response.pipe(zipFile);
+const txtFilenames = ["cities1000.txt", "DE.txt"];
+const zipFilenames = ["cities1000.zip", "alternatenames/DE.zip"];
+const localeZipFilenames = ["cities1000.zip", "DE.zip"];
 
-  zipFile.on('finish', () => {
-    zipFile.close();
-    console.log('Download Completed');
+zipFilenames.forEach((zipFilename, index) => {
+  const zipFile = fs.createWriteStream(localeZipFilenames[index]);
+  http.get(`${baseURL}${zipFilename}`, (response) => {
+    response.pipe(zipFile);
 
-    yauzl.open(zipFilename, { lazyEntries: true }, (err, zipfile) => {
-      if (err) throw err;
-      zipfile.readEntry();
-      zipfile.on('entry', (entry) => {
-        if (entry.fileName === txtFilename) {
-          const txtFile = fs.createWriteStream(entry.fileName);
-          zipfile.openReadStream(entry, (err, readStream) => {
-            if (err) {
-              throw err;
-            }
-            readStream.on('end', function () {
+    zipFile.on("finish", () => {
+      zipFile.close();
+      console.log(`Download of ${baseURL}${zipFilename} Completed`);
+
+      yauzl.open(
+        localeZipFilenames[index],
+        { lazyEntries: true },
+        (err, zipfile) => {
+          if (err) throw err;
+          zipfile.readEntry();
+          zipfile.on("entry", (entry) => {
+            if (entry.fileName === txtFilenames[index]) {
+              const txtFile = fs.createWriteStream(entry.fileName);
+              zipfile.openReadStream(entry, (err, readStream) => {
+                if (err) {
+                  throw err;
+                }
+                readStream.on("end", function () {
+                  zipfile.readEntry();
+                });
+                readStream.pipe(txtFile);
+              });
+              console.log(`Extracted ${entry.fileName}`);
+            } else {
               zipfile.readEntry();
-            });
-            readStream.pipe(txtFile);
+            }
           });
-        }
-      });
+        },
+      );
     });
   });
 });
