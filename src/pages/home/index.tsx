@@ -359,14 +359,14 @@ const InternalHome = observer(() => {
                   }
                   return (
                     <div
-                      className="m-3 flex flex-col items-center md:m-6"
+                      className="m-3 flex flex-col items-center justify-center text-center md:m-6"
                       key={index}
                     >
                       <div className="mt-1.5 font-semibold">{time}</div>
                       {isSunsetOrSunrise && (
-                        <div className="mt-1.5">{sunEvent}</div>
+                        <div className="mt-1.5 text-center">{sunEvent}</div>
                       )}
-                      <div className="h-12 w-12">
+                      <div className="flex h-12 w-12 justify-center">
                         {weatherState({ hour: index, icons: true })}
                       </div>
                       {hourlyForecast.temperature ? (
