@@ -8,6 +8,7 @@
   "air quality": "Luftqualität",
   "pressure": "Luftdruck",
   "speed": "Geschwindigkeit",
+  "moon phase": "Mondphase",
 
   "early morning": "Früh",
   "morning": "Morgen",
@@ -53,5 +54,16 @@
 
   "wind pressure card title": "Derzeitiger Wind",
 
-  "not available": "Nicht verfügbar"
+  "not available": "Nicht verfügbar",
+
+  "moon phase card title": "Derzeitige Mondphase",
+  "moon phase card content": "Die Mondphase ist die Form des Mondes, die wir von der Erde aus sehen können.",
+
+  "moon phase new moon": "Neumond",
+  "moon phase waxing crescent": "Zunehmende Sichel",
+  "moon phase first quarter": "Erstes Viertel",
+  "moon phase waxing gibbous": "Zunehmender Mond",
+  "moon phase full moon": "Vollmond",
+    "moon phase waning gibbous": "Abnehmender Mond",
+    "moon phase last quarter": "Letztes Viertel"
 }

@@ -115,6 +115,12 @@ const PresentAirQualitySchema = z.object({
 
 type PresentAirQuality = z.infer<typeof PresentAirQualitySchema> | undefined;
 
+const MoonPhaseSchema = z.object({
+  moonPhase: z.array(z.object({ icon: z.string() })),
+});
+
+type MoonPhase = z.infer<typeof MoonPhaseSchema> | undefined;
+
 /**
  * Calculates the Air Quality Index (AQI) based on the given PM10 and PM2.5 values.
  *
@@ -171,17 +177,29 @@ export const weatherRouter = createTRPCRouter({
       // Open Meteo
       const urlHourlyForecast = `https://api.open-meteo.com/v1/forecast?latitude=${input.coordinates.lat}&longitude=${input.coordinates.lon}&hourly=temperature_2m,rain,showers,snowfall,precipitation_probability,cloudcover,windspeed_10m,apparent_temperature&forecast_days=9&timezone=${input.timezone}`;
       const urlAirQuality = `https://air-quality-api.open-meteo.com/v1/air-quality?latitude=${input.coordinates.lat}&longitude=${input.coordinates.lon}&hourly=pm10,pm2_5,nitrogen_dioxide`;
+      // QWeather
+      const urlMoonPhase = `https://devapi.qweather.com/v7/astronomy/moon?location=${
+        input.coordinates.lon
+      },${input.coordinates.lat}&key=${env.QWEATHER_API_KEY}&date=${dayjs()
+        .tz(input.timezone)
+        .format("YYYYMMDD")}`;
 
-      const [hourlyResult, presentWeatherResult, presentAirQualityResult] =
-        await Promise.allSettled([
-          axios.get<HourlyWeather>(urlHourlyForecast),
-          axios.get<PresentWeather>(urlWeather),
-          axios.get<PresentAirQuality>(urlAirQuality),
-        ]);
+      const [
+        hourlyResult,
+        presentWeatherResult,
+        presentAirQualityResult,
+        moonPhaseResult,
+      ] = await Promise.allSettled([
+        axios.get<HourlyWeather>(urlHourlyForecast),
+        axios.get<PresentWeather>(urlWeather),
+        axios.get<PresentAirQuality>(urlAirQuality),
+        axios.get<MoonPhase>(urlMoonPhase),
+      ]);
 
       let hourlyData: HourlyWeather = undefined;
       let presentWeather: PresentWeather = undefined;
       let presentAirQuality: PresentAirQuality = undefined;
+      let moonPhase: MoonPhase = undefined;
 
       if (hourlyResult.status === "fulfilled") {
         try {
@@ -272,6 +290,28 @@ export const weatherRouter = createTRPCRouter({
           reason:
             typeof presentAirQualityResult.reason === "string"
               ? presentAirQualityResult.reason
+              : "The reason is not a string",
+        });
+      }
+
+      if (moonPhaseResult.status === "fulfilled") {
+        try {
+          // console.debug(moonPhaseResult.value.data);
+          // console.debug(urlMoonPhase);
+          moonPhase = MoonPhaseSchema.parse(moonPhaseResult.value.data);
+        } catch (error) {
+          if (error instanceof z.ZodError) {
+            log.error("Zod Errors in the moon phase", error.issues);
+          } else {
+            log.error("Else Error in the moon phase", { error });
+          }
+        }
+      } else {
+        log.error("Moon phase data request failed", {
+          status: moonPhaseResult.status,
+          reason:
+            typeof moonPhaseResult.reason === "string"
+              ? moonPhaseResult.reason
               : "The reason is not a string",
         });
       }
@@ -560,6 +600,7 @@ export const weatherRouter = createTRPCRouter({
           .unix(presentWeather?.sys.sunset ?? 0)
           .tz(input.timezone)
           .format(),
+        moonPhaseCode: moonPhase?.moonPhase[0]?.icon,
       };
     }),
 });

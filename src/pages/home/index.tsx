@@ -19,7 +19,15 @@ import {
   FaSun,
   FaWind,
 } from "react-icons/fa6";
-import { WiRaindrop } from "react-icons/wi";
+import {
+  WiMoonAltFull,
+  WiMoonAltNew,
+  WiMoonAltWaningCrescent2,
+  WiMoonAltWaningGibbous2,
+  WiMoonAltWaxingCrescent2,
+  WiMoonAltWaxingGibbous2,
+  WiRaindrop,
+} from "react-icons/wi";
 import cn from "classnames";
 import { PiSunglasses } from "react-icons/pi";
 import { BsWind } from "react-icons/bs";
@@ -689,7 +697,7 @@ const InternalHome = observer(() => {
           )}
 
           {weatherData.data?.air_quality ? (
-            <div className="col-span-5 row-span-2 row-start-3 rounded-md bg-gray-400 md:col-span-2 md:col-start-4 xl:col-span-1 xl:col-start-4">
+            <div className="col-span-5 row-span-2 row-start-3 rounded-md bg-gray-400 md:col-span-2 md:col-start-4 md:row-span-1 xl:col-span-1 xl:col-start-4">
               <div className="ml-2 mt-1.5 hyphens-auto break-words text-xl">
                 {translationHome("air quality")}
               </div>
@@ -726,7 +734,7 @@ const InternalHome = observer(() => {
               </div>
             </div>
           ) : (
-            <Skeleton className="col-span-5 row-span-2 row-start-3 md:col-span-2 md:col-start-4 xl:col-span-1 xl:col-start-4" />
+            <Skeleton className="col-span-5 row-span-2 row-start-3 md:col-span-2 md:col-start-4 md:row-span-1 xl:col-span-1 xl:col-start-4" />
           )}
 
           {weatherData.data?.visibility ? (
@@ -752,7 +760,7 @@ const InternalHome = observer(() => {
                 </HoverCard>
               </div>
               <div className="flex w-full items-center">
-                <PiSunglasses className="ml-4 mt-2 h-full w-full" />
+                <PiSunglasses className="ml-4 mt-2 hidden h-auto w-5/12 sm:block md:w-8/12 xl:h-32 xl:w-32" />
                 <div className="ml-4 mt-2 text-3xl xl:text-5xl">
                   {weatherData.data?.visibility}%
                 </div>
@@ -764,7 +772,7 @@ const InternalHome = observer(() => {
 
           {weatherData.data?.wind_speed !== undefined &&
           weatherData.data?.wind_pressure !== undefined ? (
-            <div className="col-span-4 col-start-6 row-span-2 row-start-3 rounded-md bg-gray-400 md:col-span-2 md:col-start-6 xl:col-span-3 xl:col-start-5">
+            <div className="col-span-4 col-start-6 row-span-1 row-start-3 rounded-md bg-gray-400 md:col-span-2 md:col-start-6 xl:col-span-3 xl:col-start-5">
               <div className="mt-1.5 flex w-full justify-between pl-4 pr-3 text-xl">
                 {translationHome("wind pressure")}{" "}
                 <HoverCard>
@@ -800,9 +808,9 @@ const InternalHome = observer(() => {
                   </HoverCardContent>
                 </HoverCard>
               </div>
-              <div className="ml-3 flex h-full w-full flex-col xl:ml-4">
-                <BsWind className="mt-5 h-auto w-10/12 xl:h-32 xl:w-32" />
-                <div className="mb-9 mt-0 flex flex-col gap-5 text-xs xl:mb-0 xl:mt-9 xl:flex-row xl:gap-10 xl:text-xl">
+              <div className="ml-3 flex h-3/5 w-full flex-row gap-3 md:flex-col xl:ml-4 xl:h-full">
+                <BsWind className="mt-5 hidden h-auto w-3/12 sm:block md:w-7/12 xl:h-28 xl:w-28" />
+                <div className="mb-3 mt-0 flex flex-col gap-5 text-xs xl:mt-3 xl:flex-row xl:gap-10 xl:text-xl">
                   <div>
                     {translationHome("pressure")}
                     <div className="mt-2">
@@ -823,9 +831,94 @@ const InternalHome = observer(() => {
               </div>
             </div>
           ) : (
-            <Skeleton className="col-span-4 col-start-6 row-span-2 row-start-3 w-full md:col-span-2 md:col-start-6 xl:col-span-3 xl:col-start-5" />
+            <Skeleton className="col-span-4 col-start-6 row-span-1 row-start-3 w-full md:col-span-2 md:col-start-6 xl:col-span-3 xl:col-start-5" />
           )}
-          <div className="z-0 col-span-2 col-start-8 row-span-4 hidden rounded-md bg-gray-400 md:block">
+
+          {weatherData.data?.moonPhaseCode ? (
+            <div className="col-span-4 col-start-6 row-span-1 row-start-4 rounded-md bg-gray-400 md:col-span-4 md:col-start-4">
+              <div className="mt-1.5 flex justify-between pl-4 pr-3 text-xl">
+                <span className="hyphens-auto break-words">
+                  {translationHome("moon phase")}{" "}
+                </span>
+                <HoverCard>
+                  <HoverCardTrigger asChild>
+                    <Button
+                      className="w-10 rounded-full p-1.5"
+                      aria-label="Infos over moon phase card"
+                    >
+                      <InfoIcon className="h-full w-full" />
+                    </Button>
+                  </HoverCardTrigger>
+                  <HoverCardContent className="w-80">
+                    <span className="font-semibold underline">
+                      {translationHome("moon phase card title")}:
+                    </span>{" "}
+                    <br /> <br />
+                    {ReactHtmlParser(
+                      translationHome("moon phase card content"),
+                    )}
+                  </HoverCardContent>
+                </HoverCard>
+              </div>
+              <div className="ml-4 mt-2 flex flex-col items-center justify-center hyphens-auto break-words text-center">
+                {weatherData.data.moonPhaseCode === "800" ? (
+                  <>
+                    <WiMoonAltNew className="h-24 w-24" />
+                    {translationHome("moon phase new moon")}
+                  </>
+                ) : (weatherData.data.moonPhaseCode === "801" &&
+                    activeCity$.coord.lat.get() > 0) ||
+                  (weatherData.data.moonPhaseCode === "807" &&
+                    activeCity$.coord.lat.get() < 0) ? (
+                  <>
+                    <WiMoonAltNew className="h-24 w-24" />
+                    {translationHome("moon phase waxing crescent")}
+                  </>
+                ) : (weatherData.data.moonPhaseCode === "802" &&
+                    activeCity$.coord.lat.get() > 0) ||
+                  (weatherData.data.moonPhaseCode === "806" &&
+                    activeCity$.coord.lat.get() < 0) ? (
+                  <>
+                    <WiMoonAltWaxingCrescent2 className="h-24 w-24" />
+                    {translationHome("moon phase first quarter")}
+                  </>
+                ) : (weatherData.data.moonPhaseCode === "803" &&
+                    activeCity$.coord.lat.get() > 0) ||
+                  (weatherData.data.moonPhaseCode === "805" &&
+                    activeCity$.coord.lat.get() < 0) ? (
+                  <>
+                    <WiMoonAltWaxingGibbous2 className="h-24 w-24" />
+                    {translationHome("moon phase waxing gibbous")}
+                  </>
+                ) : weatherData.data.moonPhaseCode === "804" ? (
+                  <>
+                    <WiMoonAltFull className="h-24 w-24" />
+                    {translationHome("moon phase full moon")}
+                  </>
+                ) : (weatherData.data.moonPhaseCode === "803" &&
+                    activeCity$.coord.lat.get() < 0) ||
+                  (weatherData.data.moonPhaseCode === "805" &&
+                    activeCity$.coord.lat.get() > 0) ? (
+                  <>
+                    <WiMoonAltWaningGibbous2 className="h-24 w-24" />
+                    {translationHome("moon phase waning gibbous")}
+                  </>
+                ) : (weatherData.data.moonPhaseCode === "802" &&
+                    activeCity$.coord.lat.get() < 0) ||
+                  (weatherData.data.moonPhaseCode === "806" &&
+                    activeCity$.coord.lat.get() > 0) ? (
+                  <>
+                    <WiMoonAltWaningCrescent2 className="h-24 w-24" />
+                    {translationHome("moon phase last quarter")}
+                  </>
+                ) : null}
+              </div>
+            </div>
+          ) : (
+            <Skeleton className="col-span-4 col-start-6 row-span-1 row-start-4 w-full md:col-span-4 md:col-start-4" />
+          )}
+
+          <div className="z-0 col-span-2 col-start-8 row-span-4 row-start-1 hidden rounded-md bg-gray-400 md:block">
             <div className="h-full w-full">
               <Map
                 position={mapPosition}
