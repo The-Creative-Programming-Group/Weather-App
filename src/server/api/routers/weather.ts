@@ -178,11 +178,11 @@ export const weatherRouter = createTRPCRouter({
       const urlHourlyForecast = `https://api.open-meteo.com/v1/forecast?latitude=${input.coordinates.lat}&longitude=${input.coordinates.lon}&hourly=temperature_2m,rain,showers,snowfall,precipitation_probability,cloudcover,windspeed_10m,apparent_temperature&forecast_days=9&timezone=${input.timezone}`;
       const urlAirQuality = `https://air-quality-api.open-meteo.com/v1/air-quality?latitude=${input.coordinates.lat}&longitude=${input.coordinates.lon}&hourly=pm10,pm2_5,nitrogen_dioxide`;
       // QWeather
-      const urlMoonPhase = `https://devapi.qweather.com/v7/astronomy/moon?location=${
-        input.coordinates.lon
-      },${input.coordinates.lat}&key=${env.QWEATHER_API_KEY}&date=${dayjs()
-        .tz(input.timezone)
-        .format("YYYYMMDD")}`;
+      const urlMoonPhase = `https://devapi.qweather.com/v7/astronomy/moon?location=${input.coordinates.lon.toFixed(
+        2,
+      )},${input.coordinates.lat.toFixed(2)}&key=${
+        env.QWEATHER_API_KEY
+      }&date=${dayjs().tz("Asia/Shanghai").format("YYYYMMDD")}`;
 
       const [
         hourlyResult,
@@ -280,6 +280,9 @@ export const weatherRouter = createTRPCRouter({
         } catch (error) {
           if (error instanceof z.ZodError) {
             log.error("Zod Errors in the air quality", error.issues);
+            console.error("Air quality data without the filter", {
+              data: presentAirQualityResult.value.data,
+            });
           } else {
             log.error("Else Error in the air quality", { error });
           }
@@ -302,6 +305,10 @@ export const weatherRouter = createTRPCRouter({
         } catch (error) {
           if (error instanceof z.ZodError) {
             log.error("Zod Errors in the moon phase", error.issues);
+            console.debug("Moon phase data without the filter", {
+              data: moonPhaseResult.value.data,
+            });
+            console.debug("Moon phase data url", urlMoonPhase);
           } else {
             log.error("Else Error in the moon phase", { error });
           }
