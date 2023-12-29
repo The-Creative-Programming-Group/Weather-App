@@ -809,16 +809,20 @@ const InternalHome = observer(() => {
                 </HoverCard>
               </div>
               <div className="ml-3 flex h-3/5 w-full flex-row gap-3 md:flex-col xl:ml-4 xl:h-full">
-                <BsWind className="mt-5 hidden h-auto w-3/12 sm:block md:w-7/12 xl:h-28 xl:w-28" />
-                <div className="mb-3 mt-0 flex flex-col gap-5 text-xs xl:mt-3 xl:flex-row xl:gap-10 xl:text-xl">
+                <BsWind className="mt-5 hidden min-h-[33%] w-3/12 sm:block md:w-7/12 xl:h-28 xl:w-28" />
+                <div className="mb-3 mt-0 flex flex-col gap-3 text-xs md:text-base xl:mt-3 xl:flex-row xl:gap-10 xl:text-xl">
                   <div>
-                    {translationHome("pressure")}
+                    <span className="font-bold md:font-normal">
+                      {translationHome("pressure")}
+                    </span>
                     <div className="mt-2">
                       {weatherData.data.wind_pressure.toPrecision(2)} Pa
                     </div>
                   </div>
-                  <div className="pr-2">
-                    {translationHome("speed")}
+                  <div className="hyphens-auto break-words pr-2">
+                    <span className="font-bold md:font-normal">
+                      {translationHome("speed")}
+                    </span>
                     <div className="mt-2 pr-1 xl:pr-8">
                       {convertWindSpeed(
                         weatherData.data.wind_speed,
