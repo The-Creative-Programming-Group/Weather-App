@@ -349,7 +349,14 @@ const InternalHome = observer(() => {
                     sunEvent = translationHome("sunrise");
                   }
 
-                  if (hourlyForecast.time === currentHour) {
+                  if (index === 0) {
+                    if (hourlyForecast.time === currentHour) {
+                      time = translationHome("this hour");
+                    } else {
+                      // Don't render this hour if it's already passed
+                      return null;
+                    }
+                  } else if (hourlyForecast.time === currentHour) {
                     time = translationHome("this hour");
                   } else if (hourlyForecast.time === 12) {
                     time = "12" + translationHome("late hour time ending");
