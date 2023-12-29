@@ -860,7 +860,7 @@ const InternalHome = observer(() => {
                   </HoverCardContent>
                 </HoverCard>
               </div>
-              <div className="ml-4 mt-2 flex flex-col items-center justify-center hyphens-auto break-words text-center">
+              <div className="mt-2 flex flex-col items-center justify-center hyphens-auto break-words text-center">
                 {weatherData.data.moonPhaseCode === "800" ? (
                   <>
                     <WiMoonAltNew className="h-24 w-24" />
