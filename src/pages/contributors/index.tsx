@@ -7,6 +7,7 @@ import jakobProfile from "~/assets/jakob-profile.webp";
 import dicsiluksProfile from "~/assets/dicsiluks-profile.webp";
 import fabiusProfile from "~/assets/fabius-profile.jpg";
 import jakeProfile from "~/assets/jake-profile.png";
+import iqbalProfile from "~/assets/bal-profile.jpg";
 import { useTranslation } from "next-i18next";
 import ReactHtmlParser from "react-html-parser";
 
@@ -42,6 +43,22 @@ const Contributors = () => {
             </Link>
             <p className="flex text-center text-base md:text-xl">
               {translationContributors("founder")}
+            </p>
+          </div>
+          <div className="flex w-16 flex-col items-center gap-2 md:w-20">
+            <Link
+              href="https://www.notion.so/iqbalrh/Hello-I-m-Iqbal-c8e26a91f13b464cb88a89eb1cb1082d?pvs=4"
+              className="group relative inline-block aspect-square w-10 md:w-20"
+            >
+              <Image
+                src={iqbalProfile}
+                alt="Iqbal's logo"
+                fill
+                className="transform rounded-full transition-transform duration-300 group-hover:-translate-x-2 group-hover:scale-105"
+              />
+            </Link>
+            <p className="flex text-center text-base md:text-xl">
+              {translationContributors("designer")}
             </p>
           </div>
           <div className="flex w-16 flex-col items-center gap-2 md:w-20">
