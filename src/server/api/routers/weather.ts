@@ -561,9 +561,9 @@ export const weatherRouter = createTRPCRouter({
           timezone: input.timezone,
         },
         // Present weather in Kelvin NOT daily average
-        temperature: hourlyForecast[0]?.temperature
-          ? hourlyForecast[0].temperature
-          : presentWeather?.main.temp,
+        temperature: presentWeather?.main.temp
+          ? presentWeather?.main.temp
+          : hourlyForecast[0]?.temperature,
         // In Kelvin
         highestTemperature:
           Math.max(...(hourlyData?.hourly.temperature_2m.slice(0, 23) ?? [])) +
@@ -573,9 +573,9 @@ export const weatherRouter = createTRPCRouter({
           Math.min(...(hourlyData?.hourly.temperature_2m.slice(0, 23) ?? [])) +
           273.15,
         // Present weather in Kelvin
-        feels_like: hourlyForecast[0]?.apparentTemperature
-          ? hourlyForecast[0].apparentTemperature
-          : presentWeather?.main.feels_like,
+        feels_like: presentWeather?.main.feels_like
+          ? presentWeather?.main.feels_like
+          : hourlyForecast[0]?.apparentTemperature,
         // In meters per second
         wind_speed: presentWeather?.wind.speed,
         // Calculates the wind pressure in Pa
