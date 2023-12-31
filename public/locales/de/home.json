@@ -64,6 +64,9 @@
   "moon phase first quarter": "Erstes Viertel",
   "moon phase waxing gibbous": "Zunehmender Mond",
   "moon phase full moon": "Vollmond",
-    "moon phase waning gibbous": "Abnehmender Mond",
-    "moon phase last quarter": "Letztes Viertel"
+  "moon phase waning gibbous": "Abnehmender Mond",
+  "moon phase last quarter": "Letztes Viertel",
+
+  "more information": "Mehr Informationen",
+  "sun hours": "Sonnenstunden"
 }

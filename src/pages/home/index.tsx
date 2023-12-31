@@ -42,7 +42,7 @@ import {
   HoverCardTrigger,
 } from "~/components/ui/hover-card";
 import { Button } from "~/components/ui/button";
-import { InfoIcon, LinkIcon } from "lucide-react";
+import { ChevronDownSquare, InfoIcon, LinkIcon } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
@@ -50,6 +50,11 @@ import { useTranslation } from "next-i18next";
 import ReactHtmlParser from "react-html-parser";
 import { observer } from "@legendapp/state/react";
 import { ScrollArea, ScrollBar } from "~/components/ui/scroll-area";
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "~/components/ui/collapsible";
 
 const Map = dynamic(() => import("~/components/ui/map"), { ssr: false });
 
@@ -112,6 +117,8 @@ function convertWindSpeed(
 }
 
 const InternalHome = observer(() => {
+  const [isMoreInfoCollapsibleOpen, setIsMoreInfoCollapsibleOpen] =
+    React.useState(false);
   const { locale } = useRouter();
   const weatherData = api.weather.getWeather.useQuery(
     { coordinates: activeCity$.coord.get(), timezone: dayjs.tz.guess() },
@@ -323,6 +330,32 @@ const InternalHome = observer(() => {
           </p>
         </div>
       </div>
+      {weatherData?.data?.maxUVIndex && weatherData.data.sunHours ? (
+        <Collapsible
+          className="mt-2 flex w-full flex-col items-center"
+          open={isMoreInfoCollapsibleOpen}
+          onOpenChange={setIsMoreInfoCollapsibleOpen}
+        >
+          <CollapsibleTrigger className="flex gap-1 outline-0">
+            {translationHome("more information")}:{" "}
+            <ChevronDownSquare
+              className={cn({
+                "rotate-180 transform": isMoreInfoCollapsibleOpen,
+              })}
+            />
+          </CollapsibleTrigger>
+          <CollapsibleContent className="flex flex-col gap-1">
+            <div>
+              <span className="font-bold">{translationHome("sun hours")}:</span>{" "}
+              {weatherData.data.sunHours}h
+            </div>
+            <div>
+              <span className="font-bold">UV-Index:</span>{" "}
+              {weatherData.data.maxUVIndex}
+            </div>
+          </CollapsibleContent>
+        </Collapsible>
+      ) : null}
       <div className="mt-12 flex flex-col items-center">
         {weatherData.data?.hourlyForecast ? (
           <ScrollArea className="mb-5 w-11/12 rounded-md xl:w-9/12">

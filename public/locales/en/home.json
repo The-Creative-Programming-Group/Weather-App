@@ -64,6 +64,9 @@
   "moon phase first quarter": "First Quarter",
   "moon phase waxing gibbous": "Waxing Gibbous",
   "moon phase full moon": "Full Moon",
-    "moon phase waning gibbous": "Waning Gibbous",
-    "moon phase last quarter": "Last Quarter"
+  "moon phase waning gibbous": "Waning Gibbous",
+  "moon phase last quarter": "Last Quarter",
+
+  "more information": "More Information",
+  "sun hours": "Sun Hours"
 }

@@ -16,7 +16,7 @@ dayjs.extend(timezone);
  * filling the gap TypeScript static analysis can't cover.
  */
 
-const HourlyWeatherSchema = z.object({
+const HourlyAndDailyWeatherSchema = z.object({
   latitude: z.number(),
   longitude: z.number(),
   generationtime_ms: z.number(),
@@ -45,9 +45,15 @@ const HourlyWeatherSchema = z.object({
     cloudcover: z.array(z.number()),
     windspeed_10m: z.array(z.number()),
   }),
+  daily: z.object({
+    sunshine_duration: z.array(z.number()),
+    uv_index_max: z.array(z.number()),
+  }),
 });
 
-type HourlyWeather = z.infer<typeof HourlyWeatherSchema> | undefined;
+type HourlyAndDailyWeather =
+  | z.infer<typeof HourlyAndDailyWeatherSchema>
+  | undefined;
 
 const PresentWeatherSchema = z.object({
   coord: z.object({
@@ -175,7 +181,7 @@ export const weatherRouter = createTRPCRouter({
       // OpenWeatherMap API
       const urlWeather = `https://api.openweathermap.org/data/2.5/weather?lat=${input.coordinates.lat}&lon=${input.coordinates.lon}&appid=${env.OPEN_WEATHER_API_KEY}`;
       // Open Meteo
-      const urlHourlyForecast = `https://api.open-meteo.com/v1/forecast?latitude=${input.coordinates.lat}&longitude=${input.coordinates.lon}&hourly=temperature_2m,rain,showers,snowfall,precipitation_probability,cloudcover,windspeed_10m,apparent_temperature&forecast_days=9&timezone=${input.timezone}`;
+      const urlHourlyAndDailyForecast = `https://api.open-meteo.com/v1/forecast?latitude=${input.coordinates.lat}&longitude=${input.coordinates.lon}&hourly=temperature_2m,rain,showers,snowfall,precipitation_probability,cloudcover,windspeed_10m,apparent_temperature&forecast_days=9&timezone=${input.timezone}&daily=sunshine_duration,uv_index_max`;
       const urlAirQuality = `https://air-quality-api.open-meteo.com/v1/air-quality?latitude=${input.coordinates.lat}&longitude=${input.coordinates.lon}&hourly=pm10,pm2_5,nitrogen_dioxide`;
       // QWeather
       const urlMoonPhase = `https://devapi.qweather.com/v7/astronomy/moon?location=${input.coordinates.lon.toFixed(
@@ -190,13 +196,13 @@ export const weatherRouter = createTRPCRouter({
         presentAirQualityResult,
         moonPhaseResult,
       ] = await Promise.allSettled([
-        axios.get<HourlyWeather>(urlHourlyForecast),
+        axios.get<HourlyAndDailyWeather>(urlHourlyAndDailyForecast),
         axios.get<PresentWeather>(urlWeather),
         axios.get<PresentAirQuality>(urlAirQuality),
         axios.get<MoonPhase>(urlMoonPhase),
       ]);
 
-      let hourlyData: HourlyWeather = undefined;
+      let hourlyAndDailyData: HourlyAndDailyWeather = undefined;
       let presentWeather: PresentWeather = undefined;
       let presentAirQuality: PresentAirQuality = undefined;
       let moonPhase: MoonPhase = undefined;
@@ -216,8 +222,8 @@ export const weatherRouter = createTRPCRouter({
               (value) => value !== null,
             );
 
-          hourlyData = HourlyWeatherSchema.parse(data);
-          // log.debug("Parsed and filtered hourly data", hourlyData);
+          hourlyAndDailyData = HourlyAndDailyWeatherSchema.parse(data);
+          // log.debug("Parsed and filtered hourly data", hourlyAndDailyData);
         } catch (error) {
           if (error instanceof z.ZodError) {
             log.error("Zod Errors in the hourly weather", error.issues);
@@ -343,13 +349,14 @@ export const weatherRouter = createTRPCRouter({
 
       const currentHour = dayjs().tz(input.timezone).hour();
       for (let i = currentHour; i < currentHour + 15; i++) {
-        const temperature = hourlyData?.hourly.temperature_2m[i];
-        const apparentTemperature = hourlyData?.hourly.apparent_temperature[i];
-        const rain = hourlyData?.hourly.rain[i];
-        const showers = hourlyData?.hourly.showers[i];
-        const snowfall = hourlyData?.hourly.snowfall[i];
-        const cloudcover = hourlyData?.hourly.cloudcover[i];
-        const windSpeed = hourlyData?.hourly.windspeed_10m[i];
+        const temperature = hourlyAndDailyData?.hourly.temperature_2m[i];
+        const apparentTemperature =
+          hourlyAndDailyData?.hourly.apparent_temperature[i];
+        const rain = hourlyAndDailyData?.hourly.rain[i];
+        const showers = hourlyAndDailyData?.hourly.showers[i];
+        const snowfall = hourlyAndDailyData?.hourly.snowfall[i];
+        const cloudcover = hourlyAndDailyData?.hourly.cloudcover[i];
+        const windSpeed = hourlyAndDailyData?.hourly.windspeed_10m[i];
         // console.log(cloudcover);
 
         const time = i % 24;
@@ -370,7 +377,7 @@ export const weatherRouter = createTRPCRouter({
 
       const dailyForecast: IDailyForecast[] = [];
 
-      if (hourlyData) {
+      if (hourlyAndDailyData) {
         for (let i = 0; i < 9; i++) {
           // console.log("i", i);
           let temperatureSumDay = 0;
@@ -391,62 +398,64 @@ export const weatherRouter = createTRPCRouter({
 
           for (let j = 24 * i; j < 24 * (i + 1); j++) {
             // console.log("j", j);
-            if (hourlyData.hourly.temperature_2m[j] !== undefined) {
+            if (hourlyAndDailyData.hourly.temperature_2m[j] !== undefined) {
               if (j % 24 > 6 && j % 24 < 19) {
-                temperatureSumDay += hourlyData.hourly.temperature_2m[j]!;
+                temperatureSumDay +=
+                  hourlyAndDailyData.hourly.temperature_2m[j]!;
                 // console.log("j", j);
                 temperatureCountDay++;
-                // console.log(hourlyData.hourly.temperature_2m[j]!);
+                // console.log(hourlyAndDailyData.hourly.temperature_2m[j]!);
                 // console.log("temperatureSumDay", temperatureSumDay);
               } else {
-                temperatureSumNight += hourlyData.hourly.temperature_2m[j]!;
+                temperatureSumNight +=
+                  hourlyAndDailyData.hourly.temperature_2m[j]!;
                 // console.log("j", j);
                 temperatureCountNight++;
-                // console.log(hourlyData.hourly.temperature_2m[j]!);
+                // console.log(hourlyAndDailyData.hourly.temperature_2m[j]!);
                 // console.log("temperatureSumNight", temperatureSumNight);
               }
             } else {
               console.log("undefined value temperature: ", j);
             }
 
-            if (hourlyData.hourly.rain[j] !== undefined) {
-              rainSum += hourlyData.hourly.rain[j]!;
+            if (hourlyAndDailyData.hourly.rain[j] !== undefined) {
+              rainSum += hourlyAndDailyData.hourly.rain[j]!;
               rainCount++;
-              // console.log(hourlyData.hourly.rain[j]!);
+              // console.log(hourlyAndDailyData.hourly.rain[j]!);
               // console.log("rainSum", rainSum);
             } else {
               console.log("undefined value rain: ", j);
             }
 
-            if (hourlyData.hourly.showers[j] !== undefined) {
-              showersSum += hourlyData.hourly.showers[j]!;
+            if (hourlyAndDailyData.hourly.showers[j] !== undefined) {
+              showersSum += hourlyAndDailyData.hourly.showers[j]!;
               showersCount++;
-              // console.log(hourlyData.hourly.showers[j]!);
+              // console.log(hourlyAndDailyData.hourly.showers[j]!);
               // console.log("showersSum", showersSum);
             } else {
               console.log("undefined value showers: ", j);
             }
 
-            if (hourlyData.hourly.snowfall[j] !== undefined) {
-              snowfallSum += hourlyData.hourly.snowfall[j]!;
+            if (hourlyAndDailyData.hourly.snowfall[j] !== undefined) {
+              snowfallSum += hourlyAndDailyData.hourly.snowfall[j]!;
               snowfallCount++;
-              // console.log(hourlyData.hourly.snowfall[j]!);
+              // console.log(hourlyAndDailyData.hourly.snowfall[j]!);
               // console.log("snowfallSum", snowfallSum);
             } else {
               console.log("undefined value snowfall: ", j);
             }
 
-            if (hourlyData.hourly.cloudcover[j] !== undefined) {
-              cloudcoverSum += hourlyData.hourly.cloudcover[j]!;
+            if (hourlyAndDailyData.hourly.cloudcover[j] !== undefined) {
+              cloudcoverSum += hourlyAndDailyData.hourly.cloudcover[j]!;
               cloudcoverCount++;
-              // console.log(hourlyData.hourly.cloudcover[j]!);
+              // console.log(hourlyAndDailyData.hourly.cloudcover[j]!);
               // console.log("cloudcoverSum", cloudcoverSum);
             }
 
-            if (hourlyData.hourly.windspeed_10m[j] !== undefined) {
-              windSpeedSum += hourlyData.hourly.windspeed_10m[j]!;
+            if (hourlyAndDailyData.hourly.windspeed_10m[j] !== undefined) {
+              windSpeedSum += hourlyAndDailyData.hourly.windspeed_10m[j]!;
               windSpeedCount++;
-              // console.log(hourlyData.hourly.cloudcover[j]!);
+              // console.log(hourlyAndDailyData.hourly.cloudcover[j]!);
               // console.log("cloudcoverSum", cloudcoverSum);
             }
           }
@@ -548,9 +557,13 @@ export const weatherRouter = createTRPCRouter({
         precipitationProbabilities[slot] = getTimeSlotAverage(
           start,
           end,
-          hourlyData,
+          hourlyAndDailyData,
         );
       });
+
+      const temperature = presentWeather?.main.temp
+        ? presentWeather?.main.temp
+        : hourlyForecast[0]?.temperature;
 
       // For testing purposes
       // await new Promise((resolve) => setTimeout(resolve, 100000));
@@ -561,17 +574,39 @@ export const weatherRouter = createTRPCRouter({
           timezone: input.timezone,
         },
         // Present weather in Kelvin NOT daily average
-        temperature: presentWeather?.main.temp
-          ? presentWeather?.main.temp
-          : hourlyForecast[0]?.temperature,
-        // In Kelvin
-        highestTemperature:
-          Math.max(...(hourlyData?.hourly.temperature_2m.slice(0, 23) ?? [])) +
-          273.15,
-        // In Kelvin
-        minimumTemperature:
-          Math.min(...(hourlyData?.hourly.temperature_2m.slice(0, 23) ?? [])) +
-          273.15,
+        temperature: temperature,
+        // This complex code is there for the case that if the temperature is over the maximum it gets the temperature.
+        // In Kelvin.
+        highestTemperature: temperature
+          ? Math.max(
+              ...(hourlyAndDailyData?.hourly.temperature_2m.slice(0, 23) ?? []),
+            ) +
+              273.15 >
+            temperature
+            ? Math.max(
+                ...(hourlyAndDailyData?.hourly.temperature_2m.slice(0, 23) ??
+                  []),
+              ) + 273.15
+            : temperature
+          : Math.max(
+              ...(hourlyAndDailyData?.hourly.temperature_2m.slice(0, 23) ?? []),
+            ) + 273.15,
+        // This complex code is there for the case that if the temperature is under the minimum it gets the temperature.
+        // In Kelvin.
+        minimumTemperature: temperature
+          ? Math.min(
+              ...(hourlyAndDailyData?.hourly.temperature_2m.slice(0, 23) ?? []),
+            ) +
+              273.15 <
+            temperature
+            ? Math.min(
+                ...(hourlyAndDailyData?.hourly.temperature_2m.slice(0, 23) ??
+                  []),
+              ) + 273.15
+            : temperature
+          : Math.min(
+              ...(hourlyAndDailyData?.hourly.temperature_2m.slice(0, 23) ?? []),
+            ) + 273.15,
         // Present weather in Kelvin
         feels_like: presentWeather?.main.feels_like
           ? presentWeather?.main.feels_like
@@ -590,7 +625,7 @@ export const weatherRouter = createTRPCRouter({
           ? presentWeather.visibility / 100
           : undefined,
         // In percentages
-        precipitationProbabilities: hourlyData
+        precipitationProbabilities: hourlyAndDailyData
           ? precipitationProbabilities
           : undefined,
         hourlyForecast,
@@ -608,6 +643,11 @@ export const weatherRouter = createTRPCRouter({
           .tz(input.timezone)
           .format(),
         moonPhaseCode: moonPhase?.moonPhase[0]?.icon,
+        sunHours:
+          hourlyAndDailyData?.daily.sunshine_duration[0] !== undefined
+            ? (hourlyAndDailyData.daily.sunshine_duration[0] / 3600).toFixed(0)
+            : undefined,
+        maxUVIndex: hourlyAndDailyData?.daily.uv_index_max[0],
       };
     }),
 });
