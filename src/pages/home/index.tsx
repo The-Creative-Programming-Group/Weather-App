@@ -475,7 +475,7 @@ const InternalHome = observer(() => {
                   <HoverCard>
                     <HoverCardTrigger asChild>
                       <Button
-                        className="w-10 rounded-full p-1.5"
+                        className="aspect-square h-7 w-7 rounded-full p-1.5 md:h-10 md:w-10"
                         aria-label="Infos over forecast card"
                       >
                         <InfoIcon className="h-full w-full" />
@@ -565,7 +565,7 @@ const InternalHome = observer(() => {
                 <HoverCard>
                   <HoverCardTrigger asChild>
                     <Button
-                      className="w-10 rounded-full p-1.5"
+                      className="aspect-square h-7 w-7 rounded-full p-1.5 md:h-10 md:w-10"
                       aria-label="Infos over precipitation card"
                     >
                       <InfoIcon className="h-full w-full" />
@@ -657,11 +657,13 @@ const InternalHome = observer(() => {
           {weatherData.data?.feels_like ? (
             <div className="col-span-5 row-span-1 row-start-2 rounded-md bg-gray-400 md:col-span-2 md:col-start-4">
               <div className="mt-1.5 flex justify-between pl-4 pr-3 text-xl">
-                {translationHome("feels like")}{" "}
+                <span className="hyphens-auto break-words">
+                  {translationHome("feels like")}
+                </span>
                 <HoverCard>
                   <HoverCardTrigger asChild>
                     <Button
-                      className="w-10 rounded-full p-1.5"
+                      className="aspect-square h-7 w-7 rounded-full p-1.5 md:h-10 md:w-10"
                       aria-label="Infos over feels like card"
                     >
                       <InfoIcon className="h-full w-full" />
@@ -749,11 +751,13 @@ const InternalHome = observer(() => {
           {weatherData.data?.visibility ? (
             <div className="col-span-4 col-start-6 row-span-1 row-start-2 rounded-md bg-gray-400 md:col-span-2 md:col-start-6">
               <div className="mt-1.5 flex justify-between pl-4 pr-3 text-xl">
-                {translationHome("visibility")}{" "}
+                <span className="hyphens-auto break-words">
+                  {translationHome("visibility")}
+                </span>
                 <HoverCard>
                   <HoverCardTrigger asChild>
                     <Button
-                      className="w-10 rounded-full p-1.5"
+                      className="aspect-square h-7 w-7 rounded-full p-1.5 md:h-10 md:w-10"
                       aria-label="Infos over visibility card"
                     >
                       <InfoIcon className="h-full w-full" />
@@ -782,12 +786,14 @@ const InternalHome = observer(() => {
           {weatherData.data?.wind_speed !== undefined &&
           weatherData.data?.wind_pressure !== undefined ? (
             <div className="col-span-4 col-start-6 row-span-1 row-start-3 rounded-md bg-gray-400 md:col-span-2 md:col-start-6 xl:col-span-3 xl:col-start-5">
-              <div className="mt-1.5 flex w-full justify-between pl-4 pr-3 text-xl">
-                {translationHome("wind pressure")}{" "}
+              <div className="mb-2 mt-1.5 flex w-full justify-between pl-4 pr-3 text-xl">
+                <span className="hyphens-auto break-words">
+                  {translationHome("wind pressure")}
+                </span>
                 <HoverCard>
                   <HoverCardTrigger asChild>
                     <Button
-                      className="w-10 rounded-full p-1.5"
+                      className="aspect-square h-7 w-7 rounded-full p-1.5 md:h-10 md:w-10"
                       aria-label="Infos over wind pressure card"
                     >
                       <InfoIcon className="h-full w-full" />
@@ -828,7 +834,7 @@ const InternalHome = observer(() => {
                       {weatherData.data.wind_pressure.toPrecision(2)} Pa
                     </div>
                   </div>
-                  <div className="hyphens-auto break-words pr-2">
+                  <div className="hyphens-auto break-words pr-3">
                     <span className="font-bold md:font-normal">
                       {translationHome("speed")}
                     </span>
@@ -856,7 +862,7 @@ const InternalHome = observer(() => {
                 <HoverCard>
                   <HoverCardTrigger asChild>
                     <Button
-                      className="w-10 rounded-full p-1.5"
+                      className="aspect-square h-7 w-7 rounded-full p-1.5 md:h-10 md:w-10"
                       aria-label="Infos over moon phase card"
                     >
                       <InfoIcon className="h-full w-full" />
