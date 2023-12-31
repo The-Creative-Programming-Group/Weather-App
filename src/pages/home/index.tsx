@@ -708,25 +708,27 @@ const InternalHome = observer(() => {
               <div className="ml-2 mt-1.5 hyphens-auto break-words text-xl">
                 {translationHome("air quality")}
               </div>
-              <div className="relative mb-2 mt-2 flex h-64 items-center justify-center xl:ml-3.5 xl:justify-normal">
-                <div className="text-md mt-2 w-20 font-medium">
+              <div className="relative mb-2 ml-3.5 mt-2 flex h-64 items-center justify-center xl:justify-normal">
+                <div className="text-md mt-2 w-full pr-6 font-medium">
                   {weatherData.data?.air_quality !== 100
                     ? weatherData.data?.air_quality.toPrecision(2)
                     : "100"}{" "}
                   <br />
-                  {weatherData.data?.air_quality > 90
-                    ? translationHome("air quality text very poor")
-                    : weatherData.data?.air_quality > 70
-                      ? translationHome("air quality text poor")
-                      : weatherData.data?.air_quality > 50
-                        ? translationHome("air quality text fair")
-                        : weatherData.data?.air_quality > 30
-                          ? translationHome("air quality text moderate")
-                          : weatherData.data?.air_quality > 10
-                            ? translationHome("air quality text good")
-                            : translationHome("air quality text excellent")}
+                  <span className="hyphens-auto break-words">
+                    {weatherData.data?.air_quality > 90
+                      ? translationHome("air quality text very poor")
+                      : weatherData.data?.air_quality > 70
+                        ? translationHome("air quality text poor")
+                        : weatherData.data?.air_quality > 50
+                          ? translationHome("air quality text fair")
+                          : weatherData.data?.air_quality > 30
+                            ? translationHome("air quality text moderate")
+                            : weatherData.data?.air_quality > 10
+                              ? translationHome("air quality text good")
+                              : translationHome("air quality text excellent")}
+                  </span>
                 </div>
-                <div className="relative h-64 w-4 rounded-xl bg-gradient-to-t from-red-500 to-green-800 xl:absolute xl:right-3 xl:w-3 xl:rounded-md">
+                <div className="relative right-3 h-64 w-4 rounded-xl bg-gradient-to-t from-red-500 to-green-800 xl:absolute xl:w-3 xl:rounded-md">
                   <div
                     className="relative h-4 w-full rounded-xl bg-black xl:h-3"
                     style={{
