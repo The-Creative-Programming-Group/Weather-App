@@ -4,15 +4,14 @@ import { activeCity$, addedCities$ } from "~/states";
 import Image from "next/image";
 import { RxCross2 } from "react-icons/rx";
 import { observer } from "@legendapp/state/react";
-import { toast, ToastContainer } from "react-toastify";
 import search2Image from "~/assets/search2.png";
-import "react-toastify/dist/ReactToastify.css";
 import { type ICity } from "~/types";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useTranslation } from "next-i18next";
 import { api } from "~/lib/utils/api";
 import { ClipLoader } from "react-spinners";
 import cn from "classnames";
+import { toast } from "sonner";
 
 const LocationSettings = observer(() => {
   const [searchValue, setSearchValue] = useState<ICity>({
@@ -92,7 +91,7 @@ const LocationSettings = observer(() => {
     } else {
       if (searchValue.id !== 0 && searchValue.country !== "") {
         if (findCityByIdStatus === "loading") {
-          toast.error(translationLocationSettings("try again toast"));
+          toast.loading(translationLocationSettings("try again toast"));
           return;
         }
         if (!Array.isArray(findCityByIdData)) {
@@ -103,7 +102,7 @@ const LocationSettings = observer(() => {
         }
       } else {
         if (findCityByNameStatus === "loading") {
-          toast.error(translationLocationSettings("try again toast"));
+          toast.loading(translationLocationSettings("try again toast"));
           return;
         }
         if (!Array.isArray(findCityByNameData)) {
@@ -131,7 +130,6 @@ const LocationSettings = observer(() => {
 
   return (
     <>
-      <ToastContainer />
       <Layout title={translationCommon("menu locations")}>
         <div className="flex w-full flex-col items-center">
           <h1 className="mt-10 flex justify-center text-4xl font-bold">

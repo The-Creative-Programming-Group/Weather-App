@@ -2,10 +2,8 @@ import React, { useEffect, useRef, useState } from "react";
 import Head from "next/head";
 import Image from "next/image";
 import { activeCity$, addedCities$ } from "~/states";
-import { toast, ToastContainer } from "react-toastify";
 import search1Image from "~/assets/search1.png";
 import background from "~/assets/background.png";
-import "react-toastify/dist/ReactToastify.css";
 import { type ICity } from "~/types";
 import { useRouter } from "next/router";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
@@ -13,6 +11,7 @@ import { useTranslation } from "next-i18next";
 import { api } from "~/lib/utils/api";
 import { ClipLoader } from "react-spinners";
 import cn from "classnames";
+import { toast } from "sonner";
 
 const Search = () => {
   const router = useRouter();
@@ -88,7 +87,7 @@ const Search = () => {
       if (searchValue.id !== 0 && searchValue.country !== "") {
         console.log("hi");
         if (findCityByIdStatus === "loading") {
-          toast.error(translationLocationSettings("try again toast"));
+          toast.loading(translationLocationSettings("try again toast"));
           return;
         }
         if (!Array.isArray(findCityByIdData)) {
@@ -100,7 +99,7 @@ const Search = () => {
       } else {
         console.log("hi");
         if (findCityByNameStatus === "loading") {
-          toast.error(translationLocationSettings("try again toast"));
+          toast.loading(translationLocationSettings("try again toast"));
           return;
         }
         console.log("hi 2");
@@ -130,7 +129,6 @@ const Search = () => {
 
   return (
     <>
-      <ToastContainer />
       <Head>
         <title>{translationCommon("search page title")}</title>
         <meta name="description" content="An faboulus weather website" />

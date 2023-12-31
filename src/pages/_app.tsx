@@ -11,6 +11,7 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import Head from "next/head";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { PWALifeCycle } from "~/components/PWALifecycle";
+import { Toaster } from "~/components/ui/sonner";
 
 // Next font inter
 const inter = Inter({ subsets: ["latin-ext"] });
@@ -31,6 +32,7 @@ const MyApp: AppType = ({ Component, pageProps }) => {
       <main className={inter.className}>
         <Component {...pageProps} />
       </main>
+      <Toaster richColors />
       <Analytics />
       <SpeedInsights />
       <AxiomWebVitals />
