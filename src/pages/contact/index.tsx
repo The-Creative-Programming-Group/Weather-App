@@ -108,7 +108,9 @@ const ContactUs = () => {
             </div>
             <div className="mb-2 flex w-60 flex-col md:w-4/12">
               {errors.email && (
-                <p className="text-red-500">{errors.email.message}</p>
+                <p className="text-red-500" data-testId="email error message">
+                  {errors.email.message}
+                </p>
               )}
               <label className="ml-2" htmlFor="email">
                 {translationContact("email")}
