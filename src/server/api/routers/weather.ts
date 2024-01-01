@@ -575,8 +575,8 @@ export const weatherRouter = createTRPCRouter({
         },
         // Present weather in Kelvin NOT daily average
         temperature: temperature,
-        // This complex code is there for the case that if the temperature is over the maximum it gets the temperature.
-        // In Kelvin.
+        // This complex code is there for the case that if the temperature is over the maximum, it gets the temperature.
+        // **In Kelvin.**
         highestTemperature: temperature
           ? Math.max(
               ...(hourlyAndDailyData?.hourly.temperature_2m.slice(0, 23) ?? []),
@@ -591,8 +591,9 @@ export const weatherRouter = createTRPCRouter({
           : Math.max(
               ...(hourlyAndDailyData?.hourly.temperature_2m.slice(0, 23) ?? []),
             ) + 273.15,
-        // This complex code is there for the case that if the temperature is under the minimum it gets the temperature.
-        // In Kelvin.
+        // This complex code is there for the case that if the temperature is under the minimum,
+        // it gets the temperature.
+        // **In Kelvin.**
         minimumTemperature: temperature
           ? Math.min(
               ...(hourlyAndDailyData?.hourly.temperature_2m.slice(0, 23) ?? []),

@@ -363,7 +363,6 @@ const InternalHome = observer(() => {
               {weatherData.data.hourlyForecast.map(
                 (hourlyForecast: IHourlyForecast, index: number) => {
                   let time;
-                  let isSunsetOrSunrise = false;
                   let sunEvent = "";
                   const currentHour = new Date().getHours();
                   if (
@@ -371,14 +370,12 @@ const InternalHome = observer(() => {
                     dayjs(weatherData.data.sunset).hour() ===
                       hourlyForecast.time
                   ) {
-                    isSunsetOrSunrise = true;
                     sunEvent = translationHome("sunset");
                   } else if (
                     weatherData.data.sunrise &&
                     dayjs(weatherData.data.sunrise).hour() ===
                       hourlyForecast.time
                   ) {
-                    isSunsetOrSunrise = true;
                     sunEvent = translationHome("sunrise");
                   }
 
@@ -411,7 +408,7 @@ const InternalHome = observer(() => {
                       key={index}
                     >
                       <div className="mt-1.5 font-semibold">{time}</div>
-                      {isSunsetOrSunrise && (
+                      {sunEvent && (
                         <div className="mt-1.5 text-center">{sunEvent}</div>
                       )}
                       <div className="flex h-12 w-12 justify-center">

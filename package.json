@@ -48,7 +48,7 @@
     "fuse.js": "^7.0.0",
     "leaflet": "^1.9.4",
     "leaflet-defaulticon-compatibility": "^0.1.2",
-    "lucide-react": "^0.300.0",
+    "lucide-react": "^0.303.0",
     "next": "^14.0.4",
     "next-axiom": "^1.1.1",
     "next-i18next": "^15.1.1",
