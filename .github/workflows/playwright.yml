@@ -37,7 +37,7 @@ jobs:
         UPSTASH_RATELIMITER_TIME_INTERVAL: ${{ secrets.UPSTASH_RATELIMITER_TIME_INTERVAL }},
         RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }},
         QWEATHER_API_KEY: ${{ secrets.QWEATHER_API_KEY }},
-    - uses: actions/upload-artifact@v3
+    - uses: actions/upload-artifact@v4
       if: always()
       with:
         name: playwright-report
