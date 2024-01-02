@@ -204,14 +204,15 @@ const Search = () => {
             city.name.toLowerCase().startsWith(searchValue.name.toLowerCase())
           ) {
             return (
-              <div
+              <button
                 className={
                   isInputActive
-                    ? "z-20 flex h-auto w-9/12 cursor-pointer items-center justify-between border-b-2 border-gray-400 bg-[#383b53] p-5 text-amber-50 md:w-6/12"
+                    ? "z-20 flex h-auto w-9/12 items-center justify-between border-b-2 border-gray-400 bg-[#383b53] p-5 text-amber-50 md:w-6/12"
                     : "hidden"
                 }
+                aria-label={city.name}
                 key={city.id}
-                onMouseDown={() => {
+                onClick={() => {
                   setSearchValue((prevSearchValue): ICity => {
                     return {
                       ...prevSearchValue,
@@ -247,11 +248,11 @@ const Search = () => {
                 </span>
                 <div className="flex w-1/2 flex-row-reverse items-center gap-0.5 sm:w-1/4 sm:gap-3">
                   <span>{city.country}</span>
-                  <span className="w-2/3 overflow-hidden overflow-ellipsis sm:w-full">
+                  <span className="w-2/3 overflow-hidden overflow-ellipsis text-left sm:w-full">
                     {city.region}
                   </span>{" "}
                 </div>
-              </div>
+              </button>
             );
           }
         })}

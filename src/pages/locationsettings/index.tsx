@@ -211,14 +211,15 @@ const LocationSettings = observer(() => {
                   .startsWith(searchValue.name.toLowerCase())
               ) {
                 return (
-                  <div
+                  <button
                     className={
                       isInputActive
-                        ? "flex h-auto w-9/12 cursor-pointer items-center justify-between border-b-2 border-gray-400 bg-[#d8d5db] p-5 md:w-5/12"
+                        ? "flex h-auto w-9/12 items-center justify-between border-b-2 border-gray-400 bg-[#d8d5db] p-5 md:w-5/12"
                         : "hidden"
                     }
+                    aria-label={city.name}
                     key={city.id}
-                    onMouseDown={() => {
+                    onClick={() => {
                       setSearchValue((prevSearchValue): ICity => {
                         return {
                           ...prevSearchValue,
@@ -255,11 +256,11 @@ const LocationSettings = observer(() => {
                     </span>
                     <div className="flex w-1/2 flex-row-reverse items-center gap-0.5 sm:w-1/4 sm:gap-3">
                       <span className="text-gray-500">{city.country}</span>
-                      <span className="w-2/3 overflow-hidden overflow-ellipsis text-gray-500 sm:w-full">
+                      <span className="w-2/3 overflow-hidden overflow-ellipsis text-left text-gray-500 sm:w-full">
                         {city.region}
                       </span>{" "}
                     </div>
-                  </div>
+                  </button>
                 );
               }
             })}
