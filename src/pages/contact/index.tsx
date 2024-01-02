@@ -80,7 +80,9 @@ const ContactUs = () => {
             <div className="mb-2 ml-5 mr-5 mt-5 flex flex-col md:w-1/3 md:flex-row">
               <div className="mb-2 flex w-60 flex-col md:mb-0 md:mr-4 md:w-full">
                 {errors.firstName && (
-                  <p className="text-red-500">{errors.firstName.message}</p>
+                  <p className="text-red-500" role="alert">
+                    {errors.firstName.message}
+                  </p>
                 )}
                 <label className="ml-2" htmlFor="firstname">
                   {translationContact("first name")}
@@ -94,7 +96,9 @@ const ContactUs = () => {
               </div>
               <div className="flex w-60 flex-col md:w-full">
                 {errors.lastName && (
-                  <p className="text-red-500">{errors.lastName.message}</p>
+                  <p className="text-red-500" role="alert">
+                    {errors.lastName.message}
+                  </p>
                 )}
                 <label className="ml-2" htmlFor="lastname">
                   {translationContact("last name")}
@@ -108,7 +112,7 @@ const ContactUs = () => {
             </div>
             <div className="mb-2 flex w-60 flex-col md:w-4/12">
               {errors.email && (
-                <p className="text-red-500" data-testId="email error message">
+                <p className="text-red-500" role="alert">
                   {errors.email.message}
                 </p>
               )}
@@ -124,7 +128,9 @@ const ContactUs = () => {
             </div>
             <div className="mb-8 flex w-60 flex-col md:w-4/12">
               {errors.message && (
-                <p className="text-red-500">{errors.message.message}</p>
+                <p className="text-red-500" role="alert">
+                  {errors.message.message}
+                </p>
               )}
               <label className="ml-2" htmlFor="message">
                 {translationContact("message")}

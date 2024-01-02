@@ -1,4 +1,5 @@
 import { expect, type Page, test } from "@playwright/test";
+import contactTranslations from "../public/locales/en/contact.json";
 
 const goToContactAndFillForm = async (
   page: Page,
@@ -42,9 +43,7 @@ test("invalid email", async ({ page }) => {
   await page.click("button[type=submit]");
 
   // Check the error element
-  expect(
-    (
-      await page.waitForSelector('p[data-testId="email error message"]')
-    ).isVisible(),
-  ).toBeTruthy();
+  await expect(
+    page.getByText(contactTranslations["invalid email"]),
+  ).toBeVisible();
 });
