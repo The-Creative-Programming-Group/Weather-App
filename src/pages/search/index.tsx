@@ -51,6 +51,17 @@ const Search = () => {
       name: searchValue.name,
     });
 
+  const findCityByCoordinatesMutation =
+    api.reverseGeoRouter.getCity.useMutation({
+      onSuccess: (data) => {
+        if (data) {
+          setSearchValue(data);
+        } else {
+          toast.error(translationLocationSettings("city not found toast"));
+        }
+      },
+    });
+
   useEffect(() => {
     if (searchValue.name === "") {
       setResults([]);
@@ -72,12 +83,15 @@ const Search = () => {
         lat: 0,
       },
     };
-    if (searchValue.id === -1) {
+    if (
+      searchValue.id.toString().length === 15 ||
+      searchValue.id.toString().length === 14
+    ) {
       city = {
-        id: -1,
+        id: searchValue.id,
         name: searchValue.name,
-        country: "",
-        region: "",
+        country: searchValue.country,
+        region: searchValue.region,
         coord: {
           lon: searchValue.coord.lon,
           lat: searchValue.coord.lat,
@@ -85,7 +99,6 @@ const Search = () => {
       };
     } else {
       if (searchValue.id !== 0 && searchValue.country !== "") {
-        console.log("hi");
         if (findCityByIdStatus === "loading") {
           toast.loading(translationLocationSettings("try again toast"));
           return;
@@ -97,14 +110,11 @@ const Search = () => {
           return;
         }
       } else {
-        console.log("hi");
         if (findCityByNameStatus === "loading") {
           toast.loading(translationLocationSettings("try again toast"));
           return;
         }
-        console.log("hi 2");
         if (!Array.isArray(findCityByNameData)) {
-          console.log("hi 3");
           city = findCityByNameData.city;
         } else {
           toast.error(translationLocationSettings("city not found toast"));
@@ -265,23 +275,15 @@ const Search = () => {
                   navigator.geolocation.getCurrentPosition((position) => {
                     const latitude = position.coords.latitude;
                     const longitude = position.coords.longitude;
-                    const city: ICity = {
-                      id: -1,
-                      name: translationCommon("my city"),
-                      country: "",
-                      region: "",
-                      coord: {
-                        lon: longitude,
-                        lat: latitude,
-                      },
-                    };
 
-                    setSearchValue(city);
+                    findCityByCoordinatesMutation.mutate({
+                      coordinates: { lat: latitude, lng: longitude },
+                    });
                   });
                 }
               }}
             >
-              {translationSearch("my city button")}
+              {translationSearch("my location button")}
             </button>
             {searchValue.name.length > 0 ? (
               <button

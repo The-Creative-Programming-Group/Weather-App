@@ -46,6 +46,17 @@ const LocationSettings = observer(() => {
       name: searchValue.name,
     });
 
+  const findCityByCoordinatesMutation =
+    api.reverseGeoRouter.getCity.useMutation({
+      onSuccess: (data) => {
+        if (data) {
+          setSearchValue(data);
+        } else {
+          toast.error(translationLocationSettings("city not found toast"));
+        }
+      },
+    });
+
   useEffect(() => {
     if (searchValue.name === "") {
       setResults([]);
@@ -77,12 +88,15 @@ const LocationSettings = observer(() => {
         lat: 0,
       },
     };
-    if (searchValue.id === -1) {
+    if (
+      searchValue.id.toString().length === 15 ||
+      searchValue.id.toString().length === 14
+    ) {
       city = {
-        id: -1,
+        id: searchValue.id,
         name: searchValue.name,
-        country: "",
-        region: "",
+        country: searchValue.country,
+        region: searchValue.region,
         coord: {
           lon: searchValue.coord.lon,
           lat: searchValue.coord.lat,
@@ -309,23 +323,15 @@ const LocationSettings = observer(() => {
                     navigator.geolocation.getCurrentPosition((position) => {
                       const latitude = position.coords.latitude;
                       const longitude = position.coords.longitude;
-                      const city: ICity = {
-                        id: -1,
-                        name: translationCommon("my city"),
-                        country: "",
-                        region: "",
-                        coord: {
-                          lon: longitude,
-                          lat: latitude,
-                        },
-                      };
 
-                      setSearchValue(city);
+                      findCityByCoordinatesMutation.mutate({
+                        coordinates: { lat: latitude, lng: longitude },
+                      });
                     });
                   }
                 }}
               >
-                {translationLocationSettings("my city button")}
+                {translationLocationSettings("my location button")}
               </button>
               <button
                 onClick={() => {
