@@ -129,8 +129,14 @@ const LocationSettings = observer(() => {
     }
 
     if (city) {
+      const existingCity = addedCities$
+        .get()
+        .find((value: ICity) => value.name === city!.name);
       if (addedCities$.get().find((value: ICity) => value.id === city!.id)) {
         activeCity$.set(city);
+        toast.success(translationLocationSettings("switched to city toast"));
+      } else if (existingCity) {
+        activeCity$.set(existingCity);
         toast.success(translationLocationSettings("switched to city toast"));
       } else {
         addedCities$.push(city);
