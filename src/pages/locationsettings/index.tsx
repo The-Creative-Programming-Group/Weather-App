@@ -238,7 +238,7 @@ const LocationSettings = observer(() => {
                       // console.log(searchValue);
                     }}
                   >
-                    <span className="w-1/2">
+                    <span className="w-1/2 text-left">
                       {city.name
                         .split("")
                         .map((letter: string, letterIndex: number) => (
