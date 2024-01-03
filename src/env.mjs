@@ -1,4 +1,4 @@
-import {z} from 'zod'
+import { z } from 'zod'
 
 /**
  * Specify your server-side environment variables schema here. This way you can ensure the app isn't
@@ -13,7 +13,7 @@ const server = z.object({
   UPSTASH_RATELIMITER_TIME_INTERVAL: z.string().min(1),
   RESEND_API_KEY: z.string().min(1),
   QWEATHER_API_KEY: z.string().min(1),
-  API_NINJA_API_KEY: z.string().min(1),
+  API_NINJA_API_KEY: z.string().min(1)
 })
 
 /**
@@ -41,7 +41,7 @@ const processEnv = {
     process.env.UPSTASH_RATELIMITER_TIME_INTERVAL,
   RESEND_API_KEY: process.env.RESEND_API_KEY,
   QWEATHER_API_KEY: process.env.QWEATHER_API_KEY,
-  API_NINJA_API_KEY: process.env.API_NINJA_API_KEY,
+  API_NINJA_API_KEY: process.env.API_NINJA_API_KEY
   // NEXT_PUBLIC_CLIENTVAR: process.env.NEXT_PUBLIC_CLIENTVAR,
 }
 
