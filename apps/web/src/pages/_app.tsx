@@ -1,17 +1,20 @@
-import { type AppType } from "next/app";
+import type { AppType } from "next/app";
 
 import "~/styles/globals.css";
-import { api } from "~/lib/utils/api";
-import { Inter } from "next/font/google";
+
 import React from "react";
+import { Inter } from "next/font/google";
+import Head from "next/head";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import { AxiomWebVitals } from "next-axiom";
 import { appWithTranslation } from "next-i18next";
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-import Head from "next/head";
-import { SpeedInsights } from "@vercel/speed-insights/next";
+
+import { Toaster } from "@weatherio/ui/sonner";
+
 import { PWALifeCycle } from "~/components/PWALifecycle";
-import { Toaster } from "~/components/ui/sonner";
+import { api } from "~/lib/utils/api";
 
 // Next font inter
 const inter = Inter({ subsets: ["latin-ext"] });
