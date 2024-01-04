@@ -1,5 +1,4 @@
 import type { Config } from "tailwindcss";
-import animate from "tailwindcss-animate";
 
 export default {
   darkMode: ["class"],
@@ -48,13 +47,13 @@ export default {
           foreground: "hsl(var(--card-foreground))",
         },
       },
-      borderColor: {
-        DEFAULT: "hsl(var(--border))",
-      },
       borderRadius: {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
+      },
+      borderWidth: {
+        12: "12px",
       },
       keyframes: {
         "accordion-down": {
@@ -72,5 +71,5 @@ export default {
       },
     },
   },
-  plugins: [animate],
+  plugins: [require("tailwindcss-animate")],
 } satisfies Config;
