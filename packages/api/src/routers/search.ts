@@ -1,11 +1,12 @@
 import type { IFuseOptions } from "fuse.js";
-import citiesJSON from "@weatherio/city-data";
-import admin1JSON from "@weatherio/city-data/admin1";
-import admin2JSON from "@weatherio/city-data/admin2";
-import { type ICity } from "@weatherio/types";
 import Fuse from "fuse.js";
 import { log } from "next-axiom";
 import { z } from "zod";
+
+import type { ICity } from "@weatherio/types";
+import citiesJSON from "@weatherio/city-data";
+import admin1JSON from "@weatherio/city-data/admin1";
+import admin2JSON from "@weatherio/city-data/admin2";
 
 import { createTRPCRouter, publicProcedure } from "../trpc";
 

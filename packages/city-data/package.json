@@ -4,9 +4,9 @@
   "private": true,
   "type": "module",
   "exports": {
-    ".": "./src/city-list.json",
-    "./admin1": "./src/admin1.json",
-    "./admin2": "./src/admin2.json"
+    ".": "./city-list.json",
+    "./admin1": "./admin1.json",
+    "./admin2": "./admin2.json"
   },
   "license": "MIT",
   "scripts": {

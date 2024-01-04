@@ -28,6 +28,7 @@ import {
   WiMoonAltFull,
   WiMoonAltNew,
   WiMoonAltWaningCrescent2,
+  WiMoonAltWaningCrescent6,
   WiMoonAltWaningGibbous2,
   WiMoonAltWaxingCrescent2,
   WiMoonAltWaxingGibbous2,
@@ -332,7 +333,7 @@ const InternalHome = observer(() => {
           <CollapsibleTrigger className="flex gap-1 outline-0">
             {translationHome("more information")}:{" "}
             <LuChevronDownSquare
-              className={cn({
+              className={cn("h-6 w-6", {
                 "rotate-180 transform": isMoreInfoCollapsibleOpen,
               })}
             />
@@ -953,7 +954,17 @@ const InternalHome = observer(() => {
                     <WiMoonAltWaningCrescent2 className="h-24 w-24" />
                     {translationHome("moon phase last quarter")}
                   </>
-                ) : null}
+                ) : (weatherData.data.moonPhaseCode === "801" &&
+                    activeCity$.coord.lat.get() < 0) ||
+                  (weatherData.data.moonPhaseCode === "807" &&
+                    activeCity$.coord.lat.get() > 0) ? (
+                  <>
+                    <WiMoonAltWaningCrescent6 className="h-24 w-24" />
+                    {translationHome("moon phase waning crescent")}
+                  </>
+                ) : (
+                  translationHome("not available")
+                )}
               </div>
             </div>
           ) : (

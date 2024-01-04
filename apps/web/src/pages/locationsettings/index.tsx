@@ -302,7 +302,7 @@ const LocationSettings = observer(() => {
                         onClick={() => {
                           activeCity$.set(city);
                         }}
-                        className="mr-5 flex w-full items-center justify-between"
+                        className="mr-5 flex w-full items-center justify-between text-left"
                       >
                         <span className="w-1/2">{city.name}</span>{" "}
                         <div className="flex w-1/2 flex-row-reverse items-center gap-0.5 sm:w-1/4 sm:gap-3">
