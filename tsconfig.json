@@ -25,11 +25,12 @@
   "include": [
     ".eslintrc.cjs",
     "next-env.d.ts",
+    "**/*.js",
     "**/*.ts",
     "**/*.tsx",
     "**/*.cjs",
     "**/*.mjs",
     ".next/types/**/*.ts",
   ],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules", "./public/fallback-*.js", "./public/sw.js", "./public/workbox-*.js"]
 }
