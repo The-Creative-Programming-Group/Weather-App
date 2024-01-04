@@ -1,0 +1,17 @@
+{
+  "name": "Weather.io",
+  "short_name": "Weather",
+  "theme_color": "#2d3142",
+  "background_color": "#ffffff",
+  "display": "standalone",
+  "scope": "/",
+  "start_url": "/",
+  "icons": [
+    {
+      "src": "/icons/icon-512x-512-any.png",
+        "sizes": "512x512",
+        "type": "image/png",
+        "purpose": "any maskable"
+    }
+  ]
+}

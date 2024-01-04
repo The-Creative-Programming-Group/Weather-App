@@ -1,0 +1,72 @@
+{
+  "today": "Heute",
+  "9 day forecast": "9 Tage Vorhersage",
+  "precipitation": "Niederschlag",
+  "feels like": "Gefühlte Temperatur",
+  "visibility": "Sicht",
+  "wind pressure": "Wind",
+  "air quality": "Luftqualität",
+  "pressure": "Luftdruck",
+  "speed": "Geschwindigkeit",
+  "moon phase": "Mondphase",
+
+  "early morning": "Früh",
+  "morning": "Morgen",
+  "noon": "Mittag",
+  "afternoon": "Nachmittag",
+  "night": "Nacht",
+
+  "feels like phrase very warm": "Die Sonne probiert sich abzukühlen!",
+  "feels like phrase warm": "Dein Eis schmilzt dir davon!",
+  "feels like phrase moderate": "Perfektes Wetter für einen Spaziergang!",
+  "feels like phrase cold": "Sogar Pinguine bestellen sich eine heiße Schokolade!",
+  "feels like phrase very cold": "Auch die Schneemänner frieren!",
+
+  "air quality text very poor": "Sehr schlecht",
+  "air quality text poor": "Schlecht",
+  "air quality text fair": "Mäßig",
+  "air quality text moderate": "Mittel",
+  "air quality text good": "Gut",
+  "air quality text excellent": "Sehr gut",
+
+  "sunset": "Sonnenuntergang",
+  "sunrise": "Sonnenaufgang",
+
+  "weather state stormy": "Stürmisch",
+  "weather state snowy": "Schnee",
+  "weather state rainy": "Regen",
+  "weather state very cloudy": "Stark bewölkt",
+  "weather state cloudy": "Bewölkt",
+  "weather state windy": "Windig",
+  "weather state sunny": "Sonnig",
+
+  "this hour": "Diese Stunde",
+  "early hour time ending": ":00",
+  "late hour time ending": ":00",
+
+  "9 day forecast card content": "Die Vorhersage für die nächsten 9 Tage. <br />Die <span class=\"font-semibold\">Temperaturen</span> sind die durchschnittlichen Temperaturen des Tages. Eine für den Tag, eine für die Nacht.",
+
+  "precipitation card title": "Derzeitige Niederschlagswahrscheinlichkeit",
+
+  "feels like card content": "Die gefühlte Temperatur ist die Temperatur, die du spürst, wenn du draußen bist.<br /> Sie wird durch die Temperatur, die Luftfeuchtigkeit und den Wind beeinflusst.",
+
+  "visibility card title": "Derzeitige Sichtweite",
+
+  "wind pressure card title": "Derzeitiger Wind",
+
+  "not available": "Nicht verfügbar",
+
+  "moon phase card title": "Derzeitige Mondphase",
+  "moon phase card content": "Die Mondphase ist die Form des Mondes, die wir von der Erde aus sehen können.",
+
+  "moon phase new moon": "Neumond",
+  "moon phase waxing crescent": "Zunehmende Sichel",
+  "moon phase first quarter": "Erstes Viertel",
+  "moon phase waxing gibbous": "Zunehmender Mond",
+  "moon phase full moon": "Vollmond",
+  "moon phase waning gibbous": "Abnehmender Mond",
+  "moon phase last quarter": "Letztes Viertel",
+
+  "more information": "Mehr Informationen",
+  "sun hours": "Sonnenstunden"
+}

@@ -1,0 +1,13 @@
+{
+  "add new location": "Add new location",
+  "add new location button": "Add new location",
+  "search input placeholder": "Search for your location",
+
+  "at least one city toast": "You must have at least one city",
+  "switched to city toast": "Switched to city!",
+  "added city toast": "Added new city!",
+  "city not found toast": "City not found!",
+  "try again toast": "Try again!",
+
+  "my location button": "Choose my location"
+}

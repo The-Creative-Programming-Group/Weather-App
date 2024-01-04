@@ -1,0 +1,7 @@
+.normalbutton {
+  @apply mt-3 flex h-10 w-64 md:w-96 items-center border-gray-700 bg-[#d8d5db] md:text-base text-sm whitespace-nowrap pr-2;
+}
+
+.buttontext {
+  @apply ml-2 font-bold;
+}

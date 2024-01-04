@@ -1,8 +1,8 @@
 {
-  "extends": "@acme/tsconfig/base.json",
+  "extends": "@weatherio/tsconfig/base.json",
   "compilerOptions": {
     "tsBuildInfoFile": "node_modules/.cache/tsbuildinfo.json"
   },
-  "include": ["."],
+  "include": [".",  "../../reset.d.ts"],
   "exclude": ["node_modules"]
 }

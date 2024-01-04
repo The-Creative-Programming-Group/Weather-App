@@ -1,16 +1,17 @@
 {
-  "name": "@acme/ui",
+  "name": "@weatherio/ui",
   "private": true,
   "version": "0.1.0",
   "type": "module",
   "exports": {
     ".": "./src/index.ts",
     "./button": "./src/button.tsx",
-    "./form": "./src/form.tsx",
-    "./input": "./src/input.tsx",
-    "./label": "./src/label.tsx",
-    "./theme": "./src/theme.tsx",
-    "./toast": "./src/toast.tsx"
+    "./collapsible": "./src/collapsible.tsx",
+    "./hover-card": "./src/hover-card.tsx",
+    "./map": "./src/map.tsx",
+    "./scroll-area": "./src/scroll-area.tsx",
+    "./skeleton": "./src/skeleton.tsx",
+    "./sonner": "./src/sonner.tsx"
   },
   "license": "MIT",
   "scripts": {
@@ -34,10 +35,10 @@
     "tailwindcss-animate": "^1.0.7"
   },
   "devDependencies": {
-    "@acme/eslint-config": "workspace:^0.2.0",
-    "@acme/prettier-config": "workspace:^0.1.0",
-    "@acme/tailwind-config": "workspace:^0.1.0",
-    "@acme/tsconfig": "workspace:^0.1.0",
+    "@weatherio/eslint-config": "workspace:^0.2.0",
+    "@weatherio/prettier-config": "workspace:^0.1.0",
+    "@weatherio/tailwind-config": "workspace:^0.1.0",
+    "@weatherio/tsconfig": "workspace:^0.1.0",
     "@types/leaflet": "^1.9.8",
     "eslint": "^8.56.0",
     "prettier": "^3.1.1",
@@ -46,9 +47,9 @@
   },
   "eslintConfig": {
     "extends": [
-      "@acme/eslint-config/base",
-      "@acme/eslint-config/react"
+      "@weatherio/eslint-config/base",
+      "@weatherio/eslint-config/react"
     ]
   },
-  "prettier": "@acme/prettier-config"
+  "prettier": "@weatherio/prettier-config"
 }

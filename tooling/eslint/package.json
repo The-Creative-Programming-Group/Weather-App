@@ -1,5 +1,5 @@
 {
-  "name": "@acme/eslint-config",
+  "name": "@weatherio/eslint-config",
   "version": "0.2.0",
   "private": true,
   "license": "MIT",
@@ -26,8 +26,8 @@
     "eslint-plugin-react-hooks": "^4.6.0"
   },
   "devDependencies": {
-    "@acme/prettier-config": "workspace:^0.1.0",
-    "@acme/tsconfig": "workspace:^0.1.0",
+    "@weatherio/prettier-config": "workspace:^0.1.0",
+    "@weatherio/tsconfig": "workspace:^0.1.0",
     "@types/eslint": "^8.56.0",
     "eslint": "^8.56.0",
     "prettier": "^3.1.1",
@@ -39,5 +39,5 @@
       "./base.js"
     ]
   },
-  "prettier": "@acme/prettier-config"
+  "prettier": "@weatherio/prettier-config"
 }
