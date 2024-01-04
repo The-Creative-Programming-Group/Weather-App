@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+import { StaticImport } from "next/dist/shared/lib/get-img-props";
 import Image from "next/image";
 import { observer } from "@legendapp/state/react";
 import cn from "classnames";
@@ -8,7 +9,7 @@ import { RxCross2 } from "react-icons/rx";
 import { ClipLoader } from "react-spinners";
 import { toast } from "sonner";
 
-import { type ICity } from "@weatherio/types";
+import type { ICity } from "@weatherio/types";
 
 import search2Image from "~/assets/search2.png";
 import Layout from "~/components/Layout";
@@ -173,7 +174,7 @@ const LocationSettings = observer(() => {
               <div className="relative flex w-full justify-center">
                 <Image
                   className="w-12 transform border-b-2 border-black bg-[#d8d5db] pb-3 pl-3 pt-3"
-                  src={search2Image}
+                  src={search2Image as StaticImport}
                   alt="search-icon"
                   width={56}
                   height={56}
@@ -188,7 +189,6 @@ const LocationSettings = observer(() => {
                         inputRef.current?.value.length > 0,
                     },
                   )}
-                  autoFocus
                   placeholder={translationLocationSettings(
                     "search input placeholder",
                   )}
@@ -298,7 +298,7 @@ const LocationSettings = observer(() => {
                       }
                       key={city.id}
                     >
-                      <div
+                      <button
                         onClick={() => {
                           activeCity$.set(city);
                         }}
@@ -311,7 +311,7 @@ const LocationSettings = observer(() => {
                             {city.region}
                           </span>{" "}
                         </div>
-                      </div>
+                      </button>
                       <div className="absolute right-0.5 top-1/2 h-5 w-5 -translate-y-1/2">
                         <RxCross2
                           onClick={() => removeCityFromAddedCities(city)}

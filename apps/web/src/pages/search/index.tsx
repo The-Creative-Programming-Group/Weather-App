@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+import { StaticImport } from "next/dist/shared/lib/get-img-props";
 import Head from "next/head";
 import Image from "next/image";
 import { useRouter } from "next/router";
@@ -152,7 +153,7 @@ const Search = () => {
         <meta name="description" content="An faboulus weather website" />
       </Head>
       <Image
-        src={background}
+        src={background as StaticImport}
         alt="background"
         className="-z-10 object-cover"
         fill
@@ -164,7 +165,7 @@ const Search = () => {
         >
           <Image
             className="transform bg-[#383b53] pb-1.5 pl-1.5 pt-1.5 md:w-12 md:pb-3 md:pl-3 md:pt-3"
-            src={search1Image}
+            src={search1Image as StaticImport}
             alt="search-icon"
             width={40}
             height={40}
@@ -180,7 +181,6 @@ const Search = () => {
                   inputRef.current?.value.length > 0,
               },
             )}
-            autoFocus
             placeholder={translationSearch("search input placeholder")}
             type="text"
             onFocus={() => {

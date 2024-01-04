@@ -33,6 +33,7 @@ const config = withMyBundleAnalyzer(withPWA(
 
   /** Enables hot reloading for local packages without a build step */
   transpilePackages: ["@weatherio/api", "@weatherio/ui", "@weatherio/types"],
+    i18n,
     }))
 )
 
