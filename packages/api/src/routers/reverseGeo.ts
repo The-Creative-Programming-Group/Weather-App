@@ -1,8 +1,9 @@
 import crypto from "crypto";
-import { type ICity } from "@weatherio/types";
 import axios from "axios";
 import { log } from "next-axiom";
 import { z } from "zod";
+
+import type { ICity } from "@weatherio/types";
 
 import { env } from "../../env.mjs";
 import { createTRPCRouter, rateLimitedProcedure } from "../trpc";

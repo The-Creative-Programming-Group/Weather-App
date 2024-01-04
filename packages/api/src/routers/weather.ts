@@ -1,10 +1,11 @@
-import { type IDailyForecast, type IHourlyForecast } from "@weatherio/types";
 import axios from "axios";
 import dayjs from "dayjs";
 import timezone from "dayjs/plugin/timezone";
 import utc from "dayjs/plugin/utc";
 import { log } from "next-axiom";
 import { z } from "zod";
+
+import type { IDailyForecast, IHourlyForecast } from "@weatherio/types";
 
 import { env } from "../../env.mjs";
 import { createTRPCRouter, rateLimitedProcedure } from "../trpc";
