@@ -197,7 +197,8 @@ const LocationSettings = observer(() => {
                     setIsInputActive(true);
                   }}
                   value={searchValue.name}
-                  onBlur={() => {
+                  onBlur={async () => {
+                    await new Promise((resolve) => setTimeout(resolve, 80));
                     setIsInputActive(false);
                   }}
                   onChange={(event) => {
@@ -227,7 +228,6 @@ const LocationSettings = observer(() => {
             </div>
             {results.map((city: ICity) => {
               if (
-                isInputActive &&
                 city.name
                   .toLowerCase()
                   .startsWith(searchValue.name.toLowerCase())
@@ -236,7 +236,7 @@ const LocationSettings = observer(() => {
                   <button
                     className={
                       isInputActive
-                        ? "flex h-auto w-9/12 items-center justify-between border-b-2 border-gray-400 bg-[#d8d5db] p-5 md:w-5/12"
+                        ? "flex h-auto w-9/12 items-center justify-between border-b-2 border-gray-400 bg-[#d8d5db] p-5 text-left md:w-5/12"
                         : "hidden"
                     }
                     aria-label={city.name}
@@ -255,12 +255,9 @@ const LocationSettings = observer(() => {
                           },
                         };
                       });
-                      setIsInputActive(false);
-                      inputRef.current?.blur();
-                      // console.log(searchValue);
                     }}
                   >
-                    <span className="w-1/2 text-left">
+                    <span className="w-1/2">
                       {city.name
                         .split("")
                         .map((letter: string, letterIndex: number) => (
@@ -278,7 +275,7 @@ const LocationSettings = observer(() => {
                     </span>
                     <div className="flex w-1/2 flex-row-reverse items-center gap-0.5 sm:w-1/4 sm:gap-3">
                       <span className="text-gray-500">{city.country}</span>
-                      <span className="w-2/3 overflow-hidden overflow-ellipsis text-left text-gray-500 sm:w-full">
+                      <span className="w-2/3 overflow-hidden overflow-ellipsis text-gray-500 sm:w-full">
                         {city.region}
                       </span>{" "}
                     </div>
