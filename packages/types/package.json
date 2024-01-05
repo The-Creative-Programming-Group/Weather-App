@@ -1,0 +1,28 @@
+{
+  "name": "@weatherio/types",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "license": "MIT",
+  "scripts": {
+    "clean": "rm -rf .turbo node_modules",
+    "format": "prettier --check . --ignore-path ../../.gitignore",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit"
+  },
+  "eslintConfig": {
+    "root": true,
+    "extends": [
+      "@weatherio/eslint-config/base"
+    ]
+  },
+  "prettier": "@weatherio/prettier-config",
+  "devDependencies": {
+    "@weatherio/tsconfig": "workspace:^0.1.0",
+    "@weatherio/eslint-config": "workspace:^0.2.0",
+    "@weatherio/prettier-config": "workspace:^0.1.0"
+  }
+}

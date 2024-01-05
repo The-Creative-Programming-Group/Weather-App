@@ -12,7 +12,7 @@ jobs:
     - uses: actions/checkout@v4
     - uses: actions/setup-node@v4
       with:
-        node-version: 18
+        node-version: 20
     - name: Install dependencies
       run: npm install -g pnpm && pnpm install
     - name: Install Playwright Browsers
@@ -27,6 +27,7 @@ jobs:
         UPSTASH_RATELIMITER_TIME_INTERVAL: ${{ secrets.UPSTASH_RATELIMITER_TIME_INTERVAL }},
         RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }},
         QWEATHER_API_KEY: ${{ secrets.QWEATHER_API_KEY }},
+        API_NINJA_API_KEY: ${{ secrets.API_NINJA_API_KEY }},
     - name: Test
       run: pnpm e2e:test
       env:
@@ -37,6 +38,7 @@ jobs:
         UPSTASH_RATELIMITER_TIME_INTERVAL: ${{ secrets.UPSTASH_RATELIMITER_TIME_INTERVAL }},
         RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }},
         QWEATHER_API_KEY: ${{ secrets.QWEATHER_API_KEY }},
+        API_NINJA_API_KEY: ${{ secrets.API_NINJA_API_KEY }},
     - uses: actions/upload-artifact@v4
       if: always()
       with:

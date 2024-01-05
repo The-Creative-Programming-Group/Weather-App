@@ -1,0 +1,14 @@
+{
+  "extends": "@weatherio/tsconfig/base.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "~/*": ["./src/*"]
+    },
+    "plugins": [{ "name": "next" }],
+    "tsBuildInfoFile": "node_modules/.cache/tsbuildinfo.json",
+    "types": ["@ducanh2912/next-pwa/workbox"]
+  },
+  "include": [".", ".next/types/**/*.ts", "../../reset.d.ts"],
+  "exclude": ["node_modules"]
+}
