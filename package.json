@@ -17,7 +17,8 @@
     "lint:ws": "pnpm dlx sherif@latest",
     "postinstall": "pnpm lint:ws",
     "typecheck": "turbo typecheck",
-    "update:city-data": "cd packages/city-data && pnpm update:city-data"
+    "update:city-data": "cd packages/city-data && pnpm update:city-data",
+    "e2e:test": "turbo e2e:test"
   },
   "devDependencies": {
     "@total-typescript/ts-reset": "^0.5.1",

@@ -23,6 +23,15 @@
       "outputs": ["node_modules/.cache/.prettiercache"],
       "outputMode": "new-only"
     },
+    "dev:test": {
+      "cache": false
+    },
+    "dev:test:ui": {
+      "cache": false
+    },
+    "e2e:test": {
+      "dependsOn": ["^build"]
+    },
     "lint": {
       "dependsOn": ["^topo"],
       "outputs": ["node_modules/.cache/.eslintcache"]
