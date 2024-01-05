@@ -1,4 +1,4 @@
-<img src="/apps/web/public/og-image.png" min-width="200px" max-width="250px" width="400px" align="right" alt="Computer">
+<img src="apps/web/public/og-image.png" min-width="200px" max-width="250px" width="400px" align="right" alt="Computer">
 
 # Weather.io
 
