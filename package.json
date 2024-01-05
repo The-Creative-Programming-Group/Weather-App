@@ -21,6 +21,7 @@
     "e2e:test": "turbo e2e:test"
   },
   "devDependencies": {
+    "@playwright/test": "^1.40.1",
     "@total-typescript/ts-reset": "^0.5.1",
     "@turbo/gen": "^1.11.2",
     "@weatherio/prettier-config": "workspace:^0.1.0",

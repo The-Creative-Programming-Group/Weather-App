@@ -21,7 +21,6 @@
   },
   "prettier": "@weatherio/prettier-config",
   "dependencies": {
-    "@playwright/test": "^1.40.1",
     "start-server-and-test": "^2.0.3"
   }
 }
