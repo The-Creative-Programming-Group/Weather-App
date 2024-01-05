@@ -447,6 +447,9 @@ importers:
         specifier: ^1.0.7
         version: 1.0.7(tailwindcss@3.4.0)
     devDependencies:
+      '@types/node':
+        specifier: ^20.10.6
+        version: 20.10.6
       '@weatherio/eslint-config':
         specifier: workspace:^0.2.0
         version: link:../eslint
