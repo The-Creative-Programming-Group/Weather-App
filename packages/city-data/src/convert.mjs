@@ -1,8 +1,8 @@
 import fs from 'fs'
 import readline from 'readline'
 import jsonfile from 'jsonfile'
-import {z} from 'zod'
-import {citySchema} from './renamejsonproperties.mjs'
+import { z } from 'zod'
+import { citySchema } from './renamejsonproperties.mjs'
 
 export const germanNamesSchema = z.array(
   z.object({
