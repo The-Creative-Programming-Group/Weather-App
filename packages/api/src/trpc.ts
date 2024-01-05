@@ -121,7 +121,7 @@ const ratelimit = new Ratelimit({
     parseInt(env.UPSTASH_RATELIMITER_TOKENS_PER_TIME),
     UPSTASH_RATELIMITER_TIME_INTERVAL,
   ),
-  analytics: true,
+  analytics: false,
   prefix: "@upstash/ratelimit",
 });
 
