@@ -248,6 +248,9 @@ importers:
 
   packages/e2e-web-tests:
     dependencies:
+      '@weatherio/web':
+        specifier: workspace:*
+        version: link:../../apps/web
       start-server-and-test:
         specifier: ^2.0.3
         version: 2.0.3
