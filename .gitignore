@@ -60,3 +60,9 @@ yarn-error.log*
 /apps/web/public/workbox-*.js
 /apps/web/public/workbox-*.js.map
 /apps/web/public/fallback-*.js
+
+# Playwright
+test-results
+playwright-report
+blob-report
+playwright/.cache

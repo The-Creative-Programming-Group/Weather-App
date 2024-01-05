@@ -1,5 +1,5 @@
+import type { StaticImport } from "next/dist/shared/lib/get-img-props";
 import React, { useEffect, useRef, useState } from "react";
-import { StaticImport } from "next/dist/shared/lib/get-img-props";
 import Image from "next/image";
 import { observer } from "@legendapp/state/react";
 import cn from "classnames";

@@ -1,5 +1,5 @@
+import type { StaticImport } from "next/dist/shared/lib/get-img-props";
 import React, { useEffect, useRef, useState } from "react";
-import { StaticImport } from "next/dist/shared/lib/get-img-props";
 import Head from "next/head";
 import Image from "next/image";
 import { useRouter } from "next/router";

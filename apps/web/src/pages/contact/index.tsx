@@ -92,7 +92,6 @@ const ContactUs = () => {
                 <input
                   className="h-10 w-full rounded-md bg-[#d7d5db] pl-2"
                   id="firstname"
-                  autoFocus
                   {...register("firstName")}
                 />
               </div>
