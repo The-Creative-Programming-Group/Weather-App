@@ -337,6 +337,9 @@ importers:
       '@types/leaflet':
         specifier: ^1.9.8
         version: 1.9.8
+      '@types/node':
+        specifier: ^20.10.6
+        version: 20.10.6
       '@types/react':
         specifier: ^18.2.46
         version: 18.2.46
