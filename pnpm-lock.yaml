@@ -267,6 +267,9 @@ importers:
         specifier: ^2.0.3
         version: 2.0.3
     devDependencies:
+      '@types/node':
+        specifier: ^20.10.6
+        version: 20.10.6
       '@weatherio/eslint-config':
         specifier: workspace:^0.2.0
         version: link:../../tooling/eslint
