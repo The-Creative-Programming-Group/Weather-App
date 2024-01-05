@@ -365,10 +365,12 @@ export const weatherRouter = createTRPCRouter({
 
         hourlyForecast.push({
           time,
-          temperature: temperature ? temperature + 273.15 : undefined,
-          apparentTemperature: apparentTemperature
-            ? apparentTemperature + 273.15
-            : undefined,
+          temperature:
+            temperature !== undefined ? temperature + 273.15 : undefined,
+          apparentTemperature:
+            apparentTemperature !== undefined
+              ? apparentTemperature + 273.15
+              : undefined,
           rain,
           showers,
           snowfall,
