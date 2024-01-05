@@ -83,8 +83,12 @@ const Layout: React.FC<LayoutProps> = ({
       </header>
       <header className="bg-[#2d3142] p-2 text-white md:hidden">
         <div className="flex items-center">
-          {!navbarOpen && <LuMenu onClick={() => setNavbarOpen(true)} />}
-          {navbarOpen && <LuX onClick={() => setNavbarOpen(false)} />}
+          {!navbarOpen && (
+            <LuMenu onClick={() => setNavbarOpen(true)} className="h-6 w-6" />
+          )}
+          {navbarOpen && (
+            <LuX onClick={() => setNavbarOpen(false)} className="h-6 w-6" />
+          )}
           <Link
             href="/home"
             className="ml-2.5 flex flex-col items-center text-xl font-semibold"
