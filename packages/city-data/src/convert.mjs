@@ -1,8 +1,8 @@
 import fs from 'fs'
 import readline from 'readline'
 import jsonfile from 'jsonfile'
-import { z } from 'zod'
-import { citySchema } from './renamejsonproperties.mjs'
+import {z} from 'zod'
+import {citySchema} from './renamejsonproperties.mjs'
 
 export const germanNamesSchema = z.array(
   z.object({
@@ -25,7 +25,7 @@ const txtToJson = (
     console.log(`Converting ${filename}.txt to ${jsonFilePath}`)
     const txtFilePath = `./${filename}.txt`
     jsonFilePath = jsonFilePath || `./${filename}.json`
-    // @ts-ignore
+    // @ts-expect-error
     const entries = []
     let i = 0
     let lineValues
@@ -45,7 +45,7 @@ const txtToJson = (
           entries.push(
             lineValues.reduce((entry, value, valueIndex) => {
               if (mappedColumnIndexes.includes(valueIndex)) {
-                // @ts-ignore
+                // @ts-expect-error
                 entry[columnNameMapping[valueIndex]] =
                   removeDoubleQuotes(value)
               }
@@ -60,7 +60,7 @@ const txtToJson = (
         console.log(`Writing ${i} entries to ${jsonFilePath}`)
         jsonfile.writeFile(
           jsonFilePath,
-          // @ts-ignore
+          // @ts-expect-error
           entries,
           { spaces: 2 },
           function (err) {

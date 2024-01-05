@@ -1,5 +1,6 @@
-import { expect, type Page, test } from "@playwright/test";
-import contactTranslations from "../../../apps/web/public/locales/en/contact.json" assert { type: 'json' };
+import type {Page} from "@playwright/test";
+import {expect, test} from "@playwright/test";
+import contactTranslations from "../../../apps/web/public/locales/en/contact.json" assert {type: "json"};
 
 const goToContactAndFillForm = async (
   page: Page,

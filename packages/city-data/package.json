@@ -4,15 +4,15 @@
   "private": true,
   "type": "module",
   "exports": {
-    ".": "./city-list.json",
-    "./admin1": "./admin1.json",
-    "./admin2": "./admin2.json"
+    ".": "./src/city-list.json",
+    "./admin1": "./src/admin1.json",
+    "./admin2": "./src/admin2.json"
   },
   "license": "MIT",
   "scripts": {
     "clean": "rm -rf .turbo node_modules",
     "format": "prettier --check . --ignore-path ../../.gitignore",
-    "lint": "eslint .",
+    "lint": "eslint \"**/*.mjs\"",
     "typecheck": "tsc --noEmit",
     "update:city-data": "node download.mjs && node convert.mjs && node renamejsonproperties.mjs"
   },
@@ -30,6 +30,9 @@
   },
   "devDependencies": {
     "@types/jsonfile": "^6.1.4",
-    "@types/yauzl": "^2.10.3"
+    "@types/yauzl": "^2.10.3",
+    "@weatherio/tsconfig": "workspace:^0.1.0",
+    "@weatherio/eslint-config": "workspace:^0.2.0",
+    "@weatherio/prettier-config": "workspace:^0.1.0"
   }
 }

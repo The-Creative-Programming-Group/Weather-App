@@ -3,6 +3,6 @@
   "compilerOptions": {
     "tsBuildInfoFile": "node_modules/.cache/tsbuildinfo.json"
   },
-  "include": ["tests", "**/*.mjs",  "../../reset.d.ts"],
+  "include": ["tests", "**/*.mjs",  "../../reset.d.ts", "**/*.ts", "**/*.tsx", "playwright.config.ts"],
   "exclude": ["node_modules"]
 }

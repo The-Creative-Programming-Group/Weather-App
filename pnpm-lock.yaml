@@ -245,6 +245,15 @@ importers:
       '@types/yauzl':
         specifier: ^2.10.3
         version: 2.10.3
+      '@weatherio/eslint-config':
+        specifier: workspace:^0.2.0
+        version: link:../../tooling/eslint
+      '@weatherio/prettier-config':
+        specifier: workspace:^0.1.0
+        version: link:../../tooling/prettier
+      '@weatherio/tsconfig':
+        specifier: workspace:^0.1.0
+        version: link:../../tooling/typescript
 
   packages/e2e-web-tests:
     dependencies:
@@ -254,8 +263,28 @@ importers:
       start-server-and-test:
         specifier: ^2.0.3
         version: 2.0.3
+    devDependencies:
+      '@weatherio/eslint-config':
+        specifier: workspace:^0.2.0
+        version: link:../../tooling/eslint
+      '@weatherio/prettier-config':
+        specifier: workspace:^0.1.0
+        version: link:../../tooling/prettier
+      '@weatherio/tsconfig':
+        specifier: workspace:^0.1.0
+        version: link:../../tooling/typescript
 
-  packages/types: {}
+  packages/types:
+    devDependencies:
+      '@weatherio/eslint-config':
+        specifier: workspace:^0.2.0
+        version: link:../../tooling/eslint
+      '@weatherio/prettier-config':
+        specifier: workspace:^0.1.0
+        version: link:../../tooling/prettier
+      '@weatherio/tsconfig':
+        specifier: workspace:^0.1.0
+        version: link:../../tooling/typescript
 
   packages/ui:
     dependencies:
