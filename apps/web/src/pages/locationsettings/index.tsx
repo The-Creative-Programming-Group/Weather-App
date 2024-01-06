@@ -198,7 +198,6 @@ const LocationSettings = observer(() => {
                   }}
                   value={searchValue.name}
                   onBlur={async () => {
-                    await new Promise((resolve) => setTimeout(resolve, 100));
                     setIsInputActive(false);
                   }}
                   onChange={(event) => {
@@ -241,7 +240,13 @@ const LocationSettings = observer(() => {
                     }
                     aria-label={city.name}
                     key={city.id}
-                    onClick={() => {
+                    /**
+                     * I chose onMouseDown over onClick
+                     * because if you choose onClick,
+                     * the onBlur function runs before onClick runs
+                     * and the onClick function never will get executed
+                     */
+                    onMouseDown={() => {
                       setSearchValue((prevSearchValue): ICity => {
                         return {
                           ...prevSearchValue,
