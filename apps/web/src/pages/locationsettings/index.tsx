@@ -198,7 +198,7 @@ const LocationSettings = observer(() => {
                   }}
                   value={searchValue.name}
                   onBlur={async () => {
-                    await new Promise((resolve) => setTimeout(resolve, 80));
+                    await new Promise((resolve) => setTimeout(resolve, 100));
                     setIsInputActive(false);
                   }}
                   onChange={(event) => {
