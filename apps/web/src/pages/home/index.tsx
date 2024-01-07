@@ -980,7 +980,7 @@ const InternalHome = observer(() => {
             </div>
           </div>
         </div>
-        <div className="mb-6 block h-96 w-11/12 rounded-md md:hidden">
+        <div className="z-0 mb-6 block h-96 w-11/12 rounded-md md:hidden">
           <Map position={mapPosition} className="h-full w-full rounded-md" />
         </div>
       </div>
