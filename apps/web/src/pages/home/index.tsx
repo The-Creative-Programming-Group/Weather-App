@@ -30,6 +30,7 @@ import {
   WiMoonAltWaningCrescent2,
   WiMoonAltWaningCrescent6,
   WiMoonAltWaningGibbous2,
+  WiMoonAltWaxingCrescent1,
   WiMoonAltWaxingCrescent2,
   WiMoonAltWaxingGibbous2,
   WiRaindrop,
@@ -914,7 +915,7 @@ const InternalHome = observer(() => {
                   (weatherData.data.moonPhaseCode === "807" &&
                     activeCity$.coord.lat.get() < 0) ? (
                   <>
-                    <WiMoonAltNew className="h-24 w-24" />
+                    <WiMoonAltWaxingCrescent1 className="h-24 w-24" />
                     {translationHome("moon phase waxing crescent")}
                   </>
                 ) : (weatherData.data.moonPhaseCode === "802" &&
