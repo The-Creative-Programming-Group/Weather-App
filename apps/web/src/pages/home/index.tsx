@@ -24,17 +24,7 @@ import {
 } from "react-icons/fa6";
 import { LuChevronDownSquare, LuInfo, LuLink } from "react-icons/lu";
 import { PiSunglasses } from "react-icons/pi";
-import {
-  WiMoonAltFull,
-  WiMoonAltNew,
-  WiMoonAltWaningCrescent2,
-  WiMoonAltWaningCrescent6,
-  WiMoonAltWaningGibbous2,
-  WiMoonAltWaxingCrescent1,
-  WiMoonAltWaxingCrescent2,
-  WiMoonAltWaxingGibbous2,
-  WiRaindrop,
-} from "react-icons/wi";
+import { WiRaindrop } from "react-icons/wi";
 
 import type { IDailyForecast, IHourlyForecast } from "@weatherio/types";
 import { Button } from "@weatherio/ui/button";
@@ -54,6 +44,7 @@ import { Skeleton } from "@weatherio/ui/skeleton";
 import type { WindSpeedUnitType } from "~/states";
 import Layout from "~/components/Layout";
 import { api } from "~/lib/utils/api";
+import { MoonPhaseInfo } from "~/pages/home/moon-phase-info";
 import { activeCity$, temperatureUnit$, windSpeedUnit$ } from "~/states";
 
 const Map = dynamic(() => import("@weatherio/ui/map"), { ssr: false });
@@ -905,67 +896,9 @@ const InternalHome = observer(() => {
                 </HoverCard>
               </div>
               <div className="mt-2 flex flex-col items-center justify-center hyphens-auto break-words text-center">
-                {weatherData.data.moonPhaseCode === "800" ? (
-                  <>
-                    <WiMoonAltNew className="h-24 w-24" />
-                    {translationHome("moon phase new moon")}
-                  </>
-                ) : (weatherData.data.moonPhaseCode === "801" &&
-                    activeCity$.coord.lat.get() > 0) ||
-                  (weatherData.data.moonPhaseCode === "807" &&
-                    activeCity$.coord.lat.get() < 0) ? (
-                  <>
-                    <WiMoonAltWaxingCrescent1 className="h-24 w-24" />
-                    {translationHome("moon phase waxing crescent")}
-                  </>
-                ) : (weatherData.data.moonPhaseCode === "802" &&
-                    activeCity$.coord.lat.get() > 0) ||
-                  (weatherData.data.moonPhaseCode === "806" &&
-                    activeCity$.coord.lat.get() < 0) ? (
-                  <>
-                    <WiMoonAltWaxingCrescent2 className="h-24 w-24" />
-                    {translationHome("moon phase first quarter")}
-                  </>
-                ) : (weatherData.data.moonPhaseCode === "803" &&
-                    activeCity$.coord.lat.get() > 0) ||
-                  (weatherData.data.moonPhaseCode === "805" &&
-                    activeCity$.coord.lat.get() < 0) ? (
-                  <>
-                    <WiMoonAltWaxingGibbous2 className="h-24 w-24" />
-                    {translationHome("moon phase waxing gibbous")}
-                  </>
-                ) : weatherData.data.moonPhaseCode === "804" ? (
-                  <>
-                    <WiMoonAltFull className="h-24 w-24" />
-                    {translationHome("moon phase full moon")}
-                  </>
-                ) : (weatherData.data.moonPhaseCode === "803" &&
-                    activeCity$.coord.lat.get() < 0) ||
-                  (weatherData.data.moonPhaseCode === "805" &&
-                    activeCity$.coord.lat.get() > 0) ? (
-                  <>
-                    <WiMoonAltWaningGibbous2 className="h-24 w-24" />
-                    {translationHome("moon phase waning gibbous")}
-                  </>
-                ) : (weatherData.data.moonPhaseCode === "802" &&
-                    activeCity$.coord.lat.get() < 0) ||
-                  (weatherData.data.moonPhaseCode === "806" &&
-                    activeCity$.coord.lat.get() > 0) ? (
-                  <>
-                    <WiMoonAltWaningCrescent2 className="h-24 w-24" />
-                    {translationHome("moon phase last quarter")}
-                  </>
-                ) : (weatherData.data.moonPhaseCode === "801" &&
-                    activeCity$.coord.lat.get() < 0) ||
-                  (weatherData.data.moonPhaseCode === "807" &&
-                    activeCity$.coord.lat.get() > 0) ? (
-                  <>
-                    <WiMoonAltWaningCrescent6 className="h-24 w-24" />
-                    {translationHome("moon phase waning crescent")}
-                  </>
-                ) : (
-                  translationHome("not available")
-                )}
+                <MoonPhaseInfo
+                  moonPhaseCode={parseInt(weatherData.data.moonPhaseCode)}
+                />
               </div>
             </div>
           ) : (
