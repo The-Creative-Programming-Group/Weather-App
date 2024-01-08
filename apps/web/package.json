@@ -28,7 +28,7 @@
     "@vercel/speed-insights": "^1.0.2",
     "@weatherio/api": "workspace:^0.1.0",
     "@weatherio/types": "workspace:^0.1.0",
-    "@weatherio/ui": "workspace:^0.1.0",
+    "@weatherio/components": "workspace:^0.1.0",
     "classnames": "^2.5.1",
     "dayjs": "^1.11.10",
     "next": "^14.0.4",

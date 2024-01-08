@@ -27,27 +27,27 @@ import { PiSunglasses } from "react-icons/pi";
 import { WiRaindrop } from "react-icons/wi";
 
 import type { IDailyForecast, IHourlyForecast } from "@weatherio/types";
-import { Button } from "@weatherio/ui/button";
+import { Button } from "@weatherio/components/ui/button";
 import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
-} from "@weatherio/ui/collapsible";
+} from "@weatherio/components/ui/collapsible";
 import {
   HoverCard,
   HoverCardContent,
   HoverCardTrigger,
-} from "@weatherio/ui/hover-card";
-import { ScrollArea, ScrollBar } from "@weatherio/ui/scroll-area";
-import { Skeleton } from "@weatherio/ui/skeleton";
+} from "@weatherio/components/ui/hover-card";
+import { ScrollArea, ScrollBar } from "@weatherio/components/ui/scroll-area";
+import { Skeleton } from "@weatherio/components/ui/skeleton";
 
 import type { WindSpeedUnitType } from "~/states";
 import Layout from "~/components/Layout";
+import { MoonPhaseInfo } from "~/components/moon-phase-info";
 import { api } from "~/lib/utils/api";
-import { MoonPhaseInfo } from "~/pages/home/moon-phase-info";
 import { activeCity$, temperatureUnit$, windSpeedUnit$ } from "~/states";
 
-const Map = dynamic(() => import("@weatherio/ui/map"), { ssr: false });
+const Map = dynamic(() => import("@weatherio/components/map"), { ssr: false });
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
