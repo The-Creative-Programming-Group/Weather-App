@@ -1,17 +1,17 @@
 {
-  "name": "@weatherio/components",
+  "name": "@weatherio/ui",
   "private": true,
   "version": "0.1.0",
   "type": "module",
   "exports": {
     ".": "./src/index.ts",
-    "./ui/button": "./src/ui/button.tsx",
-    "./ui/collapsible": "./src/ui/collapsible.tsx",
-    "./ui/hover-card": "./src/ui/hover-card.tsx",
-    "./ui/scroll-area": "./src/ui/scroll-area.tsx",
-    "./ui/skeleton": "./src/ui/skeleton.tsx",
-    "./ui/sonner": "./src/ui/sonner.tsx",
-    "./map": "./src/map.tsx"
+    "./button": "./src/button.tsx",
+    "./collapsible": "./src/collapsible.tsx",
+    "./hover-card": "./src/hover-card.tsx",
+    "./map": "./src/map.tsx",
+    "./scroll-area": "./src/scroll-area.tsx",
+    "./skeleton": "./src/skeleton.tsx",
+    "./sonner": "./src/sonner.tsx"
   },
   "license": "MIT",
   "scripts": {

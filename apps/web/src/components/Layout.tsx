@@ -7,7 +7,7 @@ import { FaMapMarkedAlt, FaShare } from "react-icons/fa";
 import { IoIosSettings, IoMdContact } from "react-icons/io";
 import { LuMenu, LuX } from "react-icons/lu";
 
-import { cn } from "@weatherio/components";
+import { cn } from "@weatherio/ui";
 
 interface LayoutProps {
   title?: string;

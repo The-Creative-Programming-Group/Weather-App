@@ -11,7 +11,7 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 import { AxiomWebVitals } from "next-axiom";
 import { appWithTranslation } from "next-i18next";
 
-import { Toaster } from "@weatherio/components/ui/sonner";
+import { Toaster } from "@weatherio/ui/sonner";
 
 import { PWALifeCycle } from "~/components/PWALifecycle";
 import { api } from "~/lib/utils/api";
