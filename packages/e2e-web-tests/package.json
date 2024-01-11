@@ -21,13 +21,14 @@
   },
   "prettier": "@weatherio/prettier-config",
   "dependencies": {
+    "@weatherio/web": "workspace:*",
     "start-server-and-test": "^2.0.3",
-    "@weatherio/web": "workspace:*"
+    "typescript": "^5.3.3"
   },
   "devDependencies": {
     "@types/node": "^20.10.6",
-    "@weatherio/tsconfig": "workspace:^0.1.0",
     "@weatherio/eslint-config": "workspace:^0.2.0",
-    "@weatherio/prettier-config": "workspace:^0.1.0"
+    "@weatherio/prettier-config": "workspace:^0.1.0",
+    "@weatherio/tsconfig": "workspace:^0.1.0"
   }
 }
