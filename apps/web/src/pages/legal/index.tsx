@@ -1,7 +1,8 @@
 import React from "react";
-import Layout from "~/components/Layout";
-import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useTranslation } from "next-i18next";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+
+import Layout from "~/components/Layout";
 
 const Legal = () => {
   const { t: translationCommon } = useTranslation("common");
