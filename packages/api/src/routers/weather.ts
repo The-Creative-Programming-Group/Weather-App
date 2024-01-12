@@ -129,6 +129,26 @@ const MoonPhaseSchema = z.object({
 
 type MoonPhase = z.infer<typeof MoonPhaseSchema> | undefined;
 
+const WarningSchema = z.object({
+  warning: z.array(
+    z.object({
+      sender: z.string(),
+      pubTime: z.string(),
+      title: z.string(),
+      startTime: z.string(),
+      endTime: z.string(),
+      status: z.string(),
+      level: z.string(),
+      severity: z.string(),
+      urgency: z.string(),
+      certainty: z.string(),
+      text: z.string(),
+    }),
+  ),
+});
+
+type Warning = z.infer<typeof WarningSchema> | undefined;
+
 /**
  * Calculates the Air Quality Index (AQI) based on the given PM10 and PM2.5 values.
  *
@@ -172,6 +192,7 @@ export const weatherRouter = createTRPCRouter({
           lon: z.number().min(-180).max(180),
         }),
         timezone: z.string(),
+        lang: z.union([z.string(), z.undefined()] as const),
       }),
     )
     .query(async ({ input, ctx }) => {
@@ -180,6 +201,7 @@ export const weatherRouter = createTRPCRouter({
         timezone: input.timezone,
         user: ctx.ip,
       });
+      const lang = input.lang ? input.lang : "en";
       // OpenWeatherMap API
       const urlWeather = `https://api.openweathermap.org/data/2.5/weather?lat=${input.coordinates.lat}&lon=${input.coordinates.lon}&appid=${env.OPEN_WEATHER_API_KEY}`;
       // Open Meteo
@@ -191,23 +213,31 @@ export const weatherRouter = createTRPCRouter({
       )},${input.coordinates.lat.toFixed(2)}&key=${
         env.QWEATHER_API_KEY
       }&date=${dayjs().tz("Asia/Shanghai").format("YYYYMMDD")}`;
+      const urlWarning = `https://devapi.qweather.com/v7/warning/now?location=${input.coordinates.lon.toFixed(
+        2,
+      )},${input.coordinates.lat.toFixed(2)}&key=${
+        env.QWEATHER_API_KEY
+      }&lang=${lang}`;
 
       const [
         hourlyResult,
         presentWeatherResult,
         presentAirQualityResult,
         moonPhaseResult,
+        warningResult,
       ] = await Promise.allSettled([
         axios.get<HourlyAndDailyWeather>(urlHourlyAndDailyForecast),
         axios.get<PresentWeather>(urlWeather),
         axios.get<PresentAirQuality>(urlAirQuality),
         axios.get<MoonPhase>(urlMoonPhase),
+        axios.get<Warning>(urlWarning),
       ]);
 
       let hourlyAndDailyData: HourlyAndDailyWeather = undefined;
       let presentWeather: PresentWeather = undefined;
       let presentAirQuality: PresentAirQuality = undefined;
       let moonPhase: MoonPhase = undefined;
+      let warning: Warning = undefined;
 
       if (hourlyResult.status === "fulfilled") {
         try {
@@ -329,6 +359,23 @@ export const weatherRouter = createTRPCRouter({
               ? moonPhaseResult.reason
               : "The reason is not a string",
         });
+      }
+      if (warningResult.status === "fulfilled") {
+        try {
+          // console.debug(warningResult.value.data);
+          // console.debug(urlWarning);
+          warning = WarningSchema.parse(warningResult.value.data);
+        } catch (error) {
+          if (error instanceof z.ZodError) {
+            log.error("Zod Errors in the warning", error.issues);
+            console.debug("Warning data without the filter", {
+              data: warningResult.value.data,
+            });
+            console.debug("Warning data url", urlWarning);
+          } else {
+            log.error("Else Error in the warning", { error });
+          }
+        }
       }
 
       let presentAirQualityIndex: number | undefined = undefined;
@@ -653,6 +700,7 @@ export const weatherRouter = createTRPCRouter({
             ? (hourlyAndDailyData.daily.sunshine_duration[0] / 3600).toFixed(0)
             : undefined,
         maxUVIndex: hourlyAndDailyData?.daily.uv_index_max[0],
+        warnings: warning?.warning,
       };
     }),
 });

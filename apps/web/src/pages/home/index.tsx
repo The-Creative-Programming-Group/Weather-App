@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import dynamic from "next/dynamic";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -109,10 +109,17 @@ function convertWindSpeed(
 
 const InternalHome = observer(() => {
   const [isMoreInfoCollapsibleOpen, setIsMoreInfoCollapsibleOpen] =
-    React.useState(false);
+    useState(false);
+  const [isMoreWarningsCollapsibleOpen, setIsMoreWarningsCollapsibleOpen] =
+    useState(false);
+
   const { locale } = useRouter();
   const weatherData = api.weather.getWeather.useQuery(
-    { coordinates: activeCity$.coord.get(), timezone: dayjs.tz.guess() },
+    {
+      coordinates: activeCity$.coord.get(),
+      timezone: dayjs.tz.guess(),
+      lang: locale,
+    },
     // TODO: The cache (stale time) is not yet working if you refresh the page
     { refetchOnWindowFocus: false, staleTime: 1000 * 60 * 60 /* 1 hour */ },
   );
@@ -341,6 +348,72 @@ const InternalHome = observer(() => {
             </div>
           </CollapsibleContent>
         </Collapsible>
+      ) : null}
+      {weatherData.data?.warnings ? (
+        <div className="flex w-full justify-center">
+          {weatherData.data.warnings.map((warning, index: number) => {
+            if (index > 0 || warning.status !== "active") return null;
+            const maxWarningTextLength = 150;
+            const textToLong = warning.text.length > maxWarningTextLength;
+            let warningText = warning.text;
+
+            if (
+              warning.text.length > maxWarningTextLength &&
+              !isMoreWarningsCollapsibleOpen
+            ) {
+              warningText = warning.text.slice(0, maxWarningTextLength) + "...";
+            }
+
+            return (
+              <div
+                className={cn(
+                  "mt-3 flex w-11/12 flex-col items-center rounded-md p-2 xl:w-9/12",
+                  {
+                    "bg-red-300":
+                      warning.severity === "Severe" ||
+                      warning.severity === "Extreme" ||
+                      warning.severity === "Major",
+                    "bg-yellow-300":
+                      warning.severity === "Moderate" ||
+                      warning.severity === "Minor",
+                    "bg-green-300": warning.severity === "Standard",
+                    "bg-blue-300":
+                      warning.severity === "Unknown" ||
+                      warning.severity === "None" ||
+                      warning.severity === "Cancel",
+                  },
+                )}
+                key={index}
+              >
+                <div className="flex flex-col text-center text-xl">
+                  <div className="font-bold">
+                    {ReactHtmlParser(warning.title)}
+                  </div>
+                  <div className="flex w-full flex-col items-center">
+                    <span>{ReactHtmlParser(warningText)}</span>
+                    {textToLong && (
+                      <button
+                        className="w-44 rounded-md bg-gray-500"
+                        onClick={() =>
+                          setIsMoreWarningsCollapsibleOpen(
+                            (prevState) => !prevState,
+                          )
+                        }
+                      >
+                        {isMoreWarningsCollapsibleOpen
+                          ? translationHome("less information")
+                          : translationHome("more information")}
+                      </button>
+                    )}
+                  </div>
+                  <div className="text-base">
+                    {translationHome("from")}: {ReactHtmlParser(warning.sender)}
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
       ) : null}
       <div className="mt-12 flex flex-col items-center">
         {weatherData.data?.hourlyForecast ? (

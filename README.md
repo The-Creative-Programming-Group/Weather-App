@@ -27,8 +27,11 @@ If you are not familiar with the different technologies used in this project, pl
 - [tRPC](https://trpc.io)
 - [TypeScript](https://www.typescriptlang.org)
 - [Turborepo](https://turbo.build/repo)
+#### APIs
 - [OpenWeatherMap API](https://openweathermap.org/api)
 - [Open Meteo API](https://open-meteo.com)
+- [QWeather API](https://dev.qweather.com/en/)
+- [API Ninjas API](https://api-ninjas.com/) (For the Reverse Geocoding)
 
 ## Learn More
 
