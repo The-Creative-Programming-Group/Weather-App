@@ -14,7 +14,7 @@
     "format": "prettier --check . --ignore-path ../../.gitignore",
     "lint": "eslint \"**/*.mjs\"",
     "typecheck": "tsc --noEmit",
-    "update:city-data": "node download.mjs && node convert.mjs && node renamejsonproperties.mjs"
+    "update:city-data": "cd src && node download.mjs && node convert.mjs && node renamejsonproperties.mjs"
   },
   "eslintConfig": {
     "root": true,
