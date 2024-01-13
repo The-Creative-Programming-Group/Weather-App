@@ -5,7 +5,9 @@ import { useTranslation } from "next-i18next";
 import { AiFillGithub, AiFillHome } from "react-icons/ai";
 import { FaMapMarkedAlt, FaShare } from "react-icons/fa";
 import { IoIosSettings, IoMdContact } from "react-icons/io";
+import { IoPeopleSharp } from "react-icons/io5";
 import { LuMenu, LuX } from "react-icons/lu";
+import { PiScrollFill } from "react-icons/pi";
 
 import { cn } from "@weatherio/ui";
 
@@ -99,21 +101,21 @@ const Layout: React.FC<LayoutProps> = ({
         </div>
         {navbarOpen && (
           <div className="z-10 mt-2 flex w-full flex-col gap-2 whitespace-nowrap border-t-2">
-            <Link href="/home" className="mt-2 flex items-center">
-              <AiFillHome className="mr-1.5" />
-              <p>{translation("menu home")}</p>
+            <Link
+              href="https://github.com/The-Creative-Programming-Group/Weather-App"
+              aria-label="Link to the GitHub Repo of this Website"
+              className="mt-2 flex items-center"
+            >
+              <AiFillGithub className="mr-1.5" />
+              <p>GitHub</p>
             </Link>
-            <Link href="/locationsettings" className="mt-2 flex items-center">
-              <FaMapMarkedAlt className="mr-1.5" />
-              <p>{translation("menu locations")}</p>
+            <Link href="/legal" className="mt-2 flex items-center">
+              <PiScrollFill className="mr-1.5" />
+              <p>{translation("footer legal")}</p>
             </Link>
-            <Link href="/settings" className="mt-2 flex items-center">
-              <IoIosSettings className="mr-1.5" />{" "}
-              <p>{translation("menu settings")}</p>
-            </Link>
-            <Link href="/contact" className="mt-2 flex items-center">
-              <IoMdContact className="mr-1.5" />
-              <p>{translation("menu contact")}</p>
+            <Link href="/contributors" className="mt-2 flex items-center">
+              <IoPeopleSharp className="mr-1.5" />
+              <p>{translation("footer contributors")}</p>
             </Link>
           </div>
         )}
@@ -128,8 +130,60 @@ const Layout: React.FC<LayoutProps> = ({
         {" "}
         <FaShare className="mr-1.5 mt-1" /> {translation("share button")}
       </button>
-      <main className="min-h-screen">{children}</main>
-      <footer className="flex h-24 w-full items-center justify-between bg-[#2d3142] pr-2 text-base text-white md:text-xl">
+      <main className="mb-14 min-h-screen md:mb-0">{children}</main>
+      <div className="fixed bottom-0 left-0 z-50 block h-16 w-full border-t border-gray-200 bg-white md:hidden dark:border-gray-600 dark:bg-gray-700">
+        <div className="mx-auto grid h-full max-w-lg grid-cols-4 font-medium">
+          <Link
+            href="/home"
+            className="group inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover:bg-gray-800"
+          >
+            <AiFillHome
+              className="mb-2 h-7 w-7 text-gray-500 group-hover:text-blue-600 dark:text-gray-400 dark:group-hover:text-blue-500"
+              aria-hidden="true"
+            />
+            <span className="text-sm text-gray-500 group-hover:text-blue-600 dark:text-gray-400 dark:group-hover:text-blue-500">
+              {translation("menu home")}
+            </span>
+          </Link>
+          <Link
+            href="/locationsettings"
+            className="group inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover:bg-gray-800"
+          >
+            <FaMapMarkedAlt
+              className="mb-2 h-7 w-7 text-gray-500 group-hover:text-blue-600 dark:text-gray-400 dark:group-hover:text-blue-500"
+              aria-hidden="true"
+            />
+            <span className="text-sm text-gray-500 group-hover:text-blue-600 dark:text-gray-400 dark:group-hover:text-blue-500">
+              {translation("menu locations")}
+            </span>
+          </Link>
+          <Link
+            href="/settings"
+            className="group inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover:bg-gray-800"
+          >
+            <IoIosSettings
+              className="mb-2 h-7 w-7 text-gray-500 group-hover:text-blue-600 dark:text-gray-400 dark:group-hover:text-blue-500"
+              aria-hidden="true"
+            />
+            <span className="text-sm text-gray-500 group-hover:text-blue-600 dark:text-gray-400 dark:group-hover:text-blue-500">
+              {translation("menu settings")}
+            </span>
+          </Link>
+          <Link
+            href="/contact"
+            className="group inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover:bg-gray-800"
+          >
+            <IoMdContact
+              className="mb-2 h-7 w-7 text-gray-500 group-hover:text-blue-600 dark:text-gray-400 dark:group-hover:text-blue-500"
+              aria-hidden="true"
+            />
+            <span className="text-sm text-gray-500 group-hover:text-blue-600 dark:text-gray-400 dark:group-hover:text-blue-500">
+              {translation("menu contact")}
+            </span>
+          </Link>
+        </div>
+      </div>
+      <footer className="hidden h-24 w-full items-center justify-between bg-[#2d3142] pr-2 text-base text-white md:flex md:text-xl">
         <div className="flex items-center gap-3 md:gap-4">
           <div className="ml-2">© - Weather.io</div>
           <Link
