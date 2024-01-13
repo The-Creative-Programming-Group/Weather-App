@@ -61,11 +61,15 @@ const Layout: React.FC<LayoutProps> = ({
         <div className="flex w-3/5 max-w-3xl justify-around">
           <Link href="/home" className="flex">
             <AiFillHome className="mr-1.5 text-2xl" />
-            <p>{translation("menu home")}</p>
+            <p className={cn({ underline: page === "home" })}>
+              {translation("menu home")}
+            </p>
           </Link>
           <Link href="/locationsettings" className="flex">
             <FaMapMarkedAlt className="mr-1.5 text-2xl" />
-            <p>{translation("menu locations")}</p>
+            <p className={cn({ underline: page === "locationsettings" })}>
+              {translation("menu locations")}
+            </p>
           </Link>
         </div>
         <Link href="/home" className="flex flex-col items-center">
@@ -77,11 +81,15 @@ const Layout: React.FC<LayoutProps> = ({
         <div className="flex w-3/5 max-w-3xl justify-around">
           <Link href="/settings" className="flex">
             <IoIosSettings className="mr-1.5 text-2xl" />{" "}
-            <p>{translation("menu settings")}</p>
+            <p className={cn({ underline: page === "settings" })}>
+              {translation("menu settings")}
+            </p>
           </Link>
           <Link href="/contact" className="flex">
             <IoMdContact className="mr-1.5 text-2xl" />
-            <p>{translation("menu contact")}</p>
+            <p className={cn({ underline: page === "contact" })}>
+              {translation("menu contact")}
+            </p>
           </Link>
         </div>
       </header>
@@ -138,9 +146,9 @@ const Layout: React.FC<LayoutProps> = ({
           <Link
             href="/home"
             className={cn(
-              "inline-flex flex-col items-center justify-center px-5 text-gray-500 hover:text-blue-600 dark:text-gray-400 dark:hover:text-blue-500",
+              "inline-flex flex-col items-center justify-center px-5 text-gray-500",
               {
-                "text-blue-600 dark:text-blue-500": page === "home",
+                "text-blue-600": page === "home",
               },
             )}
           >
@@ -150,9 +158,9 @@ const Layout: React.FC<LayoutProps> = ({
           <Link
             href="/locationsettings"
             className={cn(
-              "inline-flex flex-col items-center justify-center px-5 text-gray-500 hover:text-blue-600 dark:text-gray-400 dark:hover:text-blue-500",
+              "inline-flex flex-col items-center justify-center px-5 text-gray-500",
               {
-                "text-blue-600 dark:text-blue-500": page === "locationsettings",
+                "text-blue-600": page === "locationsettings",
               },
             )}
           >
@@ -162,9 +170,9 @@ const Layout: React.FC<LayoutProps> = ({
           <Link
             href="/settings"
             className={cn(
-              "inline-flex flex-col items-center justify-center px-5 text-gray-500 hover:text-blue-600 dark:text-gray-400 dark:hover:text-blue-500",
+              "inline-flex flex-col items-center justify-center px-5 text-gray-500",
               {
-                "text-blue-600 dark:text-blue-500": page === "settings",
+                "text-blue-600": page === "settings",
               },
             )}
           >
@@ -174,9 +182,9 @@ const Layout: React.FC<LayoutProps> = ({
           <Link
             href="/contact"
             className={cn(
-              "inline-flex flex-col items-center justify-center px-5 text-gray-500 hover:text-blue-600 dark:text-gray-400 dark:hover:text-blue-500",
+              "inline-flex flex-col items-center justify-center px-5 text-gray-500",
               {
-                "text-blue-600 dark:text-blue-500": page === "contact",
+                "text-blue-600": page === "contact",
               },
             )}
           >
