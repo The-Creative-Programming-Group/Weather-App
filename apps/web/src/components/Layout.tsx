@@ -15,6 +15,7 @@ interface LayoutProps {
   title?: string;
   children: React.ReactNode;
   classNameShareButton?: string;
+  page?: "home" | "locationsettings" | "settings" | "contact";
 }
 
 /* If you use this component,
@@ -24,6 +25,7 @@ const Layout: React.FC<LayoutProps> = ({
   title,
   children,
   classNameShareButton,
+  page,
 }) => {
   const [navbarOpen, setNavbarOpen] = useState(false);
 
@@ -135,51 +137,51 @@ const Layout: React.FC<LayoutProps> = ({
         <div className="mx-auto grid h-full max-w-lg grid-cols-4 font-medium">
           <Link
             href="/home"
-            className="group inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover:bg-gray-800"
+            className={cn(
+              "inline-flex flex-col items-center justify-center px-5 text-gray-500 hover:text-blue-600 dark:text-gray-400 dark:hover:text-blue-500",
+              {
+                "text-blue-600 dark:text-blue-500": page === "home",
+              },
+            )}
           >
-            <AiFillHome
-              className="mb-2 h-7 w-7 text-gray-500 group-hover:text-blue-600 dark:text-gray-400 dark:group-hover:text-blue-500"
-              aria-hidden="true"
-            />
-            <span className="text-sm text-gray-500 group-hover:text-blue-600 dark:text-gray-400 dark:group-hover:text-blue-500">
-              {translation("menu home")}
-            </span>
+            <AiFillHome className="mb-2 h-7 w-7" aria-hidden="true" />
+            <span className="text-sm">{translation("menu home")}</span>
           </Link>
           <Link
             href="/locationsettings"
-            className="group inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover:bg-gray-800"
+            className={cn(
+              "inline-flex flex-col items-center justify-center px-5 text-gray-500 hover:text-blue-600 dark:text-gray-400 dark:hover:text-blue-500",
+              {
+                "text-blue-600 dark:text-blue-500": page === "locationsettings",
+              },
+            )}
           >
-            <FaMapMarkedAlt
-              className="mb-2 h-7 w-7 text-gray-500 group-hover:text-blue-600 dark:text-gray-400 dark:group-hover:text-blue-500"
-              aria-hidden="true"
-            />
-            <span className="text-sm text-gray-500 group-hover:text-blue-600 dark:text-gray-400 dark:group-hover:text-blue-500">
-              {translation("menu locations")}
-            </span>
+            <FaMapMarkedAlt className="mb-2 h-7 w-7" aria-hidden="true" />
+            <span className="text-sm">{translation("menu locations")}</span>
           </Link>
           <Link
             href="/settings"
-            className="group inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover:bg-gray-800"
+            className={cn(
+              "inline-flex flex-col items-center justify-center px-5 text-gray-500 hover:text-blue-600 dark:text-gray-400 dark:hover:text-blue-500",
+              {
+                "text-blue-600 dark:text-blue-500": page === "settings",
+              },
+            )}
           >
-            <IoIosSettings
-              className="mb-2 h-7 w-7 text-gray-500 group-hover:text-blue-600 dark:text-gray-400 dark:group-hover:text-blue-500"
-              aria-hidden="true"
-            />
-            <span className="text-sm text-gray-500 group-hover:text-blue-600 dark:text-gray-400 dark:group-hover:text-blue-500">
-              {translation("menu settings")}
-            </span>
+            <IoIosSettings className="mb-2 h-7 w-7 " aria-hidden="true" />
+            <span className="text-sm">{translation("menu settings")}</span>
           </Link>
           <Link
             href="/contact"
-            className="group inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover:bg-gray-800"
+            className={cn(
+              "inline-flex flex-col items-center justify-center px-5 text-gray-500 hover:text-blue-600 dark:text-gray-400 dark:hover:text-blue-500",
+              {
+                "text-blue-600 dark:text-blue-500": page === "contact",
+              },
+            )}
           >
-            <IoMdContact
-              className="mb-2 h-7 w-7 text-gray-500 group-hover:text-blue-600 dark:text-gray-400 dark:group-hover:text-blue-500"
-              aria-hidden="true"
-            />
-            <span className="text-sm text-gray-500 group-hover:text-blue-600 dark:text-gray-400 dark:group-hover:text-blue-500">
-              {translation("menu contact")}
-            </span>
+            <IoMdContact className="mb-2 h-7 w-7" aria-hidden="true" />
+            <span className="text-sm">{translation("menu contact")}</span>
           </Link>
         </div>
       </div>

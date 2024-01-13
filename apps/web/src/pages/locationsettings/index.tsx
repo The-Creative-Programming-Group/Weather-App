@@ -153,7 +153,10 @@ const LocationSettings = observer(() => {
 
   return (
     <>
-      <Layout title={translationCommon("menu locations")}>
+      <Layout
+        title={translationCommon("menu locations")}
+        page="locationsettings"
+      >
         <div className="flex w-full flex-col items-center">
           <h1 className="mt-10 flex justify-center text-4xl font-bold">
             {translationCommon("menu locations")}

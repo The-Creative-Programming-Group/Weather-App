@@ -275,7 +275,7 @@ const InternalHome = observer(() => {
   ];
 
   return (
-    <Layout classNameShareButton="mt-44">
+    <Layout classNameShareButton="mt-44" page="home">
       <div className="mt-24 flex flex-col items-center">
         <h1 className="text-center text-4xl sm:text-5xl md:text-7xl">
           {activeCity$.name.get()}
