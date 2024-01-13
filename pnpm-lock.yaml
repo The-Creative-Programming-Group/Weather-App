@@ -235,9 +235,6 @@ importers:
       jsonfile:
         specifier: ^6.1.0
         version: 6.1.0
-      typescript:
-        specifier: ^5.3.3
-        version: 5.3.3
       yauzl:
         specifier: ^2.10.0
         version: 2.10.0
@@ -260,6 +257,15 @@ importers:
       '@weatherio/tsconfig':
         specifier: workspace:^0.1.0
         version: link:../../tooling/typescript
+      eslint:
+        specifier: ^8.56.0
+        version: 8.56.0
+      prettier:
+        specifier: ^3.1.1
+        version: 3.1.1
+      typescript:
+        specifier: ^5.3.3
+        version: 5.3.3
 
   packages/e2e-web-tests:
     dependencies:
@@ -269,9 +275,6 @@ importers:
       start-server-and-test:
         specifier: ^2.0.3
         version: 2.0.3
-      typescript:
-        specifier: ^5.3.3
-        version: 5.3.3
     devDependencies:
       '@types/node':
         specifier: ^20.11.0
@@ -285,12 +288,17 @@ importers:
       '@weatherio/tsconfig':
         specifier: workspace:^0.1.0
         version: link:../../tooling/typescript
-
-  packages/types:
-    dependencies:
+      eslint:
+        specifier: ^8.56.0
+        version: 8.56.0
+      prettier:
+        specifier: ^3.1.1
+        version: 3.1.1
       typescript:
         specifier: ^5.3.3
         version: 5.3.3
+
+  packages/types:
     devDependencies:
       '@weatherio/eslint-config':
         specifier: workspace:^0.2.0
@@ -301,6 +309,15 @@ importers:
       '@weatherio/tsconfig':
         specifier: workspace:^0.1.0
         version: link:../../tooling/typescript
+      eslint:
+        specifier: ^8.56.0
+        version: 8.56.0
+      prettier:
+        specifier: ^3.1.1
+        version: 3.1.1
+      typescript:
+        specifier: ^5.3.3
+        version: 5.3.3
 
   packages/ui:
     dependencies:
@@ -4799,6 +4816,7 @@ packages:
   /eslint@8.56.0:
     resolution: {integrity: sha512-Go19xM6T9puCOWntie1/P997aXxFsOi37JIHRWI514Hc6ZnaHGKY9xFhrU65RT6CcBEzZoGG1e6Nq+DT04ZtZQ==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
+    hasBin: true
     dependencies:
       '@eslint-community/eslint-utils': 4.4.0(eslint@8.56.0)
       '@eslint-community/regexpp': 4.6.2
