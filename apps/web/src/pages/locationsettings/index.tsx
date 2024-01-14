@@ -81,6 +81,7 @@ const LocationSettings = observer(() => {
   };
 
   const searchCity = () => {
+    inputRef.current?.blur();
     let city: ICity | undefined = {
       id: 0,
       name: "",

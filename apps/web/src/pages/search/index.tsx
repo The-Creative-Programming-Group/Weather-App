@@ -76,6 +76,7 @@ const Search = () => {
 
   // Gets called if the user clicks on the "continue" button or press enter
   const searchCity = () => {
+    inputRef.current?.blur();
     let city: ICity | undefined = {
       id: 0,
       name: "",
