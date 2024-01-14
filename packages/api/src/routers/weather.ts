@@ -124,6 +124,8 @@ const PresentAirQualitySchema = z.object({
 type PresentAirQuality = z.infer<typeof PresentAirQualitySchema> | undefined;
 
 const MoonPhaseSchema = z.object({
+  moonrise: z.string(),
+  moonset: z.string(),
   moonPhase: z.array(z.object({ icon: z.string() })),
 });
 
@@ -694,6 +696,12 @@ export const weatherRouter = createTRPCRouter({
           .unix(presentWeather?.sys.sunset ?? 0)
           .tz(input.timezone)
           .format(),
+        moonrise: moonPhase
+          ? dayjs(moonPhase.moonrise).tz(input.timezone).format()
+          : undefined,
+        moonset: moonPhase
+          ? dayjs(moonPhase.moonset).tz(input.timezone).format()
+          : undefined,
         moonPhaseCode: moonPhase?.moonPhase[0]?.icon,
         sunHours:
           hourlyAndDailyData?.daily.sunshine_duration[0] !== undefined

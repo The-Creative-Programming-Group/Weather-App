@@ -437,6 +437,20 @@ const InternalHome = observer(() => {
                   ) {
                     sunEvent = translationHome("sunrise");
                   }
+                  let moonEvent = "";
+                  if (
+                    weatherData.data.moonrise &&
+                    dayjs(weatherData.data.moonrise).hour() ===
+                      hourlyForecast.time
+                  ) {
+                    moonEvent = translationHome("moonrise");
+                  } else if (
+                    weatherData.data.moonset &&
+                    dayjs(weatherData.data.moonset).hour() ===
+                      hourlyForecast.time
+                  ) {
+                    moonEvent = translationHome("moonset");
+                  }
 
                   if (index === 0) {
                     if (hourlyForecast.time === currentHour) {
@@ -469,6 +483,9 @@ const InternalHome = observer(() => {
                       <div className="mt-1.5 font-semibold">{time}</div>
                       {sunEvent && (
                         <div className="mt-1.5 text-center">{sunEvent}</div>
+                      )}
+                      {moonEvent && (
+                        <div className="mt-1.5 text-center">{moonEvent}</div>
                       )}
                       <div className="flex h-12 w-12 justify-center">
                         {weatherState({ hour: index, icons: true })}

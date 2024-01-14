@@ -32,6 +32,9 @@
   "sunset": "Sonnenuntergang",
   "sunrise": "Sonnenaufgang",
 
+  "moonset": "Monduntergang",
+  "moonrise": "Mondaufgang",
+
   "weather state stormy": "Stürmisch",
   "weather state snowy": "Schnee",
   "weather state rainy": "Regen",

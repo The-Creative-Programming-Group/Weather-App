@@ -32,6 +32,9 @@
   "sunset": "Sunset",
   "sunrise": "Sunrise",
 
+  "moonset": "Moonset",
+  "moonrise": "Moonrise",
+
   "weather state stormy": "Stormy",
   "weather state snowy": "Snowy",
   "weather state rainy": "Rainy",
