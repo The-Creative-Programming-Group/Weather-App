@@ -29,7 +29,9 @@ export const emailRouter = createTRPCRouter({
       return await resend.emails.send({
         from: "onbording@resend.dev",
         to: "jakob.roessner@outlook.de",
-        subject: "Form Email from Weather.io",
+        subject: !process.env.TEST_MODE
+          ? "Form Email from Weather.io"
+          : "TEST: Form Email from Weather.io",
         react: FormEmail({
           firstName: input.firstName,
           lastName: input.lastName,
