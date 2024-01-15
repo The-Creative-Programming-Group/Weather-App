@@ -795,15 +795,37 @@ const InternalHome = observer(() => {
                       )}°F`}
                 </div>
                 <div className="text-sm font-medium text-gray-700">
-                  {weatherData.data.feels_like > 309
-                    ? translationHome("feels like phrase very warm")
-                    : weatherData.data.feels_like > 299
-                      ? translationHome("feels like phrase warm")
-                      : weatherData.data.feels_like > 279
-                        ? translationHome("feels like phrase moderate")
-                        : weatherData.data.feels_like > 269
-                          ? translationHome("feels like phrase cold")
-                          : translationHome("feels like phrase very cold")}
+                  {weatherData.data.feels_like > 320
+                    ? translationHome("feels like phrase extremely warm")
+                    : weatherData.data.feels_like > 315
+                      ? translationHome("feels like phrase very warm")
+                      : weatherData.data.feels_like > 305
+                        ? translationHome("feels like phrase warm")
+                        : weatherData.data.feels_like > 300
+                          ? translationHome(
+                              "feels like phrase slightly more warm",
+                            )
+                          : weatherData.data.feels_like > 295
+                            ? translationHome("feels like phrase slightly warm")
+                            : weatherData.data.feels_like > 285
+                              ? translationHome("feels like phrase neutral")
+                              : weatherData.data.feels_like > 279
+                                ? translationHome(
+                                    "feels like phrase slightly cold",
+                                  )
+                                : weatherData.data.feels_like > 270
+                                  ? translationHome(
+                                      "feels like phrase slightly more cold",
+                                    )
+                                  : weatherData.data.feels_like > 264
+                                    ? translationHome("feels like phrase cold")
+                                    : weatherData.data.feels_like > 255
+                                      ? translationHome(
+                                          "feels like phrase very cold",
+                                        )
+                                      : translationHome(
+                                          "feels like phrase extremely cold",
+                                        )}
                 </div>
               </div>
             </div>

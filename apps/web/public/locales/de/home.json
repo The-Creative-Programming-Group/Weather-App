@@ -16,11 +16,17 @@
   "afternoon": "Nachmittag",
   "night": "Nacht",
 
+  "feels like phrase extremely warm": "Es ist so heiß, dass die Sonne sich selbst verbrennt!",
   "feels like phrase very warm": "Die Sonne probiert sich abzukühlen!",
   "feels like phrase warm": "Dein Eis schmilzt dir davon!",
-  "feels like phrase moderate": "Perfektes Wetter für einen Spaziergang!",
+  "feels like phrase slightly more warm": "Es ist ein warmer Tag!",
+  "feels like phrase slightly warm": "Perfekte Temeperatur für ein Picknick!",
+  "feels like phrase neutral": "Perfektes Wetter für einen Spaziergang!",
+  "feels like phrase slightly cold": "Eine leichte Jacke könnte erforderlich sein.",
+  "feels like phrase slightly moor cold": "Es ist ein eisiger Tag!",
   "feels like phrase cold": "Sogar Pinguine bestellen sich eine heiße Schokolade!",
   "feels like phrase very cold": "Auch die Schneemänner frieren!",
+  "feels like phrase extremely cold": "Es ist so kalt, dass sogar die Eisbären im Haus bleiben!",
 
   "air quality text very poor": "Sehr schlecht",
   "air quality text poor": "Schlecht",
