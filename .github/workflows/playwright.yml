@@ -20,14 +20,14 @@ jobs:
     - name: Build
       run: pnpm build
       env:
-        OPEN_WEATHER_API_KEY: ${{ secrets.OPEN_WEATHER_API_KEY }},
-        UPSTASH_REDIS_REST_URL: ${{ secrets.UPSTASH_REDIS_REST_URL }},
-        UPSTASH_REDIS_REST_TOKEN: ${{ secrets.UPSTASH_REDIS_REST_TOKEN }},
-        UPSTASH_RATELIMITER_TOKENS_PER_TIME: ${{ secrets.UPSTASH_RATELIMITER_TOKENS_PER_TIME }},
-        UPSTASH_RATELIMITER_TIME_INTERVAL: ${{ secrets.UPSTASH_RATELIMITER_TIME_INTERVAL }},
-        RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }},
-        QWEATHER_API_KEY: ${{ secrets.QWEATHER_API_KEY }},
-        API_NINJA_API_KEY: ${{ secrets.API_NINJA_API_KEY }},
+        OPEN_WEATHER_API_KEY: ${{ secrets.OPEN_WEATHER_API_KEY }}
+        UPSTASH_REDIS_REST_URL: ${{ secrets.UPSTASH_REDIS_REST_URL }}
+        UPSTASH_REDIS_REST_TOKEN: ${{ secrets.UPSTASH_REDIS_REST_TOKEN }}
+        UPSTASH_RATELIMITER_TOKENS_PER_TIME: ${{ secrets.UPSTASH_RATELIMITER_TOKENS_PER_TIME }}
+        UPSTASH_RATELIMITER_TIME_INTERVAL: ${{ secrets.UPSTASH_RATELIMITER_TIME_INTERVAL }}
+        RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+        QWEATHER_API_KEY: ${{ secrets.QWEATHER_API_KEY }}
+        API_NINJA_API_KEY: ${{ secrets.API_NINJA_API_KEY }}
     - name: Test
       run: pnpm e2e:test
       env:
