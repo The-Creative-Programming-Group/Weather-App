@@ -39,7 +39,6 @@ jobs:
         RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
         QWEATHER_API_KEY: ${{ secrets.QWEATHER_API_KEY }}
         API_NINJA_API_KEY: ${{ secrets.API_NINJA_API_KEY }}
-        TEST_MODE: true
     - uses: actions/upload-artifact@v4
       if: always()
       with:

@@ -11,7 +11,7 @@
     "typecheck": "tsc --noEmit",
     "dev:test": "playwright test",
     "dev:test:ui": "playwright test --ui",
-    "e2e:test": "start-server-and-test \"(cd ../../apps/web && pnpm start)\" http://localhost:3000 dev:test"
+    "e2e:test": "cross-env TEST_MODE=true start-server-and-test \"(cd ../../apps/web && pnpm start)\" http://localhost:3000 dev:test"
   },
   "eslintConfig": {
     "root": true,
@@ -29,6 +29,7 @@
     "@weatherio/eslint-config": "workspace:^0.2.0",
     "@weatherio/prettier-config": "workspace:^0.1.0",
     "@weatherio/tsconfig": "workspace:^0.1.0",
+    "cross-env": "^7.0.3",
     "eslint": "^8.56.0",
     "prettier": "^3.1.1",
     "typescript": "^5.3.3"
