@@ -31,9 +31,9 @@ test("contact form", async ({ page }) => {
   await page.click("button[type=submit]");
 
   // Check the toast
-  expect(
-    (await page.waitForSelector('li[data-type="success"]')).isVisible(),
-  ).toBeTruthy();
+  await expect(
+    page.locator('li[data-type="success"]'),
+  ).toBeVisible({ timeout: 6000 });
 });
 
 test("invalid email", async ({ page }) => {
