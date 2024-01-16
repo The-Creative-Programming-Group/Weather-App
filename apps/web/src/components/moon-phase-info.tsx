@@ -23,11 +23,11 @@ export const MoonPhaseInfo = ({ moonPhaseCode }: { moonPhaseCode: number }) => {
 
   switch (moonPhaseCode) {
     case 800:
-      MoonPhaseIcon = WiMoonAltNew as IconType;
+      MoonPhaseIcon = WiMoonAltNew;
       moonPhaseName = translationHome("moon phase new moon");
       break;
     case 801:
-      MoonPhaseIcon = WiMoonAltWaxingCrescent2 as IconType;
+      MoonPhaseIcon = WiMoonAltWaxingCrescent2;
       if (nothernHemisphere) {
         moonPhaseName = translationHome("moon phase waxing crescent");
       } else {
@@ -35,7 +35,7 @@ export const MoonPhaseInfo = ({ moonPhaseCode }: { moonPhaseCode: number }) => {
       }
       break;
     case 802:
-      MoonPhaseIcon = WiMoonAltFirstQuarter as IconType;
+      MoonPhaseIcon = WiMoonAltFirstQuarter;
       if (nothernHemisphere) {
         moonPhaseName = translationHome("moon phase first quarter");
       } else {
@@ -43,7 +43,7 @@ export const MoonPhaseInfo = ({ moonPhaseCode }: { moonPhaseCode: number }) => {
       }
       break;
     case 803:
-      MoonPhaseIcon = WiMoonAltWaxingGibbous3 as IconType;
+      MoonPhaseIcon = WiMoonAltWaxingGibbous3;
       if (nothernHemisphere) {
         moonPhaseName = translationHome("moon phase waxing gibbous");
       } else {
@@ -51,11 +51,11 @@ export const MoonPhaseInfo = ({ moonPhaseCode }: { moonPhaseCode: number }) => {
       }
       break;
     case 804:
-      MoonPhaseIcon = WiMoonAltFull as IconType;
+      MoonPhaseIcon = WiMoonAltFull;
       moonPhaseName = translationHome("moon phase full moon");
       break;
     case 805:
-      MoonPhaseIcon = WiMoonAltWaningGibbous3 as IconType;
+      MoonPhaseIcon = WiMoonAltWaningGibbous3;
       if (nothernHemisphere) {
         moonPhaseName = translationHome("moon phase waning gibbous");
       } else {
@@ -63,7 +63,7 @@ export const MoonPhaseInfo = ({ moonPhaseCode }: { moonPhaseCode: number }) => {
       }
       break;
     case 806:
-      MoonPhaseIcon = WiMoonAltThirdQuarter as IconType;
+      MoonPhaseIcon = WiMoonAltThirdQuarter;
       if (nothernHemisphere) {
         moonPhaseName = translationHome("moon phase last quarter");
       } else {
@@ -71,7 +71,7 @@ export const MoonPhaseInfo = ({ moonPhaseCode }: { moonPhaseCode: number }) => {
       }
       break;
     case 807:
-      MoonPhaseIcon = WiMoonAltWaningCrescent5 as IconType;
+      MoonPhaseIcon = WiMoonAltWaningCrescent5;
       if (nothernHemisphere) {
         moonPhaseName = translationHome("moon phase waning crescent");
       } else {

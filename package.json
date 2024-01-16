@@ -26,7 +26,7 @@
     "@total-typescript/ts-reset": "^0.5.1",
     "@turbo/gen": "^1.11.3",
     "@weatherio/prettier-config": "workspace:^0.1.0",
-    "prettier": "^3.1.1",
+    "prettier": "^3.2.2",
     "turbo": "^1.11.3",
     "typescript": "^5.3.3"
   },
