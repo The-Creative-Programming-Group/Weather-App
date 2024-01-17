@@ -52,6 +52,20 @@ const Map = dynamic(() => import("@weatherio/ui/map"), { ssr: false });
 dayjs.extend(utc);
 dayjs.extend(timezone);
 
+function getFeelsLikePhrase(feels_like: number) {
+  if (feels_like > 320) return "feels like phrase extremely warm";
+  if (feels_like > 315) return "feels like phrase very warm";
+  if (feels_like > 305) return "feels like phrase warm";
+  if (feels_like > 300) return "feels like phrase slightly more warm";
+  if (feels_like > 295) return "feels like phrase slightly warm";
+  if (feels_like > 285) return "feels like phrase neutral";
+  if (feels_like > 279) return "feels like phrase slightly cold";
+  if (feels_like > 270) return "feels like phrase slightly more cold";
+  if (feels_like > 264) return "feels like phrase cold";
+  if (feels_like > 255) return "feels like phrase very cold";
+  return "feels like phrase extremely cold";
+}
+
 function convertWindSpeed(
   speedInMetersPerSecond: number,
   unit: WindSpeedUnitType,
@@ -795,37 +809,9 @@ const InternalHome = observer(() => {
                       )}°F`}
                 </div>
                 <div className="text-sm font-medium text-gray-700">
-                  {weatherData.data.feels_like > 320
-                    ? translationHome("feels like phrase extremely warm")
-                    : weatherData.data.feels_like > 315
-                      ? translationHome("feels like phrase very warm")
-                      : weatherData.data.feels_like > 305
-                        ? translationHome("feels like phrase warm")
-                        : weatherData.data.feels_like > 300
-                          ? translationHome(
-                              "feels like phrase slightly more warm",
-                            )
-                          : weatherData.data.feels_like > 295
-                            ? translationHome("feels like phrase slightly warm")
-                            : weatherData.data.feels_like > 285
-                              ? translationHome("feels like phrase neutral")
-                              : weatherData.data.feels_like > 279
-                                ? translationHome(
-                                    "feels like phrase slightly cold",
-                                  )
-                                : weatherData.data.feels_like > 270
-                                  ? translationHome(
-                                      "feels like phrase slightly more cold",
-                                    )
-                                  : weatherData.data.feels_like > 264
-                                    ? translationHome("feels like phrase cold")
-                                    : weatherData.data.feels_like > 255
-                                      ? translationHome(
-                                          "feels like phrase very cold",
-                                        )
-                                      : translationHome(
-                                          "feels like phrase extremely cold",
-                                        )}
+                  {translationHome(
+                    getFeelsLikePhrase(weatherData.data.feels_like),
+                  )}
                 </div>
               </div>
             </div>
