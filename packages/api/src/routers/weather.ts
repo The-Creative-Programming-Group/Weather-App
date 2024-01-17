@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 import dayjs from "dayjs";
 import timezone from "dayjs/plugin/timezone";
 import utc from "dayjs/plugin/utc";
@@ -132,21 +132,23 @@ const MoonPhaseSchema = z.object({
 type MoonPhase = z.infer<typeof MoonPhaseSchema> | undefined;
 
 const WarningSchema = z.object({
-  warning: z.array(
-    z.object({
-      sender: z.string(),
-      pubTime: z.string(),
-      title: z.string(),
-      startTime: z.string(),
-      endTime: z.string(),
-      status: z.string(),
-      level: z.string(),
-      severity: z.string(),
-      urgency: z.string(),
-      certainty: z.string(),
-      text: z.string(),
-    }),
-  ),
+  warning: z
+    .array(
+      z.object({
+        sender: z.string(),
+        pubTime: z.string(),
+        title: z.string(),
+        startTime: z.string(),
+        endTime: z.string(),
+        status: z.string(),
+        level: z.string(),
+        severity: z.string(),
+        urgency: z.string(),
+        certainty: z.string(),
+        text: z.string(),
+      }),
+    )
+    .optional(),
 });
 
 type Warning = z.infer<typeof WarningSchema> | undefined;
@@ -241,14 +243,53 @@ export const weatherRouter = createTRPCRouter({
       let moonPhase: MoonPhase = undefined;
       let warning: Warning = undefined;
 
-      if (hourlyResult.status === "fulfilled") {
-        try {
-          const data = hourlyResult.value.data;
+      function handleApiResponse<DataSchema>(
+        result: PromiseSettledResult<AxiosResponse<DataSchema>>,
+        schema: z.ZodSchema<DataSchema>,
+        errorMessage: string,
+        filterFn?: (data: NonNullable<DataSchema>) => NonNullable<DataSchema>,
+      ): DataSchema | undefined {
+        let parsedData: DataSchema | undefined = undefined;
 
-          if (!data) {
-            throw new Error("Air quality data is undefined");
+        if (result.status === "fulfilled") {
+          try {
+            let data = result.value.data;
+
+            if (!data) {
+              throw new Error(`The ${errorMessage} data is undefined`);
+            }
+
+            // Apply the filter function if it is provided
+            if (filterFn) {
+              data = filterFn(data);
+            }
+
+            parsedData = schema.parse(data);
+          } catch (error) {
+            if (error instanceof z.ZodError) {
+              log.error(`Zod Errors in the ${errorMessage}`, error.issues);
+            } else {
+              log.error(`Else Error in the ${errorMessage}`, { error });
+            }
           }
+        } else {
+          log.error(`${errorMessage} request failed`, {
+            status: result.status,
+            reason:
+              typeof result.reason === "string"
+                ? result.reason
+                : "The reason is not a string",
+          });
+        }
 
+        return parsedData;
+      }
+
+      hourlyAndDailyData = handleApiResponse<HourlyAndDailyWeather>(
+        hourlyResult,
+        HourlyAndDailyWeatherSchema,
+        "hourly weather",
+        (data) => {
           // log.debug("Hourly data without the filter and unparsed", data);
 
           data.hourly.precipitation_probability =
@@ -256,56 +297,21 @@ export const weatherRouter = createTRPCRouter({
               (value) => value !== null,
             );
 
-          hourlyAndDailyData = HourlyAndDailyWeatherSchema.parse(data);
-          // log.debug("Parsed and filtered hourly data", hourlyAndDailyData);
-        } catch (error) {
-          if (error instanceof z.ZodError) {
-            log.error("Zod Errors in the hourly weather", error.issues);
-          } else {
-            log.error("Else Error in the hourly weather", { error });
-          }
-        }
-      } else {
-        log.error("Hourly weather data request failed", {
-          status: hourlyResult.status,
-          reason:
-            typeof hourlyResult.reason === "string"
-              ? hourlyResult.reason
-              : "The reason is not a string",
-        });
-      }
+          return data;
+        },
+      );
 
-      if (presentWeatherResult.status === "fulfilled") {
-        try {
-          presentWeather = PresentWeatherSchema.parse(
-            presentWeatherResult.value.data,
-          );
-          // log.debug("Parsed present weather data", presentWeather);
-        } catch (error) {
-          if (error instanceof z.ZodError) {
-            log.error("Zod Errors in the present weather", error.issues);
-          } else {
-            log.error("Else Error in the present weather", { error });
-          }
-        }
-      } else {
-        log.error("Present weather data request failed", {
-          status: presentWeatherResult.status,
-          reason:
-            typeof presentWeatherResult.reason === "string"
-              ? presentWeatherResult.reason
-              : "The reason is not a string",
-        });
-      }
+      presentWeather = handleApiResponse<PresentWeather>(
+        presentWeatherResult,
+        PresentWeatherSchema,
+        "present weather",
+      );
 
-      if (presentAirQualityResult.status === "fulfilled") {
-        try {
-          const data = presentAirQualityResult.value.data;
-
-          if (!data) {
-            throw new Error("Air quality data is undefined");
-          }
-
+      presentAirQuality = handleApiResponse<PresentAirQuality>(
+        presentAirQualityResult,
+        PresentAirQualitySchema,
+        "present air quality",
+        (data) => {
           // log.debug("Air quality data without the filter and unparsed", data);
 
           data.hourly.pm10 = data.hourly.pm10.filter((value) => value !== null);
@@ -316,69 +322,21 @@ export const weatherRouter = createTRPCRouter({
             (value) => value !== null,
           );
 
-          presentAirQuality = PresentAirQualitySchema.parse(data);
-        } catch (error) {
-          if (error instanceof z.ZodError) {
-            log.error("Zod Errors in the air quality", error.issues);
-            console.error("Air quality data without the filter", {
-              data: presentAirQualityResult.value.data,
-            });
-          } else {
-            log.error("Else Error in the air quality", { error });
-          }
-        }
-      } else {
-        log.error("Present air quality data request failed", {
-          status: presentAirQualityResult.status,
-          reason:
-            typeof presentAirQualityResult.reason === "string"
-              ? presentAirQualityResult.reason
-              : "The reason is not a string",
-        });
-      }
+          return data;
+        },
+      );
 
-      if (moonPhaseResult.status === "fulfilled") {
-        try {
-          // console.debug(moonPhaseResult.value.data);
-          // console.debug(urlMoonPhase);
-          moonPhase = MoonPhaseSchema.parse(moonPhaseResult.value.data);
-        } catch (error) {
-          if (error instanceof z.ZodError) {
-            log.error("Zod Errors in the moon phase", error.issues);
-            console.debug("Moon phase data without the filter", {
-              data: moonPhaseResult.value.data,
-            });
-            console.debug("Moon phase data url", urlMoonPhase);
-          } else {
-            log.error("Else Error in the moon phase", { error });
-          }
-        }
-      } else {
-        log.error("Moon phase data request failed", {
-          status: moonPhaseResult.status,
-          reason:
-            typeof moonPhaseResult.reason === "string"
-              ? moonPhaseResult.reason
-              : "The reason is not a string",
-        });
-      }
-      if (warningResult.status === "fulfilled") {
-        try {
-          // console.debug(warningResult.value.data);
-          // console.debug(urlWarning);
-          warning = WarningSchema.parse(warningResult.value.data);
-        } catch (error) {
-          if (error instanceof z.ZodError) {
-            log.error("Zod Errors in the warning", error.issues);
-            console.debug("Warning data without the filter", {
-              data: warningResult.value.data,
-            });
-            console.debug("Warning data url", urlWarning);
-          } else {
-            log.error("Else Error in the warning", { error });
-          }
-        }
-      }
+      moonPhase = handleApiResponse<MoonPhase>(
+        moonPhaseResult,
+        MoonPhaseSchema,
+        "moon phase",
+      );
+
+      warning = handleApiResponse<Warning>(
+        warningResult,
+        WarningSchema,
+        "warning",
+      );
 
       let presentAirQualityIndex: number | undefined = undefined;
 
