@@ -12,7 +12,7 @@ export const env = createEnv({
     UPSTASH_RATELIMITER_EXCLUDED_IPS: z.string().min(1),
     RESEND_API_KEY: z.string().min(1),
     QWEATHER_API_KEY: z.string().min(1),
-    API_NINJA_API_KEY: z.string().min(1),
+    API_NINJA_API_KEY: z.string().min(1)
   },
   client: {},
   runtimeEnv: {
