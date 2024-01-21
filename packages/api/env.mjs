@@ -12,7 +12,7 @@ export const env = createEnv({
     UPSTASH_RATELIMITER_EXCLUDED_IPS: z.string().min(1),
     RESEND_API_KEY: z.string().min(1),
     QWEATHER_API_KEY: z.string().min(1),
-    API_NINJA_API_KEY: z.string().min(1)
+    API_NINJA_API_KEY: z.string().min(1),
   },
   client: {},
   runtimeEnv: {
@@ -22,6 +22,7 @@ export const env = createEnv({
     UPSTASH_REDIS_REST_TOKEN: process.env.UPSTASH_REDIS_REST_TOKEN,
     UPSTASH_RATELIMITER_TOKENS_PER_TIME: process.env.UPSTASH_RATELIMITER_TOKENS_PER_TIME,
     UPSTASH_RATELIMITER_TIME_INTERVAL: process.env.UPSTASH_RATELIMITER_TIME_INTERVAL,
+    UPSTASH_RATELIMITER_EXCLUDED_IPS: process.env.UPSTASH_RATELIMITER_EXCLUDED_IPS,
     RESEND_API_KEY: process.env.RESEND_API_KEY,
     QWEATHER_API_KEY: process.env.QWEATHER_API_KEY,
     API_NINJA_API_KEY: process.env.API_NINJA_API_KEY

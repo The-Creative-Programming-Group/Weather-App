@@ -1,5 +1,6 @@
 // Importing env files here to validate on build
 import './src/env.mjs'
+import '@weatherio/api/env'
 import withBundleAnalyzer from '@next/bundle-analyzer'
 import pkg from './next-i18next.config.js'
 import withPWAInit from '@ducanh2912/next-pwa'
