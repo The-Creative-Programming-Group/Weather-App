@@ -146,7 +146,7 @@ const rateLimitMiddleware = t.middleware(async ({ ctx, path, next }) => {
     log.warn("Rate limit exceeded", { ip: identifier });
     throw new TRPCError({
       code: "INTERNAL_SERVER_ERROR",
-      message: "Rate limit exceeded on this IP: " + identifier,
+      message: "Rate limit exceeded on this identifier: " + identifier,
     });
   }
   return next();
