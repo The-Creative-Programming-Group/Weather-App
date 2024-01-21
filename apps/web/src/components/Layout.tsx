@@ -57,7 +57,7 @@ const Layout: React.FC<LayoutProps> = ({
           content="/_next/image?url=%2Fog-image.png&w=640&q=75"
         />
       </Head>
-      <header className="m hidden items-center justify-around bg-[#2d3142] p-2 text-white md:flex">
+      <header className="hidden items-center justify-around bg-[#2d3142] p-2 text-white md:flex">
         <div className="flex w-3/5 max-w-3xl justify-around">
           <Link href="/home" className="flex">
             <AiFillHome className="mr-1.5 text-2xl" />
