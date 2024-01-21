@@ -125,8 +125,15 @@ const ratelimit = new Ratelimit({
   prefix: "@upstash/ratelimit",
 });
 
+const EXCLUDED_IPS = env.UPSTASH_RATELIMITER_EXCLUDED_IPS.split(",");
+
 const rateLimitMiddleware = t.middleware(async ({ ctx, path, next }) => {
   const identifier = `${ctx.ip}:${path}`;
+
+  if (EXCLUDED_IPS.includes(ctx.ip)) {
+    return next();
+  }
+
   // log.debug("identifier", { identifier });
   const { success, remaining } = await ratelimit.limit(identifier);
   // log.debug("remaining", { remaining });
