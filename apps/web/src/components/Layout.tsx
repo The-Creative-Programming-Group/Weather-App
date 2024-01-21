@@ -20,15 +20,8 @@ interface LayoutProps {
 
 declare global {
   interface Window {
-    MSStream: any;
+    MSStream: unknown;
   }
-}
-
-function isIOS() {
-  if (typeof window !== "undefined") {
-    return /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
-  }
-  return false;
 }
 
 /* If you use this component,
