@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Head from "next/head";
 import Link from "next/link";
 import { useTranslation } from "next-i18next";
@@ -18,6 +18,19 @@ interface LayoutProps {
   page?: "home" | "locationsettings" | "settings" | "contact";
 }
 
+declare global {
+  interface Window {
+    MSStream: any;
+  }
+}
+
+function isIOS() {
+  if (typeof window !== "undefined") {
+    return /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+  }
+  return false;
+}
+
 /* If you use this component,
    you have to add the i18n translation SSR stuff to the getStaticProps function of the page
    you use this component in. */
@@ -28,8 +41,13 @@ const Layout: React.FC<LayoutProps> = ({
   page,
 }) => {
   const [navbarOpen, setNavbarOpen] = useState(false);
+  const [isIOS, setIsIOS] = useState(false);
 
   const { t: translation } = useTranslation("common");
+
+  useEffect(() => {
+    setIsIOS(/iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream);
+  }, []);
 
   const handleShare = () => {
     const title = document.title;
@@ -141,7 +159,15 @@ const Layout: React.FC<LayoutProps> = ({
         <FaShare className="mr-1.5 mt-1" /> {translation("share button")}
       </button>
       <main className="mb-14 min-h-screen md:mb-0">{children}</main>
-      <div className="fixed bottom-0 left-0 z-50 block h-24 w-full border-t border-gray-200 bg-white pb-4 dark:border-gray-600 dark:bg-gray-700 md:hidden">
+      <div
+        className={cn(
+          "fixed bottom-0 left-0 z-50 block h-16 w-full border-t border-gray-200 bg-white dark:border-gray-600 dark:bg-gray-700 md:hidden",
+          // This is needed because of the iOS bottom bar which is always visible and overlaps the menu bar
+          {
+            "h-24 pb-8": isIOS,
+          },
+        )}
+      >
         <div className="mx-auto grid h-full max-w-lg grid-cols-4 font-medium">
           <Link
             href="/home"
