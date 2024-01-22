@@ -289,6 +289,7 @@ const InternalHome = observer(() => {
     activeCity$.coord.lon.get(),
   ];
 
+  // Prevent a weather forecast for the preset active city from being displayed
   useLayoutEffect(() => {
     if (activeCity$.id.get() === 0 && activeCity$.name.get() === "") {
       void router.push("/search");
