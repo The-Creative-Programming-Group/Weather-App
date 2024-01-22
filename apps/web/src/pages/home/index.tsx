@@ -1,5 +1,4 @@
 import React, { useLayoutEffect, useState } from "react";
-import { router } from "next/client";
 import dynamic from "next/dynamic";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -288,6 +287,8 @@ const InternalHome = observer(() => {
     activeCity$.coord.lat.get(),
     activeCity$.coord.lon.get(),
   ];
+
+  const router = useRouter();
 
   // Prevent a weather forecast for the preset active city from being displayed
   useLayoutEffect(() => {
