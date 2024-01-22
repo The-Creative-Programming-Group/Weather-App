@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useLayoutEffect, useState } from "react";
+import { router } from "next/client";
 import dynamic from "next/dynamic";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -287,6 +288,12 @@ const InternalHome = observer(() => {
     activeCity$.coord.lat.get(),
     activeCity$.coord.lon.get(),
   ];
+
+  useLayoutEffect(() => {
+    if (activeCity$.id.get() === 0 && activeCity$.name.get() === "") {
+      void router.push("/search");
+    }
+  });
 
   return (
     <Layout classNameShareButton="mt-44" page="home">
