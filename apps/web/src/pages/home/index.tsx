@@ -1002,7 +1002,7 @@ const InternalHome = observer(() => {
                   </HoverCardContent>
                 </HoverCard>
               </div>
-              <div className="mt-2 flex flex-col items-center justify-center hyphens-auto break-words text-center">
+              <div className="mt-2 flex flex-col items-center justify-center hyphens-auto break-words p-1 text-center">
                 <MoonPhaseInfo
                   moonPhaseCode={parseInt(weatherData.data.moonPhaseCode)}
                 />
