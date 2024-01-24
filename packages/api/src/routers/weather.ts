@@ -626,10 +626,10 @@ export const weatherRouter = createTRPCRouter({
           : hourlyForecast[0]?.apparentTemperature,
         // In meters per second
         wind_speed: presentWeather?.wind.speed,
-        // Calculates the wind pressure in Pa
+        // Calculates the wind pressure in hPa
         wind_pressure:
-          presentWeather?.wind.speed !== undefined
-            ? 0.5 * 1.225 * Math.pow(presentWeather.wind.speed, 2)
+          presentWeather?.main.pressure !== undefined
+            ? presentWeather?.main.pressure
             : undefined,
         // Index from 0 to 100
         air_quality: presentAirQualityIndex,

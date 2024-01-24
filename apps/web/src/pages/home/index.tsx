@@ -935,7 +935,7 @@ const InternalHome = observer(() => {
                       className="underline"
                       href="https://en.wikipedia.org/wiki/Pascal_(unit)"
                     >
-                      Pascal (Pa)
+                      Hectopascal (hPa)
                       <LuLink className="ml-1 inline h-4 w-4" />
                     </Link>
                     <br />
@@ -954,7 +954,8 @@ const InternalHome = observer(() => {
                       {translationHome("pressure")}
                     </span>
                     <div className="mt-2">
-                      {weatherData.data.wind_pressure.toPrecision(2)} Pa
+                      {Math.round(weatherData.data.wind_pressure * 100) / 100}{" "}
+                      hPa
                     </div>
                   </div>
                   <div className="hyphens-auto break-words pr-3">
