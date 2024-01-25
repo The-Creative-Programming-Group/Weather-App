@@ -935,10 +935,14 @@ const InternalHome = observer(() => {
                       className="underline"
                       href="https://en.wikipedia.org/wiki/Pascal_(unit)"
                     >
-                      Hectopascal (hPa)
+                      {translationCommon("hectopascals")} (hPa)
                       <LuLink className="ml-1 inline h-4 w-4" />
                     </Link>
                     <br />
+                    {ReactHtmlParser(
+                      translationHome("wind pressure card content"),
+                    )}
+                    <br /> <br />
                     <span className="font-semibold">
                       {translationHome("speed")}:
                     </span>{" "}

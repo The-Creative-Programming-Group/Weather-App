@@ -62,6 +62,7 @@
   "visibility card title": "Current Visibility",
 
   "wind pressure card title": "Current Wind & Pressure",
+  "wind pressure card content": "<b>Atmospheric pressure on the sea level.</b> <br /> At sea level, atmospheric pressure is the force exerted by the weight of the air above, averaging around 1013.25 hPa.",
 
   "not available": "Not available",
 
