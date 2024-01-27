@@ -15,7 +15,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@t3-oss/env-nextjs": "^0.7.3",
+    "@t3-oss/env-nextjs": "^0.8.0",
     "@trpc/client": "^10.45.0",
     "@trpc/server": "^10.45.0",
     "@upstash/ratelimit": "^1.0.0",
