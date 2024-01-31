@@ -1,14 +1,13 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { basehub } from "basehub";
-import { RichText } from "basehub/react";
 
 export const revalidate = 60;
 export const dynamic = "force-static";
 
 export async function generateMetadata(): Promise<Metadata> {
-  const { blogIndex } = await basehub().query({
-    blogIndex: {
+  const { weatherIoBlog } = await basehub().query({
+    weatherIoBlog: {
       _title: true,
       title: true,
       subtitle: true,
@@ -16,15 +15,15 @@ export async function generateMetadata(): Promise<Metadata> {
   });
 
   return {
-    title: blogIndex._title,
-    description: blogIndex.subtitle,
+    title: weatherIoBlog._title,
+    description: weatherIoBlog.subtitle,
     // etc...
   };
 }
 
 const BlogPage = async () => {
-  const { blogIndex } = await basehub({ next: { revalidate: 60 } }).query({
-    blogIndex: {
+  const { weatherIoBlog } = await basehub({ next: { revalidate: 60 } }).query({
+    weatherIoBlog: {
       title: true,
       subtitle: true,
       blogPosts: {
@@ -38,11 +37,10 @@ const BlogPage = async () => {
   });
 
   return (
-    <div>
-      <h1>{blogIndex.title}</h1>
-      <div>{blogIndex.subtitle}</div>
+    <div className="container">
+      <div>{weatherIoBlog.subtitle}</div>
       <ul>
-        {blogIndex.blogPosts.items.map((post) => {
+        {weatherIoBlog.blogPosts.items.map((post) => {
           return (
             <li key={post._id}>
               <Link href={`/blog/${post._slug}`}>{post._title}</Link>
