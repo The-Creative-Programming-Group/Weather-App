@@ -92,10 +92,7 @@ const LocationSettings = observer(() => {
         lat: 0,
       },
     };
-    if (
-      searchValue.id.toString().length === 15 ||
-      searchValue.id.toString().length === 14
-    ) {
+    if (searchValue.id.toString().length > 15) {
       city = {
         id: searchValue.id,
         name: searchValue.name,
@@ -115,6 +112,7 @@ const LocationSettings = observer(() => {
         if (!Array.isArray(findCityByIdData)) {
           city = findCityByIdData.city;
         } else {
+          console.log("city not found by id reverse geocoding");
           toast.error(translationLocationSettings("city not found toast"));
           return;
         }
@@ -126,6 +124,7 @@ const LocationSettings = observer(() => {
         if (!Array.isArray(findCityByNameData)) {
           city = findCityByNameData.city;
         } else {
+          console.log("city not found by name reverse geocoding");
           toast.error(translationLocationSettings("city not found toast"));
           return;
         }

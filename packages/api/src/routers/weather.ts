@@ -1,5 +1,3 @@
-import type { AxiosResponse } from "axios";
-import axios from "axios";
 import dayjs from "dayjs";
 import timezone from "dayjs/plugin/timezone";
 import utc from "dayjs/plugin/utc";
@@ -231,11 +229,11 @@ export const weatherRouter = createTRPCRouter({
         moonPhaseResult,
         warningResult,
       ] = await Promise.allSettled([
-        axios.get<HourlyAndDailyWeather>(urlHourlyAndDailyForecast),
-        axios.get<PresentWeather>(urlWeather),
-        axios.get<PresentAirQuality>(urlAirQuality),
-        axios.get<MoonPhase>(urlMoonPhase),
-        axios.get<Warning>(urlWarning),
+        fetch(urlHourlyAndDailyForecast),
+        fetch(urlWeather),
+        fetch(urlAirQuality),
+        fetch(urlMoonPhase),
+        fetch(urlWarning),
       ]);
 
       let hourlyAndDailyData: HourlyAndDailyWeather = undefined;
@@ -244,28 +242,28 @@ export const weatherRouter = createTRPCRouter({
       let moonPhase: MoonPhase = undefined;
       let warning: Warning = undefined;
 
-      function handleApiResponse<DataSchema>(
-        result: PromiseSettledResult<AxiosResponse<DataSchema>>,
+      async function handleApiResponse<DataSchema>(
+        result: PromiseSettledResult<Response>,
         schema: z.ZodSchema<DataSchema>,
         errorMessage: string,
-        filterFn?: (data: NonNullable<DataSchema>) => NonNullable<DataSchema>,
-      ): DataSchema | undefined {
+        filterFn?: (data: DataSchema) => DataSchema,
+      ): Promise<DataSchema | undefined> {
         let parsedData: DataSchema | undefined = undefined;
 
         if (result.status === "fulfilled") {
           try {
-            let data = result.value.data;
+            const data = await result.value.json();
 
-            if (!data) {
+            parsedData = schema.parse(data);
+
+            if (!parsedData) {
               throw new Error(`The ${errorMessage} data is undefined`);
             }
 
             // Apply the filter function if it is provided
             if (filterFn) {
-              data = filterFn(data);
+              parsedData = filterFn(parsedData);
             }
-
-            parsedData = schema.parse(data);
           } catch (error) {
             if (error instanceof z.ZodError) {
               log.error(`Zod Errors in the ${errorMessage}`, error.issues);
@@ -274,6 +272,7 @@ export const weatherRouter = createTRPCRouter({
             }
           }
         } else {
+          console.log("result", result);
           log.error(`${errorMessage} request failed`, {
             status: result.status,
             reason:
@@ -286,54 +285,31 @@ export const weatherRouter = createTRPCRouter({
         return parsedData;
       }
 
-      hourlyAndDailyData = handleApiResponse<HourlyAndDailyWeather>(
+      hourlyAndDailyData = await handleApiResponse<HourlyAndDailyWeather>(
         hourlyResult,
         HourlyAndDailyWeatherSchema,
         "hourly weather",
-        (data) => {
-          // log.debug("Hourly data without the filter and unparsed", data);
-
-          data.hourly.precipitation_probability =
-            data.hourly.precipitation_probability.filter(
-              (value) => value !== null,
-            );
-
-          return data;
-        },
       );
 
-      presentWeather = handleApiResponse<PresentWeather>(
+      presentWeather = await handleApiResponse<PresentWeather>(
         presentWeatherResult,
         PresentWeatherSchema,
         "present weather",
       );
 
-      presentAirQuality = handleApiResponse<PresentAirQuality>(
+      presentAirQuality = await handleApiResponse<PresentAirQuality>(
         presentAirQualityResult,
         PresentAirQualitySchema,
         "present air quality",
-        (data) => {
-          // log.debug("Air quality data without the filter and unparsed", data);
-
-          data.hourly.pm10 = data.hourly.pm10.filter((value) => value !== null);
-          data.hourly.pm2_5 = data.hourly.pm2_5.filter(
-            (value) => value !== null,
-          );
-          data.hourly.nitrogen_dioxide = data.hourly.nitrogen_dioxide.filter(
-            (value) => value !== null,
-          );
-
-          return data;
-        },
       );
 
-      moonPhase = handleApiResponse<MoonPhase>(
+      moonPhase = await handleApiResponse<MoonPhase>(
         moonPhaseResult,
         MoonPhaseSchema,
         "moon phase",
       );
 
-      warning = handleApiResponse<Warning>(
+      warning = await handleApiResponse<Warning>(
         warningResult,
         WarningSchema,
         "warning",

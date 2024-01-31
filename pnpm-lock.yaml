@@ -189,9 +189,9 @@ importers:
       '@weatherio/types':
         specifier: workspace:^0.1.0
         version: link:../types
-      axios:
-        specifier: ^1.6.5
-        version: 1.6.5(debug@4.3.4)
+      big-integer:
+        specifier: ^1.6.52
+        version: 1.6.52
       dayjs:
         specifier: ^1.11.10
         version: 1.11.10
@@ -3833,6 +3833,11 @@ packages:
     resolution: {integrity: sha512-QHX8HLlncOLpy54mh+k/sWIFd0ThmRqwe9ZjELybGZK+tZ8rUb9VO0saKJUROTbE+KhzDUT7xziGpGrW8Kmd+g==}
     engines: {node: '>=10.0.0'}
     dev: true
+
+  /big-integer@1.6.52:
+    resolution: {integrity: sha512-QxD8cf2eVqJOOz63z6JIN9BzvVs/dlySa5HGSBH5xtR8dPteIRQnBxxKqkNTiT6jbDTF6jAfrd4oMcND9RGbQg==}
+    engines: {node: '>=0.6'}
+    dev: false
 
   /binary-extensions@2.2.0:
     resolution: {integrity: sha512-jDctJ/IVQbZoJykoeHbhXpOlNBqGNcwXJKJog42E5HDPUwQTSdjCHdihjj0DlnheQ7blbT6dHOafNAiS8ooQKA==}
