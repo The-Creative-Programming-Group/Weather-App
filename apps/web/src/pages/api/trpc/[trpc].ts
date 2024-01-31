@@ -5,6 +5,8 @@ import { appRouter, createTRPCContext } from "@weatherio/api";
 
 import { env } from "~/env.mjs";
 
+export const config = { runtime: "edge" };
+
 // export API handler
 export default async function handler(req: NextRequest) {
   return fetchRequestHandler({
