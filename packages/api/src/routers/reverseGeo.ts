@@ -1,4 +1,3 @@
-import bigInt from "big-integer";
 import { log } from "next-axiom";
 import { z } from "zod";
 
@@ -31,9 +30,7 @@ async function generateId(object: ReverseGeo): Promise<number> {
     .map((byte) => byte.toString(16).padStart(2, "0"))
     .join("");
 
-  const hashInteger = bigInt(hashHex, 16).toJSNumber();
-
-  return hashInteger;
+  return parseInt(hashHex, 16);
 }
 
 export const reverseGeoRouter = createTRPCRouter({
