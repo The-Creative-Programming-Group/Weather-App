@@ -32,13 +32,15 @@ After that you can run the following command, to look at the current state (with
 
 We try to keep this project as simple as possible, so you can start with just the scaffolding we set up for you, and add additional things later when they become necessary.
 
-If you are not familiar with the different technologies used in this project, please refer to the respective docs. If you still are in the wind, please join our [Discord](https://t3.gg/discord) and ask for help.
+If you are not familiar with the different technologies used in this project, please refer to the respective docs. If you still are in the wind, please join our [Discord](https://discord.gg/VUv9vAHyjW) and ask for help.
 
 - [Next.js](https://nextjs.org)
 - [Tailwind CSS](https://tailwindcss.com)
 - [tRPC](https://trpc.io)
 - [TypeScript](https://www.typescriptlang.org)
 - [Turborepo](https://turbo.build/repo)
+- [Playwright](https://playwright.dev)
+- [Convex](https://convex.dev)
 #### APIs
 - [OpenWeatherMap API](https://openweathermap.org/api)
 - [Open Meteo API](https://open-meteo.com)

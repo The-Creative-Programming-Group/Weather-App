@@ -1,5 +1,3 @@
-import crypto from "crypto";
-import axios from "axios";
 import { log } from "next-axiom";
 import { z } from "zod";
 
@@ -18,10 +16,21 @@ const reverseGeoSchema = z.array(
 
 type ReverseGeo = z.infer<typeof reverseGeoSchema> | undefined;
 
-function generateId(object: ReverseGeo): number {
+async function generateId(object: ReverseGeo): Promise<number> {
   const str = JSON.stringify(object);
-  const hash = crypto.createHash("md5").update(str).digest("hex");
-  return parseInt(hash.slice(0, 12), 16);
+  const encoder = new TextEncoder();
+  const data = encoder.encode(str);
+
+  // Use the SubtleCrypto API to generate the hash
+  const hashBuffer = await crypto.subtle.digest("SHA-256", data);
+
+  // Convert the hash to a hexadecimal string
+  const hashArray = Array.from(new Uint8Array(hashBuffer));
+  const hashHex = hashArray
+    .map((byte) => byte.toString(16).padStart(2, "0"))
+    .join("");
+
+  return parseInt(hashHex, 16);
 }
 
 export const reverseGeoRouter = createTRPCRouter({
@@ -44,7 +53,7 @@ export const reverseGeoRouter = createTRPCRouter({
       let reverseGeoData: ReverseGeo = undefined;
 
       try {
-        const reverseGeoResult = await axios.get<ReverseGeo>(urlReverseGeo, {
+        const reverseGeoResult = await fetch(urlReverseGeo, {
           headers: {
             "X-Api-Key": `${env.API_NINJA_API_KEY}`,
           },
@@ -52,7 +61,7 @@ export const reverseGeoRouter = createTRPCRouter({
         /* log.debug("Reverse geocoding data", {
                     data: (reverseGeoResult).data,
                 }); */
-        reverseGeoData = reverseGeoSchema.parse(reverseGeoResult.data);
+        reverseGeoData = reverseGeoSchema.parse(await reverseGeoResult.json());
       } catch (error) {
         if (error instanceof z.ZodError) {
           log.error("Zod Errors", error.issues);
@@ -71,7 +80,7 @@ export const reverseGeoRouter = createTRPCRouter({
       // console.log(generateId(reverseGeoData));
 
       return {
-        id: generateId(reverseGeoData),
+        id: await generateId(reverseGeoData),
         name: reverseGeoData[0].name,
         coord: {
           lat: input.coordinates.lat,

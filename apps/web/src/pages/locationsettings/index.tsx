@@ -3,6 +3,7 @@ import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { observer } from "@legendapp/state/react";
 import cn from "classnames";
+import { useQuery } from "convex/react";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { RxCross2 } from "react-icons/rx";
@@ -10,10 +11,11 @@ import { ClipLoader } from "react-spinners";
 import { toast } from "sonner";
 
 import type { ICity } from "@weatherio/types";
+import { api as convexApi } from "@weatherio/city-data";
 
 import search2Image from "~/assets/search2.png";
 import Layout from "~/components/Layout";
-import { api } from "~/lib/utils/api";
+import { api as tRPCApi } from "~/lib/utils/api";
 import { activeCity$, addedCities$ } from "~/states";
 
 const LocationSettings = observer(() => {
@@ -34,23 +36,20 @@ const LocationSettings = observer(() => {
   const { t: translationLocationSettings } = useTranslation("locationsettings");
   const { t: translationCommon } = useTranslation("common");
 
-  const { data: findCitiesByNameData = [], status: findCitiesByNameStatus } =
-    api.search.findCitiesByName.useQuery({
-      name: searchValue.name,
-    });
+  /*
+  Fetches on every change in the search Value the cities that match the search value
+   */
 
-  const { data: findCityByIdData = [], status: findCityByIdStatus } =
-    api.search.findCityById.useQuery({
-      id: searchValue.id,
-    });
+  const findCitiesByName = useQuery(convexApi.getCity.findCitiesByName, {
+    name: searchValue.name,
+  });
 
-  const { data: findCityByNameData = [], status: findCityByNameStatus } =
-    api.search.findCityByName.useQuery({
-      name: searchValue.name,
-    });
+  const findCityById = useQuery(convexApi.getCity.findCityById, {
+    id: searchValue.id,
+  });
 
   const findCityByCoordinatesMutation =
-    api.reverseGeoRouter.getCity.useMutation({
+    tRPCApi.reverseGeoRouter.getCity.useMutation({
       onSuccess: (data) => {
         if (data) {
           setSearchValue(data);
@@ -65,9 +64,24 @@ const LocationSettings = observer(() => {
       setResults([]);
       return;
     }
-    if (!findCitiesByNameData || findCitiesByNameStatus !== "success") return;
-    setResults(findCitiesByNameData);
-  }, [searchValue, findCitiesByNameData, findCitiesByNameStatus]);
+    if (findCitiesByName === undefined) return;
+    setResults(() => {
+      const cities: ICity[] = [];
+      findCitiesByName.map((city) => {
+        cities.push({
+          id: city.id,
+          name: city.name,
+          country: city.country,
+          region: city.region,
+          coord: {
+            lon: city.coord.lon,
+            lat: city.coord.lat,
+          },
+        });
+      });
+      return cities;
+    });
+  }, [searchValue, findCitiesByName]);
 
   const removeCityFromAddedCities = (city: ICity) => {
     if (addedCities$.get().length === 1) {
@@ -92,10 +106,7 @@ const LocationSettings = observer(() => {
         lat: 0,
       },
     };
-    if (
-      searchValue.id.toString().length === 15 ||
-      searchValue.id.toString().length === 14
-    ) {
+    if (searchValue.id.toString().length > 15) {
       city = {
         id: searchValue.id,
         name: searchValue.name,
@@ -108,24 +119,40 @@ const LocationSettings = observer(() => {
       };
     } else {
       if (searchValue.id !== 0 && searchValue.country !== "") {
-        if (findCityByIdStatus === "loading") {
+        if (findCityById === undefined) {
           toast.loading(translationLocationSettings("try again toast"));
           return;
         }
-        if (!Array.isArray(findCityByIdData)) {
-          city = findCityByIdData.city;
+        if (findCityById) {
+          city = {
+            id: findCityById.id,
+            name: findCityById.name,
+            country: findCityById.country,
+            region: findCityById.region,
+            coord: {
+              lon: findCityById.coord.lon,
+              lat: findCityById.coord.lat,
+            },
+          };
         } else {
+          console.log("city not found by id reverse geocoding");
           toast.error(translationLocationSettings("city not found toast"));
           return;
         }
       } else {
-        if (findCityByNameStatus === "loading") {
-          toast.loading(translationLocationSettings("try again toast"));
-          return;
-        }
-        if (!Array.isArray(findCityByNameData)) {
-          city = findCityByNameData.city;
+        if (findCitiesByName?.[0]) {
+          city = {
+            id: findCitiesByName[0].id,
+            name: findCitiesByName[0].name,
+            country: findCitiesByName[0].country,
+            region: findCitiesByName[0].region,
+            coord: {
+              lon: findCitiesByName[0].coord.lon,
+              lat: findCitiesByName[0].coord.lat,
+            },
+          };
         } else {
+          console.log("city not found by name reverse geocoding");
           toast.error(translationLocationSettings("city not found toast"));
           return;
         }
@@ -133,9 +160,17 @@ const LocationSettings = observer(() => {
     }
 
     if (city) {
+      // Checks if the city is already added, and if it is a reverse geocoded city.
+      // If it is not a reverse geocoded city, we can compare by id,
+      // but if it is a reverse geocoded city, we have to compare by name.
       const existingCity = addedCities$
         .get()
-        .find((value: ICity) => value.name === city!.name);
+        .find(
+          (value: ICity) =>
+            value.name === city!.name &&
+            (value.id.toString().length > 15 ||
+              city!.id.toString().length > 15),
+        );
       if (addedCities$.get().find((value: ICity) => value.id === city!.id)) {
         activeCity$.set(city);
         toast.success(translationLocationSettings("switched to city toast"));
@@ -188,7 +223,7 @@ const LocationSettings = observer(() => {
                     "w-full border-b-2 border-black bg-[#d8d5db] pb-0.5 pl-3 pt-0.5 text-xl font-bold text-black outline-none",
                     {
                       "pr-10":
-                        findCitiesByNameStatus === "loading" &&
+                        findCitiesByName === undefined &&
                         inputRef.current?.value &&
                         inputRef.current?.value.length > 0,
                     },
@@ -221,7 +256,7 @@ const LocationSettings = observer(() => {
                   }}
                 />
                 <div className="absolute right-3 top-1/2 mt-0.5 -translate-y-1/2">
-                  {findCitiesByNameStatus === "loading" &&
+                  {findCitiesByName === undefined &&
                   inputRef.current?.value &&
                   inputRef.current?.value.length > 0 ? (
                     <ClipLoader color={"#ffffff"} loading={true} size={20} />

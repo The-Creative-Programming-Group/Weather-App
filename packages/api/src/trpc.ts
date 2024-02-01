@@ -7,7 +7,7 @@
  * need to use are documented accordingly near the end.
  */
 
-import type { CreateNextContextOptions } from "@trpc/server/adapters/next";
+import type { FetchCreateContextFnOptions } from "@trpc/server/adapters/fetch";
 import { initTRPC, TRPCError } from "@trpc/server";
 import { Ratelimit } from "@upstash/ratelimit";
 import { log } from "next-axiom";
@@ -60,13 +60,16 @@ const UPSTASH_RATELIMITER_TIME_INTERVAL: Duration = validateDuration(
  *
  * @see https://trpc.io/docs/context
  */
-export const createTRPCContext = (_opts: CreateNextContextOptions) => {
-  const ip = _opts.req.headers["x-forwarded-for"] as string;
-  const res = _opts.res;
+export const createTRPCContext = ({
+  req,
+  resHeaders,
+}: FetchCreateContextFnOptions) => {
+  const ip = req.headers.get("x-forwarded-for") ?? "";
   return {
     ...createInnerTRPCContext({}),
+    req,
+    resHeaders,
     ip,
-    res,
   };
 };
 
@@ -137,11 +140,11 @@ const rateLimitMiddleware = t.middleware(async ({ ctx, path, next }) => {
   // log.debug("identifier", { identifier });
   const { success, remaining } = await ratelimit.limit(identifier);
   // log.debug("remaining", { remaining });
-  ctx.res.setHeader(
+  ctx.resHeaders.set(
     "X-RateLimit-Limit",
     env.UPSTASH_RATELIMITER_TOKENS_PER_TIME,
   );
-  ctx.res.setHeader("X-RateLimit-Remaining", remaining);
+  ctx.resHeaders.set("X-RateLimit-Remaining", remaining.toString());
   if (!success) {
     log.warn("Rate limit exceeded", { ip: identifier });
     throw new TRPCError({

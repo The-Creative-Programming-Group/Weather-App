@@ -4,16 +4,18 @@ import Head from "next/head";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import cn from "classnames";
+import { useQuery } from "convex/react";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { ClipLoader } from "react-spinners";
 import { toast } from "sonner";
 
 import type { ICity } from "@weatherio/types";
+import { api as convexApi } from "@weatherio/city-data";
 
 import background from "~/assets/background.png";
 import search1Image from "~/assets/search1.png";
-import { api } from "~/lib/utils/api";
+import { api as tRPCApi } from "~/lib/utils/api";
 import { activeCity$, addedCities$ } from "~/states";
 
 const Search = () => {
@@ -39,23 +41,17 @@ const Search = () => {
   /*
   Fetches on every change in the search Value the cities that match the search value
    */
-  const { data: findCitiesByNameData = [], status: findCitiesByNameStatus } =
-    api.search.findCitiesByName.useQuery({
-      name: searchValue.name,
-    });
 
-  const { data: findCityByIdData = [], status: findCityByIdStatus } =
-    api.search.findCityById.useQuery({
-      id: searchValue.id,
-    });
+  const findCitiesByName = useQuery(convexApi.getCity.findCitiesByName, {
+    name: searchValue.name,
+  });
 
-  const { data: findCityByNameData = [], status: findCityByNameStatus } =
-    api.search.findCityByName.useQuery({
-      name: searchValue.name,
-    });
+  const findCityById = useQuery(convexApi.getCity.findCityById, {
+    id: searchValue.id,
+  });
 
   const findCityByCoordinatesMutation =
-    api.reverseGeoRouter.getCity.useMutation({
+    tRPCApi.reverseGeoRouter.getCity.useMutation({
       onSuccess: (data) => {
         if (data) {
           setSearchValue(data);
@@ -70,9 +66,24 @@ const Search = () => {
       setResults([]);
       return;
     }
-    if (!findCitiesByNameData || findCitiesByNameStatus !== "success") return;
-    setResults(findCitiesByNameData);
-  }, [searchValue, findCitiesByNameData, findCitiesByNameStatus]);
+    if (findCitiesByName === undefined) return;
+    setResults(() => {
+      const cities: ICity[] = [];
+      findCitiesByName.map((city) => {
+        cities.push({
+          id: city.id,
+          name: city.name,
+          country: city.country,
+          region: city.region,
+          coord: {
+            lon: city.coord.lon,
+            lat: city.coord.lat,
+          },
+        });
+      });
+      return cities;
+    });
+  }, [searchValue, findCitiesByName]);
 
   // Gets called if the user clicks on the "continue" button or press enter
   const searchCity = () => {
@@ -87,10 +98,7 @@ const Search = () => {
         lat: 0,
       },
     };
-    if (
-      searchValue.id.toString().length === 15 ||
-      searchValue.id.toString().length === 14
-    ) {
+    if (searchValue.id.toString().length > 15) {
       city = {
         id: searchValue.id,
         name: searchValue.name,
@@ -103,23 +111,37 @@ const Search = () => {
       };
     } else {
       if (searchValue.id !== 0 && searchValue.country !== "") {
-        if (findCityByIdStatus === "loading") {
+        if (findCityById === undefined) {
           toast.loading(translationLocationSettings("try again toast"));
           return;
         }
-        if (!Array.isArray(findCityByIdData)) {
-          city = findCityByIdData.city;
+        if (findCityById) {
+          city = {
+            id: findCityById.id,
+            name: findCityById.name,
+            country: findCityById.country,
+            region: findCityById.region,
+            coord: {
+              lon: findCityById.coord.lon,
+              lat: findCityById.coord.lat,
+            },
+          };
         } else {
           toast.error(translationLocationSettings("city not found toast"));
           return;
         }
       } else {
-        if (findCityByNameStatus === "loading") {
-          toast.loading(translationLocationSettings("try again toast"));
-          return;
-        }
-        if (!Array.isArray(findCityByNameData)) {
-          city = findCityByNameData.city;
+        if (findCitiesByName?.[0]) {
+          city = {
+            id: findCitiesByName[0].id,
+            name: findCitiesByName[0].name,
+            country: findCitiesByName[0].country,
+            region: findCitiesByName[0].region,
+            coord: {
+              lon: findCitiesByName[0].coord.lon,
+              lat: findCitiesByName[0].coord.lat,
+            },
+          };
         } else {
           toast.error(translationLocationSettings("city not found toast"));
           return;
@@ -177,7 +199,7 @@ const Search = () => {
               "w-full bg-[#383b53] pl-1.5 text-xl text-white outline-none md:pb-0.5 md:pl-3 md:pt-0.5",
               {
                 "pr-10":
-                  findCitiesByNameStatus === "loading" &&
+                  findCitiesByName === undefined &&
                   inputRef.current?.value &&
                   inputRef.current?.value.length > 0,
               },
@@ -208,7 +230,7 @@ const Search = () => {
             }}
           />
           <div className="absolute right-3 top-1/2 mt-0.5 -translate-y-1/2">
-            {findCitiesByNameStatus === "loading" &&
+            {findCitiesByName === undefined &&
             inputRef.current?.value &&
             inputRef.current?.value.length > 0 ? (
               <ClipLoader color={"#ffffff"} loading={true} size={20} />
