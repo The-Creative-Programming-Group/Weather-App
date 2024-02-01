@@ -189,9 +189,9 @@ importers:
       '@weatherio/types':
         specifier: workspace:^0.1.0
         version: link:../types
-      axios:
-        specifier: ^1.6.5
-        version: 1.6.5(debug@4.3.4)
+      big-integer:
+        specifier: ^1.6.52
+        version: 1.6.52
       dayjs:
         specifier: ^1.11.10
         version: 1.11.10
