@@ -19,7 +19,7 @@
     "@trpc/client": "^10.45.0",
     "@trpc/server": "^10.45.0",
     "@upstash/ratelimit": "^1.0.0",
-    "@upstash/redis": "^1.28.2",
+    "@upstash/redis": "^1.28.3",
     "@weatherio/city-data": "workspace:^0.1.0",
     "@weatherio/types": "workspace:^0.1.0",
     "dayjs": "^1.11.10",
