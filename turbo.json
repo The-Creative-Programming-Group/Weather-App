@@ -60,5 +60,8 @@
     "TEST_MODE",
     "NEXT_PUBLIC_CONVEX_URL",
     "CONVEX_DEPLOY_KEY"
+  ],
+  "globalPassThroughEnv": [
+    "CONVEX_URL"
   ]
 }

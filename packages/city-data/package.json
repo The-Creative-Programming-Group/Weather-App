@@ -16,8 +16,7 @@
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
     "update:city-data": "cd src && node download.mjs && node convert.mjs && node renamejsonproperties.mjs && node createJSONL.mjs",
-    "push:city-data": " convex import --table search src/city-list.jsonl --replace",
-    "build": "convex deploy"
+    "convex:deploy": " convex import --table search src/city-list.jsonl --replace && convex deploy"
   },
   "eslintConfig": {
     "root": true,
