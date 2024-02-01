@@ -160,9 +160,17 @@ const LocationSettings = observer(() => {
     }
 
     if (city) {
+      // Checks if the city is already added, and if it is a reverse geocoded city.
+      // If it is not a reverse geocoded city, we can compare by id,
+      // but if it is a reverse geocoded city, we have to compare by name.
       const existingCity = addedCities$
         .get()
-        .find((value: ICity) => value.name === city!.name);
+        .find(
+          (value: ICity) =>
+            value.name === city!.name &&
+            (value.id.toString().length > 15 ||
+              city!.id.toString().length > 15),
+        );
       if (addedCities$.get().find((value: ICity) => value.id === city!.id)) {
         activeCity$.set(city);
         toast.success(translationLocationSettings("switched to city toast"));
