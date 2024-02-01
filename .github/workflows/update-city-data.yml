@@ -2,7 +2,8 @@ name: Deploy to Convex
 
 on:
   push:
-    branches: ["main"]
+    branches: ["master"]
+  merge_group:
 
 # You can leverage Vercel Remote Caching with Turbo to speed up your builds
 # @link https://turborepo.org/docs/core-concepts/remote-caching#remote-caching-on-vercel-builds
