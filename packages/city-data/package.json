@@ -4,17 +4,19 @@
   "private": true,
   "type": "module",
   "exports": {
-    ".": "./src/city-list.json",
+    ".": "./index.ts",
     "./admin1": "./src/admin1.json",
     "./admin2": "./src/admin2.json"
   },
   "license": "MIT",
   "scripts": {
+    "dev": "convex dev",
     "clean": "rm -rf .turbo node_modules",
     "format": "prettier --check . --ignore-path ../../.gitignore",
-    "lint": "eslint \"**/*.mjs\"",
+    "lint": "eslint .",
     "typecheck": "tsc --noEmit",
-    "update:city-data": "cd src && node download.mjs && node convert.mjs && node renamejsonproperties.mjs"
+    "update:city-data": "cd src && node download.mjs && node convert.mjs && node renamejsonproperties.mjs && node createJSONL.mjs",
+    "push:city-data": " convex import --table search src/city-list.jsonl --replace"
   },
   "eslintConfig": {
     "root": true,
@@ -24,7 +26,9 @@
   },
   "prettier": "@weatherio/prettier-config",
   "dependencies": {
+    "convex": "^1.8.0",
     "jsonfile": "^6.1.0",
+    "jsonl": "^1.1.2",
     "yauzl": "^2.10.0",
     "zod": "^3.22.4"
   },

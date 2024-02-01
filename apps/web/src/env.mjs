@@ -13,12 +13,16 @@ export const env = createEnv({
       .transform((v) => (v ? `https://${v}` : undefined)),
     PORT: z.coerce.number().default(3000)
   },
+  client: {
+    NEXT_PUBLIC_CONVEX_URL: z.string().min(1)
+  },
   /**
    * Destructure all variables from `process.env` to make sure they aren't tree-shaken away.
    */
   runtimeEnv: {
     PORT: process.env.PORT,
-    VERCEL_URL: process.env.VERCEL_URL
+    VERCEL_URL: process.env.VERCEL_URL,
+    NEXT_PUBLIC_CONVEX_URL: process.env.NEXT_PUBLIC_CONVEX_URL
 
     // NEXT_PUBLIC_CLIENTVAR: process.env.NEXT_PUBLIC_CLIENTVAR,
   },

@@ -57,6 +57,7 @@
     "RESEND_API_KEY",
     "QWEATHER_API_KEY",
     "API_NINJA_API_KEY",
-    "TEST_MODE"
+    "TEST_MODE",
+    "NEXT_PUBLIC_CONVEX_URL"
   ]
 }
