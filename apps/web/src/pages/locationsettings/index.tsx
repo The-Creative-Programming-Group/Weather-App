@@ -265,67 +265,65 @@ const LocationSettings = observer(() => {
               </div>{" "}
             </div>
             {results.map((city: ICity) => {
-              if (
-                city.name
-                  .toLowerCase()
-                  .startsWith(searchValue.name.toLowerCase())
-              ) {
-                return (
-                  <button
-                    className={
-                      isInputActive
-                        ? "flex h-auto w-9/12 items-center justify-between border-b-2 border-gray-400 bg-[#d8d5db] p-5 text-left md:w-5/12"
-                        : "hidden"
-                    }
-                    aria-label={city.name}
-                    key={city.id}
-                    /**
-                     * I chose onMouseDown over onClick
-                     * because if you choose onClick,
-                     * the onBlur function runs before onClick runs
-                     * and the onClick function never will get executed
-                     */
-                    onMouseDown={() => {
-                      setSearchValue((prevSearchValue): ICity => {
-                        return {
-                          ...prevSearchValue,
-                          id: city.id,
-                          name: city.name,
-                          country: city.country,
-                          region: city.region,
-                          coord: {
-                            lon: city.coord.lon,
-                            lat: city.coord.lat,
-                          },
-                        };
-                      });
-                    }}
-                  >
-                    <span className="w-1/2">
-                      {city.name
-                        .split("")
-                        .map((letter: string, letterIndex: number) => (
-                          <span
-                            className={
-                              letterIndex < searchValue.name.length
+              return (
+                <button
+                  className={
+                    isInputActive
+                      ? "flex h-auto w-9/12 items-center justify-between border-b-2 border-gray-400 bg-[#d8d5db] p-5 text-left md:w-5/12"
+                      : "hidden"
+                  }
+                  aria-label={city.name}
+                  key={city.id}
+                  /**
+                   * I chose onMouseDown over onClick
+                   * because if you choose onClick,
+                   * the onBlur function runs before onClick runs
+                   * and the onClick function never will get executed
+                   */
+                  onMouseDown={() => {
+                    setSearchValue((prevSearchValue): ICity => {
+                      return {
+                        ...prevSearchValue,
+                        id: city.id,
+                        name: city.name,
+                        country: city.country,
+                        region: city.region,
+                        coord: {
+                          lon: city.coord.lon,
+                          lat: city.coord.lat,
+                        },
+                      };
+                    });
+                  }}
+                >
+                  <span className="w-1/2">
+                    {city.name
+                      .split("")
+                      .map((letter: string, letterIndex: number) => (
+                        <span
+                          className={
+                            city.name
+                              .toLowerCase()
+                              .startsWith(searchValue.name.toLowerCase())
+                              ? letterIndex < searchValue.name.length
                                 ? "font-bold"
                                 : ""
-                            }
-                            key={letterIndex}
-                          >
-                            {letter}
-                          </span>
-                        ))}
-                    </span>
-                    <div className="flex w-1/2 flex-row-reverse items-center gap-0.5 sm:w-1/4 sm:gap-3">
-                      <span className="text-gray-500">{city.country}</span>
-                      <span className="w-2/3 overflow-hidden overflow-ellipsis text-gray-500 sm:w-full">
-                        {city.region}
-                      </span>{" "}
-                    </div>
-                  </button>
-                );
-              }
+                              : ""
+                          }
+                          key={letterIndex}
+                        >
+                          {letter}
+                        </span>
+                      ))}
+                  </span>
+                  <div className="flex w-1/2 flex-row-reverse items-center gap-0.5 sm:w-1/4 sm:gap-3">
+                    <span className="text-gray-500">{city.country}</span>
+                    <span className="w-2/3 overflow-hidden overflow-ellipsis text-gray-500 sm:w-full">
+                      {city.region}
+                    </span>{" "}
+                  </div>
+                </button>
+              );
             })}
             <div className="mt-2 flex w-full justify-center">
               <div className="block w-9/12 md:w-5/12">

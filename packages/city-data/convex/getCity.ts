@@ -66,7 +66,13 @@ export const findCitiesByName = query({
       .withSearchIndex("search_body", (q) => q.search("name", args.name))
       .take(5);
 
-    return cities.map(addRegionToCity);
+    const uniqueCities = cities
+      .filter((city, index, self) => {
+        return index === self.findIndex((c) => c.id === city.id);
+      })
+      .slice(0, 5);
+
+    return uniqueCities.map(addRegionToCity);
   },
 });
 
