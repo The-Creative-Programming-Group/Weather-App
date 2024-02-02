@@ -9,10 +9,10 @@ export const env = createEnv({
     UPSTASH_REDIS_REST_TOKEN: z.string().min(1),
     UPSTASH_RATELIMITER_TOKENS_PER_TIME: z.string().min(1),
     UPSTASH_RATELIMITER_TIME_INTERVAL: z.string().min(1),
-    UPSTASH_RATELIMITER_EXCLUDED_IPS: z.string().default(""),
+    UPSTASH_RATELIMITER_EXCLUDED_IPS: z.string().default(''),
     RESEND_API_KEY: z.string().min(1),
     QWEATHER_API_KEY: z.string().min(1),
-    API_NINJA_API_KEY: z.string().min(1),
+    API_NINJA_API_KEY: z.string().min(1)
   },
   client: {},
   runtimeEnv: {
