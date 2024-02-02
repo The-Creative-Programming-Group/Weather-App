@@ -47,6 +47,42 @@ If you are not familiar with the different technologies used in this project, pl
 - [QWeather API](https://dev.qweather.com/en/)
 - [API Ninjas API](https://api-ninjas.com/) (For the Reverse Geocoding)
 
+## Project Structure
+```text
+.github
+  └─ workflows
+        ├─ Playwright tests
+        ├─ Update Convex Deployment
+        └─ CI with pnpm cache setup
+apps
+  └─ next.js
+      ├─ Next.js 14
+      ├─ React 18
+      ├─ Tailwind CSS
+      └─ E2E Typesafe API Server & Client
+packages
+  ├─ api
+  |   └─ tRPC v11 router definition
+  ├─ city-data
+  |    ├─ Convex Files for the database and convex functions
+  |    └─ Scripts for pulling the city-data
+  ├─ e2e-web-tests
+  |    └─ Playwright tests for the Next.js app
+  ├─ types 
+  |    └─ Types that are used across the whole project  
+  └─ ui
+      └─ Start of a UI package for the webapp using shadcn-ui and custom components
+tooling
+  ├─ eslint
+  |   └─ shared, fine-grained, eslint presets
+  ├─ prettier
+  |   └─ shared prettier configuration
+  ├─ tailwind
+  |   └─ shared tailwind configuration
+  └─ typescript
+      └─ shared tsconfig you can extend from
+```
+
 ## Learn More
 
 To learn more about the [T3 Stack](https://create.t3.gg/), take a look at the following resources:
