@@ -4,6 +4,18 @@ on:
     branches: [ main, master ]
   pull_request:
     branches: [ main, master ]
+
+env:
+  OPEN_WEATHER_API_KEY: ${{ secrets.OPEN_WEATHER_API_KEY }}
+  UPSTASH_REDIS_REST_URL: ${{ secrets.UPSTASH_REDIS_REST_URL }}
+  UPSTASH_REDIS_REST_TOKEN: ${{ secrets.UPSTASH_REDIS_REST_TOKEN }}
+  UPSTASH_RATELIMITER_TOKENS_PER_TIME: ${{ secrets.UPSTASH_RATELIMITER_TOKENS_PER_TIME }}
+  UPSTASH_RATELIMITER_TIME_INTERVAL: ${{ secrets.UPSTASH_RATELIMITER_TIME_INTERVAL }}
+  RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+  QWEATHER_API_KEY: ${{ secrets.QWEATHER_API_KEY }}
+  API_NINJA_API_KEY: ${{ secrets.API_NINJA_API_KEY }}
+  NEXT_PUBLIC_CONVEX_URL: ${{ secrets.NEXT_PUBLIC_CONVEX_URL_PROD }}
+
 jobs:
   test:
     timeout-minutes: 60
@@ -19,26 +31,8 @@ jobs:
       run: pnpm exec playwright install --with-deps
     - name: Build
       run: pnpm build
-      env:
-        OPEN_WEATHER_API_KEY: ${{ secrets.OPEN_WEATHER_API_KEY }}
-        UPSTASH_REDIS_REST_URL: ${{ secrets.UPSTASH_REDIS_REST_URL }}
-        UPSTASH_REDIS_REST_TOKEN: ${{ secrets.UPSTASH_REDIS_REST_TOKEN }}
-        UPSTASH_RATELIMITER_TOKENS_PER_TIME: ${{ secrets.UPSTASH_RATELIMITER_TOKENS_PER_TIME }}
-        UPSTASH_RATELIMITER_TIME_INTERVAL: ${{ secrets.UPSTASH_RATELIMITER_TIME_INTERVAL }}
-        RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
-        QWEATHER_API_KEY: ${{ secrets.QWEATHER_API_KEY }}
-        API_NINJA_API_KEY: ${{ secrets.API_NINJA_API_KEY }}
     - name: Test
       run: pnpm e2e:test
-      env:
-        OPEN_WEATHER_API_KEY: ${{ secrets.OPEN_WEATHER_API_KEY }}
-        UPSTASH_REDIS_REST_URL: ${{ secrets.UPSTASH_REDIS_REST_URL }}
-        UPSTASH_REDIS_REST_TOKEN: ${{ secrets.UPSTASH_REDIS_REST_TOKEN }}
-        UPSTASH_RATELIMITER_TOKENS_PER_TIME: ${{ secrets.UPSTASH_RATELIMITER_TOKENS_PER_TIME }}
-        UPSTASH_RATELIMITER_TIME_INTERVAL: ${{ secrets.UPSTASH_RATELIMITER_TIME_INTERVAL }}
-        RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
-        QWEATHER_API_KEY: ${{ secrets.QWEATHER_API_KEY }}
-        API_NINJA_API_KEY: ${{ secrets.API_NINJA_API_KEY }}
     - uses: actions/upload-artifact@v4
       if: always()
       with:
