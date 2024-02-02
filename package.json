@@ -18,7 +18,8 @@
     "lint:ws": "pnpm dlx sherif@latest",
     "postinstall": "pnpm lint:ws",
     "typecheck": "turbo typecheck",
-    "update:city-data": "cd packages/city-data && pnpm update:city-data && pnpm push:city-data",
+    "update:city-data-prod": "cd packages/city-data && pnpm update:city-data && pnpm push:city-data-prod",
+    "update:city-data-dev": "cd packages/city-data && pnpm update:city-data && pnpm push:city-data-dev",
     "convex:deploy": "cd packages/city-data && pnpm convex:deploy",
     "e2e:test": "turbo e2e:test"
   },
