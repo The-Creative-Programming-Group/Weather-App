@@ -19,7 +19,7 @@
     "postinstall": "pnpm lint:ws",
     "typecheck": "turbo typecheck",
     "update:city-data": "cd packages/city-data && pnpm update:city-data && pnpm push:city-data",
-    "convex:deploy": "cd packages/city-data && pnpm update:city-data && pnpm convex:deploy",
+    "convex:deploy": "cd packages/city-data && pnpm convex:deploy",
     "e2e:test": "turbo e2e:test"
   },
   "devDependencies": {
