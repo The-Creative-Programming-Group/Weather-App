@@ -59,5 +59,10 @@
     "API_NINJA_API_KEY",
     "TEST_MODE",
     "BASEHUB_TOKEN"
+    "NEXT_PUBLIC_CONVEX_URL",
+    "CONVEX_DEPLOY_KEY"
+  ],
+  "globalPassThroughEnv": [
+    "CONVEX_URL"
   ]
 }

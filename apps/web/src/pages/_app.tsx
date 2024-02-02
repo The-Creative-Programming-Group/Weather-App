@@ -13,6 +13,7 @@ import { appWithTranslation } from "next-i18next";
 
 import { Toaster } from "@weatherio/ui/sonner";
 
+import ConvexClientProvider from "~/components/ConvexClientProvider";
 import { PWALifeCycle } from "~/components/PWALifecycle";
 import { api } from "~/lib/utils/api";
 
@@ -21,7 +22,7 @@ const inter = Inter({ subsets: ["latin-ext"] });
 
 const MyApp: AppType = ({ Component, pageProps }) => {
   return (
-    <>
+    <ConvexClientProvider>
       <Head>
         <meta
           name="google-site-verification"
@@ -40,7 +41,7 @@ const MyApp: AppType = ({ Component, pageProps }) => {
       <SpeedInsights />
       <AxiomWebVitals />
       <ReactQueryDevtools initialIsOpen={false} />
-    </>
+    </ConvexClientProvider>
   );
 };
 
