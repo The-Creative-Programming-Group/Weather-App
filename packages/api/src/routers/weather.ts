@@ -114,9 +114,9 @@ const PresentAirQualitySchema = z.object({
   }),
   hourly: z.object({
     time: z.array(z.string()),
-    pm10: z.array(z.number()),
-    pm2_5: z.array(z.number()),
-    nitrogen_dioxide: z.array(z.number()),
+    pm10: z.array(z.number().nullable()),
+    pm2_5: z.array(z.number().nullable()),
+    nitrogen_dioxide: z.array(z.number().nullable()),
   }),
 });
 
