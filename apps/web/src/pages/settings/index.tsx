@@ -1,4 +1,5 @@
 import React from "react";
+import Image from "next/image";
 import { useRouter } from "next/router";
 import { observer } from "@legendapp/state/react";
 import { useTranslation } from "next-i18next";
@@ -6,6 +7,8 @@ import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { RxCheck } from "react-icons/rx";
 
 import type { TemperatureUnitType, WindSpeedUnitType } from "~/states";
+import germanFlag from "~/assets/german-flag.png";
+import usaFlag from "~/assets/usa-flag.png";
 import Layout from "~/components/Layout";
 import { temperatureUnit$, windSpeedUnit$ } from "~/states";
 import styles from "./settings.module.css";
@@ -146,7 +149,13 @@ const Settings = observer(() => {
               }`}
               onClick={() => changeLocale("en")}
             >
-              <p className={styles.buttontext}>
+              <Image
+                src={usaFlag}
+                alt="Flag of the United States"
+                width={20}
+                height={20}
+              />
+              <p className={`${styles.buttontext} ml-2`}>
                 {translationSettings("english")}
               </p>
               {locale === "en" && (
@@ -159,7 +168,13 @@ const Settings = observer(() => {
               }`}
               onClick={() => changeLocale("de")}
             >
-              <p className={styles.buttontext}>
+              <Image
+                src={germanFlag}
+                alt="Flag of Germany"
+                width={20}
+                height={20}
+              />
+              <p className={`${styles.buttontext} ml-2`}>
                 {translationSettings("german")}
               </p>
               {locale === "de" && (
