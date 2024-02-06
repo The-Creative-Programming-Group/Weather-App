@@ -38,7 +38,7 @@
     "next-i18next": "^15.2.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "react-hook-form": "^7.50.0",
+    "react-hook-form": "^7.50.1",
     "react-html-parser": "^2.0.2",
     "react-icons": "^5.0.1",
     "react-spinners": "^0.13.8",
