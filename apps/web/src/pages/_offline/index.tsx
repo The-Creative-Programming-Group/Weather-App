@@ -1,6 +1,7 @@
-import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import Layout from "~/components/Layout";
 import { useTranslation } from "next-i18next";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+
+import Layout from "~/components/Layout";
 
 // This page is rendered when the user installed the PWA and is offline
 export default function OfflinePage() {
@@ -12,7 +13,7 @@ export default function OfflinePage() {
         <h1 className="mt-10 text-4xl font-bold">
           {translationOffline("title")}
         </h1>
-        <p>{translationOffline("message")}</p>
+        <p className="text-center">{translationOffline("message")}</p>
       </div>
     </Layout>
   );
