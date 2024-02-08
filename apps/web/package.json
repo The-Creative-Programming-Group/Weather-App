@@ -15,7 +15,7 @@
   "dependencies": {
     "@ducanh2912/next-pwa": "^10.2.5",
     "@hookform/resolvers": "^3.3.4",
-    "@legendapp/state": "^2.1.5",
+    "@legendapp/state": "^2.1.6",
     "@next/bundle-analyzer": "^14.1.0",
     "@t3-oss/env-nextjs": "^0.8.0",
     "@tanstack/react-query": "^4.36.1",
