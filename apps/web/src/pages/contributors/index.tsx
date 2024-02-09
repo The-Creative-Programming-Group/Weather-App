@@ -1,19 +1,19 @@
 import React from "react";
-import Layout from "~/components/Layout";
-import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import Link from "next/link";
 import Image from "next/image";
-import jakobProfile from "~/assets/jakob-profile.webp";
+import Link from "next/link";
+import ReactHtmlParser from "react-html-parser";
+
+import iqbalProfile from "~/assets/bal-profile.jpg";
 import dicsiluksProfile from "~/assets/dicsiluks-profile.webp";
 import fabiusProfile from "~/assets/fabius-profile.jpg";
 import jakeProfile from "~/assets/jake-profile.png";
-import iqbalProfile from "~/assets/bal-profile.jpg";
-import { useTranslation } from "next-i18next";
-import ReactHtmlParser from "react-html-parser";
+import jakobProfile from "~/assets/jakob-profile.webp";
+import Layout from "~/components/Layout";
+import { getLocaleProps, useScopedI18n } from "~/locales";
 
 const Contributors = () => {
-  const { t: translationCommon } = useTranslation("common");
-  const { t: translationContributors } = useTranslation("contributors");
+  const translationCommon = useScopedI18n("common");
+  const translationContributors = useScopedI18n("contributors");
 
   return (
     <Layout
@@ -117,12 +117,6 @@ const Contributors = () => {
   );
 };
 
-export async function getStaticProps({ locale }: { locale: string }) {
-  return {
-    props: {
-      ...(await serverSideTranslations(locale, ["contributors", "common"])),
-    },
-  };
-}
+export const getStaticProps = getLocaleProps();
 
 export default Contributors;
