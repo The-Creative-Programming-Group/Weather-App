@@ -15,6 +15,7 @@ import { Toaster } from "@weatherio/ui/sonner";
 import ConvexClientProvider from "~/components/ConvexClientProvider";
 import { PWALifeCycle } from "~/components/PWALifecycle";
 import { api } from "~/lib/utils/api";
+import en from "~/locales/en";
 import { I18nProvider } from "../locales";
 
 // Next font inter
@@ -24,7 +25,7 @@ const MyApp: AppType = ({ Component, pageProps }: AppProps) => {
   return (
     <ConvexClientProvider>
       {/* eslint-disable-next-line @typescript-eslint/no-unsafe-assignment,@typescript-eslint/no-unsafe-member-access */}
-      <I18nProvider locale={pageProps.locale}>
+      <I18nProvider locale={pageProps.locale} fallbackLocale={en}>
         <Head>
           <meta
             name="google-site-verification"
