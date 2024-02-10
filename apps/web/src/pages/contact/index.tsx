@@ -1,18 +1,17 @@
 import type { SubmitHandler } from "react-hook-form";
 import React from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useTranslation } from "next-i18next";
-import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
 
 import Layout from "~/components/Layout";
 import { api } from "~/lib/utils/api";
+import { getLocaleProps, useScopedI18n } from "~/locales";
 
 const ContactUs = () => {
-  const { t: translationContact } = useTranslation("contact");
-  const { t: translationCommon } = useTranslation("common");
+  const translationContact = useScopedI18n("contact");
+  const translationCommon = useScopedI18n("common");
 
   const ContactValidator = z.object({
     firstName: z
@@ -75,8 +74,6 @@ const ContactUs = () => {
           </h1>
           <hr className="mt-3 h-1.5 w-6/12 rounded bg-[#2d3142] md:w-4/12" />
           <form
-            // If you add a void, before the handleSubmit, it will not work, idk why. - Jakob
-            // eslint-disable-next-line @typescript-eslint/no-misused-promises
             onSubmit={handleSubmit(onSubmit)}
             className="flex w-full flex-col items-center"
           >
@@ -157,12 +154,6 @@ const ContactUs = () => {
   );
 };
 
-export async function getStaticProps({ locale }: { locale: string }) {
-  return {
-    props: {
-      ...(await serverSideTranslations(locale, ["contact", "common"])),
-    },
-  };
-}
+export const getStaticProps = getLocaleProps();
 
 export default ContactUs;

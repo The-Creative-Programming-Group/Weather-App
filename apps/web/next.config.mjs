@@ -2,7 +2,6 @@
 import './src/env.mjs'
 import '@weatherio/api/env'
 import withBundleAnalyzer from '@next/bundle-analyzer'
-import pkg from './next-i18next.config.js'
 import withPWAInit from '@ducanh2912/next-pwa'
 import { withAxiom } from 'next-axiom'
 
@@ -12,8 +11,6 @@ const withPWA = withPWAInit({
     document: '/_offline'
   }
 })
-
-const { i18n } = pkg
 
 // create the bundle analyzer config
 const withMyBundleAnalyzer = withBundleAnalyzer({
@@ -33,7 +30,10 @@ const config = withMyBundleAnalyzer(withPWA(
 
     /** Enables hot reloading for local packages without a build step */
     transpilePackages: ['@weatherio/api', '@weatherio/ui', '@weatherio/types', '@weatherio/city-data'],
-    i18n
+    i18n: {
+      defaultLocale: 'en',
+      locales: ['en', 'de']
+    }
   }))
 )
 

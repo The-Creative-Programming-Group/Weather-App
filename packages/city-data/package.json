@@ -28,7 +28,7 @@
   },
   "prettier": "@weatherio/prettier-config",
   "dependencies": {
-    "convex": "^1.8.0",
+    "convex": "^1.9.0",
     "jsonfile": "^6.1.0",
     "jsonl": "^1.1.2",
     "yauzl": "^2.10.0",
@@ -41,7 +41,7 @@
     "@weatherio/prettier-config": "workspace:^0.1.0",
     "@weatherio/tsconfig": "workspace:^0.1.0",
     "eslint": "^8.56.0",
-    "prettier": "^3.2.4",
+    "prettier": "^3.2.5",
     "typescript": "^5.3.3"
   }
 }

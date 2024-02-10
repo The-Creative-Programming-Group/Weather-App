@@ -1,26 +1,27 @@
 import React from "react";
-import { useRouter } from "next/router";
+import Image from "next/image";
 import { observer } from "@legendapp/state/react";
-import { useTranslation } from "next-i18next";
-import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { RxCheck } from "react-icons/rx";
 
 import type { TemperatureUnitType, WindSpeedUnitType } from "~/states";
+import germanFlag from "~/assets/german-flag.png";
+import usaFlag from "~/assets/usa-flag.png";
 import Layout from "~/components/Layout";
+import {
+  getLocaleProps,
+  useChangeLocale,
+  useCurrentLocale,
+  useScopedI18n,
+} from "~/locales";
 import { temperatureUnit$, windSpeedUnit$ } from "~/states";
 import styles from "./settings.module.css";
 
 const Settings = observer(() => {
-  const { locale } = useRouter();
+  const locale = useCurrentLocale();
+  const changeLocale = useChangeLocale();
 
-  const router = useRouter();
-
-  const changeLocale = (locale: string) => {
-    void router.push(router.pathname, router.asPath, { locale });
-  };
-
-  const { t: translationSettings } = useTranslation("settings");
-  const { t: translationCommon } = useTranslation("common");
+  const translationSettings = useScopedI18n("settings");
+  const translationCommon = useScopedI18n("common");
 
   const handleTemperatureUnitClick = (unit: TemperatureUnitType) => {
     temperatureUnit$.set(unit);
@@ -146,7 +147,13 @@ const Settings = observer(() => {
               }`}
               onClick={() => changeLocale("en")}
             >
-              <p className={styles.buttontext}>
+              <Image
+                src={usaFlag}
+                alt="Flag of the United States"
+                width={20}
+                height={20}
+              />
+              <p className={`${styles.buttontext} ml-2`}>
                 {translationSettings("english")}
               </p>
               {locale === "en" && (
@@ -159,7 +166,13 @@ const Settings = observer(() => {
               }`}
               onClick={() => changeLocale("de")}
             >
-              <p className={styles.buttontext}>
+              <Image
+                src={germanFlag}
+                alt="Flag of Germany"
+                width={20}
+                height={20}
+              />
+              <p className={`${styles.buttontext} ml-2`}>
                 {translationSettings("german")}
               </p>
               {locale === "de" && (
@@ -173,12 +186,6 @@ const Settings = observer(() => {
   );
 });
 
-export async function getStaticProps({ locale }: { locale: string }) {
-  return {
-    props: {
-      ...(await serverSideTranslations(locale, ["settings", "common"])),
-    },
-  };
-}
+export const getStaticProps = getLocaleProps();
 
 export default Settings;
