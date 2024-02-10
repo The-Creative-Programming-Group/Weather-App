@@ -3,7 +3,7 @@ import './src/env.mjs'
 import '@weatherio/api/env'
 import withBundleAnalyzer from '@next/bundle-analyzer'
 import withPWAInit from '@ducanh2912/next-pwa'
-import {withAxiom} from 'next-axiom'
+import { withAxiom } from 'next-axiom'
 
 const withPWA = withPWAInit({
   dest: 'public',
