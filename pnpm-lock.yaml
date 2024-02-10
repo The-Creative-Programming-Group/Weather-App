@@ -99,8 +99,8 @@ importers:
         specifier: ^1.1.1
         version: 1.1.1(next@14.1.0)(react@18.2.0)
       next-international:
-        specifier: ^1.2.3
-        version: 1.2.3
+        specifier: ^1.2.4
+        version: 1.2.4
       react:
         specifier: 18.2.0
         version: 18.2.0
@@ -6447,8 +6447,8 @@ packages:
       whatwg-fetch: 3.6.20
     dev: false
 
-  /next-international@1.2.3:
-    resolution: {integrity: sha512-pLHX6dIjg2bd/LHcBIylhQXsiv2CQgAEKXb1tlVMXIj+RxpxgB9ymgkNdm4OsEmEpVlleCoq4T3k4Pi9QXZ8wQ==}
+  /next-international@1.2.4:
+    resolution: {integrity: sha512-JQvp+h2iSgA/t8hu5S/Lwow1ZErJutQRdpnplxjv4VTlCiND8T95fYih8BjkHcVhQbtM+Wu9Mb1CM32wD9hlWQ==}
     dependencies:
       client-only: 0.0.1
       international-types: 0.8.1
