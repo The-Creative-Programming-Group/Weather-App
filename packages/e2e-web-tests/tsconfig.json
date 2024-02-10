@@ -1,7 +1,11 @@
 {
   "extends": "@weatherio/tsconfig/base.json",
   "compilerOptions": {
-    "tsBuildInfoFile": "node_modules/.cache/tsbuildinfo.json"
+    "tsBuildInfoFile": "node_modules/.cache/tsbuildinfo.json",
+    "baseUrl": ".",
+    "paths": {
+      "@weatherio/*": ["node_modules/@weatherio/*"]
+    }
   },
   "include": ["tests", "**/*.mjs",  "../../reset.d.ts", "**/*.ts", "**/*.tsx", "playwright.config.ts"],
   "exclude": ["node_modules"]

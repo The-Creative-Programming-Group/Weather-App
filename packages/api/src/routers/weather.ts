@@ -500,7 +500,23 @@ export const weatherRouter = createTRPCRouter({
         };
       }
 
-      const precipitationProbabilities: Record<string, number | undefined> = {};
+      type PrecipitationProbabilitiesTimeSlots =
+        | "1 early morning"
+        | "2 morning"
+        | "3 noon"
+        | "4 afternoon"
+        | "5 night";
+
+      const precipitationProbabilities: Record<
+        PrecipitationProbabilitiesTimeSlots,
+        number | undefined
+      > = {
+        "1 early morning": undefined,
+        "2 morning": undefined,
+        "3 noon": undefined,
+        "4 afternoon": undefined,
+        "5 night": undefined,
+      };
 
       /**
        * Calculates the average precipitation probability for a given time slot.
@@ -533,7 +549,11 @@ export const weatherRouter = createTRPCRouter({
         return undefined;
       };
 
-      const timeSlots: { slot: string; start: number; end: number }[] = [
+      const timeSlots: {
+        slot: PrecipitationProbabilitiesTimeSlots;
+        start: number;
+        end: number;
+      }[] = [
         { slot: "1 early morning", start: 0, end: 5 },
         { slot: "2 morning", start: 6, end: 9 },
         { slot: "3 noon", start: 10, end: 14 },

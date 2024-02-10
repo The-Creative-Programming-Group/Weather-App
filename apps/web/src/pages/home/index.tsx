@@ -7,8 +7,6 @@ import cn from "classnames";
 import dayjs from "dayjs";
 import timezone from "dayjs/plugin/timezone";
 import utc from "dayjs/plugin/utc";
-import { useTranslation } from "next-i18next";
-import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import ReactHtmlParser from "react-html-parser";
 import { BsWind } from "react-icons/bs";
 import {
@@ -45,6 +43,7 @@ import type { WindSpeedUnitType } from "~/states";
 import Layout from "~/components/Layout";
 import { MoonPhaseInfo } from "~/components/moon-phase-info";
 import { api } from "~/lib/utils/api";
+import { getLocaleProps, useScopedI18n } from "~/locales";
 import { activeCity$, temperatureUnit$, windSpeedUnit$ } from "~/states";
 
 const Map = dynamic(() => import("@weatherio/ui/map"), { ssr: false });
@@ -145,8 +144,8 @@ const InternalHome = observer(() => {
         : `${Math.round((weatherData.data?.temperature * 9) / 5 - 459.67)}°F`;
   }
 
-  const { t: translationHome } = useTranslation("home");
-  const { t: translationCommon } = useTranslation("common");
+  const translationHome = useScopedI18n("home");
+  const translationCommon = useScopedI18n("common");
 
   type WeatherStateType = string | React.ReactNode | undefined;
 
@@ -756,26 +755,37 @@ const InternalHome = observer(() => {
                       { "opacity-100": value > 75 },
                     );
                   }
-                  return (
-                    <div
-                      className="mt-1 flex w-24 flex-col items-center justify-center"
-                      key={key}
-                    >
-                      <div className="text-xs xl:text-sm">
-                        {translationHome(key.slice(2))}
+
+                  const translationHomeKey = key.slice(2);
+                  // Check if the translationHomeKey is "early morning" or "morning" or "noon" or "afternoon" or "night"
+                  if (
+                    translationHomeKey === "early morning" ||
+                    translationHomeKey === "morning" ||
+                    translationHomeKey === "noon" ||
+                    translationHomeKey === "afternoon" ||
+                    translationHomeKey === "night"
+                  ) {
+                    return (
+                      <div
+                        className="mt-1 flex w-24 flex-col items-center justify-center"
+                        key={key}
+                      >
+                        <div className="text-xs xl:text-sm">
+                          {translationHome(translationHomeKey)}
+                        </div>
+                        <WiRaindrop className={raindropClass} />
+                        {value !== undefined && value !== null ? (
+                          <div className="-mt-4 text-center text-base md:text-xl">
+                            {value}%
+                          </div>
+                        ) : (
+                          <div className="-mt-4 text-center text-base md:text-xl">
+                            {translationHome("not available")}
+                          </div>
+                        )}
                       </div>
-                      <WiRaindrop className={raindropClass} />
-                      {value !== undefined && value !== null ? (
-                        <div className="-mt-4 text-center text-base md:text-xl">
-                          {value}%
-                        </div>
-                      ) : (
-                        <div className="-mt-4 text-center text-base md:text-xl">
-                          {translationHome("not available")}
-                        </div>
-                      )}
-                    </div>
-                  );
+                    );
+                  }
                 })}
               </div>
             </div>
@@ -1034,12 +1044,6 @@ const InternalHome = observer(() => {
   );
 });
 
-export async function getStaticProps({ locale }: { locale: string }) {
-  return {
-    props: {
-      ...(await serverSideTranslations(locale, ["home", "common"])),
-    },
-  };
-}
+export const getStaticProps = getLocaleProps();
 
 export default InternalHome;

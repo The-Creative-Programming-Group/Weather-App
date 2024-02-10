@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Head from "next/head";
 import Link from "next/link";
-import { useTranslation } from "next-i18next";
 import { AiFillGithub, AiFillHome } from "react-icons/ai";
 import { FaMapMarkedAlt, FaShare } from "react-icons/fa";
 import { IoIosSettings, IoMdContact } from "react-icons/io";
@@ -10,6 +9,8 @@ import { LuMenu, LuX } from "react-icons/lu";
 import { PiScrollFill } from "react-icons/pi";
 
 import { cn } from "@weatherio/ui";
+
+import { useScopedI18n } from "~/locales";
 
 interface LayoutProps {
   title?: string;
@@ -36,7 +37,7 @@ const Layout: React.FC<LayoutProps> = ({
   const [navbarOpen, setNavbarOpen] = useState(false);
   const [isIOS, setIsIOS] = useState(false);
 
-  const { t: translation } = useTranslation("common");
+  const translation = useScopedI18n("common");
 
   useEffect(() => {
     setIsIOS(/iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream);

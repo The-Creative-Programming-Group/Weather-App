@@ -4,14 +4,13 @@ import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useTranslation } from "next-i18next";
-import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
 import background from "~/assets/background.png";
+import { getLocaleProps, useScopedI18n } from "~/locales";
 import { activeCity$ } from "~/states";
 
 const PublicHome: NextPage = () => {
-  const { t: translation } = useTranslation("common");
+  const translation = useScopedI18n("common");
   const router = useRouter();
 
   useLayoutEffect(() => {
@@ -52,12 +51,6 @@ const PublicHome: NextPage = () => {
   );
 };
 
-export async function getStaticProps({ locale }: { locale: string }) {
-  return {
-    props: {
-      ...(await serverSideTranslations(locale, ["common"])),
-    },
-  };
-}
+export const getStaticProps = getLocaleProps();
 
 export default PublicHome;

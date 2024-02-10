@@ -4,8 +4,6 @@ import Image from "next/image";
 import { observer } from "@legendapp/state/react";
 import cn from "classnames";
 import { useQuery } from "convex/react";
-import { useTranslation } from "next-i18next";
-import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { RxCross2 } from "react-icons/rx";
 import { ClipLoader } from "react-spinners";
 import { toast } from "sonner";
@@ -16,6 +14,7 @@ import { api as convexApi } from "@weatherio/city-data";
 import search2Image from "~/assets/search2.png";
 import Layout from "~/components/Layout";
 import { api as tRPCApi } from "~/lib/utils/api";
+import { getLocaleProps, useScopedI18n } from "~/locales";
 import { activeCity$, addedCities$ } from "~/states";
 
 const LocationSettings = observer(() => {
@@ -33,8 +32,8 @@ const LocationSettings = observer(() => {
   const [isInputActive, setIsInputActive] = useState<boolean>(true); // activeInput is the input field that is active
   const inputRef = useRef<HTMLInputElement>(null); // inputRef is the ref of the input field
 
-  const { t: translationLocationSettings } = useTranslation("locationsettings");
-  const { t: translationCommon } = useTranslation("common");
+  const translationLocationSettings = useScopedI18n("locationsettings");
+  const translationCommon = useScopedI18n("common");
 
   /*
   Fetches on every change in the search Value the cities that match the search value
@@ -396,12 +395,6 @@ const LocationSettings = observer(() => {
   );
 });
 
-export async function getStaticProps({ locale }: { locale: string }) {
-  return {
-    props: {
-      ...(await serverSideTranslations(locale, ["locationsettings", "common"])),
-    },
-  };
-}
+export const getStaticProps = getLocaleProps();
 
 export default LocationSettings;

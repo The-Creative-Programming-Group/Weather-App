@@ -1,12 +1,11 @@
 import React from "react";
-import { useTranslation } from "next-i18next";
-import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
 import Layout from "~/components/Layout";
+import { getLocaleProps, useScopedI18n } from "~/locales";
 
 const Legal = () => {
-  const { t: translationCommon } = useTranslation("common");
-  const { t: translationLegal } = useTranslation("legal");
+  const translationCommon = useScopedI18n("common");
+  const translationLegal = useScopedI18n("legal");
 
   return (
     <>
@@ -33,12 +32,6 @@ const Legal = () => {
   );
 };
 
-export async function getStaticProps({ locale }: { locale: string }) {
-  return {
-    props: {
-      ...(await serverSideTranslations(locale, ["legal", "common"])),
-    },
-  };
-}
+export const getStaticProps = getLocaleProps();
 
 export default Legal;

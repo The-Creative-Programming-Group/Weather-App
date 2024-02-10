@@ -35,7 +35,7 @@
     "dayjs": "^1.11.10",
     "next": "^14.1.0",
     "next-axiom": "^1.1.1",
-    "next-i18next": "^15.2.0",
+    "next-international": "^1.2.4",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-hook-form": "^7.50.1",

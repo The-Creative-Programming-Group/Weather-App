@@ -1,6 +1,7 @@
-import type {Page} from "@playwright/test";
-import {expect, test} from "@playwright/test";
-import contactTranslations from "../../../apps/web/public/locales/en/contact.json" assert {type: "json"};
+import type { Page } from "@playwright/test";
+import { expect, test } from "@playwright/test";
+
+import en from "@weatherio/web/src/locales/en";
 
 const goToContactAndFillForm = async (
   page: Page,
@@ -31,9 +32,9 @@ test("contact form", async ({ page }) => {
   await page.click("button[type=submit]");
 
   // Check the toast
-  await expect(
-    page.locator('li[data-type="success"]'),
-  ).toBeVisible({ timeout: 6000 });
+  await expect(page.locator('li[data-type="success"]')).toBeVisible({
+    timeout: 6000,
+  });
 });
 
 test("invalid email", async ({ page }) => {
@@ -44,7 +45,5 @@ test("invalid email", async ({ page }) => {
   await page.click("button[type=submit]");
 
   // Check the error element
-  await expect(
-    page.getByText(contactTranslations["invalid email"]),
-  ).toBeVisible();
+  await expect(page.getByText(en["contact.invalid email"])).toBeVisible();
 });

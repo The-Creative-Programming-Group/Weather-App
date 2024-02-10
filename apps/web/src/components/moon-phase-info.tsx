@@ -1,5 +1,4 @@
 import type { IconType } from "react-icons";
-import { useTranslation } from "next-i18next";
 import {
   WiMoonAltFirstQuarter,
   WiMoonAltFull,
@@ -11,10 +10,11 @@ import {
   WiMoonAltWaxingGibbous3,
 } from "react-icons/wi";
 
+import { useScopedI18n } from "~/locales";
 import { activeCity$ } from "~/states";
 
 export const MoonPhaseInfo = ({ moonPhaseCode }: { moonPhaseCode: number }) => {
-  const { t: translationHome } = useTranslation("home");
+  const translationHome = useScopedI18n("home");
 
   let MoonPhaseIcon: IconType | null = null;
   let moonPhaseName: string = translationHome("not available");

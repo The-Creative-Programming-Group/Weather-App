@@ -1,12 +1,10 @@
-import { useTranslation } from "next-i18next";
-import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-
 import Layout from "~/components/Layout";
+import { getLocaleProps, useScopedI18n } from "~/locales";
 
 // This page is rendered when the user installed the PWA and is offline
 export default function OfflinePage() {
-  const { t: translationOffline } = useTranslation("offline");
-  const { t: translationCommon } = useTranslation("common");
+  const translationOffline = useScopedI18n("offline");
+  const translationCommon = useScopedI18n("common");
   return (
     <Layout title={translationCommon("title offline page")}>
       <div className="flex w-full flex-col items-center">
@@ -19,10 +17,4 @@ export default function OfflinePage() {
   );
 }
 
-export async function getStaticProps({ locale }: { locale: string }) {
-  return {
-    props: {
-      ...(await serverSideTranslations(locale, ["offline", "common"])),
-    },
-  };
-}
+export const getStaticProps = getLocaleProps();
