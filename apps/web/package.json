@@ -25,7 +25,7 @@
     "@trpc/react-query": "^10.45.1",
     "@trpc/server": "^10.45.1",
     "@vercel/analytics": "^1.1.4",
-    "@vercel/speed-insights": "^1.0.9",
+    "@vercel/speed-insights": "^1.0.10",
     "@weatherio/api": "workspace:^0.1.0",
     "@weatherio/city-data": "workspace:^0.1.0",
     "@weatherio/types": "workspace:^0.1.0",
