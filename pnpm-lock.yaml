@@ -239,8 +239,8 @@ importers:
         specifier: ^1.1.2
         version: 1.1.2
       yauzl:
-        specifier: ^2.10.0
-        version: 2.10.0
+        specifier: ^3.0.0
+        version: 3.0.0
       zod:
         specifier: ^3.22.4
         version: 3.22.4
@@ -5193,12 +5193,6 @@ packages:
     dependencies:
       reusify: 1.0.4
 
-  /fd-slicer@1.1.0:
-    resolution: {integrity: sha512-cE1qsB/VwyQozZ+q1dGxR8LBYNZeofhEdUNGSMbQD3Gw2lAzX9Zb3uIU6Ebc/Fmyjo9AWWfnn0AUCHqtevs/8g==}
-    dependencies:
-      pend: 1.2.0
-    dev: false
-
   /figures@3.2.0:
     resolution: {integrity: sha512-yaduQFRKLXYOGgEn6AZau90j3ggSOyiqXU0F9JZfeXYhNa+Jk4X+s45A2zg5jns87GAFa34BBm2kXw4XpNcbdg==}
     engines: {node: '>=8'}
@@ -8749,11 +8743,11 @@ packages:
     resolution: {integrity: sha512-CBKFWExMn46Foo4cldiChEzn7S7SRV+wqiluAb6xmueD/fGyRHIhX8m14vVGgeFWjN540nKCNVj6P21eQjgTuA==}
     engines: {node: '>= 14'}
 
-  /yauzl@2.10.0:
-    resolution: {integrity: sha512-p4a9I6X6nu6IhoGmBqAcbJy1mlC4j27vEPZX9F4L4/vZT3Lyq1VkFHw/V/PUcB9Buo+DG3iHkT0x3Qya58zc3g==}
+  /yauzl@3.0.0:
+    resolution: {integrity: sha512-6LiN2QaAWal/+uTf0N5nt4oAsSgddNO69kkLF0lXFY8J8Zt9WrcJq9saIIsg9vyOAnQ9m/dxoyPRMzo3G5BZHg==}
     dependencies:
       buffer-crc32: 0.2.13
-      fd-slicer: 1.1.0
+      pend: 1.2.0
     dev: false
 
   /yn@3.1.1:
