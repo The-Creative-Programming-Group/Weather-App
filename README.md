@@ -6,6 +6,7 @@ Weather.io is a simple,
 user-friendly application that fetches
 and displays real-time weather data for any city
 using the [OpenWeatherMap API](https://openweathermap.org/api) and [Open Meteo API](https://open-meteo.com).
+It's not collecting any data and is free from ads. You can use it for free and without any registration.
 
 ## How to start
 
