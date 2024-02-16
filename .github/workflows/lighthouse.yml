@@ -23,6 +23,7 @@ jobs:
               previewUrl = matches[0];
               console.log('Preview url found:', previewUrl);
             }
+            console.log(comment);
             console.log("No preview url found.");
             core.setOutput('vercel_preview_url', previewUrl);
 
