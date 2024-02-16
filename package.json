@@ -2,9 +2,9 @@
   "name": "weatherio",
   "private": true,
   "engines": {
-    "node": ">=20.11.0"
+    "node": ">=20.11.1"
   },
-  "packageManager": "pnpm@8.15.1",
+  "packageManager": "pnpm@8.15.3",
   "scripts": {
     "build": "turbo build",
     "clean": "git clean -xdf node_modules",
@@ -26,10 +26,10 @@
   "devDependencies": {
     "@playwright/test": "^1.41.2",
     "@total-typescript/ts-reset": "^0.5.1",
-    "@turbo/gen": "^1.12.3",
+    "@turbo/gen": "^1.12.4",
     "@weatherio/prettier-config": "workspace:^0.1.0",
     "prettier": "^3.2.5",
-    "turbo": "^1.12.3",
+    "turbo": "^1.12.4",
     "typescript": "^5.3.3"
   },
   "prettier": "@weatherio/prettier-config"

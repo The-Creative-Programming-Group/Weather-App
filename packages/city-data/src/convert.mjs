@@ -68,7 +68,7 @@ const txtToJson = (
               console.error(err)
               reject(err)
             } else {
-              resolve(undefined)
+              resolve()
             }
           }
         )

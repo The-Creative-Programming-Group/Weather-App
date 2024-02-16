@@ -19,11 +19,11 @@
     "@trpc/client": "^10.45.1",
     "@trpc/server": "^10.45.1",
     "@upstash/ratelimit": "^1.0.1",
-    "@upstash/redis": "^1.28.3",
+    "@upstash/redis": "^1.28.4",
     "@weatherio/types": "workspace:^0.1.0",
     "dayjs": "^1.11.10",
     "next-axiom": "^1.1.1",
-    "resend": "^3.1.0",
+    "resend": "^3.2.0",
     "superjson": "2.2.1",
     "zod": "^3.22.4"
   },
