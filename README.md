@@ -13,6 +13,8 @@ After you installed pnpm (you can look here at the [installation guide](https://
 `pnpm install` <br>
 This will install all the dependencies for the project.
 <br> <br>
+Next you will have to fill the `.env` file with your own API keys, following the `.env.example` file as a guide.
+<br> <br>
 After that you can run the following command, to look at the current state (with your own changes) of the project:
 `pnpm dev`
 
