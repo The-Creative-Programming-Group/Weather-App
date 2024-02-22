@@ -14,6 +14,8 @@ test("main workflow", async ({ page }) => {
   await page.waitForURL("**/home");
 
   expect(page.url()).toBe("http://localhost:3000/home");
+
+  await expect(page.getByText("Munich")).toBeVisible();
 });
 
 test("main workflow german city name", async ({ page }) => {
@@ -30,4 +32,6 @@ test("main workflow german city name", async ({ page }) => {
   await page.waitForURL("**/home");
 
   expect(page.url()).toBe("http://localhost:3000/home");
+
+  await expect(page.getByText("München")).toBeVisible();
 });
