@@ -150,48 +150,57 @@ const InternalHome = observer(() => {
   type WeatherStateType = string | React.ReactNode | undefined;
 
   type TimeType =
-    | { hour: number; day?: undefined; icons: boolean }
-    | { hour?: undefined; day: number; icons: boolean };
+    | { hourIndex: number; dayIndex?: undefined; icons: boolean }
+    | { hourIndex?: undefined; dayIndex: number; icons: boolean };
 
-  const weatherState = ({ hour, day, icons }: TimeType): WeatherStateType => {
-    if (hour !== undefined && hour !== null) {
-      if (weatherData.data?.hourlyForecast[hour]?.showers) {
-        if (weatherData.data.hourlyForecast[hour]!.showers! > 0) {
+  const weatherState = ({
+    hourIndex,
+    dayIndex,
+    icons,
+  }: TimeType): WeatherStateType => {
+    let hour: number | undefined;
+
+    if (hourIndex && weatherData.data?.hourlyForecast[hourIndex]?.time) {
+      hour = new Date(
+        weatherData.data.hourlyForecast[hourIndex]!.time!,
+      ).getHours();
+    }
+
+    if (hourIndex !== undefined && hourIndex !== null) {
+      if (weatherData.data?.hourlyForecast[hourIndex]?.showers) {
+        if (weatherData.data.hourlyForecast[hourIndex]!.showers! > 0) {
           if (icons) {
             return <FaCloudShowersHeavy className="h-full w-full" />;
           }
           return translationHome("weather state stormy");
         }
       }
-      if (weatherData.data?.hourlyForecast[hour]?.snowfall) {
-        if (weatherData.data.hourlyForecast[hour]!.snowfall! > 0) {
+      if (weatherData.data?.hourlyForecast[hourIndex]?.snowfall) {
+        if (weatherData.data.hourlyForecast[hourIndex]!.snowfall! > 0) {
           if (icons) {
             return <FaCloudMeatball className="h-full w-full" />;
           }
           return translationHome("weather state snowy");
         }
       }
-      if (weatherData.data?.hourlyForecast[hour]?.rain) {
-        if (weatherData.data.hourlyForecast[hour]!.rain! > 0) {
+      if (weatherData.data?.hourlyForecast[hourIndex]?.rain) {
+        if (weatherData.data.hourlyForecast[hourIndex]!.rain! > 0) {
           if (icons) {
             return <FaCloudRain className="h-full w-full" />;
           }
           return translationHome("weather state rainy");
         }
       }
-      if (weatherData.data?.hourlyForecast[hour]?.cloudcover) {
-        if (weatherData.data.hourlyForecast[hour]!.cloudcover! > 40) {
-          if (weatherData.data.hourlyForecast[hour]!.cloudcover! > 60) {
+      if (weatherData.data?.hourlyForecast[hourIndex]?.cloudcover) {
+        if (weatherData.data.hourlyForecast[hourIndex]!.cloudcover! > 40) {
+          if (weatherData.data.hourlyForecast[hourIndex]!.cloudcover! > 60) {
             if (icons) {
               return <FaCloud className="h-full w-full" />;
             }
             return translationHome("weather state very cloudy");
           } else {
-            if (weatherData.data) {
-              if (
-                weatherData.data.hourlyForecast[hour]!.time < 19 &&
-                weatherData.data.hourlyForecast[hour]!.time > 6
-              ) {
+            if (hour) {
+              if (hour < 19 && hour > 6) {
                 if (icons) {
                   return <FaCloudSun className="h-full w-full" />;
                 }
@@ -205,8 +214,8 @@ const InternalHome = observer(() => {
             }
           }
         }
-        if (weatherData.data?.dailyForecast[hour]?.windSpeed) {
-          if (weatherData.data.dailyForecast[hour]!.windSpeed! >= 20) {
+        if (weatherData.data?.dailyForecast[hourIndex]?.windSpeed) {
+          if (weatherData.data.dailyForecast[hourIndex]!.windSpeed! >= 20) {
             if (icons) {
               return <FaWind className="h-full w-full" />;
             }
@@ -214,34 +223,34 @@ const InternalHome = observer(() => {
           }
         }
       }
-    } else if (day !== undefined && day !== null) {
-      if (weatherData.data?.dailyForecast[day]?.showers) {
-        if (weatherData.data.dailyForecast[day]!.showers! > 0) {
+    } else if (dayIndex !== undefined && dayIndex !== null) {
+      if (weatherData.data?.dailyForecast[dayIndex]?.showers) {
+        if (weatherData.data.dailyForecast[dayIndex]!.showers! > 0) {
           if (icons) {
             return <FaCloudShowersHeavy className="h-full w-full" />;
           }
           return translationHome("weather state stormy");
         }
       }
-      if (weatherData.data?.dailyForecast[day]?.snowfall) {
-        if (weatherData.data.dailyForecast[day]!.snowfall! > 0) {
+      if (weatherData.data?.dailyForecast[dayIndex]?.snowfall) {
+        if (weatherData.data.dailyForecast[dayIndex]!.snowfall! > 0) {
           if (icons) {
             return <FaCloudMeatball className="h-full w-full" />;
           }
           return translationHome("weather state snowy");
         }
       }
-      if (weatherData.data?.dailyForecast[day]?.rain) {
-        if (weatherData.data.dailyForecast[day]!.rain! > 0) {
+      if (weatherData.data?.dailyForecast[dayIndex]?.rain) {
+        if (weatherData.data.dailyForecast[dayIndex]!.rain! > 0) {
           if (icons) {
             return <FaCloudRain className="h-full w-full" />;
           }
           return translationHome("weather state rainy");
         }
       }
-      if (weatherData.data?.dailyForecast[day]?.cloudcover) {
-        if (weatherData.data.dailyForecast[day]!.cloudcover! > 40) {
-          if (weatherData.data.dailyForecast[day]!.cloudcover! > 60) {
+      if (weatherData.data?.dailyForecast[dayIndex]?.cloudcover) {
+        if (weatherData.data.dailyForecast[dayIndex]!.cloudcover! > 40) {
+          if (weatherData.data.dailyForecast[dayIndex]!.cloudcover! > 60) {
             if (icons) {
               return <FaCloud className="h-full w-full" />;
             }
@@ -254,8 +263,8 @@ const InternalHome = observer(() => {
           }
         }
       }
-      if (weatherData.data?.dailyForecast[day]?.windSpeed) {
-        if (weatherData.data.dailyForecast[day]!.windSpeed! >= 20) {
+      if (weatherData.data?.dailyForecast[dayIndex]?.windSpeed) {
+        if (weatherData.data.dailyForecast[dayIndex]!.windSpeed! >= 20) {
           if (icons) {
             return <FaWind className="h-full w-full" />;
           }
@@ -263,19 +272,16 @@ const InternalHome = observer(() => {
         }
       }
     }
-    if (icons && day === undefined) {
-      if (weatherData.data) {
-        if (
-          weatherData.data.hourlyForecast[hour]!.time < 19 &&
-          weatherData.data.hourlyForecast[hour]!.time > 6
-        ) {
+    if (icons && dayIndex === undefined) {
+      if (hour) {
+        if (hour < 19 && hour > 6) {
           // console.log("Sunny", hour, day)
           return <FaSun className="h-full w-full" />;
         } else {
           return <FaMoon className="h-full w-full" />;
         }
       }
-    } else if (icons && hour === undefined) {
+    } else if (icons && hourIndex === undefined) {
       // console.log("Sunny", hour, day);
       return <FaSun className="h-full w-full" />;
     }
@@ -307,7 +313,7 @@ const InternalHome = observer(() => {
         </h1>
         <p className="mt-3 text-xl">
           {weatherData.data ? (
-            weatherState({ hour: 0, icons: false })
+            weatherState({ hourIndex: 0, icons: false })
           ) : (
             <Skeleton className="h-9 w-36" />
           )}
@@ -445,16 +451,25 @@ const InternalHome = observer(() => {
                 (hourlyForecast: IHourlyForecast, index: number) => {
                   let time;
                   let sunEvent = "";
-                  const currentHour = new Date().getHours();
+                  const currentHour = dayjs()
+                    .tz(dayjs.tz.guess())
+                    .format("YYYY-MM-DDTHH:00");
+
+                  let hour: number | undefined;
+
+                  if (hourlyForecast.time) {
+                    hour = new Date(hourlyForecast.time).getHours();
+                  }
+
                   if (
                     weatherData.data.sunset &&
-                    dayjs(weatherData.data.sunset).hour() ===
+                    weatherData.data.sunset.slice(0, -11) + "00" ===
                       hourlyForecast.time
                   ) {
                     sunEvent = translationHome("sunset");
                   } else if (
                     weatherData.data.sunrise &&
-                    dayjs(weatherData.data.sunrise).hour() ===
+                    weatherData.data.sunrise.slice(0, -11) + "00" ===
                       hourlyForecast.time
                   ) {
                     sunEvent = translationHome("sunrise");
@@ -462,40 +477,38 @@ const InternalHome = observer(() => {
                   let moonEvent = "";
                   if (
                     weatherData.data.moonrise &&
-                    dayjs(weatherData.data.moonrise).hour() ===
+                    weatherData.data.moonrise.slice(0, -11) + "00" ===
                       hourlyForecast.time
                   ) {
                     moonEvent = translationHome("moonrise");
                   } else if (
                     weatherData.data.moonset &&
-                    dayjs(weatherData.data.moonset).hour() ===
+                    weatherData.data.moonset.slice(0, -11) + "00" ===
                       hourlyForecast.time
                   ) {
                     moonEvent = translationHome("moonset");
                   }
 
-                  if (index === 0) {
-                    if (hourlyForecast.time === currentHour) {
+                  if (hour !== undefined) {
+                    if (index === 0) {
+                      if (hourlyForecast.time === currentHour) {
+                        time = translationHome("this hour");
+                      } else {
+                        // Don't render this hour if it's already passed
+                        return null;
+                      }
+                    } else if (hourlyForecast.time === currentHour) {
                       time = translationHome("this hour");
+                    } else if (hour === 12) {
+                      time = "12" + translationHome("late hour time ending");
+                    } else if (hour > 12) {
+                      time =
+                        hour - 12 + translationHome("late hour time ending");
+                    } else if (hour === 0) {
+                      time = "12" + translationHome("early hour time ending");
                     } else {
-                      // Don't render this hour if it's already passed
-                      return null;
+                      time = hour + translationHome("early hour time ending");
                     }
-                  } else if (hourlyForecast.time === currentHour) {
-                    time = translationHome("this hour");
-                  } else if (hourlyForecast.time === 12) {
-                    time = "12" + translationHome("late hour time ending");
-                  } else if (hourlyForecast.time > 12) {
-                    time =
-                      hourlyForecast.time -
-                      12 +
-                      translationHome("late hour time ending");
-                  } else if (hourlyForecast.time === 0) {
-                    time = "12" + translationHome("early hour time ending");
-                  } else {
-                    time =
-                      hourlyForecast.time +
-                      translationHome("early hour time ending");
                   }
                   return (
                     <div
@@ -510,7 +523,7 @@ const InternalHome = observer(() => {
                         <div className="mt-1.5 text-center">{moonEvent}</div>
                       )}
                       <div className="flex h-12 w-12 justify-center">
-                        {weatherState({ hour: index, icons: true })}
+                        {weatherState({ hourIndex: index, icons: true })}
                       </div>
                       {hourlyForecast.temperature ? (
                         <div>
@@ -555,7 +568,7 @@ const InternalHome = observer(() => {
                     >
                       <div className="mt-1.5 font-semibold">{day}</div>
                       <div className="h-12 w-12">
-                        {weatherState({ day: index, icons: true })}
+                        {weatherState({ dayIndex: index, icons: true })}
                       </div>
                       {dailyForecast.temperatureDay ? (
                         <div>
@@ -643,7 +656,7 @@ const InternalHome = observer(() => {
                             {day}
                           </div>
                           <div className="mt-2 w-1/5 xl:pl-1 xl:pr-4">
-                            {weatherState({ day: index, icons: true })}
+                            {weatherState({ dayIndex: index, icons: true })}
                           </div>
                           <div className="flex w-1/5 flex-col items-center justify-around xl:w-2/5 xl:flex-row">
                             {dailyForecast.temperatureDay ? (

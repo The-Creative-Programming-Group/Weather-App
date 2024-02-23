@@ -334,7 +334,7 @@ export const weatherRouter = createTRPCRouter({
       const hourlyForecast: IHourlyForecast[] = [];
 
       const currentHour = dayjs().tz(input.timezone).hour();
-      for (let i = currentHour; i < currentHour + 15; i++) {
+      for (let i = currentHour; i < currentHour + 48; i++) {
         const temperature = hourlyAndDailyData?.hourly.temperature_2m[i];
         const apparentTemperature =
           hourlyAndDailyData?.hourly.apparent_temperature[i];
@@ -345,10 +345,8 @@ export const weatherRouter = createTRPCRouter({
         const windSpeed = hourlyAndDailyData?.hourly.windspeed_10m[i];
         // console.log(cloudcover);
 
-        const time = i % 24;
-
         hourlyForecast.push({
-          time,
+          time: hourlyAndDailyData?.hourly.time[i],
           temperature:
             temperature !== undefined ? temperature + 273.15 : undefined,
           apparentTemperature:
