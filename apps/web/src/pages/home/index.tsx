@@ -160,7 +160,10 @@ const InternalHome = observer(() => {
   }: TimeType): WeatherStateType => {
     let hour: number | undefined;
 
-    if (hourIndex && weatherData.data?.hourlyForecast[hourIndex]?.time) {
+    if (
+      hourIndex !== undefined &&
+      weatherData.data?.hourlyForecast[hourIndex]?.time
+    ) {
       hour = new Date(
         weatherData.data.hourlyForecast[hourIndex]!.time!,
       ).getHours();
@@ -273,16 +276,15 @@ const InternalHome = observer(() => {
       }
     }
     if (icons && dayIndex === undefined) {
-      if (hour) {
+      if (hour !== undefined) {
         if (hour < 19 && hour > 6) {
-          // console.log("Sunny", hour, day)
           return <FaSun className="h-full w-full" />;
         } else {
           return <FaMoon className="h-full w-full" />;
         }
       }
-    } else if (icons && hourIndex === undefined) {
-      // console.log("Sunny", hour, day);
+    }
+    if (icons) {
       return <FaSun className="h-full w-full" />;
     }
     return translationHome("weather state sunny");
