@@ -15,7 +15,9 @@ test("main workflow", async ({ page }) => {
 
   expect(page.url()).toBe("http://localhost:3000/home");
 
-  await expect(page.getByText("Munich")).toBeVisible();
+  await expect(
+    page.locator("h1").filter({ hasText: "Munich" }).first(),
+  ).toBeVisible();
 });
 
 test("main workflow german city name", async ({ page }) => {
@@ -33,5 +35,7 @@ test("main workflow german city name", async ({ page }) => {
 
   expect(page.url()).toBe("http://localhost:3000/home");
 
-  await expect(page.getByText("München")).toBeVisible();
+  await expect(
+    page.locator("h1").filter({ hasText: "München" }).first(),
+  ).toBeVisible();
 });
