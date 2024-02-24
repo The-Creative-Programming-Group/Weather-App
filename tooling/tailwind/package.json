@@ -20,7 +20,7 @@
     "tailwindcss-animate": "^1.0.7"
   },
   "devDependencies": {
-    "@types/node": "^20.11.19",
+    "@types/node": "^20.11.20",
     "@weatherio/eslint-config": "workspace:^0.2.0",
     "@weatherio/prettier-config": "workspace:^0.1.0",
     "@weatherio/tsconfig": "workspace:^0.1.0",
