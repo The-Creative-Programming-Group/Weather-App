@@ -28,7 +28,7 @@
   },
   "prettier": "@weatherio/prettier-config",
   "dependencies": {
-    "convex": "^1.9.1",
+    "convex": "^1.10.0",
     "jsonfile": "^6.1.0",
     "jsonl": "^1.1.2",
     "yauzl": "^3.1.0",
