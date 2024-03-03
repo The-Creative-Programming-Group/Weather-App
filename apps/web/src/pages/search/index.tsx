@@ -194,6 +194,9 @@ const Search = () => {
           />
 
           <input
+            // See here: https://stackoverflow.com/questions/2180645/is-automatically-assigning-focus-bad-for-accessibility
+            // eslint-disable-next-line jsx-a11y/no-autofocus
+            autoFocus
             className={cn(
               "w-full bg-[#383b53] pl-1.5 text-xl text-white outline-none md:pb-0.5 md:pl-3 md:pt-0.5",
               {
