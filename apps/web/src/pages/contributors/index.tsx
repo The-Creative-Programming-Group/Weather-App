@@ -6,6 +6,7 @@ import ReactHtmlParser from "react-html-parser";
 import iqbalProfile from "~/assets/bal-profile.jpg";
 import dicsiluksProfile from "~/assets/dicsiluks-profile.webp";
 import fabiusProfile from "~/assets/fabius-profile.jpg";
+import furkanProfile from "~/assets/furkan-profile.webp";
 import jakeProfile from "~/assets/jake-profile.png";
 import jakobProfile from "~/assets/jakob-profile.webp";
 import Layout from "~/components/Layout";
@@ -109,6 +110,24 @@ const Contributors = () => {
             <p className="flex text-center text-base md:text-xl">
               {translationContributors("designer")} &{" "}
               {translationContributors("engineer")}
+            </p>
+          </div>
+          <div className="flex w-16 flex-col items-center gap-2 md:w-20">
+            <Link
+              href="https://github.com/zolusion"
+              className="group relative inline-block aspect-square w-10 md:w-20"
+            >
+              <Image
+                src={furkanProfile}
+                alt="Furkan's logo"
+                fill
+                className="transform rounded-full transition-transform duration-300 group-hover:-translate-x-2 group-hover:scale-105"
+              />
+            </Link>
+            <p className="flex text-center text-base md:text-xl">
+              {translationContributors("designer")} &{" "}
+              {translationContributors("engineer")} &{" "}
+              {translationContributors("translator")}
             </p>
           </div>
         </div>

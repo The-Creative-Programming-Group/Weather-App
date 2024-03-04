@@ -4,6 +4,7 @@ import { observer } from "@legendapp/state/react";
 import { RxCheck } from "react-icons/rx";
 
 import type { TemperatureUnitType, WindSpeedUnitType } from "~/states";
+import dutchFlag from "~/assets/dutch-flag.png";
 import germanFlag from "~/assets/german-flag.png";
 import usaFlag from "~/assets/usa-flag.png";
 import Layout from "~/components/Layout";
@@ -176,6 +177,25 @@ const Settings = observer(() => {
                 {translationSettings("german")}
               </p>
               {locale === "de" && (
+                <RxCheck width={20} height={20} className="h-9 w-9" />
+              )}
+            </button>
+            <button
+              className={`${normalButtonClass} ${
+                locale === "nl" ? "border-2" : ""
+              }`}
+              onClick={() => changeLocale("nl")}
+            >
+              <Image
+                src={dutchFlag}
+                alt="Flag of the Netherladns"
+                width={20}
+                height={20}
+              />
+              <p className={`${styles.buttontext} ml-2`}>
+                {translationSettings("dutch")}
+              </p>
+              {locale === "nl" && (
                 <RxCheck width={20} height={20} className="h-9 w-9" />
               )}
             </button>

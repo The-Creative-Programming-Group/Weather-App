@@ -36,6 +36,7 @@ export default {
 
   "settings.english": "Englisch",
   "settings.german": "Deutsch",
+  "settings.dutch": "Niederländisch",
 
   // locationsettings page translations
   "locationsettings.add new location": "Füge einen Ort hinzu",
@@ -187,4 +188,5 @@ export default {
   "contributors.founder": "Gründer",
   "contributors.engineer": "Entwickler",
   "contributors.designer": "Designer",
+  "contributors.translator": "Übersetzer",
 } as const;
