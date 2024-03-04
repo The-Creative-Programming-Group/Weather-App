@@ -239,8 +239,8 @@ importers:
         specifier: ^1.1.2
         version: 1.1.2
       yauzl:
-        specifier: ^3.1.0
-        version: 3.1.0
+        specifier: ^3.1.1
+        version: 3.1.1
       zod:
         specifier: ^3.22.4
         version: 3.22.4
@@ -8753,8 +8753,8 @@ packages:
     resolution: {integrity: sha512-CBKFWExMn46Foo4cldiChEzn7S7SRV+wqiluAb6xmueD/fGyRHIhX8m14vVGgeFWjN540nKCNVj6P21eQjgTuA==}
     engines: {node: '>= 14'}
 
-  /yauzl@3.1.0:
-    resolution: {integrity: sha512-zbff6SaAPyewVextulqeBjJm+1ZhS69vSN7cRpqVD7jMNSE9oXEdQ1SGF+ydfB+gKE2a3GiWfXf/pnwVZ1/tOA==}
+  /yauzl@3.1.1:
+    resolution: {integrity: sha512-MPxA7oN5cvGV0wzfkeHKF2/+Q4TkMpHSWGRy/96I4Cozljmx0ph91+Muxh6HegEtDC4GftJ8qYDE51vghFiEYA==}
     engines: {node: '>=12'}
     dependencies:
       buffer-crc32: 0.2.13
