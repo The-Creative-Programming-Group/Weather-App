@@ -87,8 +87,8 @@ importers:
         specifier: ^2.5.1
         version: 2.5.1
       convex:
-        specifier: ^1.9.1
-        version: 1.9.1(react-dom@18.2.0)(react@18.2.0)
+        specifier: ^1.10.0
+        version: 1.10.0(react-dom@18.2.0)(react@18.2.0)
       dayjs:
         specifier: ^1.11.10
         version: 1.11.10
@@ -230,8 +230,8 @@ importers:
   packages/city-data:
     dependencies:
       convex:
-        specifier: ^1.9.1
-        version: 1.9.1(react-dom@18.2.0)(react@18.2.0)
+        specifier: ^1.10.0
+        version: 1.10.0(react-dom@18.2.0)(react@18.2.0)
       jsonfile:
         specifier: ^6.1.0
         version: 6.1.0
@@ -4323,8 +4323,8 @@ packages:
     resolution: {integrity: sha512-Kvp459HrV2FEJ1CAsi1Ku+MY3kasH19TFykTz2xWmMeq6bk2NU3XXvfJ+Q61m0xktWwt+1HSYf3JZsTms3aRJg==}
     dev: false
 
-  /convex@1.9.1(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-OhO/rMSuHy3Y30zDI9XGfJrnqspp+1R+OpX9Bb2cD/k+O59kz4jKvNPvtOzVAyi3w3DTUMcdhBY1WFl3SOBjOQ==}
+  /convex@1.10.0(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-dGU3K3z63e4JQSq4AQthgxUADux1/0qfgFBtOsolcPo+ilV2Dp5wfBJYMOvLi7wkmNvJ+b3I90XfLPGfGzQrWw==}
     engines: {node: '>=16.15.1', npm: '>=7.0.0'}
     hasBin: true
     peerDependencies:
