@@ -166,11 +166,10 @@ const LocationSettings = observer(() => {
         .get()
         .find(
           (value: ICity) =>
-            value.name === city!.name &&
-            (value.id.toString().length > 15 ||
-              city!.id.toString().length > 15),
+            value.name === city.name &&
+            (value.id.toString().length > 15 || city.id.toString().length > 15),
         );
-      if (addedCities$.get().find((value: ICity) => value.id === city!.id)) {
+      if (addedCities$.get().find((value: ICity) => value.id === city.id)) {
         activeCity$.set(city);
         toast.success(translationLocationSettings("switched to city toast"));
       } else if (existingCity) {
