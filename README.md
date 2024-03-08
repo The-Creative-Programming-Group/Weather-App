@@ -16,7 +16,9 @@ This will install all the dependencies for the project.
 <br> <br>
 Next you will have to fill the `.env` file with your own API keys, following the `.env.example` file as a guide.
 <br> <br>
-After that you can run the following command, to look at the current state (with your own changes) of the project:
+After that you have to go into the city-data dir (`cd packages/city-data`), execute this command and follow all Convex setup instructions: `pnpm dlx convex dev`
+<br> <br>
+After that you can run the following command, to look at the current state (with your own changes) of the project by executing this command at the root directory:
 `pnpm dev`
 
 ## What's next? Which technologies are used?

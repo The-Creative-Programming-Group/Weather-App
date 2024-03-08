@@ -151,8 +151,8 @@ const Search = () => {
     if (city) {
       const existingCity = addedCities$
         .get()
-        .find((value: ICity) => value.name === city!.name);
-      if (addedCities$.get().find((value: ICity) => value.id === city!.id)) {
+        .find((value: ICity) => value.name === city.name);
+      if (addedCities$.get().find((value: ICity) => value.id === city.id)) {
         activeCity$.set(city);
         void router.push("/home");
       } else if (existingCity) {
