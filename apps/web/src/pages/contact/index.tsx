@@ -65,7 +65,7 @@ const ContactUs = () => {
     <>
       <Layout
         title={translationCommon("menu contact")}
-        classNameShareButton="mt-24 md:mt-28"
+        classNameShareButton="mt-6 md:mt-12"
         page="contact"
       >
         <div className="flex w-full flex-col items-center">

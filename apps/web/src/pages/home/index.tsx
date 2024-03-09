@@ -305,7 +305,7 @@ const InternalHome = observer(() => {
   });
 
   return (
-    <Layout classNameShareButton="mt-44" page="home">
+    <Layout classNameShareButton="mt-15" page="home">
       <div className="mt-24 flex flex-col items-center">
         <h1 className="text-center text-4xl sm:text-5xl md:text-7xl">
           {activeCity$.name.get()}
@@ -1009,7 +1009,7 @@ const InternalHome = observer(() => {
           {weatherData.data?.moonPhaseCode ? (
             <div className="col-span-4 col-start-6 row-span-1 row-start-4 rounded-md bg-gray-400 md:col-span-4 md:col-start-4">
               <div className="mt-1.5 flex justify-between pl-4 pr-3 text-xl">
-                <span className="hyphens-auto break-words">
+                <span className="hyphens-auto break-all">
                   {translationHome("moon phase")}{" "}
                 </span>
                 <HoverCard>
