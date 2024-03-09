@@ -2,7 +2,7 @@ import type { StaticImport } from "next/dist/shared/lib/get-img-props";
 import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { observer } from "@legendapp/state/react";
-import cn from "classnames";
+import clsx from "clsx";
 import { useQuery } from "convex/react";
 import { RxCross2 } from "react-icons/rx";
 import { ClipLoader } from "react-spinners";
@@ -217,7 +217,7 @@ const LocationSettings = observer(() => {
                   height={56}
                 />
                 <input
-                  className={cn(
+                  className={clsx(
                     "w-full border-b-2 border-black bg-[#d8d5db] pb-0.5 pl-3 pt-0.5 text-xl font-bold text-black outline-none",
                     {
                       "pr-10":

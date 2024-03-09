@@ -30,7 +30,7 @@
     "@weatherio/city-data": "workspace:^0.1.0",
     "@weatherio/types": "workspace:^0.1.0",
     "@weatherio/ui": "workspace:^0.1.0",
-    "classnames": "^2.5.1",
+    "clsx": "^2.1.0",
     "convex": "^1.10.0",
     "dayjs": "^1.11.10",
     "next": "^14.1.3",

@@ -3,7 +3,7 @@ import React, { useEffect, useRef, useState } from "react";
 import Head from "next/head";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import cn from "classnames";
+import clsx from "clsx";
 import { useQuery } from "convex/react";
 import { ClipLoader } from "react-spinners";
 import { toast } from "sonner";
@@ -197,7 +197,7 @@ const Search = () => {
             // See here: https://stackoverflow.com/questions/2180645/is-automatically-assigning-focus-bad-for-accessibility
             // eslint-disable-next-line jsx-a11y/no-autofocus
             autoFocus
-            className={cn(
+            className={clsx(
               "w-full bg-[#383b53] pl-1.5 text-xl text-white outline-none md:pb-0.5 md:pl-3 md:pt-0.5",
               {
                 "pr-10":
