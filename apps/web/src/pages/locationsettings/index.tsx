@@ -332,7 +332,7 @@ const LocationSettings = observer(() => {
                       className={
                         activeCity$.id.get() === city.id
                           ? "relative mt-2 flex cursor-pointer justify-between border-2 border-black bg-[#d8d5db] p-2"
-                          : "relative mt-2 flex cursor-pointer justify-between bg-[#d8d5db] p-2"
+                          : "relative mt-2 flex cursor-pointer justify-between border border-solid border-black bg-[#d8d5db] p-2"
                       }
                       key={city.id}
                     >

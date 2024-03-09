@@ -142,18 +142,16 @@ const Layout: React.FC<LayoutProps> = ({
           </div>
         )}
       </header>
-      <div className={"mt-10 flex justify-center"}>
-        <button
-          className={cn(
-            "flex rounded border-2 border-black bg-[#2d3142] p-2 text-amber-50 md:right-16",
-            classNameShareButton,
-          )}
-          onClick={handleShare}
-        >
-          {" "}
-          <FaShare className="mr-1.5 mt-1" /> {translation("share button")}
-        </button>
-      </div>
+      <button
+        className={cn(
+          "absolute right-5 mt-28 flex rounded border-2 border-black bg-[#2d3142] p-2 text-amber-50 md:right-16",
+          classNameShareButton,
+        )}
+        onClick={handleShare}
+      >
+        {" "}
+        <FaShare className="mr-1.5 mt-1" /> {translation("share button")}
+      </button>
       <main className="mb-14 min-h-screen md:mb-0">{children}</main>
       <div
         className={cn(
