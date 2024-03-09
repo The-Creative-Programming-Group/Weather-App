@@ -86,21 +86,22 @@ export default {
   "home.afternoon": "Sore",
   "home.night": "Malam",
 
-  "home.feels like phrase extremely warm": "The sun is scorching today!",
+  "home.feels like phrase extremely warm": "Matahari sangat menyengat hari ini",
   "home.feels like phrase very warm":
-    "Matahari mungkin mencoba untuk mendinginkan!",
-  "home.feels like phrase warm": "Bahkan es krim pun merasa terlalu hangat!",
-  "home.feels like phrase slightly more warm": "It's a toasty day!",
-  "home.feels like phrase slightly warm": "A perfect day for a picnic!",
+    "Matahari mungkin sedang berusaha mendinginkan diri!",
+  "home.feels like phrase warm": "Bahkan es krim pun merasa terlalu panas!",
+  "home.feels like phrase slightly more warm": "Hari ini terasa hangat sekali!",
+  "home.feels like phrase slightly warm": "Hari yang pas untuk piknik!",
   "home.feels like phrase neutral":
-    "Just the right temperature, not too hot, not too cold.",
-  "home.feels like phrase slightly cold": "A light jacket might be needed.",
-  "home.feels like phrase slightly more cold": "It's a frosty day!",
-  "home.feels like phrase cold": "Penguin memesan cokelat panas karena dingin!",
+    "Suhu yang pas, tidak terlalu panas, tidak terlalu dingin.",
+  "home.feels like phrase slightly cold": "Mungkin perlu memakai jaket tipis.",
+  "home.feels like phrase slightly more cold": "Hari ini terasa cukup dingin!",
+  "home.feels like phrase cold":
+    "Para pinguin memesan cokelat panas karena udara yang dingin!",
   "home.feels like phrase very cold":
-    "Cuaca yang dingin membuat bahkan boneka salju pun menggigil!",
+    "Cuaca dingin hari ini membuat bahkan manusia salju pun menggigil!",
   "home.feels like phrase extremely cold":
-    "It's so cold, even the polar bears are staying inside!",
+    "Terlalu dingin, bahkan beruang kutub pun lebih memilih untuk menetap di rumahnya!",
 
   "home.air quality text very poor": "Sangat Buruk",
   "home.air quality text poor": "Buruk",
@@ -112,8 +113,8 @@ export default {
   "home.sunset": "Matahari Terbenam",
   "home.sunrise": "Matahari Terbit",
 
-  "home.moonset": "Moonset",
-  "home.moonrise": "Moonrise",
+  "home.moonset": "Terbenamnya Bulan",
+  "home.moonrise": "Terbitnya Bulan",
 
   "home.weather state stormy": "Badai",
   "home.weather state snowy": "Berawan",
@@ -139,7 +140,7 @@ export default {
 
   "home.wind pressure card title": "Angin & Tekanan Saat Ini",
   "home.wind pressure card content":
-    "<b>Atmospheric pressure on the sea level.</b> <br /> At sea level, atmospheric pressure is the force exerted by the weight of the air above, averaging around 1013.25 hPa.",
+    "<b>Tekanan atmosfer pada permukaan laut.</b> <br /> Pada permukaan laut, tekanan atmosfer adalah gaya yang diberikan oleh berat udara di atasnya, dengan rata-rata sekitar 1013.25 hPa.",
 
   "home.not available": "Tidak Tersedia",
 
