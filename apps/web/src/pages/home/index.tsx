@@ -3,7 +3,7 @@ import dynamic from "next/dynamic";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { observer } from "@legendapp/state/react";
-import cn from "classnames";
+import clsx from "clsx";
 import dayjs from "dayjs";
 import timezone from "dayjs/plugin/timezone";
 import utc from "dayjs/plugin/utc";
@@ -362,7 +362,7 @@ const InternalHome = observer(() => {
           <CollapsibleTrigger className="flex gap-1 outline-0">
             {translationHome("more information")}:{" "}
             <LuChevronDownSquare
-              className={cn("h-6 w-6", {
+              className={clsx("h-6 w-6", {
                 "rotate-180 transform": isMoreInfoCollapsibleOpen,
               })}
             />
@@ -396,7 +396,7 @@ const InternalHome = observer(() => {
 
             return (
               <div
-                className={cn(
+                className={clsx(
                   "mt-3 flex w-11/12 flex-col items-center rounded-md p-2 xl:w-9/12",
                   {
                     "bg-red-300":
@@ -757,7 +757,7 @@ const InternalHome = observer(() => {
                 ).map(([key, value]) => {
                   let raindropClass = "h-full w-full -mt-2";
                   if (value !== undefined && value !== null) {
-                    raindropClass = cn(
+                    raindropClass = clsx(
                       "w-full",
                       "h-full",
                       "-mt-2",

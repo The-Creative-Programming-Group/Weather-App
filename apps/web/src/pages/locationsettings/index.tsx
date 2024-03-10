@@ -2,7 +2,7 @@ import type { StaticImport } from "next/dist/shared/lib/get-img-props";
 import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { observer } from "@legendapp/state/react";
-import cn from "classnames";
+import clsx from "clsx";
 import { useQuery } from "convex/react";
 import { RxCross2 } from "react-icons/rx";
 import { ClipLoader } from "react-spinners";
@@ -166,11 +166,10 @@ const LocationSettings = observer(() => {
         .get()
         .find(
           (value: ICity) =>
-            value.name === city!.name &&
-            (value.id.toString().length > 15 ||
-              city!.id.toString().length > 15),
+            value.name === city.name &&
+            (value.id.toString().length > 15 || city.id.toString().length > 15),
         );
-      if (addedCities$.get().find((value: ICity) => value.id === city!.id)) {
+      if (addedCities$.get().find((value: ICity) => value.id === city.id)) {
         activeCity$.set(city);
         toast.success(translationLocationSettings("switched to city toast"));
       } else if (existingCity) {
@@ -181,6 +180,16 @@ const LocationSettings = observer(() => {
         activeCity$.set(city);
         toast.success(translationLocationSettings("added city toast"));
       }
+      setSearchValue({
+        id: 0,
+        name: "",
+        country: "",
+        region: "",
+        coord: {
+          lon: 0,
+          lat: 0,
+        },
+      });
     } else {
       toast.error(translationLocationSettings("city not found toast"));
     }
@@ -218,7 +227,7 @@ const LocationSettings = observer(() => {
                   height={56}
                 />
                 <input
-                  className={cn(
+                  className={clsx(
                     "w-full border-b-2 border-black bg-[#d8d5db] pb-0.5 pl-3 pt-0.5 text-xl font-bold text-black outline-none",
                     {
                       "pr-10":
@@ -332,7 +341,7 @@ const LocationSettings = observer(() => {
                       className={
                         activeCity$.id.get() === city.id
                           ? "relative mt-2 flex cursor-pointer justify-between border-2 border-black bg-[#d8d5db] p-2"
-                          : "relative mt-2 flex cursor-pointer justify-between border border-solid border-black bg-[#d8d5db] p-2"
+                          : "relative mt-2 flex cursor-pointer justify-between bg-[#d8d5db] p-2"
                       }
                       key={city.id}
                     >
