@@ -9,4 +9,5 @@ export const {
 } = createI18n({
   en: () => import("./en"),
   de: () => import("./de"),
+  nl: () => import("./nl"),
 });
