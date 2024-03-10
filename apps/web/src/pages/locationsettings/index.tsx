@@ -180,6 +180,16 @@ const LocationSettings = observer(() => {
         activeCity$.set(city);
         toast.success(translationLocationSettings("added city toast"));
       }
+      setSearchValue({
+        id: 0,
+        name: "",
+        country: "",
+        region: "",
+        coord: {
+          lon: 0,
+          lat: 0,
+        },
+      });
     } else {
       toast.error(translationLocationSettings("city not found toast"));
     }
