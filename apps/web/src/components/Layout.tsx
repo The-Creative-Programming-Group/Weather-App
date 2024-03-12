@@ -2,9 +2,9 @@ import React, { useEffect, useState } from "react";
 import Head from "next/head";
 import Link from "next/link";
 import { AiFillGithub, AiFillHome } from "react-icons/ai";
-import { FaMapMarkedAlt, FaShare } from "react-icons/fa";
+import { FaMapMarkedAlt, FaShare, FaShareAlt } from "react-icons/fa";
 import { IoIosSettings, IoMdContact } from "react-icons/io";
-import { IoPeopleSharp } from "react-icons/io5";
+import { IoPeopleSharp, IoShareOutline } from "react-icons/io5";
 import { LuMenu, LuX } from "react-icons/lu";
 import { PiScrollFill } from "react-icons/pi";
 
@@ -106,20 +106,35 @@ const Layout: React.FC<LayoutProps> = ({
         </div>
       </header>
       <header className="bg-[#2d3142] p-2 text-white md:hidden">
-        <div className="flex items-center">
-          {!navbarOpen && (
-            <LuMenu onClick={() => setNavbarOpen(true)} className="h-6 w-6" />
-          )}
-          {navbarOpen && (
-            <LuX onClick={() => setNavbarOpen(false)} className="h-6 w-6" />
-          )}
-          <Link
-            href="/home"
-            className="ml-2.5 flex flex-col items-center text-xl font-semibold"
-          >
-            <h1>{translation("title")}</h1>
-            <p className="text-sm font-normal">{translation("location")}</p>
-          </Link>
+        <div className="flex items-center justify-between">
+          <div className="flex">
+            {!navbarOpen && (
+              <LuMenu
+                onClick={() => setNavbarOpen(true)}
+                className="mt-3 h-6 w-6"
+              />
+            )}
+            {navbarOpen && (
+              <LuX
+                onClick={() => setNavbarOpen(false)}
+                className="mt-3 h-6 w-6"
+              />
+            )}
+            <Link
+              href="/home"
+              className="ml-2.5 flex flex-col items-center text-xl font-semibold"
+            >
+              <h1>{translation("title")}</h1>
+              <p className="text-sm font-normal">{translation("location")}</p>
+            </Link>
+          </div>
+          <div className="mr-2.5">
+            {isIOS ? (
+              <IoShareOutline onClick={handleShare} className="h-5 w-5" />
+            ) : (
+              <FaShareAlt onClick={handleShare} className="h-5 w-5" />
+            )}
+          </div>
         </div>
         {navbarOpen && (
           <div className="z-10 mt-2 flex w-full flex-col gap-2 whitespace-nowrap border-t-2">
@@ -144,7 +159,7 @@ const Layout: React.FC<LayoutProps> = ({
       </header>
       <button
         className={cn(
-          "absolute right-5 mt-28 flex rounded border-2 border-black bg-[#2d3142] p-2 text-amber-50 md:right-16",
+          "absolute right-5 mt-28 flex hidden rounded border-2 border-black bg-[#2d3142] p-2 text-amber-50 md:right-16 md:flex",
           classNameShareButton,
         )}
         onClick={handleShare}
