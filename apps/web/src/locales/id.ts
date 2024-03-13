@@ -88,18 +88,18 @@ export default {
 
   "home.feels like phrase extremely warm": "Matahari sangat menyengat hari ini",
   "home.feels like phrase very warm":
-    "Matahari mungkin sedang berusaha mendinginkan diri!",
-  "home.feels like phrase warm": "Bahkan es krim pun merasa terlalu panas!",
+    "Matahari kayaknya lagi nyoba buat refreshing!",
+  "home.feels like phrase warm": "Es krim aja ngerasa kepanasan!",
   "home.feels like phrase slightly more warm": "Hari ini terasa hangat sekali!",
   "home.feels like phrase slightly warm": "Hari yang pas untuk piknik!",
   "home.feels like phrase neutral":
-    "Suhu yang pas, tidak terlalu panas, tidak terlalu dingin.",
+    "Cuacanya pas banget, kayaknya Goldilocks pun juga setuju!",
   "home.feels like phrase slightly cold": "Mungkin perlu memakai jaket tipis.",
   "home.feels like phrase slightly more cold": "Hari ini terasa cukup dingin!",
   "home.feels like phrase cold":
-    "Para pinguin memesan cokelat panas karena udara yang dingin!",
+    "Penguin-penguin lagi pesen cokelat panas nih, sedingin itu!",
   "home.feels like phrase very cold":
-    "Cuaca dingin hari ini membuat bahkan manusia salju pun menggigil!",
+    "Hari ini dinginnya sampe bikin manusia salju kedinginan!",
   "home.feels like phrase extremely cold":
     "Terlalu dingin, bahkan beruang kutub pun lebih memilih untuk menetap di rumahnya!",
 
@@ -149,13 +149,13 @@ export default {
     "Fase bulan adalah bentuk bagian yang disinari langsung oleh Matahari dari Bulan saat dilihat dari Bumi.",
 
   "home.moon phase new moon": "Bulan Baru",
-  "home.moon phase waxing crescent": "Sabit Membesar",
+  "home.moon phase waxing crescent": "Sabit Muda",
   "home.moon phase first quarter": "Kuartal Pertama",
-  "home.moon phase waxing gibbous": "Membesar Penuh",
+  "home.moon phase waxing gibbous": "Cembung Awal",
   "home.moon phase full moon": "Purnama",
-  "home.moon phase waning gibbous": "Mengering Penuh",
+  "home.moon phase waning gibbous": "Cembung Akhir",
   "home.moon phase last quarter": "Kuartal Terakhir",
-  "home.moon phase waning crescent": "Sabitan Mengecil",
+  "home.moon phase waning crescent": "Sabit tua",
 
   "home.more information": "Informasi Lebih Lanjut",
   "home.less information": "Informasi Lebih Sedikit",
