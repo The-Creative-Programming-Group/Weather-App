@@ -43,7 +43,8 @@ const ContactUs = () => {
     },
 
     onSuccess: () => {
-      toast.success(translationContact("sent toast"), { id: toastIdTmp });
+      toast.success(translationContact("sent toast"));
+      toast.dismiss(toastIdTmp);
       reset();
     },
   });
