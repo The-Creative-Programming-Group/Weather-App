@@ -39,7 +39,7 @@
   "devDependencies": {
     "@types/leaflet": "^1.9.8",
     "@types/node": "^20.11.28",
-    "@types/react": "^18.2.64",
+    "@types/react": "^18.2.66",
     "@weatherio/eslint-config": "workspace:^0.2.0",
     "@weatherio/prettier-config": "workspace:^0.1.0",
     "@weatherio/tailwind-config": "workspace:^0.1.0",
