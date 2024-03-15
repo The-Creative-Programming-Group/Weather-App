@@ -16,7 +16,7 @@ importers:
         version: 0.5.1
       '@turbo/gen':
         specifier: ^1.12.5
-        version: 1.12.5(@types/node@20.11.25)(typescript@5.4.2)
+        version: 1.12.5(@types/node@20.11.28)(typescript@5.4.2)
       '@weatherio/prettier-config':
         specifier: workspace:^0.1.0
         version: link:tooling/prettier
@@ -133,8 +133,8 @@ importers:
         version: 3.22.4
     devDependencies:
       '@types/node':
-        specifier: ^20.11.25
-        version: 20.11.25
+        specifier: ^20.11.28
+        version: 20.11.28
       '@types/react':
         specifier: ^18.2.64
         version: 18.2.64
@@ -280,8 +280,8 @@ importers:
         version: 2.0.3
     devDependencies:
       '@types/node':
-        specifier: ^20.11.25
-        version: 20.11.25
+        specifier: ^20.11.28
+        version: 20.11.28
       '@weatherio/eslint-config':
         specifier: workspace:^0.2.0
         version: link:../../tooling/eslint
@@ -371,8 +371,8 @@ importers:
         specifier: ^1.9.8
         version: 1.9.8
       '@types/node':
-        specifier: ^20.11.25
-        version: 20.11.25
+        specifier: ^20.11.28
+        version: 20.11.28
       '@types/react':
         specifier: ^18.2.64
         version: 18.2.64
@@ -487,8 +487,8 @@ importers:
         version: 1.0.7(tailwindcss@3.4.1)
     devDependencies:
       '@types/node':
-        specifier: ^20.11.25
-        version: 20.11.25
+        specifier: ^20.11.28
+        version: 20.11.28
       '@weatherio/eslint-config':
         specifier: workspace:^0.2.0
         version: link:../eslint
@@ -3158,7 +3158,7 @@ packages:
     resolution: {integrity: sha512-vxhUy4J8lyeyinH7Azl1pdd43GJhZH/tP2weN8TntQblOY+A0XbT8DJk1/oCPuOOyg/Ja757rG0CgHcWC8OfMA==}
     dev: true
 
-  /@turbo/gen@1.12.5(@types/node@20.11.25)(typescript@5.4.2):
+  /@turbo/gen@1.12.5(@types/node@20.11.28)(typescript@5.4.2):
     resolution: {integrity: sha512-sEF/iryAcWYqONXcrAyWREUVPA4eba22hxU1yx4b9+Rs9SUNFkM54cDaXEAtzbh/iji428aQpnuxi+SUT7m9zw==}
     hasBin: true
     dependencies:
@@ -3170,7 +3170,7 @@ packages:
       minimatch: 9.0.3
       node-plop: 0.26.3
       proxy-agent: 6.3.0
-      ts-node: 10.9.1(@types/node@20.11.25)(typescript@5.4.2)
+      ts-node: 10.9.1(@types/node@20.11.28)(typescript@5.4.2)
       update-check: 1.5.4
       validate-npm-package-name: 5.0.0
     transitivePeerDependencies:
@@ -3237,14 +3237,14 @@ packages:
     resolution: {integrity: sha512-ZUxbzKl0IfJILTS6t7ip5fQQM/J3TJYubDm3nMbgubNNYS62eXeUpoLUC8/7fJNiFYHTrGPQn7hspDUzIHX3UA==}
     dependencies:
       '@types/minimatch': 5.1.2
-      '@types/node': 20.11.25
+      '@types/node': 20.11.28
 
   /@types/htmlparser2@3.10.7:
     resolution: {integrity: sha512-ycBs4PNr9rY9XFFp4WkP+M1UcO49ahn0+9b24cmIY6KWy0w35rW0G8+JTTe9Rp6Wnyqn5SEHZrhCBMa0TIOxBw==}
     dependencies:
       '@types/domhandler': 2.4.5
       '@types/domutils': 1.7.8
-      '@types/node': 20.11.25
+      '@types/node': 20.11.28
       domhandler: 2.4.2
     dev: true
 
@@ -3265,7 +3265,7 @@ packages:
   /@types/jsonfile@6.1.4:
     resolution: {integrity: sha512-D5qGUYwjvnNNextdU59/+fI+spnwtTFmyQP0h+PfIOSkNfpU6AOICUOkm4i0OnSk+NyjdPJrxCDro0sJsWlRpQ==}
     dependencies:
-      '@types/node': 20.11.25
+      '@types/node': 20.11.28
     dev: true
 
   /@types/leaflet@1.9.8:
@@ -3277,8 +3277,8 @@ packages:
   /@types/minimatch@5.1.2:
     resolution: {integrity: sha512-K0VQKziLUWkVKiRVrx4a40iPaxTUefQmjtkQofBkYRcoaaL/8rhwDWww9qWbrgicNOgnpIsMxyNIUM4+n6dUIA==}
 
-  /@types/node@20.11.25:
-    resolution: {integrity: sha512-TBHyJxk2b7HceLVGFcpAUjsa5zIdsPWlR6XHfyGzd0SFu+/NFgQgMAl96MSDZgQDvJAvV6BKsFOrt6zIL09JDw==}
+  /@types/node@20.11.28:
+    resolution: {integrity: sha512-M/GPWVS2wLkSkNHVeLkrF2fD5Lx5UC4PxA0uZcKc6QqbIQUJyW1jVjueJYi1z8n0I5PxYrtpnPnWglE+y9A0KA==}
     dependencies:
       undici-types: 5.26.5
 
@@ -3308,7 +3308,7 @@ packages:
   /@types/resolve@1.17.1:
     resolution: {integrity: sha512-yy7HuzQhj0dhGpD8RLXSZWEkLsV9ibvxvi6EiJ3bkqLAO1RGo0WbkWQiwpRlSFymTJRz0d3k5LM3kkx8ArDbLw==}
     dependencies:
-      '@types/node': 20.11.25
+      '@types/node': 20.11.28
     dev: false
 
   /@types/scheduler@0.16.3:
@@ -3321,7 +3321,7 @@ packages:
   /@types/through@0.0.30:
     resolution: {integrity: sha512-FvnCJljyxhPM3gkRgWmxmDZyAQSiBQQWLI0A0VFL0K7W1oRUrPJSqNO0NvTnLkBcotdlp3lKvaT0JrnyRDkzOg==}
     dependencies:
-      '@types/node': 20.11.25
+      '@types/node': 20.11.28
     dev: true
 
   /@types/tinycolor2@1.4.3:
@@ -3335,7 +3335,7 @@ packages:
   /@types/yauzl@2.10.3:
     resolution: {integrity: sha512-oJoftv0LSuaDZE3Le4DbKX+KS9G36NzOeSap90UIK0yMA/NhKJhqlSGtNDORNRaIbQfzjXDrQa0ytJ6mNRGz/Q==}
     dependencies:
-      '@types/node': 20.11.25
+      '@types/node': 20.11.28
     dev: true
 
   /@typescript-eslint/eslint-plugin@7.2.0(@typescript-eslint/parser@7.2.0)(eslint@8.57.0)(typescript@5.4.2):
@@ -6268,7 +6268,7 @@ packages:
     resolution: {integrity: sha512-KWYVV1c4i+jbMpaBC+U++4Va0cp8OisU185o73T1vo99hqi7w8tSJfUXYswwqqrjzwxa6KpRK54WhPvwf5w6PQ==}
     engines: {node: '>= 10.13.0'}
     dependencies:
-      '@types/node': 20.11.25
+      '@types/node': 20.11.28
       merge-stream: 2.0.0
       supports-color: 7.2.0
     dev: false
@@ -6277,7 +6277,7 @@ packages:
     resolution: {integrity: sha512-7vuh85V5cdDofPyxn58nrPjBktZo0u9x1g8WtjQol+jZDaE+fhN+cIvTj11GndBnMnyfrUOG1sZQxCdjKh+DKg==}
     engines: {node: '>= 10.13.0'}
     dependencies:
-      '@types/node': 20.11.25
+      '@types/node': 20.11.28
       merge-stream: 2.0.0
       supports-color: 8.1.1
     dev: false
@@ -8325,7 +8325,7 @@ packages:
   /ts-interface-checker@0.1.13:
     resolution: {integrity: sha512-Y/arvbn+rrz3JCKl9C4kVNfTfSm2/mEp5FSz5EsZSANGPSlQrpRI5M4PKF+mJnE52jOO90PnPSc3Ur3bTQw0gA==}
 
-  /ts-node@10.9.1(@types/node@20.11.25)(typescript@5.4.2):
+  /ts-node@10.9.1(@types/node@20.11.28)(typescript@5.4.2):
     resolution: {integrity: sha512-NtVysVPkxxrwFGUUxGYhfux8k78pQB3JqYBXlLRZgdGUqTO5wU/UyHop5p70iEbGhB7q5KmiZiU0Y3KlJrScEw==}
     hasBin: true
     peerDependencies:
@@ -8344,7 +8344,7 @@ packages:
       '@tsconfig/node12': 1.0.11
       '@tsconfig/node14': 1.0.3
       '@tsconfig/node16': 1.0.4
-      '@types/node': 20.11.25
+      '@types/node': 20.11.28
       acorn: 8.11.2
       acorn-walk: 8.2.0
       arg: 4.1.0
