@@ -306,7 +306,7 @@ const InternalHome = observer(() => {
 
   const [isSafari, setIsSafari] = useState<boolean>(false);
 
-  const BreakText = (variable: string) => {
+  const breakText = (variable: string) => {
     const words = variable.trim().split(/\s+/); // Check the wordcount in the translation
     const wordCount = words.length;
 
@@ -829,7 +829,7 @@ const InternalHome = observer(() => {
           {weatherData.data?.feels_like ? (
             <div className="col-span-5 row-span-1 row-start-2 rounded-md bg-gray-400 md:col-span-2 md:col-start-4">
               <div className="mt-1.5 flex justify-between pl-4 pr-3 text-xl">
-                <span className={BreakText(translationHome("feels like"))}>
+                <span className={breakText(translationHome("feels like"))}>
                   {translationHome("feels like")}
                 </span>
                 <HoverCard>
@@ -874,7 +874,7 @@ const InternalHome = observer(() => {
           {weatherData.data?.air_quality ? (
             <div className="col-span-5 row-span-2 row-start-3 rounded-md bg-gray-400 md:col-span-2 md:col-start-4 md:row-span-1 xl:col-span-1 xl:col-start-4">
               <div
-                className={`${BreakText(translationHome("air quality"))} ml-2 mt-1.5 text-xl`}
+                className={`${breakText(translationHome("air quality"))} ml-2 mt-1.5 text-xl`}
               >
                 {translationHome("air quality")}
               </div>
@@ -919,7 +919,7 @@ const InternalHome = observer(() => {
           {weatherData.data?.visibility ? (
             <div className="col-span-4 col-start-6 row-span-1 row-start-2 rounded-md bg-gray-400 md:col-span-2 md:col-start-6">
               <div className="mt-1.5 flex justify-between pl-4 pr-3 text-xl">
-                <span className={BreakText(translationHome("visibility"))}>
+                <span className={breakText(translationHome("visibility"))}>
                   {translationHome("visibility")}
                 </span>
                 <HoverCard>
@@ -955,7 +955,7 @@ const InternalHome = observer(() => {
           weatherData.data?.wind_pressure !== undefined ? (
             <div className="col-span-4 col-start-6 row-span-1 row-start-3 rounded-md bg-gray-400 md:col-span-2 md:col-start-6 xl:col-span-3 xl:col-start-5">
               <div className="mb-2 mt-1.5 flex w-full justify-between pl-4 pr-3 text-xl">
-                <span className={BreakText(translationHome("wind pressure"))}>
+                <span className={breakText(translationHome("wind pressure"))}>
                   {translationHome("wind pressure")}
                 </span>
                 <HoverCard>
@@ -1008,7 +1008,7 @@ const InternalHome = observer(() => {
                     </div>
                   </div>
                   <div
-                    className={`${BreakText(translationHome("speed"))} pr-3`}
+                    className={`${breakText(translationHome("speed"))} pr-3`}
                   >
                     <span className="font-bold md:font-normal">
                       {translationHome("speed")}
@@ -1031,7 +1031,7 @@ const InternalHome = observer(() => {
           {weatherData.data?.moonPhaseCode ? (
             <div className="col-span-4 col-start-6 row-span-1 row-start-4 rounded-md bg-gray-400 md:col-span-4 md:col-start-4">
               <div className="mt-1.5 flex justify-between pl-4 pr-3 text-xl">
-                <span className={BreakText(translationHome("moon phase"))}>
+                <span className={breakText(translationHome("moon phase"))}>
                   {translationHome("moon phase")}{" "}
                 </span>
                 <HoverCard>
