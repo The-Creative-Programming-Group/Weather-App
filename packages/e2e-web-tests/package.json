@@ -25,7 +25,7 @@
     "start-server-and-test": "^2.0.3"
   },
   "devDependencies": {
-    "@types/node": "^20.11.25",
+    "@types/node": "^20.11.28",
     "@weatherio/eslint-config": "workspace:^0.2.0",
     "@weatherio/prettier-config": "workspace:^0.1.0",
     "@weatherio/tsconfig": "workspace:^0.1.0",
