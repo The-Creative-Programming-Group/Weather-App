@@ -29,7 +29,7 @@
     "class-variance-authority": "^0.7.0",
     "leaflet": "^1.9.4",
     "leaflet-defaulticon-compatibility": "^0.1.2",
-    "next-themes": "^0.2.1",
+    "next-themes": "^0.3.0",
     "react": "18.2.0",
     "react-leaflet": "^4.2.1",
     "sonner": "^1.4.3",
