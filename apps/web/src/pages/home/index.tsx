@@ -306,13 +306,15 @@ const InternalHome = observer(() => {
 
   const [isSafari, setIsSafari] = useState<boolean>(false);
 
-  const breakText = (variable: string) => {
+  const classNamesCardsTitle = (variable: string) => {
     const words = variable.trim().split(/\s+/); // Check the wordcount in the translation
     const wordCount = words.length;
 
+    const standardClassNamesCardsTitle = "hyphens-auto pr-3";
+
     return isSafari && wordCount == 1
-      ? "hyphens-auto break-all"
-      : "hyphens-auto break-words";
+      ? standardClassNamesCardsTitle + " break-all"
+      : standardClassNamesCardsTitle + " break-words";
   };
 
   useEffect(() => {
@@ -632,7 +634,13 @@ const InternalHome = observer(() => {
             <>
               <div className="col-span-3 row-span-4 hidden flex-col rounded-xl bg-gray-400 md:flex">
                 <div className="flex w-full items-center justify-between pb-2 pl-5 pr-3 pt-2 text-xl">
-                  {translationHome("9 day forecast")}{" "}
+                  <span
+                    className={classNamesCardsTitle(
+                      translationHome("9 day forecast"),
+                    )}
+                  >
+                    {translationHome("9 day forecast")}
+                  </span>
                   <HoverCard>
                     <HoverCardTrigger asChild>
                       <Button
@@ -722,7 +730,13 @@ const InternalHome = observer(() => {
           {weatherData.data?.precipitationProbabilities ? (
             <div className="col-span-9 row-span-1 rounded-md bg-gray-400 pb-2 md:col-span-4 md:col-start-4">
               <div className="mt-1.5 flex justify-between pl-4 pr-3 text-xl">
-                {translationHome("precipitation")}{" "}
+                <span
+                  className={classNamesCardsTitle(
+                    translationHome("precipitation"),
+                  )}
+                >
+                  {translationHome("precipitation")}{" "}
+                </span>
                 <HoverCard>
                   <HoverCardTrigger asChild>
                     <Button
@@ -829,7 +843,11 @@ const InternalHome = observer(() => {
           {weatherData.data?.feels_like ? (
             <div className="col-span-5 row-span-1 row-start-2 rounded-md bg-gray-400 md:col-span-2 md:col-start-4">
               <div className="mt-1.5 flex justify-between pl-4 pr-3 text-xl">
-                <span className={breakText(translationHome("feels like"))}>
+                <span
+                  className={classNamesCardsTitle(
+                    translationHome("feels like"),
+                  )}
+                >
                   {translationHome("feels like")}
                 </span>
                 <HoverCard>
@@ -874,7 +892,7 @@ const InternalHome = observer(() => {
           {weatherData.data?.air_quality ? (
             <div className="col-span-5 row-span-2 row-start-3 rounded-md bg-gray-400 md:col-span-2 md:col-start-4 md:row-span-1 xl:col-span-1 xl:col-start-4">
               <div
-                className={`${breakText(translationHome("air quality"))} ml-2 mt-1.5 text-xl`}
+                className={`${classNamesCardsTitle(translationHome("air quality"))} ml-2 mt-1.5 text-xl`}
               >
                 {translationHome("air quality")}
               </div>
@@ -919,7 +937,11 @@ const InternalHome = observer(() => {
           {weatherData.data?.visibility ? (
             <div className="col-span-4 col-start-6 row-span-1 row-start-2 rounded-md bg-gray-400 md:col-span-2 md:col-start-6">
               <div className="mt-1.5 flex justify-between pl-4 pr-3 text-xl">
-                <span className={breakText(translationHome("visibility"))}>
+                <span
+                  className={classNamesCardsTitle(
+                    translationHome("visibility"),
+                  )}
+                >
                   {translationHome("visibility")}
                 </span>
                 <HoverCard>
@@ -955,7 +977,11 @@ const InternalHome = observer(() => {
           weatherData.data?.wind_pressure !== undefined ? (
             <div className="col-span-4 col-start-6 row-span-1 row-start-3 rounded-md bg-gray-400 md:col-span-2 md:col-start-6 xl:col-span-3 xl:col-start-5">
               <div className="mb-2 mt-1.5 flex w-full justify-between pl-4 pr-3 text-xl">
-                <span className={breakText(translationHome("wind pressure"))}>
+                <span
+                  className={classNamesCardsTitle(
+                    translationHome("wind pressure"),
+                  )}
+                >
                   {translationHome("wind pressure")}
                 </span>
                 <HoverCard>
@@ -1008,7 +1034,7 @@ const InternalHome = observer(() => {
                     </div>
                   </div>
                   <div
-                    className={`${breakText(translationHome("speed"))} pr-3`}
+                    className={`${classNamesCardsTitle(translationHome("speed"))} pr-3`}
                   >
                     <span className="font-bold md:font-normal">
                       {translationHome("speed")}
@@ -1031,7 +1057,11 @@ const InternalHome = observer(() => {
           {weatherData.data?.moonPhaseCode ? (
             <div className="col-span-4 col-start-6 row-span-1 row-start-4 rounded-md bg-gray-400 md:col-span-4 md:col-start-4">
               <div className="mt-1.5 flex justify-between pl-4 pr-3 text-xl">
-                <span className={breakText(translationHome("moon phase"))}>
+                <span
+                  className={classNamesCardsTitle(
+                    translationHome("moon phase"),
+                  )}
+                >
                   {translationHome("moon phase")}{" "}
                 </span>
                 <HoverCard>
