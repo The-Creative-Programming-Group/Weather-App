@@ -1,9 +1,11 @@
-import React, { useEffect, useLayoutEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { observer } from "@legendapp/state/react";
+import { skipToken } from "@tanstack/react-query";
 import clsx from "clsx";
+import { useQuery } from "convex/react";
 import dayjs from "dayjs";
 import timezone from "dayjs/plugin/timezone";
 import utc from "dayjs/plugin/utc";
@@ -25,6 +27,7 @@ import { PiSunglasses } from "react-icons/pi";
 import { WiRaindrop } from "react-icons/wi";
 
 import type { IDailyForecast, IHourlyForecast } from "@weatherio/types";
+import { api as convexApi } from "@weatherio/city-data";
 import { Button } from "@weatherio/ui/button";
 import {
   Collapsible,
@@ -39,12 +42,16 @@ import {
 import { ScrollArea, ScrollBar } from "@weatherio/ui/scroll-area";
 import { Skeleton } from "@weatherio/ui/skeleton";
 
-import type { WindSpeedUnitType } from "~/states";
 import Layout from "~/components/Layout";
 import { MoonPhaseInfo } from "~/components/moon-phase-info";
 import { api } from "~/lib/utils/api";
 import { getLocaleProps, useScopedI18n } from "~/locales";
-import { activeCity$, temperatureUnit$, windSpeedUnit$ } from "~/states";
+import {
+  activeCity$,
+  temperatureUnit$,
+  windSpeedUnit$,
+  WindSpeedUnitType,
+} from "~/states";
 
 const Map = dynamic(() => import("@weatherio/ui/map"), { ssr: false });
 
@@ -125,23 +132,48 @@ const InternalHome = observer(() => {
     useState(false);
   const [isMoreWarningsCollapsibleOpen, setIsMoreWarningsCollapsibleOpen] =
     useState(false);
+  const { locale, query, replace, isReady } = useRouter();
 
-  const { locale } = useRouter();
-  const weatherData = api.weather.getWeather.useQuery(
-    {
-      coordinates: activeCity$.coord.get(),
-      timezone: dayjs.tz.guess(),
-      lang: locale,
-    },
-    // TODO: The cache (stale time) is not yet working if you refresh the page
-    { refetchOnWindowFocus: false, staleTime: 1000 * 60 * 60 /* 1 hour */ },
+  const cityById = useQuery(
+    convexApi.getCity.findCityById,
+    typeof query.cityId === "string" ? { id: parseInt(query.cityId) } : "skip",
   );
+
+  useEffect(() => {
+    const cityByIdIsLoading =
+      cityById === undefined && typeof query.cityId === "string";
+    if (!cityByIdIsLoading && !cityById && isReady) {
+      if (activeCity$.id.get() !== 0 && activeCity$.name.get() !== "") {
+        void replace("/home?cityId=" + activeCity$.id.get());
+        return;
+      } else {
+        void replace("/search");
+        return;
+      }
+    }
+  });
+
+  const weatherData = api.weather.getWeather.useQuery(
+    cityById
+      ? {
+          coordinates: cityById.coord,
+          timezone: dayjs.tz.guess(),
+          lang: locale,
+        }
+      : skipToken,
+    // TODO: The cache (stale time) is not yet working if you refresh the page
+    {
+      refetchOnWindowFocus: false,
+      staleTime: 1000 * 60 * 60 /* 1 hour */,
+    },
+  );
+
   let temperature = undefined;
   if (weatherData.data?.temperature) {
     temperature =
       temperatureUnit$.get() === "Celsius"
-        ? `${Math.round(weatherData.data?.temperature - 273.15)}°C`
-        : `${Math.round((weatherData.data?.temperature * 9) / 5 - 459.67)}°F`;
+        ? `${Math.round(weatherData.data.temperature - 273.15)}°C`
+        : `${Math.round((weatherData.data.temperature * 9) / 5 - 459.67)}°F`;
   }
 
   const translationHome = useScopedI18n("home");
@@ -295,15 +327,6 @@ const InternalHome = observer(() => {
     activeCity$.coord.lon.get(),
   ];
 
-  const router = useRouter();
-
-  // Prevent a weather forecast for the preset active city from being displayed
-  useLayoutEffect(() => {
-    if (activeCity$.id.get() === 0 && activeCity$.name.get() === "") {
-      void router.push("/search");
-    }
-  });
-
   const [isSafari, setIsSafari] = useState<boolean>(false);
 
   const classNamesCardsTitle = (variable: string) => {
@@ -325,10 +348,14 @@ const InternalHome = observer(() => {
   }, []);
 
   return (
-    <Layout classNameShareButton="mt-44" page="home">
+    <Layout
+      classNameShareButton="mt-44"
+      page="home"
+      title={cityById ? cityById.name : undefined}
+    >
       <div className="mt-24 flex flex-col items-center">
         <h1 className="text-center text-4xl sm:text-5xl md:text-7xl">
-          {activeCity$.name.get()}
+          {cityById ? cityById.name : <Skeleton className="h-20 w-80" />}
         </h1>
         <h1 className="mt-3 text-6xl text-gray-500 md:text-7xl">
           {temperature ? temperature : <Skeleton className="h-20 w-36" />}
@@ -373,7 +400,7 @@ const InternalHome = observer(() => {
           </p>
         </div>
       </div>
-      {weatherData?.data?.maxUVIndex && weatherData.data.sunHours ? (
+      {weatherData.data?.maxUVIndex && weatherData.data.sunHours ? (
         <Collapsible
           className="mt-2 flex w-full flex-col items-center"
           open={isMoreInfoCollapsibleOpen}

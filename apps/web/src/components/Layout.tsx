@@ -11,6 +11,7 @@ import { PiScrollFill } from "react-icons/pi";
 import { cn } from "@weatherio/ui";
 
 import { useScopedI18n } from "~/locales";
+import { activeCity$ } from "~/states";
 
 interface LayoutProps {
   title?: string;
@@ -121,7 +122,10 @@ const Layout: React.FC<LayoutProps> = ({
               />
             )}
             <Link
-              href="/home"
+              href={{
+                pathname: "/home",
+                query: { cityId: activeCity$.id.get() },
+              }}
               className="ml-2.5 flex flex-col items-center text-xl font-semibold"
             >
               <h1>{translation("title")}</h1>

@@ -154,14 +154,14 @@ const Search = () => {
         .find((value: ICity) => value.name === city.name);
       if (addedCities$.get().find((value: ICity) => value.id === city.id)) {
         activeCity$.set(city);
-        void router.push("/home");
+        void router.push("/home?cityId=" + city.id);
       } else if (existingCity) {
         activeCity$.set(existingCity);
-        void router.push("/home");
+        void router.push("/home?cityId=" + city.id);
       } else {
         addedCities$.push(city);
         activeCity$.set(city);
-        void router.push("/home");
+        void router.push("/home?cityId=" + city.id);
       }
     } else {
       toast.error(translationLocationSettings("city not found toast"));

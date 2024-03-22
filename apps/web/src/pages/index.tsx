@@ -15,7 +15,7 @@ const PublicHome: NextPage = () => {
 
   useLayoutEffect(() => {
     if (activeCity$.id.get() !== 0 && activeCity$.name.get() !== "") {
-      void router.push("/home");
+      void router.push("/home?cityId=" + activeCity$.id.get());
     }
   });
 
