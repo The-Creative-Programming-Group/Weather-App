@@ -322,10 +322,9 @@ const InternalHome = observer(() => {
     return translationHome("weather state sunny");
   };
 
-  const mapPosition: [number, number] = [
-    activeCity$.coord.lat.get(),
-    activeCity$.coord.lon.get(),
-  ];
+  const mapPosition: [number, number] | undefined = cityById
+    ? [cityById.coord.lat, cityById.coord.lon]
+    : undefined;
 
   const [isSafari, setIsSafari] = useState<boolean>(false);
 
@@ -1123,15 +1122,23 @@ const InternalHome = observer(() => {
 
           <div className="z-0 col-span-2 col-start-8 row-span-4 row-start-1 hidden rounded-md bg-gray-400 md:block">
             <div className="h-full w-full">
-              <Map
-                position={mapPosition}
-                className="h-full w-full rounded-md"
-              />
+              {mapPosition ? (
+                <Map
+                  position={mapPosition}
+                  className="h-full w-full rounded-md"
+                />
+              ) : (
+                <Skeleton className="h-full w-full" />
+              )}
             </div>
           </div>
         </div>
         <div className="z-0 mb-6 block h-96 w-11/12 rounded-md md:hidden">
-          <Map position={mapPosition} className="h-full w-full rounded-md" />
+          {mapPosition ? (
+            <Map position={mapPosition} className="h-full w-full rounded-md" />
+          ) : (
+            <Skeleton className="h-full w-full" />
+          )}
         </div>
       </div>
     </Layout>
