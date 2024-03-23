@@ -2,8 +2,8 @@ import type { StaticImport } from "next/dist/shared/lib/get-img-props";
 import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { observer } from "@legendapp/state/react";
-import cn from "classnames";
-import { useQuery } from "convex/react";
+import clsx from "clsx";
+import { useMutation, useQuery } from "convex/react";
 import { RxCross2 } from "react-icons/rx";
 import { ClipLoader } from "react-spinners";
 import { toast } from "sonner";
@@ -13,7 +13,6 @@ import { api as convexApi } from "@weatherio/city-data";
 
 import search2Image from "~/assets/search2.png";
 import Layout from "~/components/Layout";
-import { api as tRPCApi } from "~/lib/utils/api";
 import { getLocaleProps, useScopedI18n } from "~/locales";
 import { activeCity$, addedCities$ } from "~/states";
 
@@ -47,16 +46,9 @@ const LocationSettings = observer(() => {
     id: searchValue.id,
   });
 
-  const findCityByCoordinatesMutation =
-    tRPCApi.reverseGeoRouter.getCity.useMutation({
-      onSuccess: (data) => {
-        if (data) {
-          setSearchValue(data);
-        } else {
-          toast.error(translationLocationSettings("city not found toast"));
-        }
-      },
-    });
+  const findCityByCoordinatesMutation = useMutation(
+    convexApi.getCity.findNearestCityByCoord,
+  );
 
   useEffect(() => {
     if (searchValue.name === "") {
@@ -159,28 +151,24 @@ const LocationSettings = observer(() => {
     }
 
     if (city) {
-      // Checks if the city is already added, and if it is a reverse geocoded city.
-      // If it is not a reverse geocoded city, we can compare by id,
-      // but if it is a reverse geocoded city, we have to compare by name.
-      const existingCity = addedCities$
-        .get()
-        .find(
-          (value: ICity) =>
-            value.name === city!.name &&
-            (value.id.toString().length > 15 ||
-              city!.id.toString().length > 15),
-        );
-      if (addedCities$.get().find((value: ICity) => value.id === city!.id)) {
+      if (addedCities$.get().find((value: ICity) => value.id === city.id)) {
         activeCity$.set(city);
-        toast.success(translationLocationSettings("switched to city toast"));
-      } else if (existingCity) {
-        activeCity$.set(existingCity);
         toast.success(translationLocationSettings("switched to city toast"));
       } else {
         addedCities$.push(city);
         activeCity$.set(city);
         toast.success(translationLocationSettings("added city toast"));
       }
+      setSearchValue({
+        id: 0,
+        name: "",
+        country: "",
+        region: "",
+        coord: {
+          lon: 0,
+          lat: 0,
+        },
+      });
     } else {
       toast.error(translationLocationSettings("city not found toast"));
     }
@@ -218,7 +206,7 @@ const LocationSettings = observer(() => {
                   height={56}
                 />
                 <input
-                  className={cn(
+                  className={clsx(
                     "w-full border-b-2 border-black bg-[#d8d5db] pb-0.5 pl-3 pt-0.5 text-xl font-bold text-black outline-none",
                     {
                       "pr-10":
@@ -258,7 +246,7 @@ const LocationSettings = observer(() => {
                   {findCitiesByName === undefined &&
                   inputRef.current?.value &&
                   inputRef.current?.value.length > 0 ? (
-                    <ClipLoader color={"#ffffff"} loading={true} size={20} />
+                    <ClipLoader color={"#ffffff"} loading size={20} />
                   ) : null}
                 </div>
               </div>{" "}
@@ -332,7 +320,7 @@ const LocationSettings = observer(() => {
                       className={
                         activeCity$.id.get() === city.id
                           ? "relative mt-2 flex cursor-pointer justify-between border-2 border-black bg-[#d8d5db] p-2"
-                          : "relative mt-2 flex cursor-pointer justify-between border border-solid border-black bg-[#d8d5db] p-2"
+                          : "relative mt-2 flex cursor-pointer justify-between bg-[#d8d5db] p-2"
                       }
                       key={city.id}
                     >
@@ -370,8 +358,16 @@ const LocationSettings = observer(() => {
                       const latitude = position.coords.latitude;
                       const longitude = position.coords.longitude;
 
-                      findCityByCoordinatesMutation.mutate({
-                        coordinates: { lat: latitude, lng: longitude },
+                      void findCityByCoordinatesMutation({
+                        coord: { lat: latitude, lng: longitude },
+                      }).then((data) => {
+                        if (data) {
+                          setSearchValue(data);
+                        } else {
+                          toast.error(
+                            translationLocationSettings("city not found toast"),
+                          );
+                        }
                       });
                     });
                   }

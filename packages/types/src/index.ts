@@ -1,6 +1,6 @@
 export interface IHourlyForecast {
   // Hour of current day
-  time: number;
+  time: string | undefined;
   // In Kelvin
   temperature: number | undefined;
   // In Kelvin

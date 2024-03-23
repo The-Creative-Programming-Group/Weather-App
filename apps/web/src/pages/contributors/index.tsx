@@ -58,7 +58,8 @@ const Contributors = () => {
               />
             </Link>
             <p className="flex text-center text-base md:text-xl">
-              {translationContributors("designer")}
+              {translationContributors("designer")} &{" "}
+              {translationContributors("translator")}
             </p>
           </div>
           <div className="flex w-16 flex-col items-center gap-2 md:w-20">

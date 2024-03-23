@@ -1,9 +1,11 @@
-import React, { useLayoutEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { observer } from "@legendapp/state/react";
-import cn from "classnames";
+import { skipToken } from "@tanstack/react-query";
+import clsx from "clsx";
+import { useQuery } from "convex/react";
 import dayjs from "dayjs";
 import timezone from "dayjs/plugin/timezone";
 import utc from "dayjs/plugin/utc";
@@ -25,6 +27,7 @@ import { PiSunglasses } from "react-icons/pi";
 import { WiRaindrop } from "react-icons/wi";
 
 import type { IDailyForecast, IHourlyForecast } from "@weatherio/types";
+import { api as convexApi } from "@weatherio/city-data";
 import { Button } from "@weatherio/ui/button";
 import {
   Collapsible,
@@ -125,23 +128,48 @@ const InternalHome = observer(() => {
     useState(false);
   const [isMoreWarningsCollapsibleOpen, setIsMoreWarningsCollapsibleOpen] =
     useState(false);
+  const { locale, query, replace, isReady } = useRouter();
 
-  const { locale } = useRouter();
-  const weatherData = api.weather.getWeather.useQuery(
-    {
-      coordinates: activeCity$.coord.get(),
-      timezone: dayjs.tz.guess(),
-      lang: locale,
-    },
-    // TODO: The cache (stale time) is not yet working if you refresh the page
-    { refetchOnWindowFocus: false, staleTime: 1000 * 60 * 60 /* 1 hour */ },
+  const cityById = useQuery(
+    convexApi.getCity.findCityById,
+    typeof query.cityId === "string" ? { id: parseInt(query.cityId) } : "skip",
   );
+
+  useEffect(() => {
+    const cityByIdIsLoading =
+      cityById === undefined && typeof query.cityId === "string";
+    if (!cityByIdIsLoading && !cityById && isReady) {
+      if (activeCity$.id.get() !== 0 && activeCity$.name.get() !== "") {
+        void replace("/home?cityId=" + activeCity$.id.get());
+        return;
+      } else {
+        void replace("/search");
+        return;
+      }
+    }
+  });
+
+  const weatherData = api.weather.getWeather.useQuery(
+    cityById
+      ? {
+          coordinates: cityById.coord,
+          timezone: dayjs.tz.guess(),
+          lang: locale,
+        }
+      : skipToken,
+    // TODO: The cache (stale time) is not yet working if you refresh the page
+    {
+      refetchOnWindowFocus: false,
+      staleTime: 1000 * 60 * 60 /* 1 hour */,
+    },
+  );
+
   let temperature = undefined;
   if (weatherData.data?.temperature) {
     temperature =
       temperatureUnit$.get() === "Celsius"
-        ? `${Math.round(weatherData.data?.temperature - 273.15)}°C`
-        : `${Math.round((weatherData.data?.temperature * 9) / 5 - 459.67)}°F`;
+        ? `${Math.round(weatherData.data.temperature - 273.15)}°C`
+        : `${Math.round((weatherData.data.temperature * 9) / 5 - 459.67)}°F`;
   }
 
   const translationHome = useScopedI18n("home");
@@ -150,48 +178,60 @@ const InternalHome = observer(() => {
   type WeatherStateType = string | React.ReactNode | undefined;
 
   type TimeType =
-    | { hour: number; day?: undefined; icons: boolean }
-    | { hour?: undefined; day: number; icons: boolean };
+    | { hourIndex: number; dayIndex?: undefined; icons: boolean }
+    | { hourIndex?: undefined; dayIndex: number; icons: boolean };
 
-  const weatherState = ({ hour, day, icons }: TimeType): WeatherStateType => {
-    if (hour !== undefined && hour !== null) {
-      if (weatherData.data?.hourlyForecast[hour]?.showers) {
-        if (weatherData.data.hourlyForecast[hour]!.showers! > 0) {
+  const weatherState = ({
+    hourIndex,
+    dayIndex,
+    icons,
+  }: TimeType): WeatherStateType => {
+    let hour: number | undefined;
+
+    if (
+      hourIndex !== undefined &&
+      weatherData.data?.hourlyForecast[hourIndex]?.time
+    ) {
+      hour = new Date(
+        weatherData.data.hourlyForecast[hourIndex]!.time!,
+      ).getHours();
+    }
+
+    if (hourIndex !== undefined && hourIndex !== null) {
+      if (weatherData.data?.hourlyForecast[hourIndex]?.showers) {
+        if (weatherData.data.hourlyForecast[hourIndex]!.showers! > 0) {
           if (icons) {
             return <FaCloudShowersHeavy className="h-full w-full" />;
           }
           return translationHome("weather state stormy");
         }
       }
-      if (weatherData.data?.hourlyForecast[hour]?.snowfall) {
-        if (weatherData.data.hourlyForecast[hour]!.snowfall! > 0) {
+      if (weatherData.data?.hourlyForecast[hourIndex]?.snowfall) {
+        if (weatherData.data.hourlyForecast[hourIndex]!.snowfall! > 0) {
           if (icons) {
             return <FaCloudMeatball className="h-full w-full" />;
           }
           return translationHome("weather state snowy");
         }
       }
-      if (weatherData.data?.hourlyForecast[hour]?.rain) {
-        if (weatherData.data.hourlyForecast[hour]!.rain! > 0) {
+      if (weatherData.data?.hourlyForecast[hourIndex]?.rain) {
+        if (weatherData.data.hourlyForecast[hourIndex]!.rain! > 0) {
           if (icons) {
             return <FaCloudRain className="h-full w-full" />;
           }
           return translationHome("weather state rainy");
         }
       }
-      if (weatherData.data?.hourlyForecast[hour]?.cloudcover) {
-        if (weatherData.data.hourlyForecast[hour]!.cloudcover! > 40) {
-          if (weatherData.data.hourlyForecast[hour]!.cloudcover! > 60) {
+      if (weatherData.data?.hourlyForecast[hourIndex]?.cloudcover) {
+        if (weatherData.data.hourlyForecast[hourIndex]!.cloudcover! > 40) {
+          if (weatherData.data.hourlyForecast[hourIndex]!.cloudcover! > 60) {
             if (icons) {
               return <FaCloud className="h-full w-full" />;
             }
             return translationHome("weather state very cloudy");
           } else {
-            if (weatherData.data) {
-              if (
-                weatherData.data.hourlyForecast[hour]!.time < 19 &&
-                weatherData.data.hourlyForecast[hour]!.time > 6
-              ) {
+            if (hour) {
+              if (hour < 19 && hour > 6) {
                 if (icons) {
                   return <FaCloudSun className="h-full w-full" />;
                 }
@@ -205,8 +245,8 @@ const InternalHome = observer(() => {
             }
           }
         }
-        if (weatherData.data?.dailyForecast[hour]?.windSpeed) {
-          if (weatherData.data.dailyForecast[hour]!.windSpeed! >= 20) {
+        if (weatherData.data?.dailyForecast[hourIndex]?.windSpeed) {
+          if (weatherData.data.dailyForecast[hourIndex]!.windSpeed! >= 20) {
             if (icons) {
               return <FaWind className="h-full w-full" />;
             }
@@ -214,34 +254,34 @@ const InternalHome = observer(() => {
           }
         }
       }
-    } else if (day !== undefined && day !== null) {
-      if (weatherData.data?.dailyForecast[day]?.showers) {
-        if (weatherData.data.dailyForecast[day]!.showers! > 0) {
+    } else if (dayIndex !== undefined && dayIndex !== null) {
+      if (weatherData.data?.dailyForecast[dayIndex]?.showers) {
+        if (weatherData.data.dailyForecast[dayIndex]!.showers! > 0) {
           if (icons) {
             return <FaCloudShowersHeavy className="h-full w-full" />;
           }
           return translationHome("weather state stormy");
         }
       }
-      if (weatherData.data?.dailyForecast[day]?.snowfall) {
-        if (weatherData.data.dailyForecast[day]!.snowfall! > 0) {
+      if (weatherData.data?.dailyForecast[dayIndex]?.snowfall) {
+        if (weatherData.data.dailyForecast[dayIndex]!.snowfall! > 0) {
           if (icons) {
             return <FaCloudMeatball className="h-full w-full" />;
           }
           return translationHome("weather state snowy");
         }
       }
-      if (weatherData.data?.dailyForecast[day]?.rain) {
-        if (weatherData.data.dailyForecast[day]!.rain! > 0) {
+      if (weatherData.data?.dailyForecast[dayIndex]?.rain) {
+        if (weatherData.data.dailyForecast[dayIndex]!.rain! > 0) {
           if (icons) {
             return <FaCloudRain className="h-full w-full" />;
           }
           return translationHome("weather state rainy");
         }
       }
-      if (weatherData.data?.dailyForecast[day]?.cloudcover) {
-        if (weatherData.data.dailyForecast[day]!.cloudcover! > 40) {
-          if (weatherData.data.dailyForecast[day]!.cloudcover! > 60) {
+      if (weatherData.data?.dailyForecast[dayIndex]?.cloudcover) {
+        if (weatherData.data.dailyForecast[dayIndex]!.cloudcover! > 40) {
+          if (weatherData.data.dailyForecast[dayIndex]!.cloudcover! > 60) {
             if (icons) {
               return <FaCloud className="h-full w-full" />;
             }
@@ -254,8 +294,8 @@ const InternalHome = observer(() => {
           }
         }
       }
-      if (weatherData.data?.dailyForecast[day]?.windSpeed) {
-        if (weatherData.data.dailyForecast[day]!.windSpeed! >= 20) {
+      if (weatherData.data?.dailyForecast[dayIndex]?.windSpeed) {
+        if (weatherData.data.dailyForecast[dayIndex]!.windSpeed! >= 20) {
           if (icons) {
             return <FaWind className="h-full w-full" />;
           }
@@ -263,51 +303,61 @@ const InternalHome = observer(() => {
         }
       }
     }
-    if (icons && day === undefined) {
-      if (weatherData.data) {
-        if (
-          weatherData.data.hourlyForecast[hour]!.time < 19 &&
-          weatherData.data.hourlyForecast[hour]!.time > 6
-        ) {
-          // console.log("Sunny", hour, day)
+    if (icons && dayIndex === undefined) {
+      if (hour !== undefined) {
+        if (hour < 19 && hour > 6) {
           return <FaSun className="h-full w-full" />;
         } else {
           return <FaMoon className="h-full w-full" />;
         }
       }
-    } else if (icons && hour === undefined) {
-      // console.log("Sunny", hour, day);
+    }
+    if (icons) {
       return <FaSun className="h-full w-full" />;
     }
     return translationHome("weather state sunny");
   };
 
-  const mapPosition: [number, number] = [
-    activeCity$.coord.lat.get(),
-    activeCity$.coord.lon.get(),
-  ];
+  const mapPosition: [number, number] | undefined = cityById
+    ? [cityById.coord.lat, cityById.coord.lon]
+    : undefined;
 
-  const router = useRouter();
+  const [isSafari, setIsSafari] = useState<boolean>(false);
 
-  // Prevent a weather forecast for the preset active city from being displayed
-  useLayoutEffect(() => {
-    if (activeCity$.id.get() === 0 && activeCity$.name.get() === "") {
-      void router.push("/search");
-    }
-  });
+  const classNamesCardsTitle = (variable: string) => {
+    const words = variable.trim().split(/\s+/); // Check the wordcount in the translation
+    const wordCount = words.length;
+
+    const standardClassNamesCardsTitle = "hyphens-auto pr-3";
+
+    return isSafari && wordCount == 1
+      ? standardClassNamesCardsTitle + " break-all"
+      : standardClassNamesCardsTitle + " break-words";
+  };
+
+  useEffect(() => {
+    setIsSafari(
+      /^((?!chrome|android).)*safari/i.test(navigator.userAgent) &&
+        !window.MSStream,
+    );
+  }, []);
 
   return (
-    <Layout classNameShareButton="mt-44" page="home">
+    <Layout
+      classNameShareButton="mt-44"
+      page="home"
+      title={cityById ? cityById.name : undefined}
+    >
       <div className="mt-24 flex flex-col items-center">
         <h1 className="text-center text-4xl sm:text-5xl md:text-7xl">
-          {activeCity$.name.get()}
+          {cityById ? cityById.name : <Skeleton className="h-20 w-80" />}
         </h1>
         <h1 className="mt-3 text-6xl text-gray-500 md:text-7xl">
           {temperature ? temperature : <Skeleton className="h-20 w-36" />}
         </h1>
         <p className="mt-3 text-xl">
           {weatherData.data ? (
-            weatherState({ hour: 0, icons: false })
+            weatherState({ hourIndex: 0, icons: false })
           ) : (
             <Skeleton className="h-9 w-36" />
           )}
@@ -345,7 +395,7 @@ const InternalHome = observer(() => {
           </p>
         </div>
       </div>
-      {weatherData?.data?.maxUVIndex && weatherData.data.sunHours ? (
+      {weatherData.data?.maxUVIndex && weatherData.data.sunHours ? (
         <Collapsible
           className="mt-2 flex w-full flex-col items-center"
           open={isMoreInfoCollapsibleOpen}
@@ -354,7 +404,7 @@ const InternalHome = observer(() => {
           <CollapsibleTrigger className="flex gap-1 outline-0">
             {translationHome("more information")}:{" "}
             <LuChevronDownSquare
-              className={cn("h-6 w-6", {
+              className={clsx("h-6 w-6", {
                 "rotate-180 transform": isMoreInfoCollapsibleOpen,
               })}
             />
@@ -388,7 +438,7 @@ const InternalHome = observer(() => {
 
             return (
               <div
-                className={cn(
+                className={clsx(
                   "mt-3 flex w-11/12 flex-col items-center rounded-md p-2 xl:w-9/12",
                   {
                     "bg-red-300":
@@ -445,16 +495,25 @@ const InternalHome = observer(() => {
                 (hourlyForecast: IHourlyForecast, index: number) => {
                   let time;
                   let sunEvent = "";
-                  const currentHour = new Date().getHours();
+                  const currentHour = dayjs()
+                    .tz(dayjs.tz.guess())
+                    .format("YYYY-MM-DDTHH:00");
+
+                  let hour: number | undefined;
+
+                  if (hourlyForecast.time) {
+                    hour = new Date(hourlyForecast.time).getHours();
+                  }
+
                   if (
                     weatherData.data.sunset &&
-                    dayjs(weatherData.data.sunset).hour() ===
+                    weatherData.data.sunset.slice(0, -11) + "00" ===
                       hourlyForecast.time
                   ) {
                     sunEvent = translationHome("sunset");
                   } else if (
                     weatherData.data.sunrise &&
-                    dayjs(weatherData.data.sunrise).hour() ===
+                    weatherData.data.sunrise.slice(0, -11) + "00" ===
                       hourlyForecast.time
                   ) {
                     sunEvent = translationHome("sunrise");
@@ -462,40 +521,38 @@ const InternalHome = observer(() => {
                   let moonEvent = "";
                   if (
                     weatherData.data.moonrise &&
-                    dayjs(weatherData.data.moonrise).hour() ===
+                    weatherData.data.moonrise.slice(0, -11) + "00" ===
                       hourlyForecast.time
                   ) {
                     moonEvent = translationHome("moonrise");
                   } else if (
                     weatherData.data.moonset &&
-                    dayjs(weatherData.data.moonset).hour() ===
+                    weatherData.data.moonset.slice(0, -11) + "00" ===
                       hourlyForecast.time
                   ) {
                     moonEvent = translationHome("moonset");
                   }
 
-                  if (index === 0) {
-                    if (hourlyForecast.time === currentHour) {
+                  if (hour !== undefined) {
+                    if (index === 0) {
+                      if (hourlyForecast.time === currentHour) {
+                        time = translationHome("this hour");
+                      } else {
+                        // Don't render this hour if it's already passed
+                        return null;
+                      }
+                    } else if (hourlyForecast.time === currentHour) {
                       time = translationHome("this hour");
+                    } else if (hour === 12) {
+                      time = "12" + translationHome("late hour time ending");
+                    } else if (hour > 12) {
+                      time =
+                        hour - 12 + translationHome("late hour time ending");
+                    } else if (hour === 0) {
+                      time = "12" + translationHome("early hour time ending");
                     } else {
-                      // Don't render this hour if it's already passed
-                      return null;
+                      time = hour + translationHome("early hour time ending");
                     }
-                  } else if (hourlyForecast.time === currentHour) {
-                    time = translationHome("this hour");
-                  } else if (hourlyForecast.time === 12) {
-                    time = "12" + translationHome("late hour time ending");
-                  } else if (hourlyForecast.time > 12) {
-                    time =
-                      hourlyForecast.time -
-                      12 +
-                      translationHome("late hour time ending");
-                  } else if (hourlyForecast.time === 0) {
-                    time = "12" + translationHome("early hour time ending");
-                  } else {
-                    time =
-                      hourlyForecast.time +
-                      translationHome("early hour time ending");
                   }
                   return (
                     <div
@@ -510,7 +567,7 @@ const InternalHome = observer(() => {
                         <div className="mt-1.5 text-center">{moonEvent}</div>
                       )}
                       <div className="flex h-12 w-12 justify-center">
-                        {weatherState({ hour: index, icons: true })}
+                        {weatherState({ hourIndex: index, icons: true })}
                       </div>
                       {hourlyForecast.temperature ? (
                         <div>
@@ -555,7 +612,7 @@ const InternalHome = observer(() => {
                     >
                       <div className="mt-1.5 font-semibold">{day}</div>
                       <div className="h-12 w-12">
-                        {weatherState({ day: index, icons: true })}
+                        {weatherState({ dayIndex: index, icons: true })}
                       </div>
                       {dailyForecast.temperatureDay ? (
                         <div>
@@ -599,7 +656,13 @@ const InternalHome = observer(() => {
             <>
               <div className="col-span-3 row-span-4 hidden flex-col rounded-xl bg-gray-400 md:flex">
                 <div className="flex w-full items-center justify-between pb-2 pl-5 pr-3 pt-2 text-xl">
-                  {translationHome("9 day forecast")}{" "}
+                  <span
+                    className={classNamesCardsTitle(
+                      translationHome("9 day forecast"),
+                    )}
+                  >
+                    {translationHome("9 day forecast")}
+                  </span>
                   <HoverCard>
                     <HoverCardTrigger asChild>
                       <Button
@@ -643,7 +706,7 @@ const InternalHome = observer(() => {
                             {day}
                           </div>
                           <div className="mt-2 w-1/5 xl:pl-1 xl:pr-4">
-                            {weatherState({ day: index, icons: true })}
+                            {weatherState({ dayIndex: index, icons: true })}
                           </div>
                           <div className="flex w-1/5 flex-col items-center justify-around xl:w-2/5 xl:flex-row">
                             {dailyForecast.temperatureDay ? (
@@ -689,7 +752,13 @@ const InternalHome = observer(() => {
           {weatherData.data?.precipitationProbabilities ? (
             <div className="col-span-9 row-span-1 rounded-md bg-gray-400 pb-2 md:col-span-4 md:col-start-4">
               <div className="mt-1.5 flex justify-between pl-4 pr-3 text-xl">
-                {translationHome("precipitation")}{" "}
+                <span
+                  className={classNamesCardsTitle(
+                    translationHome("precipitation"),
+                  )}
+                >
+                  {translationHome("precipitation")}{" "}
+                </span>
                 <HoverCard>
                   <HoverCardTrigger asChild>
                     <Button
@@ -742,7 +811,7 @@ const InternalHome = observer(() => {
                 ).map(([key, value]) => {
                   let raindropClass = "h-full w-full -mt-2";
                   if (value !== undefined && value !== null) {
-                    raindropClass = cn(
+                    raindropClass = clsx(
                       "w-full",
                       "h-full",
                       "-mt-2",
@@ -796,7 +865,11 @@ const InternalHome = observer(() => {
           {weatherData.data?.feels_like ? (
             <div className="col-span-5 row-span-1 row-start-2 rounded-md bg-gray-400 md:col-span-2 md:col-start-4">
               <div className="mt-1.5 flex justify-between pl-4 pr-3 text-xl">
-                <span className="hyphens-auto break-words">
+                <span
+                  className={classNamesCardsTitle(
+                    translationHome("feels like"),
+                  )}
+                >
                   {translationHome("feels like")}
                 </span>
                 <HoverCard>
@@ -840,7 +913,9 @@ const InternalHome = observer(() => {
 
           {weatherData.data?.air_quality ? (
             <div className="col-span-5 row-span-2 row-start-3 rounded-md bg-gray-400 md:col-span-2 md:col-start-4 md:row-span-1 xl:col-span-1 xl:col-start-4">
-              <div className="ml-2 mt-1.5 hyphens-auto break-words text-xl">
+              <div
+                className={`${classNamesCardsTitle(translationHome("air quality"))} ml-2 mt-1.5 text-xl`}
+              >
                 {translationHome("air quality")}
               </div>
               <div className="relative mb-2 ml-3.5 mt-2 flex h-64 items-center justify-center xl:justify-normal">
@@ -884,7 +959,11 @@ const InternalHome = observer(() => {
           {weatherData.data?.visibility ? (
             <div className="col-span-4 col-start-6 row-span-1 row-start-2 rounded-md bg-gray-400 md:col-span-2 md:col-start-6">
               <div className="mt-1.5 flex justify-between pl-4 pr-3 text-xl">
-                <span className="hyphens-auto break-words">
+                <span
+                  className={classNamesCardsTitle(
+                    translationHome("visibility"),
+                  )}
+                >
                   {translationHome("visibility")}
                 </span>
                 <HoverCard>
@@ -920,7 +999,11 @@ const InternalHome = observer(() => {
           weatherData.data?.wind_pressure !== undefined ? (
             <div className="col-span-4 col-start-6 row-span-1 row-start-3 rounded-md bg-gray-400 md:col-span-2 md:col-start-6 xl:col-span-3 xl:col-start-5">
               <div className="mb-2 mt-1.5 flex w-full justify-between pl-4 pr-3 text-xl">
-                <span className="hyphens-auto break-words">
+                <span
+                  className={classNamesCardsTitle(
+                    translationHome("wind pressure"),
+                  )}
+                >
                   {translationHome("wind pressure")}
                 </span>
                 <HoverCard>
@@ -972,7 +1055,9 @@ const InternalHome = observer(() => {
                       hPa
                     </div>
                   </div>
-                  <div className="hyphens-auto break-words pr-3">
+                  <div
+                    className={`${classNamesCardsTitle(translationHome("speed"))} pr-3`}
+                  >
                     <span className="font-bold md:font-normal">
                       {translationHome("speed")}
                     </span>
@@ -994,7 +1079,11 @@ const InternalHome = observer(() => {
           {weatherData.data?.moonPhaseCode ? (
             <div className="col-span-4 col-start-6 row-span-1 row-start-4 rounded-md bg-gray-400 md:col-span-4 md:col-start-4">
               <div className="mt-1.5 flex justify-between pl-4 pr-3 text-xl">
-                <span className="hyphens-auto break-words">
+                <span
+                  className={classNamesCardsTitle(
+                    translationHome("moon phase"),
+                  )}
+                >
                   {translationHome("moon phase")}{" "}
                 </span>
                 <HoverCard>
@@ -1029,15 +1118,23 @@ const InternalHome = observer(() => {
 
           <div className="z-0 col-span-2 col-start-8 row-span-4 row-start-1 hidden rounded-md bg-gray-400 md:block">
             <div className="h-full w-full">
-              <Map
-                position={mapPosition}
-                className="h-full w-full rounded-md"
-              />
+              {mapPosition ? (
+                <Map
+                  position={mapPosition}
+                  className="h-full w-full rounded-md"
+                />
+              ) : (
+                <Skeleton className="h-full w-full" />
+              )}
             </div>
           </div>
         </div>
         <div className="z-0 mb-6 block h-96 w-11/12 rounded-md md:hidden">
-          <Map position={mapPosition} className="h-full w-full rounded-md" />
+          {mapPosition ? (
+            <Map position={mapPosition} className="h-full w-full rounded-md" />
+          ) : (
+            <Skeleton className="h-full w-full" />
+          )}
         </div>
       </div>
     </Layout>

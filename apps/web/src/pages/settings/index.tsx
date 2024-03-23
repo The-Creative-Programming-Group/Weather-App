@@ -5,6 +5,7 @@ import { RxCheck } from "react-icons/rx";
 
 import type { TemperatureUnitType, WindSpeedUnitType } from "~/states";
 import germanFlag from "~/assets/german-flag.png";
+import indonesianFlag from "~/assets/indonesian-flag.png";
 import usaFlag from "~/assets/usa-flag.png";
 import Layout from "~/components/Layout";
 import {
@@ -176,6 +177,25 @@ const Settings = observer(() => {
                 {translationSettings("german")}
               </p>
               {locale === "de" && (
+                <RxCheck width={20} height={20} className="h-9 w-9" />
+              )}
+            </button>
+            <button
+              className={`${normalButtonClass} ${
+                locale === "id" ? "border-2" : ""
+              }`}
+              onClick={() => changeLocale("id")}
+            >
+              <Image
+                src={indonesianFlag}
+                alt="Flag of the Netherladns"
+                width={20}
+                height={20}
+              />
+              <p className={`${styles.buttontext} ml-2`}>
+                {translationSettings("indonesian")}
+              </p>
+              {locale === "id" && (
                 <RxCheck width={20} height={20} className="h-9 w-9" />
               )}
             </button>

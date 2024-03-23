@@ -6,6 +6,7 @@ Weather.io is a simple,
 user-friendly application that fetches
 and displays real-time weather data for any city
 using the [OpenWeatherMap API](https://openweathermap.org/api) and [Open Meteo API](https://open-meteo.com).
+It's not collecting any data and is free from ads. You can use it for free and without any registration.
 
 ## How to start
 
@@ -13,7 +14,11 @@ After you installed pnpm (you can look here at the [installation guide](https://
 `pnpm install` <br>
 This will install all the dependencies for the project.
 <br> <br>
-After that you can run the following command, to look at the current state (with your own changes) of the project:
+Next you will have to fill the `.env` file with your own API keys, following the `.env.example` file as a guide.
+<br> <br>
+After that you have to go into the city-data dir (`cd packages/city-data`), execute this command and follow all Convex setup instructions: `pnpm dlx convex dev`
+<br> <br>
+After that you can run the following command, to look at the current state (with your own changes) of the project by executing this command at the root directory:
 `pnpm dev`
 
 ## What's next? Which technologies are used?
@@ -94,7 +99,7 @@ You can check out the [create-t3-app GitHub repository](https://github.com/t3-os
 
 ## How do I deploy this?
 
-Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/vercel), [Netlify](https://create.t3.gg/en/deployment/netlify) and [Docker](https://create.t3.gg/en/deployment/docker) for more information.
+Follow the T3 deployment guides for [Vercel](https://create.t3.gg/en/deployment/vercel), [Netlify](https://create.t3.gg/en/deployment/netlify) and [Docker](https://create.t3.gg/en/deployment/docker) for more information.
 
 #### Create T3 App & Create T3 Turbo
 

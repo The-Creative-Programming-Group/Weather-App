@@ -3,8 +3,8 @@ import React, { useEffect, useRef, useState } from "react";
 import Head from "next/head";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import cn from "classnames";
-import { useQuery } from "convex/react";
+import clsx from "clsx";
+import { useMutation, useQuery } from "convex/react";
 import { ClipLoader } from "react-spinners";
 import { toast } from "sonner";
 
@@ -13,7 +13,6 @@ import { api as convexApi } from "@weatherio/city-data";
 
 import background from "~/assets/background.png";
 import search1Image from "~/assets/search1.png";
-import { api as tRPCApi } from "~/lib/utils/api";
 import { getLocaleProps, useScopedI18n } from "~/locales";
 import { activeCity$, addedCities$ } from "~/states";
 
@@ -49,16 +48,9 @@ const Search = () => {
     id: searchValue.id,
   });
 
-  const findCityByCoordinatesMutation =
-    tRPCApi.reverseGeoRouter.getCity.useMutation({
-      onSuccess: (data) => {
-        if (data) {
-          setSearchValue(data);
-        } else {
-          toast.error(translationLocationSettings("city not found toast"));
-        }
-      },
-    });
+  const findCityByCoordinatesMutation = useMutation(
+    convexApi.getCity.findNearestCityByCoord,
+  );
 
   useEffect(() => {
     if (searchValue.name === "") {
@@ -151,17 +143,17 @@ const Search = () => {
     if (city) {
       const existingCity = addedCities$
         .get()
-        .find((value: ICity) => value.name === city!.name);
-      if (addedCities$.get().find((value: ICity) => value.id === city!.id)) {
+        .find((value: ICity) => value.name === city.name);
+      if (addedCities$.get().find((value: ICity) => value.id === city.id)) {
         activeCity$.set(city);
-        void router.push("/home");
+        void router.push("/home?cityId=" + city.id);
       } else if (existingCity) {
         activeCity$.set(existingCity);
-        void router.push("/home");
+        void router.push("/home?cityId=" + city.id);
       } else {
         addedCities$.push(city);
         activeCity$.set(city);
-        void router.push("/home");
+        void router.push("/home?cityId=" + city.id);
       }
     } else {
       toast.error(translationLocationSettings("city not found toast"));
@@ -194,7 +186,10 @@ const Search = () => {
           />
 
           <input
-            className={cn(
+            // See here: https://stackoverflow.com/questions/2180645/is-automatically-assigning-focus-bad-for-accessibility
+            // eslint-disable-next-line jsx-a11y/no-autofocus
+            autoFocus
+            className={clsx(
               "w-full bg-[#383b53] pl-1.5 text-xl text-white outline-none md:pb-0.5 md:pl-3 md:pt-0.5",
               {
                 "pr-10":
@@ -232,7 +227,7 @@ const Search = () => {
             {findCitiesByName === undefined &&
             inputRef.current?.value &&
             inputRef.current?.value.length > 0 ? (
-              <ClipLoader color={"#ffffff"} loading={true} size={20} />
+              <ClipLoader color={"#ffffff"} loading size={20} />
             ) : null}
           </div>
         </div>
@@ -309,8 +304,16 @@ const Search = () => {
                     const latitude = position.coords.latitude;
                     const longitude = position.coords.longitude;
 
-                    findCityByCoordinatesMutation.mutate({
-                      coordinates: { lat: latitude, lng: longitude },
+                    void findCityByCoordinatesMutation({
+                      coord: { lat: latitude, lng: longitude },
+                    }).then((data) => {
+                      if (data) {
+                        setSearchValue(data);
+                      } else {
+                        toast.error(
+                          translationLocationSettings("city not found toast"),
+                        );
+                      }
                     });
                   });
                 }

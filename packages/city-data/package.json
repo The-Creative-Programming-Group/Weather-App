@@ -28,10 +28,10 @@
   },
   "prettier": "@weatherio/prettier-config",
   "dependencies": {
-    "convex": "^1.9.0",
+    "convex": "^1.10.0",
     "jsonfile": "^6.1.0",
     "jsonl": "^1.1.2",
-    "yauzl": "^3.0.0",
+    "yauzl": "^3.1.2",
     "zod": "^3.22.4"
   },
   "devDependencies": {
@@ -40,8 +40,8 @@
     "@weatherio/eslint-config": "workspace:^0.2.0",
     "@weatherio/prettier-config": "workspace:^0.1.0",
     "@weatherio/tsconfig": "workspace:^0.1.0",
-    "eslint": "^8.56.0",
+    "eslint": "^8.57.0",
     "prettier": "^3.2.5",
-    "typescript": "^5.3.3"
+    "typescript": "^5.4.2"
   }
 }
