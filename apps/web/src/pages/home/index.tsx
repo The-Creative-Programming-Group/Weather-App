@@ -42,16 +42,12 @@ import {
 import { ScrollArea, ScrollBar } from "@weatherio/ui/scroll-area";
 import { Skeleton } from "@weatherio/ui/skeleton";
 
+import type { WindSpeedUnitType } from "~/states";
 import Layout from "~/components/Layout";
 import { MoonPhaseInfo } from "~/components/moon-phase-info";
 import { api } from "~/lib/utils/api";
 import { getLocaleProps, useScopedI18n } from "~/locales";
-import {
-  activeCity$,
-  temperatureUnit$,
-  windSpeedUnit$,
-  WindSpeedUnitType,
-} from "~/states";
+import { activeCity$, temperatureUnit$, windSpeedUnit$ } from "~/states";
 
 const Map = dynamic(() => import("@weatherio/ui/map"), { ssr: false });
 
