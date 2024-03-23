@@ -8,21 +8,21 @@ import { v } from "convex/values";
 import type { DataModel } from "./_generated/dataModel";
 import admin1JSON from "../src/admin1.json";
 import admin2JSON from "../src/admin2.json";
-import { query } from "./_generated/server";
+import { mutation, query } from "./_generated/server";
 
 interface IAdminJSON {
   code: string;
   name: string;
 }
 
+type City = DocumentByInfo<
+  NamedTableInfo<DataModel, TableNamesInDataModel<DataModel>>
+>;
+
 const admin1 = admin1JSON as IAdminJSON[];
 const admin2 = admin2JSON as IAdminJSON[];
 
-const addRegionToCity = (
-  city: DocumentByInfo<
-    NamedTableInfo<DataModel, TableNamesInDataModel<DataModel>>
-  >,
-) => {
+const addRegionToCity = (city: City) => {
   if (city.admin1 === "" || city.country === "") {
     console.log(city);
     return {
@@ -89,5 +89,60 @@ export const findCityById = query({
     }
 
     return addRegionToCity(city);
+  },
+});
+
+export const findNearestCityByCoord = mutation({
+  args: { coord: v.object({ lat: v.number(), lng: v.number() }) },
+  handler: async (ctx, args) => {
+    // This is a simple query that finds cities within a 0.1-degree square; this optimization is to avoid scanning the whole table with havy calculations.
+    const cities = await ctx.db
+      .query("search")
+      .withIndex("by_lon", (q) =>
+        q
+          .gt("coord.lon", args.coord.lng - 0.1)
+          .lt("coord.lon", args.coord.lng + 0.1),
+      )
+      .filter((q) =>
+        q.and(
+          q.gt(q.field("coord.lat"), args.coord.lat - 0.1),
+          q.lt(q.field("coord.lat"), args.coord.lat + 0.1),
+        ),
+      )
+      .collect();
+
+    // Find nearest city by calculating the distance between the given coord and the city's coord by using the haversine algorithm.
+    let nearestCity: City | null = null;
+    let nearestDistance = Infinity;
+    for (const city of cities) {
+      const cityCoord = city.coord;
+      const lat1 = args.coord.lat;
+      const lon1 = args.coord.lng;
+      const lat2 = cityCoord.lat;
+      const lon2 = cityCoord.lon;
+      const R = 6371e3; // metres
+      const φ1 = (lat1 * Math.PI) / 180; // φ, λ in radians
+      const φ2 = (lat2 * Math.PI) / 180;
+      const Δφ = ((lat2 - lat1) * Math.PI) / 180;
+      const Δλ = ((lon2 - lon1) * Math.PI) / 180;
+
+      const a =
+        Math.sin(Δφ / 2) * Math.sin(Δφ / 2) +
+        Math.cos(φ1) * Math.cos(φ2) * Math.sin(Δλ / 2) * Math.sin(Δλ / 2);
+      const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+      const distance = R * c; // in metres
+
+      if (distance < nearestDistance) {
+        nearestCity = city;
+        nearestDistance = distance;
+      }
+    }
+
+    if (!nearestCity) {
+      return null;
+    }
+
+    return addRegionToCity(nearestCity);
   },
 });

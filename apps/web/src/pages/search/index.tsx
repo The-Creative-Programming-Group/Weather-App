@@ -4,7 +4,7 @@ import Head from "next/head";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import clsx from "clsx";
-import { useQuery } from "convex/react";
+import { useMutation, useQuery } from "convex/react";
 import { ClipLoader } from "react-spinners";
 import { toast } from "sonner";
 
@@ -13,7 +13,6 @@ import { api as convexApi } from "@weatherio/city-data";
 
 import background from "~/assets/background.png";
 import search1Image from "~/assets/search1.png";
-import { api as tRPCApi } from "~/lib/utils/api";
 import { getLocaleProps, useScopedI18n } from "~/locales";
 import { activeCity$, addedCities$ } from "~/states";
 
@@ -49,16 +48,9 @@ const Search = () => {
     id: searchValue.id,
   });
 
-  const findCityByCoordinatesMutation =
-    tRPCApi.reverseGeoRouter.getCity.useMutation({
-      onSuccess: (data) => {
-        if (data) {
-          setSearchValue(data);
-        } else {
-          toast.error(translationLocationSettings("city not found toast"));
-        }
-      },
-    });
+  const findCityByCoordinatesMutation = useMutation(
+    convexApi.getCity.findNearestCityByCoord,
+  );
 
   useEffect(() => {
     if (searchValue.name === "") {
@@ -312,8 +304,16 @@ const Search = () => {
                     const latitude = position.coords.latitude;
                     const longitude = position.coords.longitude;
 
-                    findCityByCoordinatesMutation.mutate({
-                      coordinates: { lat: latitude, lng: longitude },
+                    void findCityByCoordinatesMutation({
+                      coord: { lat: latitude, lng: longitude },
+                    }).then((data) => {
+                      if (data) {
+                        setSearchValue(data);
+                      } else {
+                        toast.error(
+                          translationLocationSettings("city not found toast"),
+                        );
+                      }
                     });
                   });
                 }
