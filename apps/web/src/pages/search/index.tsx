@@ -227,7 +227,7 @@ const Search = () => {
             {findCitiesByName === undefined &&
             inputRef.current?.value &&
             inputRef.current?.value.length > 0 ? (
-              <ClipLoader color={"#ffffff"} loading={true} size={20} />
+              <ClipLoader color={"#ffffff"} loading size={20} />
             ) : null}
           </div>
         </div>
