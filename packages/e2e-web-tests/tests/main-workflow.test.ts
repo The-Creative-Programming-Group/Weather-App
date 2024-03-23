@@ -11,9 +11,9 @@ test("main workflow", async ({ page }) => {
   await page.waitForSelector("button[aria-label=Munich]");
   await page.press("input[type=text]", "Enter");
 
-  await page.waitForURL("**/home");
+  await page.waitForURL(/^http:\/\/localhost:3000\/home(\?.*)?$/);
 
-  expect(page.url()).toBe("http://localhost:3000/home");
+  await expect(page).toHaveURL(/^http:\/\/localhost:3000\/home(\?.*)?$/);
 
   await expect(
     page.locator("h1").filter({ hasText: "Munich" }).first(),
@@ -31,9 +31,9 @@ test("main workflow german city name", async ({ page }) => {
   await page.waitForSelector("button[aria-label=München]");
   await page.press("input[type=text]", "Enter");
 
-  await page.waitForURL("**/home");
+  await page.waitForURL(/^http:\/\/localhost:3000\/home(\?.*)?$/);
 
-  expect(page.url()).toBe("http://localhost:3000/home");
+  await expect(page).toHaveURL(/^http:\/\/localhost:3000\/home(\?.*)?$/);
 
   await expect(
     page.locator("h1").filter({ hasText: "München" }).first(),
