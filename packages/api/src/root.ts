@@ -1,5 +1,4 @@
 import { emailRouter } from "./routers/email";
-import { reverseGeoRouter } from "./routers/reverseGeo";
 import { weatherRouter } from "./routers/weather";
 import { createTRPCRouter } from "./trpc";
 
@@ -11,7 +10,6 @@ import { createTRPCRouter } from "./trpc";
 export const appRouter = createTRPCRouter({
   weather: weatherRouter,
   email: emailRouter,
-  reverseGeoRouter: reverseGeoRouter,
 });
 
 // export type definition of API

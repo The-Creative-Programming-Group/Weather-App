@@ -3,7 +3,7 @@ import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { observer } from "@legendapp/state/react";
 import clsx from "clsx";
-import { useQuery } from "convex/react";
+import { useMutation, useQuery } from "convex/react";
 import { RxCross2 } from "react-icons/rx";
 import { ClipLoader } from "react-spinners";
 import { toast } from "sonner";
@@ -13,7 +13,6 @@ import { api as convexApi } from "@weatherio/city-data";
 
 import search2Image from "~/assets/search2.png";
 import Layout from "~/components/Layout";
-import { api as tRPCApi } from "~/lib/utils/api";
 import { getLocaleProps, useScopedI18n } from "~/locales";
 import { activeCity$, addedCities$ } from "~/states";
 
@@ -47,16 +46,9 @@ const LocationSettings = observer(() => {
     id: searchValue.id,
   });
 
-  const findCityByCoordinatesMutation =
-    tRPCApi.reverseGeoRouter.getCity.useMutation({
-      onSuccess: (data) => {
-        if (data) {
-          setSearchValue(data);
-        } else {
-          toast.error(translationLocationSettings("city not found toast"));
-        }
-      },
-    });
+  const findCityByCoordinatesMutation = useMutation(
+    convexApi.getCity.findNearestCityByCoord,
+  );
 
   useEffect(() => {
     if (searchValue.name === "") {
@@ -159,21 +151,8 @@ const LocationSettings = observer(() => {
     }
 
     if (city) {
-      // Checks if the city is already added, and if it is a reverse geocoded city.
-      // If it is not a reverse geocoded city, we can compare by id,
-      // but if it is a reverse geocoded city, we have to compare by name.
-      const existingCity = addedCities$
-        .get()
-        .find(
-          (value: ICity) =>
-            value.name === city.name &&
-            (value.id.toString().length > 15 || city.id.toString().length > 15),
-        );
       if (addedCities$.get().find((value: ICity) => value.id === city.id)) {
         activeCity$.set(city);
-        toast.success(translationLocationSettings("switched to city toast"));
-      } else if (existingCity) {
-        activeCity$.set(existingCity);
         toast.success(translationLocationSettings("switched to city toast"));
       } else {
         addedCities$.push(city);
@@ -379,8 +358,16 @@ const LocationSettings = observer(() => {
                       const latitude = position.coords.latitude;
                       const longitude = position.coords.longitude;
 
-                      findCityByCoordinatesMutation.mutate({
-                        coordinates: { lat: latitude, lng: longitude },
+                      void findCityByCoordinatesMutation({
+                        coord: { lat: latitude, lng: longitude },
+                      }).then((data) => {
+                        if (data) {
+                          setSearchValue(data);
+                        } else {
+                          toast.error(
+                            translationLocationSettings("city not found toast"),
+                          );
+                        }
                       });
                     });
                   }
