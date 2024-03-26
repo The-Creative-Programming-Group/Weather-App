@@ -13,6 +13,5 @@ export default defineSchema({
     .searchIndex("search_body", {
       searchField: "name",
     })
-    .index("by_city_id", ["id"])
-    .index("by_lon", ["coord.lon"]),
+    .index("by_city_id", ["id"]),
 });

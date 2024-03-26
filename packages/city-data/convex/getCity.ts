@@ -92,19 +92,21 @@ export const findCityById = query({
   },
 });
 
+// This is not the fastest way of doing this stuff,
+// FIRST: We should use an index for both of the coord fields.
+// I did this first, but because of the big size these indexes took, our convex db storage limit exceeded.
+// In the future, if we have more storage, we should use indexes for coord fields.
+// SECOND: Instead of a bounding box search, we could use something like geohashes to find all nearby cities more efficiently and quickly.
 export const findNearestCityByCoord = mutation({
   args: { coord: v.object({ lat: v.number(), lng: v.number() }) },
   handler: async (ctx, args) => {
     // This is a simple query that finds cities within a 0.1-degree square; this optimization is to avoid scanning the whole table with havy calculations.
     const cities = await ctx.db
       .query("search")
-      .withIndex("by_lon", (q) =>
-        q
-          .gt("coord.lon", args.coord.lng - 0.1)
-          .lt("coord.lon", args.coord.lng + 0.1),
-      )
       .filter((q) =>
         q.and(
+          q.gt(q.field("coord.lon"), args.coord.lng - 0.1),
+          q.lt(q.field("coord.lon"), args.coord.lng + 0.1),
           q.gt(q.field("coord.lat"), args.coord.lat - 0.1),
           q.lt(q.field("coord.lat"), args.coord.lat + 0.1),
         ),
