@@ -30,7 +30,7 @@
     "@weatherio/prettier-config": "workspace:^0.1.0",
     "prettier": "^3.2.5",
     "turbo": "^1.13.0",
-    "typescript": "^5.4.2"
+    "typescript": "^5.4.3"
   },
   "prettier": "@weatherio/prettier-config"
 }
