@@ -28,7 +28,7 @@
   "devDependencies": {
     "@weatherio/prettier-config": "workspace:^0.1.0",
     "@weatherio/tsconfig": "workspace:^0.1.0",
-    "@types/eslint": "^8.56.5",
+    "@types/eslint": "^8.56.6",
     "eslint": "^8.57.0",
     "prettier": "^3.2.5",
     "typescript": "^5.4.2"
