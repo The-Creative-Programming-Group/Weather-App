@@ -15,6 +15,7 @@ env:
   QWEATHER_API_KEY: ${{ secrets.QWEATHER_API_KEY }}
   API_NINJA_API_KEY: ${{ secrets.API_NINJA_API_KEY }}
   NEXT_PUBLIC_CONVEX_URL: ${{ secrets.NEXT_PUBLIC_CONVEX_URL_PROD }}
+  BASEHUB_TOKEN: ${{ secrets.BASEHUB_TOKEN }}
 
 jobs:
   test:
