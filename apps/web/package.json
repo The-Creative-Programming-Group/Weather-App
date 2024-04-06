@@ -27,6 +27,7 @@
     "@vercel/analytics": "^1.2.2",
     "@vercel/speed-insights": "^1.0.10",
     "@weatherio/api": "workspace:^0.1.0",
+    "@weatherio/db": "workspace:^",
     "@weatherio/types": "workspace:^0.1.0",
     "@weatherio/ui": "workspace:^0.1.0",
     "clsx": "^2.1.0",

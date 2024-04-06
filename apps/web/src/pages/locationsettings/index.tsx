@@ -97,7 +97,7 @@ const LocationSettings = observer(() => {
       });
       return cities;
     });
-  }, [findCitiesByNameData]);
+  }, [findCitiesByNameData, findCitiesByNameStatus, searchQuery]);
 
   const removeCityFromAddedCities = (city: ICity) => {
     if (addedCities$.get().length === 1) {

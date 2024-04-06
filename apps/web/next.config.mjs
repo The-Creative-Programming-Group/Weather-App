@@ -1,8 +1,8 @@
 import createJiti from 'jiti'
-import { fileURLToPath } from 'node:url'
+import {fileURLToPath} from 'node:url'
 import withBundleAnalyzer from '@next/bundle-analyzer'
 import withPWAInit from '@ducanh2912/next-pwa'
-import { withAxiom } from 'next-axiom'
+import {withAxiom} from 'next-axiom'
 
 const withPWA = withPWAInit({
   dest: 'public',
@@ -25,6 +25,7 @@ const jiti = createJiti(fileURLToPath(import.meta.url))
  */
 jiti('./src/env.ts')
 jiti('@weatherio/api/env')
+jiti('@weatherio/db/env')
 
 /** @type {import("next").NextConfig} */
 const config = withMyBundleAnalyzer(withPWA(

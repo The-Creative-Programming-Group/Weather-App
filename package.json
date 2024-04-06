@@ -29,7 +29,7 @@
     "@turbo/gen": "^1.12.5",
     "@weatherio/prettier-config": "workspace:^0.1.0",
     "prettier": "^3.2.5",
-    "turbo": "^1.13.0",
+    "turbo": "^1.13.2",
     "typescript": "^5.4.2"
   },
   "prettier": "@weatherio/prettier-config"

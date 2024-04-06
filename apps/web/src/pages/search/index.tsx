@@ -99,7 +99,7 @@ const Search = () => {
       });
       return cities;
     });
-  }, [findCitiesByNameData]);
+  }, [findCitiesByNameData, findCitiesByNameStatus, searchQuery]);
 
   // Gets called if the user clicks on the "continue" button or press enter
   const searchCity = () => {
