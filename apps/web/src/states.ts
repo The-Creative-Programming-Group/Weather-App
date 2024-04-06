@@ -12,6 +12,7 @@ export const activeCity$ = observable<ICity>({
   coord: { lat: 0, lon: 0 },
   region: "",
   country: "",
+  germanName: "",
 });
 
 persistObservable<ICity>(activeCity$, {
