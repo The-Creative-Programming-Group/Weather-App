@@ -45,6 +45,7 @@ export interface ICity {
   };
   region: string;
   country: string;
+  germanName: string | null;
 }
 
 // Copied from @upstash/ratelimiter

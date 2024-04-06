@@ -4,21 +4,21 @@ import Head from "next/head";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import clsx from "clsx";
-import { useMutation, useQuery } from "convex/react";
 import { ClipLoader } from "react-spinners";
 import { toast } from "sonner";
 
 import type { ICity } from "@weatherio/types";
-import { api as convexApi } from "@weatherio/city-data";
 
 import background from "~/assets/background.png";
 import search1Image from "~/assets/search1.png";
-import { getLocaleProps, useScopedI18n } from "~/locales";
+import { api } from "~/lib/utils/api";
+import { getLocaleProps, useCurrentLocale, useScopedI18n } from "~/locales";
 import { activeCity$, addedCities$ } from "~/states";
 
 const Search = () => {
+  const locale = useCurrentLocale();
   const router = useRouter();
-  const [searchValue, setSearchValue] = useState<ICity>({
+  const [searchedValue, setSearchedValue] = useState<ICity>({
     id: 0,
     name: "",
     country: "",
@@ -27,7 +27,9 @@ const Search = () => {
       lon: 0,
       lat: 0,
     },
+    germanName: "",
   }); // searchValue is the value of the input field
+  const [searchQuery, setSearchQuery] = useState<string>("");
   const [results, setResults] = useState<ICity[]>([]); // results is the list of cities that match the searchValue
   const [isInputActive, setIsInputActive] = useState<boolean>(true); // this looks if the input field is active
   const inputRef = useRef<HTMLInputElement>(null); // inputRef is the ref of the input field
@@ -40,41 +42,64 @@ const Search = () => {
   Fetches on every change in the search Value the cities that match the search value
    */
 
-  const findCitiesByName = useQuery(convexApi.getCity.findCitiesByName, {
-    name: searchValue.name,
-  });
+  const { data: findCitiesByNameData = [], status: findCitiesByNameStatus } =
+    api.search.findCitiesByName.useQuery({
+      name: searchQuery,
+    });
 
-  const findCityById = useQuery(convexApi.getCity.findCityById, {
-    id: searchValue.id,
-  });
+  const { data: findCityByIdData = [], status: findCityByIdStatus } =
+    api.search.findCityById.useQuery({
+      id: searchedValue.id,
+    });
 
-  const findCityByCoordinatesMutation = useMutation(
-    convexApi.getCity.findNearestCityByCoord,
-  );
+  const findCityByCoordinatesMutation =
+    api.search.findNearestCityByCoord.useMutation({
+      onSuccess: (data) => {
+        if (data) {
+          setSearchedValue({
+            id: data.id,
+            name: data.name,
+            country: data.country,
+            region: data.region,
+            coord: {
+              lat: data.lat,
+              lon: data.lon,
+            },
+            germanName: data.germanName,
+          });
+          setSearchQuery(
+            locale === "de" && data.germanName ? data.germanName : data.name,
+          );
+        } else {
+          toast.error(translationLocationSettings("city not found toast"));
+        }
+      },
+    });
 
   useEffect(() => {
-    if (searchValue.name === "") {
+    if (searchQuery === "") {
       setResults([]);
       return;
     }
-    if (findCitiesByName === undefined) return;
+    if (!findCitiesByNameData || findCitiesByNameStatus !== "success") return;
     setResults(() => {
       const cities: ICity[] = [];
-      findCitiesByName.map((city) => {
+      findCitiesByNameData.map((city) => {
         cities.push({
           id: city.id,
           name: city.name,
           country: city.country,
           region: city.region,
           coord: {
-            lon: city.coord.lon,
-            lat: city.coord.lat,
+            lon: city.lon,
+            lat: city.lat,
           },
+          germanName: city.germanName,
         });
       });
       return cities;
     });
-  }, [searchValue, findCitiesByName]);
+  }, [findCitiesByNameData]);
 
   // Gets called if the user clicks on the "continue" button or press enter
   const searchCity = () => {
@@ -88,55 +113,45 @@ const Search = () => {
         lon: 0,
         lat: 0,
       },
+      germanName: null,
     };
-    if (searchValue.id.toString().length > 15) {
-      city = {
-        id: searchValue.id,
-        name: searchValue.name,
-        country: searchValue.country,
-        region: searchValue.region,
-        coord: {
-          lon: searchValue.coord.lon,
-          lat: searchValue.coord.lat,
-        },
-      };
-    } else {
-      if (searchValue.id !== 0 && searchValue.country !== "") {
-        if (findCityById === undefined) {
-          toast.loading(translationLocationSettings("try again toast"));
-          return;
-        }
-        if (findCityById) {
-          city = {
-            id: findCityById.id,
-            name: findCityById.name,
-            country: findCityById.country,
-            region: findCityById.region,
-            coord: {
-              lon: findCityById.coord.lon,
-              lat: findCityById.coord.lat,
-            },
-          };
-        } else {
-          toast.error(translationLocationSettings("city not found toast"));
-          return;
-        }
+    if (searchedValue.id !== 0 && searchedValue.country !== "") {
+      if (findCityByIdStatus === "pending") {
+        toast.loading(translationLocationSettings("try again toast"));
+        return;
+      }
+      if (!Array.isArray(findCityByIdData)) {
+        city = {
+          id: findCityByIdData.id,
+          name: findCityByIdData.name,
+          country: findCityByIdData.country,
+          region: findCityByIdData.region,
+          coord: {
+            lon: findCityByIdData.lon,
+            lat: findCityByIdData.lat,
+          },
+          germanName: findCityByIdData.germanName,
+        };
       } else {
-        if (findCitiesByName?.[0]) {
-          city = {
-            id: findCitiesByName[0].id,
-            name: findCitiesByName[0].name,
-            country: findCitiesByName[0].country,
-            region: findCitiesByName[0].region,
-            coord: {
-              lon: findCitiesByName[0].coord.lon,
-              lat: findCitiesByName[0].coord.lat,
-            },
-          };
-        } else {
-          toast.error(translationLocationSettings("city not found toast"));
-          return;
-        }
+        toast.error(translationLocationSettings("city not found toast"));
+        return;
+      }
+    } else {
+      if (findCitiesByNameData?.[0]) {
+        city = {
+          id: findCitiesByNameData[0].id,
+          name: findCitiesByNameData[0].name,
+          country: findCitiesByNameData[0].country,
+          region: findCitiesByNameData[0].region,
+          coord: {
+            lon: findCitiesByNameData[0].lon,
+            lat: findCitiesByNameData[0].lat,
+          },
+          germanName: findCitiesByNameData[0].germanName,
+        };
+      } else {
+        toast.error(translationLocationSettings("city not found toast"));
+        return;
       }
     }
 
@@ -193,7 +208,7 @@ const Search = () => {
               "w-full bg-[#383b53] pl-1.5 text-xl text-white outline-none md:pb-0.5 md:pl-3 md:pt-0.5",
               {
                 "pr-10":
-                  findCitiesByName === undefined &&
+                  findCitiesByNameStatus === "pending" &&
                   inputRef.current?.value &&
                   inputRef.current?.value.length > 0,
               },
@@ -203,18 +218,12 @@ const Search = () => {
             onFocus={() => {
               setIsInputActive(true);
             }}
-            value={searchValue.name}
+            value={searchQuery}
             onBlur={async () => {
               setIsInputActive(false);
             }}
             onChange={(event) => {
-              setSearchValue((prevSearchValue): ICity => {
-                return {
-                  ...prevSearchValue,
-                  id: 0,
-                  name: event.target.value,
-                };
-              });
+              setSearchQuery(event.target.value);
             }}
             ref={inputRef}
             onKeyDown={(event) => {
@@ -224,7 +233,7 @@ const Search = () => {
             }}
           />
           <div className="absolute right-3 top-1/2 mt-0.5 -translate-y-1/2">
-            {findCitiesByName === undefined &&
+            {findCitiesByNameStatus === "pending" &&
             inputRef.current?.value &&
             inputRef.current?.value.length > 0 ? (
               <ClipLoader color={"#ffffff"} loading size={20} />
@@ -250,7 +259,7 @@ const Search = () => {
                * and the onClick function never will get executed
                */
               onMouseDown={() => {
-                setSearchValue((prevSearchValue): ICity => {
+                setSearchedValue((prevSearchValue): ICity => {
                   return {
                     ...prevSearchValue,
                     id: city.id,
@@ -263,18 +272,29 @@ const Search = () => {
                     },
                   };
                 });
+                setSearchQuery(
+                  locale === "de" && city.germanName
+                    ? city.germanName
+                    : city.name,
+                );
               }}
             >
               <span>
-                {city.name
+                {(locale === "de" && city.germanName
+                  ? city.germanName
+                  : city.name
+                )
                   .split("")
                   .map((letter: string, letterIndex: number) => (
                     <span
                       className={
-                        city.name
+                        (locale === "de" && city.germanName
+                          ? city.germanName
+                          : city.name
+                        )
                           .toLowerCase()
-                          .startsWith(searchValue.name.toLowerCase())
-                          ? letterIndex < searchValue.name.length
+                          .startsWith(searchQuery.toLowerCase())
+                          ? letterIndex < searchQuery.length
                             ? "font-bold"
                             : ""
                           : ""
@@ -304,16 +324,8 @@ const Search = () => {
                     const latitude = position.coords.latitude;
                     const longitude = position.coords.longitude;
 
-                    void findCityByCoordinatesMutation({
-                      coord: { lat: latitude, lng: longitude },
-                    }).then((data) => {
-                      if (data) {
-                        setSearchValue(data);
-                      } else {
-                        toast.error(
-                          translationLocationSettings("city not found toast"),
-                        );
-                      }
+                    findCityByCoordinatesMutation.mutate({
+                      coord: { lat: latitude, lon: longitude },
                     });
                   });
                 }
@@ -321,7 +333,7 @@ const Search = () => {
             >
               {translationSearch("my location button")}
             </button>
-            {searchValue.name.length > 0 ? (
+            {searchQuery.length > 0 ? (
               <button
                 onClick={() => {
                   searchCity();

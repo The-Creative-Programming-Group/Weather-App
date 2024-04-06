@@ -15,8 +15,9 @@ import superjson from "superjson";
 import { ZodError } from "zod";
 
 import type { Duration } from "@weatherio/types";
+import { db } from "@weatherio/db";
 
-import { env } from "../env.mjs";
+import { env } from "../env";
 import { redis } from "./upstash";
 
 /**
@@ -70,6 +71,7 @@ export const createTRPCContext = ({
     req,
     resHeaders,
     ip,
+    db,
   };
 };
 

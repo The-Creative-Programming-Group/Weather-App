@@ -12,7 +12,6 @@ import { AxiomWebVitals } from "next-axiom";
 
 import { Toaster } from "@weatherio/ui/sonner";
 
-import ConvexClientProvider from "~/components/ConvexClientProvider";
 import { PWALifeCycle } from "~/components/PWALifecycle";
 import { api } from "~/lib/utils/api";
 import en from "~/locales/en";
@@ -23,7 +22,7 @@ const inter = Inter({ subsets: ["latin-ext"] });
 
 const MyApp: AppType = ({ Component, pageProps }: AppProps) => {
   return (
-    <ConvexClientProvider>
+    <>
       {/* eslint-disable-next-line @typescript-eslint/no-unsafe-assignment,@typescript-eslint/no-unsafe-member-access */}
       <I18nProvider locale={pageProps.locale} fallbackLocale={en}>
         <Head>
@@ -45,7 +44,7 @@ const MyApp: AppType = ({ Component, pageProps }: AppProps) => {
       <SpeedInsights />
       <AxiomWebVitals />
       <ReactQueryDevtools initialIsOpen={false} />
-    </ConvexClientProvider>
+    </>
   );
 };
 

@@ -3,7 +3,7 @@ import { fetchRequestHandler } from "@trpc/server/adapters/fetch";
 
 import { appRouter, createTRPCContext } from "@weatherio/api";
 
-import { env } from "~/env.mjs";
+import { env } from "~/env";
 
 export const config = { runtime: "edge" };
 

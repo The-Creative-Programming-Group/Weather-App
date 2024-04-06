@@ -6,7 +6,8 @@
   "files": [
     "./base.js",
     "./nextjs.js",
-    "./react.js"
+    "./react.js",
+    "./drizzle.js"
   ],
   "scripts": {
     "clean": "rm -rf .turbo node_modules",
@@ -20,15 +21,16 @@
     "@typescript-eslint/parser": "^7.2.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-config-turbo": "^1.12.5",
+    "eslint-plugin-drizzle": "^0.2.3",
     "eslint-plugin-import": "^2.29.1",
     "eslint-plugin-jsx-a11y": "^6.8.0",
     "eslint-plugin-react": "^7.34.1",
     "eslint-plugin-react-hooks": "^4.6.0"
   },
   "devDependencies": {
+    "@types/eslint": "^8.56.5",
     "@weatherio/prettier-config": "workspace:^0.1.0",
     "@weatherio/tsconfig": "workspace:^0.1.0",
-    "@types/eslint": "^8.56.5",
     "eslint": "^8.57.0",
     "prettier": "^3.2.5",
     "typescript": "^5.4.2"

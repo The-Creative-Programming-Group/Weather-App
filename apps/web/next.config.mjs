@@ -1,9 +1,8 @@
-// Importing env files here to validate on build
-import './src/env.mjs'
-import '@weatherio/api/env'
+import createJiti from "jiti";
+import {fileURLToPath} from "node:url";
 import withBundleAnalyzer from '@next/bundle-analyzer'
 import withPWAInit from '@ducanh2912/next-pwa'
-import { withAxiom } from 'next-axiom'
+import {withAxiom} from 'next-axiom'
 
 const withPWA = withPWAInit({
   dest: 'public',
@@ -17,11 +16,15 @@ const withMyBundleAnalyzer = withBundleAnalyzer({
   enabled: process.env.ANALYZE === 'true'
 })
 
+const jiti = createJiti(fileURLToPath(import.meta.url));
+
 /**
- * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation.
- * This is especially useful for Docker builds.
+ * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation. This is especially useful
+ * for Docker builds.
+ * Importing env files here to validate on build
  */
-!process.env.SKIP_ENV_VALIDATION && (await import('./src/env.mjs'))
+jiti("./src/env.ts");
+jiti("@weatherio/api/env")
 
 /** @type {import("next").NextConfig} */
 const config = withMyBundleAnalyzer(withPWA(
@@ -29,7 +32,7 @@ const config = withMyBundleAnalyzer(withPWA(
     reactStrictMode: true,
 
     /** Enables hot reloading for local packages without a build step */
-    transpilePackages: ['@weatherio/api', '@weatherio/ui', '@weatherio/types', '@weatherio/city-data'],
+    transpilePackages: ['@weatherio/api', '@weatherio/ui', '@weatherio/types'],
     i18n: {
       defaultLocale: 'en',
       locales: ['en', 'de', 'id']
