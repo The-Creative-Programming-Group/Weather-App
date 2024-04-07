@@ -1,8 +1,8 @@
 import createJiti from 'jiti'
-import {fileURLToPath} from 'node:url'
+import { fileURLToPath } from 'node:url'
 import withBundleAnalyzer from '@next/bundle-analyzer'
 import withPWAInit from '@ducanh2912/next-pwa'
-import {withAxiom} from 'next-axiom'
+import { withAxiom } from 'next-axiom'
 
 const withPWA = withPWAInit({
   dest: 'public',
