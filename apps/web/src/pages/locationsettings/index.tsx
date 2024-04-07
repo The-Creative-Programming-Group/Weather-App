@@ -376,7 +376,7 @@ const LocationSettings = observer(() => {
             </div>
             <div className="flex w-max flex-col">
               <button
-                className="mt-2.5 rounded border-2 bg-white p-2 font-bold text-[#2d3142] transition duration-500 ease-in-out hover:shadow-2xl"
+                className="mt-2.5 min-w-44 rounded border-2 bg-white p-2 font-bold text-[#2d3142] transition duration-500 ease-in-out hover:shadow-2xl"
                 onClick={() => {
                   if (navigator.geolocation) {
                     navigator.geolocation.getCurrentPosition((position) => {
@@ -390,13 +390,15 @@ const LocationSettings = observer(() => {
                   }
                 }}
               >
-                {translationLocationSettings("my location button")}
+                {findCityByCoordinatesMutation.isPending
+                  ? translationLocationSettings("loading")
+                  : translationLocationSettings("my location button")}
               </button>
               <button
                 onClick={() => {
                   searchCity();
                 }}
-                className="mb-2.5 mt-2.5 rounded border-2 border-black bg-[#2d3142] p-2 font-bold text-white"
+                className="mb-2.5 mt-2.5 min-w-44 rounded border-2 border-black bg-[#2d3142] p-2 font-bold text-white"
               >
                 {translationLocationSettings("add new location button")}
               </button>

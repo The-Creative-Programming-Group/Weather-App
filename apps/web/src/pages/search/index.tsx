@@ -331,7 +331,9 @@ const Search = () => {
                 }
               }}
             >
-              {translationSearch("my location button")}
+              {findCityByCoordinatesMutation.isPending
+                ? translationSearch("loading")
+                : translationSearch("my location button")}
             </button>
             {searchQuery.length > 0 ? (
               <button

@@ -32,18 +32,9 @@ export const searchRouter = createTRPCRouter({
         limit: 5,
         where: (users, { like, or }) =>
           or(
-            or(
-              like(users.name, input.name + "%"),
-              like(users.name, "%" + input.name),
-            ),
-            or(
-              like(users.germanName, input.name + "%"),
-              like(users.germanName, "%" + input.name),
-            ),
-            or(
-              like(users.region, input.name + "%"),
-              like(users.region, "%" + input.name),
-            ),
+            like(users.name, "%" + input.name + "%"),
+            like(users.germanName, "%" + input.name + "%"),
+            like(users.region, "%" + input.name + "%"),
           ),
       });
     }),

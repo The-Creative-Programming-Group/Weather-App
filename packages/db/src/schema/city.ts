@@ -21,6 +21,11 @@ export const city = sqliteTable(
   },
   (table) => {
     return {
+      searchByNameIdx: index("search_by_name_idx").on(
+        table.name,
+        table.germanName,
+        table.region,
+      ),
       nameIdx: index("name_idx").on(table.name),
       germanNameIdx: index("german_name_idx").on(table.germanName),
       regionIdx: index("region_idx").on(table.region),
