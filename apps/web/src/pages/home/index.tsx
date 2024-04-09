@@ -137,7 +137,6 @@ const InternalHome = observer(() => {
 
   useEffect(() => {
     if (Array.isArray(findCityByIdData) && isReady) {
-      console.log("moin meister");
       if (activeCity$.id.get() !== 0 && activeCity$.name.get() !== "") {
         void replace("/home?cityId=" + activeCity$.id.get());
         return;
