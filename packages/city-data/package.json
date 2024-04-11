@@ -4,19 +4,20 @@
   "private": true,
   "type": "module",
   "exports": {
+    ".": "./index.ts",
     "./admin1": "./src/admin1.json",
     "./admin2": "./src/admin2.json"
   },
   "license": "MIT",
   "scripts": {
+    "dev": "convex dev",
     "clean": "rm -rf .turbo node_modules",
     "format": "prettier --check . --ignore-path ../../.gitignore",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
-    "update:city-data": "cd src && tsx download.ts && tsx convert.ts",
-    "push:city-data-prod": "pnpm with-env tsx src/push-city-data.ts",
-    "push:city-data-dev": "",
-    "with-env": "dotenv -e ../../.env --"
+    "update:city-data-dev": "cd src && cross-env DEV_MODE=true tsx download.ts && cross-env DEV_MODE=true tsx convert.ts && cross-env DEV_MODE=true tsx optimize-json.ts && cd .. && convex import --table search src/cities.jsonl --replace",
+    "update:city-data-prod": "cd src && tsx download.ts && tsx convert.ts && tsx optimize-json.ts && cd .. && convex import --table search src/cities.jsonl --replace --prod",
+    "convex:deploy": "convex deploy"
   },
   "eslintConfig": {
     "root": true,
@@ -26,9 +27,10 @@
   },
   "prettier": "@weatherio/prettier-config",
   "dependencies": {
-    "@weatherio/db": "workspace:^",
-    "dotenv-cli": "^7.4.1",
+    "convex": "^1.11.0",
+    "cross-env": "^7.0.3",
     "jsonfile": "^6.1.0",
+    "jsonl-db": "^1.0.1",
     "yauzl": "^3.1.2",
     "zod": "^3.22.4"
   },

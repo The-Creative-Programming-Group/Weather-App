@@ -7,14 +7,29 @@ import { useRouter } from "next/router";
 
 import background from "~/assets/background.png";
 import { getLocaleProps, useScopedI18n } from "~/locales";
-import { activeCity$ } from "~/states";
+import { activeCity$, addedCities$ } from "~/states";
 
 const PublicHome: NextPage = () => {
   const translation = useScopedI18n("common");
   const router = useRouter();
 
   useLayoutEffect(() => {
-    if (activeCity$.id.get() !== 0 && activeCity$.name.get() !== "") {
+    // This is just for a migration of the types. This can be modified or removed in the future
+    if (typeof activeCity$.id.get() !== "string") {
+      activeCity$.delete();
+    }
+    addedCities$.get().map((city) => {
+      if (typeof city.id !== "string") {
+        addedCities$.delete();
+        activeCity$.delete();
+      }
+    });
+
+    if (
+      activeCity$ &&
+      activeCity$.id.get() !== "" &&
+      activeCity$.name.get() !== ""
+    ) {
       void router.push("/home?cityId=" + activeCity$.id.get());
     }
   });

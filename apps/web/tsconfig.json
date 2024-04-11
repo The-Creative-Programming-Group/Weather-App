@@ -9,9 +9,6 @@
       "@weatherio/api": [
         "node_modules/@weatherio/api/*"
       ],
-      "@weatherio/db": [
-        "node_modules/@weatherio/db/*"
-      ]
     },
     "plugins": [
       {

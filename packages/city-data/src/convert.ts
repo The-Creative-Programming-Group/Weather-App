@@ -1,84 +1,6 @@
 import fs from "fs";
 import readline from "readline";
 import jsonfile from "jsonfile";
-import { z } from "zod";
-
-import admin1JSON from "../src/admin1.json";
-import admin2JSON from "../src/admin2.json";
-import { newCitySchema } from "./push-city-data.js";
-
-export const citySchema = z.object({
-  id: z.string(),
-  name: z.string(),
-  country: z.string(),
-  admin1: z.string(),
-  admin2: z.string(),
-  lat: z.string(),
-  lng: z.string(),
-});
-
-export const citiesSchema = z.array(citySchema);
-
-export const germanNamesSchema = z.array(
-  z.object({
-    geonameid: z.string(),
-    isolanguage: z.string(),
-    alternateName: z.string(),
-    isPreferredName: z.string(),
-  }),
-);
-
-interface IAdminJSON {
-  code: string;
-  name: string;
-}
-
-const admin1 = admin1JSON as IAdminJSON[];
-const admin2 = admin2JSON as IAdminJSON[];
-
-const addRegionToCity = (city: {
-  id: number;
-  admin1: string;
-  admin2: string;
-  lat: number;
-  lon: number;
-  country: string;
-  name: string;
-  germanName: string | undefined;
-}) => {
-  if (city.admin1 === "" || city.country === "") {
-    return {
-      ...city,
-      region: "",
-    };
-  }
-  if (city.admin2 !== "") {
-    const regionCode = city.country + "." + city.admin1 + "." + city.admin2;
-    const region = admin2.find((region) => region.code === regionCode);
-
-    if (!region) {
-      const regionCode = city.country + "." + city.admin1;
-      const region = admin1.find((region) => region.code === regionCode);
-
-      return {
-        ...city,
-        region: region ? region.name : "",
-      };
-    }
-
-    return {
-      ...city,
-      region: region ? region.name : "",
-    };
-  }
-  const regionCode = city.country + "." + city.admin1;
-  const region = admin1.find((region) => region.code === regionCode);
-  const { admin1: _a1, admin2: _a2, ...newCity } = city;
-  return {
-    ...newCity,
-    region: region ? region.name : "",
-  };
-};
 
 const removeDoubleQuotes = (value: string) => value.replaceAll('"', "");
 
@@ -164,9 +86,12 @@ const txtToJson = (
 // dem               : digital elevation model, srtm3 or gtopo30, average elevation of 3''x3'' (ca 90mx90m) or 30''x30'' (ca 900mx900m) area in meters, integer. srtm processed by cgiar/ciat.
 // timezone          : the iana timezone id (see file timeZone.txt) varchar(40)
 // modification date : date of last modification in yyyy-MM-dd format
-void Promise.all([
+
+const populationModifier = process.env.DEV_MODE === "true" ? 5000 : 1000;
+
+await Promise.all([
   txtToJson(
-    "cities1000",
+    `cities${populationModifier}`,
     {
       0: "id",
       8: "country",
@@ -176,7 +101,7 @@ void Promise.all([
       10: "admin1",
       11: "admin2",
     },
-    "./cities.json",
+    `./cities${populationModifier}.json`,
   ),
 
   txtToJson(
@@ -215,38 +140,4 @@ void Promise.all([
   ),
 ]).then(() => {
   console.log("Done creating JSON files");
-
-  console.log("Starting to format and optimize cities.json");
-
-  const cities = JSON.parse(fs.readFileSync("./cities.json", "utf8"));
-  const germanNames = JSON.parse(fs.readFileSync("./DE.json", "utf8"));
-  const parsedCities = citiesSchema.parse(cities);
-  const parsedGermanNames = germanNamesSchema.parse(germanNames);
-
-  const updatedCities: z.infer<typeof newCitySchema> = parsedCities.map(
-    (city) => {
-      const germanNameEntry = parsedGermanNames.find(
-        (entry) =>
-          entry.geonameid === city.id &&
-          entry.isolanguage === "de" &&
-          entry.isPreferredName === "1",
-      );
-      return addRegionToCity({
-        ...city,
-        germanName: germanNameEntry?.alternateName,
-        id: parseInt(city.id),
-        lat: parseFloat(city.lat),
-        lon: parseFloat(city.lng),
-      });
-    },
-  );
-
-  // Write the updated cities back to the cities.json file
-  fs.writeFileSync(
-    "./cities.json",
-    JSON.stringify(updatedCities, null, 2),
-    "utf8",
-  );
-
-  console.log("Done formatting and optimizing cities.json");
 });

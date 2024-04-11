@@ -16,6 +16,8 @@ This will install all the dependencies for the project.
 <br> <br>
 Next you will have to fill the `.env` file with your own API keys, following the `.env.example` file as a guide.
 <br> <br>
+After that you have to go into the city-data dir (`cd packages/city-data`), execute this command and follow all Convex setup instructions: `pnpm dlx convex dev`
+<br> <br>
 From there on you have to run `pnpm update:city-data-dev` (for inserting the city data into the db in the dev branch).
 <br> <br>
 After that you can run the following command, to look at the current state (with your own changes) of the project by executing this command at the root directory:
@@ -45,8 +47,8 @@ If you are not familiar with the different technologies used in this project, pl
 - [TypeScript](https://www.typescriptlang.org)
 - [Turborepo](https://turbo.build/repo)
 - [Playwright](https://playwright.dev)
-- [Turso](https://turso.tech)
-- [Drizzle ORM](https://orm.drizzle.team/)
+- [Convex](https://convex.dev)
+
 #### APIs
 - [OpenWeatherMap API](https://openweathermap.org/api)
 - [Open Meteo API](https://open-meteo.com)
@@ -58,7 +60,8 @@ If you are not familiar with the different technologies used in this project, pl
 .github
   └─ workflows
         ├─ Playwright tests
-        ├─ Lighthouse score in Pull Requests 
+        ├─ Lighthouse score in Pull Requests
+        ├─ Update Convex Deployment 
         └─ CI with pnpm cache setup
 apps
   └─ next.js
@@ -69,14 +72,13 @@ apps
 packages
   ├─ api
   |   └─ tRPC v11 router definition
-  ├─ city-data 
+  ├─ city-data
+  |    ├─ Convex Files for the database and convex functions
   |    └─ Scripts for pulling the city-data
   ├─ e2e-web-tests
   |    └─ Playwright tests for the Next.js app
   ├─ types 
   |    └─ Types that are used across the whole project
-  ├─ db
-  |   └─ Typesafe db calls using Drizzle & Turso 
   └─ ui
       └─ Start of a UI package for the webapp using shadcn-ui and custom components
 tooling

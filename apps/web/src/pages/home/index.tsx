@@ -5,6 +5,7 @@ import { useRouter } from "next/router";
 import { observer } from "@legendapp/state/react";
 import { skipToken } from "@tanstack/react-query";
 import clsx from "clsx";
+import { useQuery } from "convex/react";
 import dayjs from "dayjs";
 import timezone from "dayjs/plugin/timezone";
 import utc from "dayjs/plugin/utc";
@@ -26,6 +27,7 @@ import { PiSunglasses } from "react-icons/pi";
 import { WiRaindrop } from "react-icons/wi";
 
 import type { IDailyForecast, IHourlyForecast } from "@weatherio/types";
+import { api as convexApi } from "@weatherio/city-data";
 import { Button } from "@weatherio/ui/button";
 import {
   Collapsible,
@@ -45,7 +47,12 @@ import Layout from "~/components/Layout";
 import { MoonPhaseInfo } from "~/components/moon-phase-info";
 import { api } from "~/lib/utils/api";
 import { getLocaleProps, useCurrentLocale, useScopedI18n } from "~/locales";
-import { activeCity$, temperatureUnit$, windSpeedUnit$ } from "~/states";
+import {
+  activeCity$,
+  addedCities$,
+  temperatureUnit$,
+  windSpeedUnit$,
+} from "~/states";
 
 const Map = dynamic(() => import("@weatherio/ui/map"), { ssr: false });
 
@@ -129,15 +136,27 @@ const InternalHome = observer(() => {
     useState(false);
   const { query, replace, isReady } = useRouter();
 
-  const { data: findCityByIdData = [] } = api.search.findCityById.useQuery(
-    typeof query.cityId === "string"
-      ? { id: parseInt(query.cityId) }
-      : skipToken,
+  const cityById = useQuery(
+    convexApi.getCity.findCityById,
+    typeof query.cityId === "string" ? { id: query.cityId } : "skip",
   );
 
   useEffect(() => {
-    if (Array.isArray(findCityByIdData) && isReady) {
-      if (activeCity$.id.get() !== 0 && activeCity$.name.get() !== "") {
+    // This is just for a migration of the types. This can be modified or removed in the future
+    if (typeof activeCity$.id.get() !== "string") {
+      activeCity$.delete();
+    }
+    addedCities$.get().map((city) => {
+      if (typeof city.id !== "string") {
+        addedCities$.delete();
+        activeCity$.delete();
+      }
+    });
+
+    const cityByIdIsLoading =
+      cityById === undefined && typeof query.cityId === "string";
+    if (!cityByIdIsLoading && !cityById && isReady) {
+      if (activeCity$.id.get() !== "" && activeCity$.name.get() !== "") {
         void replace("/home?cityId=" + activeCity$.id.get());
         return;
       } else {
@@ -148,9 +167,9 @@ const InternalHome = observer(() => {
   });
 
   const weatherData = api.weather.getWeather.useQuery(
-    !Array.isArray(findCityByIdData)
+    cityById
       ? {
-          coordinates: { lat: findCityByIdData.lat, lon: findCityByIdData.lon },
+          coordinates: { lat: cityById.lat, lon: cityById.lon },
           timezone: dayjs.tz.guess(),
           lang: locale,
         }
@@ -316,10 +335,8 @@ const InternalHome = observer(() => {
     return translationHome("weather state sunny");
   };
 
-  const mapPosition: [number, number] | undefined = !Array.isArray(
-    findCityByIdData,
-  )
-    ? [findCityByIdData.lat, findCityByIdData.lon]
+  const mapPosition: [number, number] | undefined = cityById
+    ? [cityById.lat, cityById.lon]
     : undefined;
 
   const [isSafari, setIsSafari] = useState<boolean>(false);
@@ -347,16 +364,20 @@ const InternalHome = observer(() => {
       classNameShareButton="mt-44"
       page="home"
       title={
-        !Array.isArray(findCityByIdData) ? findCityByIdData.name : undefined
+        cityById
+          ? locale === "de" && cityById.germanName
+            ? cityById.germanName
+            : cityById.name
+          : undefined
       }
     >
       <div className="mt-24 flex flex-col items-center">
         <h1 className="text-center text-4xl sm:text-5xl md:text-7xl">
-          {!Array.isArray(findCityByIdData) ? (
-            locale === "de" && findCityByIdData.germanName ? (
-              findCityByIdData.germanName
+          {cityById ? (
+            locale === "de" && cityById.germanName ? (
+              cityById.germanName
             ) : (
-              findCityByIdData.name
+              cityById.name
             )
           ) : (
             <Skeleton className="h-20 w-80" />

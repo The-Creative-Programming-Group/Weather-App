@@ -58,7 +58,11 @@
     "QWEATHER_API_KEY",
     "API_NINJA_API_KEY",
     "TEST_MODE",
-    "TURSO_CONNECTION_URL",
-    "TURSO_AUTH_TOKEN"
+    "NEXT_PUBLIC_CONVEX_URL",
+    "CONVEX_DEPLOY_KEY"
+  ],
+  "globalPassThroughEnv": [
+    "CONVEX_URL"
   ]
+
 }

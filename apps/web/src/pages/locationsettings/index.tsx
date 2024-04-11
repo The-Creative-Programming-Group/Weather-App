@@ -3,22 +3,23 @@ import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { observer } from "@legendapp/state/react";
 import clsx from "clsx";
+import { useMutation, useQuery } from "convex/react";
 import { RxCross2 } from "react-icons/rx";
 import { ClipLoader } from "react-spinners";
 import { toast } from "sonner";
 
 import type { ICity } from "@weatherio/types";
+import { api } from "@weatherio/city-data";
 
 import search2Image from "~/assets/search2.png";
 import Layout from "~/components/Layout";
-import { api } from "~/lib/utils/api";
 import { getLocaleProps, useCurrentLocale, useScopedI18n } from "~/locales";
 import { activeCity$, addedCities$ } from "~/states";
 
 const LocationSettings = observer(() => {
   const locale = useCurrentLocale();
   const [searchedValue, setSearchedValue] = useState<ICity>({
-    id: 0,
+    id: "",
     name: "",
     country: "",
     region: "",
@@ -40,51 +41,29 @@ const LocationSettings = observer(() => {
   Fetches on every change in the search Value the cities that match the search value
    */
 
-  const { data: findCitiesByNameData = [], status: findCitiesByNameStatus } =
-    api.search.findCitiesByName.useQuery({
-      name: searchQuery,
-    });
+  const findCitiesByName = useQuery(api.getCity.findCitiesByName, {
+    name: searchQuery,
+  });
 
-  const { data: findCityByIdData = [], status: findCityByIdStatus } =
-    api.search.findCityById.useQuery({
-      id: searchedValue.id,
-    });
+  const findCityById = useQuery(api.getCity.findCityById, {
+    id: searchedValue.id,
+  });
 
-  const findCityByCoordinatesMutation =
-    api.search.findNearestCityByCoord.useMutation({
-      onSuccess: (data) => {
-        if (data) {
-          setSearchedValue({
-            id: data.id,
-            name: data.name,
-            country: data.country,
-            region: data.region,
-            coord: {
-              lat: data.lat,
-              lon: data.lon,
-            },
-            germanName: data.germanName,
-          });
-          setSearchQuery(
-            locale === "de" && data.germanName ? data.germanName : data.name,
-          );
-        } else {
-          toast.error(translationLocationSettings("city not found toast"));
-        }
-      },
-    });
+  const findCityByCoordinatesMutation = useMutation(
+    api.getCity.findNearestCityByCoord,
+  );
 
   useEffect(() => {
     if (searchQuery === "") {
       setResults([]);
       return;
     }
-    if (!findCitiesByNameData || findCitiesByNameStatus !== "success") return;
+    if (findCitiesByName === undefined) return;
     setResults(() => {
       const cities: ICity[] = [];
-      findCitiesByNameData.map((city) => {
+      findCitiesByName.map((city) => {
         cities.push({
-          id: city.id,
+          id: city._id,
           name: city.name,
           country: city.country,
           region: city.region,
@@ -97,7 +76,7 @@ const LocationSettings = observer(() => {
       });
       return cities;
     });
-  }, [findCitiesByNameData, findCitiesByNameStatus, searchQuery]);
+  }, [findCitiesByName, searchQuery]);
 
   const removeCityFromAddedCities = (city: ICity) => {
     if (addedCities$.get().length === 1) {
@@ -110,11 +89,11 @@ const LocationSettings = observer(() => {
     }
   };
 
-  // Gets called if the user clicks on the "continue" button or press enter
+  // Gets called if the user clicks on the "add new location" button or press enter
   const searchCity = () => {
     inputRef.current?.blur();
     let city: ICity | undefined = {
-      id: 0,
+      id: "",
       name: "",
       country: "",
       region: "",
@@ -122,41 +101,46 @@ const LocationSettings = observer(() => {
         lon: 0,
         lat: 0,
       },
-      germanName: null,
+      germanName: undefined,
     };
-    if (searchedValue.id !== 0 && searchedValue.country !== "") {
-      if (findCityByIdStatus === "pending") {
+    if (
+      searchedValue.id !== "" &&
+      searchedValue.country !== "" &&
+      (searchedValue.name === searchQuery ||
+        searchedValue.germanName === searchQuery)
+    ) {
+      if (findCityById === undefined) {
         toast.loading(translationLocationSettings("try again toast"));
         return;
       }
-      if (!Array.isArray(findCityByIdData)) {
+      if (findCityById) {
         city = {
-          id: findCityByIdData.id,
-          name: findCityByIdData.name,
-          country: findCityByIdData.country,
-          region: findCityByIdData.region,
+          id: findCityById._id,
+          name: findCityById.name,
+          germanName: findCityById.germanName,
+          region: findCityById.region,
+          country: findCityById.country,
           coord: {
-            lon: findCityByIdData.lon,
-            lat: findCityByIdData.lat,
+            lat: findCityById.lat,
+            lon: findCityById.lon,
           },
-          germanName: findCityByIdData.germanName,
         };
       } else {
         toast.error(translationLocationSettings("city not found toast"));
         return;
       }
     } else {
-      if (findCitiesByNameData?.[0]) {
+      if (findCitiesByName?.[0]) {
         city = {
-          id: findCitiesByNameData[0].id,
-          name: findCitiesByNameData[0].name,
-          country: findCitiesByNameData[0].country,
-          region: findCitiesByNameData[0].region,
+          id: findCitiesByName[0]._id,
+          name: findCitiesByName[0].name,
+          germanName: findCitiesByName[0].germanName,
+          region: findCitiesByName[0].region,
+          country: findCitiesByName[0].country,
           coord: {
-            lon: findCitiesByNameData[0].lon,
-            lat: findCitiesByNameData[0].lat,
+            lat: findCitiesByName[0].lat,
+            lon: findCitiesByName[0].lon,
           },
-          germanName: findCitiesByNameData[0].germanName,
         };
       } else {
         toast.error(translationLocationSettings("city not found toast"));
@@ -174,7 +158,7 @@ const LocationSettings = observer(() => {
         toast.success(translationLocationSettings("added city toast"));
       }
       setSearchedValue({
-        id: 0,
+        id: "",
         name: "",
         country: "",
         region: "",
@@ -226,7 +210,7 @@ const LocationSettings = observer(() => {
                     "w-full border-b-2 border-black bg-[#d8d5db] pb-0.5 pl-3 pt-0.5 text-xl font-bold text-black outline-none",
                     {
                       "pr-10":
-                        findCitiesByNameStatus === "pending" &&
+                        findCitiesByName === undefined &&
                         inputRef.current?.value &&
                         inputRef.current?.value.length > 0,
                     },
@@ -253,7 +237,7 @@ const LocationSettings = observer(() => {
                   }}
                 />
                 <div className="absolute right-3 top-1/2 mt-0.5 -translate-y-1/2">
-                  {findCitiesByNameStatus === "pending" &&
+                  {!findCitiesByName &&
                   inputRef.current?.value &&
                   inputRef.current?.value.length > 0 ? (
                     <ClipLoader color={"#ffffff"} loading size={20} />
@@ -269,7 +253,11 @@ const LocationSettings = observer(() => {
                       ? "flex h-auto w-9/12 items-center justify-between border-b-2 border-gray-400 bg-[#d8d5db] p-5 text-left md:w-5/12"
                       : "hidden"
                   }
-                  aria-label={city.name}
+                  aria-label={
+                    locale === "de" && city.germanName
+                      ? city.germanName
+                      : city.name
+                  }
                   key={city.id}
                   /**
                    * I chose onMouseDown over onClick
@@ -383,14 +371,37 @@ const LocationSettings = observer(() => {
                       const latitude = position.coords.latitude;
                       const longitude = position.coords.longitude;
 
-                      findCityByCoordinatesMutation.mutate({
+                      void findCityByCoordinatesMutation({
                         coord: { lat: latitude, lon: longitude },
+                      }).then((data) => {
+                        if (data) {
+                          setSearchedValue({
+                            id: data._id,
+                            name: data.name,
+                            germanName: data.germanName,
+                            region: data.region,
+                            coord: {
+                              lat: data.lat,
+                              lon: data.lon,
+                            },
+                            country: data.country,
+                          });
+                          setSearchQuery(
+                            locale === "de" && data.germanName
+                              ? data.germanName
+                              : data.name,
+                          );
+                        } else {
+                          toast.error(
+                            translationLocationSettings("city not found toast"),
+                          );
+                        }
                       });
                     });
                   }
                 }}
               >
-                {findCityByCoordinatesMutation.isPending
+                {findCityByCoordinatesMutation === undefined
                   ? translationLocationSettings("loading")
                   : translationLocationSettings("my location button")}
               </button>
