@@ -50,7 +50,6 @@ export default {
   "locationsettings.city not found toast": "Kota tidak ditemukan!",
   "locationsettings.try again toast": "Coba lagi!",
 
-  "locationsettings.loading": "", // "dimuat" or "memuat"
   "locationsettings.my location button": "Pilih lokasi",
 
   // offline page translations
@@ -61,7 +60,6 @@ export default {
   "search.search input placeholder": "Cari lokasi",
   "search.continue button": "Lanjutkan -->",
 
-  "search.loading": "", // "dimuat" or "memuat"
   "search.my location button": "Pilih lokasi",
 
   // legal page translations

@@ -50,7 +50,6 @@ export default {
   "locationsettings.city not found toast": "Stadt nicht gefunden!",
   "locationsettings.try again toast": "Versuche es erneut!",
 
-  "locationsettings.loading": "Lädt...",
   "locationsettings.my location button": "Meinen Standort auswählen",
 
   // offline page translations
@@ -62,7 +61,6 @@ export default {
   "search.search input placeholder": "Suche deinen Standort",
   "search.continue button": "Weiter -->",
 
-  "search.loading": "Lädt...",
   "search.my location button": "Meinen Standort auswählen",
 
   // legal page translations

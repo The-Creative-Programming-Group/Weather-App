@@ -346,9 +346,7 @@ const Search = () => {
                 }
               }}
             >
-              {findCityByCoordinatesMutation === undefined
-                ? translationSearch("loading")
-                : translationSearch("my location button")}
+              {translationSearch("my location button")}
             </button>
             {searchQuery.length > 0 ? (
               <button

@@ -401,9 +401,7 @@ const LocationSettings = observer(() => {
                   }
                 }}
               >
-                {findCityByCoordinatesMutation === undefined
-                  ? translationLocationSettings("loading")
-                  : translationLocationSettings("my location button")}
+                {translationLocationSettings("my location button")}
               </button>
               <button
                 onClick={() => {
