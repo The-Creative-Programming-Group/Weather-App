@@ -15,9 +15,8 @@
     "format": "prettier --check . --ignore-path ../../.gitignore",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
-    "update:city-data": "cd src && node download.mjs && node convert.mjs && node renamejsonproperties.mjs && node createJSONL.mjs",
-    "push:city-data-prod": "convex import --table search src/city-list.jsonl --replace --prod",
-    "push:city-data-dev": "convex import --table search src/city-list.jsonl --replace",
+    "update:city-data-dev": "cd src && cross-env DEV_MODE=true tsx download.ts && cross-env DEV_MODE=true tsx convert.ts && cross-env DEV_MODE=true tsx optimize-json.ts && cd .. && convex import --table search src/cities.jsonl --replace",
+    "update:city-data-prod": "cd src && tsx download.ts && tsx convert.ts && tsx optimize-json.ts && cd .. && convex import --table search src/cities.jsonl --replace --prod",
     "convex:deploy": "convex deploy"
   },
   "eslintConfig": {
@@ -28,9 +27,11 @@
   },
   "prettier": "@weatherio/prettier-config",
   "dependencies": {
-    "convex": "^1.10.0",
+    "convex": "^1.11.0",
+    "cross-env": "^7.0.3",
     "jsonfile": "^6.1.0",
-    "jsonl": "^1.1.2",
+    "jsonl-db": "^1.0.1",
+    "tsx": "^4.7.2",
     "yauzl": "^3.1.2",
     "zod": "^3.22.4"
   },

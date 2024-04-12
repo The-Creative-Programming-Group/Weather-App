@@ -18,6 +18,8 @@ Next you will have to fill the `.env` file with your own API keys, following the
 <br> <br>
 After that you have to go into the city-data dir (`cd packages/city-data`), execute this command and follow all Convex setup instructions: `pnpm dlx convex dev`
 <br> <br>
+From there on you have to run `pnpm update:city-data-dev` (for inserting the city data into the db in the dev branch).
+<br> <br>
 After that you can run the following command, to look at the current state (with your own changes) of the project by executing this command at the root directory:
 `pnpm dev`
 
@@ -46,6 +48,7 @@ If you are not familiar with the different technologies used in this project, pl
 - [Turborepo](https://turbo.build/repo)
 - [Playwright](https://playwright.dev)
 - [Convex](https://convex.dev)
+
 #### APIs
 - [OpenWeatherMap API](https://openweathermap.org/api)
 - [Open Meteo API](https://open-meteo.com)
@@ -57,7 +60,8 @@ If you are not familiar with the different technologies used in this project, pl
 .github
   └─ workflows
         ├─ Playwright tests
-        ├─ Update Convex Deployment
+        ├─ Lighthouse score in Pull Requests
+        ├─ Update Convex Deployment 
         └─ CI with pnpm cache setup
 apps
   └─ next.js
@@ -74,7 +78,7 @@ packages
   ├─ e2e-web-tests
   |    └─ Playwright tests for the Next.js app
   ├─ types 
-  |    └─ Types that are used across the whole project  
+  |    └─ Types that are used across the whole project
   └─ ui
       └─ Start of a UI package for the webapp using shadcn-ui and custom components
 tooling

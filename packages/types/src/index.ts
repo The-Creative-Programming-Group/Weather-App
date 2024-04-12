@@ -37,7 +37,7 @@ export interface IDailyForecast {
 }
 
 export interface ICity {
-  id: number;
+  id: string;
   name: string;
   coord: {
     lon: number;
@@ -45,6 +45,7 @@ export interface ICity {
   };
   region: string;
   country: string;
+  germanName: string | undefined;
 }
 
 // Copied from @upstash/ratelimiter

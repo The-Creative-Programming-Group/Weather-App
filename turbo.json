@@ -64,4 +64,5 @@
   "globalPassThroughEnv": [
     "CONVEX_URL"
   ]
+
 }

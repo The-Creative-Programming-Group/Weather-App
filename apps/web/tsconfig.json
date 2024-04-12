@@ -5,7 +5,10 @@
     "paths": {
       "~/*": [
         "./src/*"
-      ]
+      ],
+      "@weatherio/api": [
+        "node_modules/@weatherio/api/*"
+      ],
     },
     "plugins": [
       {

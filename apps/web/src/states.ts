@@ -7,11 +7,12 @@ import type { ICity } from "@weatherio/types";
 // See Legend Documentation for more information about the state management
 // If you want more information stored in the state, you can change the input into an object
 export const activeCity$ = observable<ICity>({
-  id: 1,
+  id: "",
   name: "",
   coord: { lat: 0, lon: 0 },
   region: "",
   country: "",
+  germanName: "",
 });
 
 persistObservable<ICity>(activeCity$, {

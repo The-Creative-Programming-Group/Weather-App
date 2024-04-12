@@ -12,7 +12,7 @@ import { AxiomWebVitals } from "next-axiom";
 
 import { Toaster } from "@weatherio/ui/sonner";
 
-import ConvexClientProvider from "~/components/ConvexClientProvider";
+import ConvexClientProvider from "~/components/convex-client-provider";
 import { PWALifeCycle } from "~/components/PWALifecycle";
 import { api } from "~/lib/utils/api";
 import en from "~/locales/en";

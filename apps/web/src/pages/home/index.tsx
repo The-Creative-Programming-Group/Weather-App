@@ -46,8 +46,13 @@ import type { WindSpeedUnitType } from "~/states";
 import Layout from "~/components/Layout";
 import { MoonPhaseInfo } from "~/components/moon-phase-info";
 import { api } from "~/lib/utils/api";
-import { getLocaleProps, useScopedI18n } from "~/locales";
-import { activeCity$, temperatureUnit$, windSpeedUnit$ } from "~/states";
+import { getLocaleProps, useCurrentLocale, useScopedI18n } from "~/locales";
+import {
+  activeCity$,
+  addedCities$,
+  temperatureUnit$,
+  windSpeedUnit$,
+} from "~/states";
 
 const Map = dynamic(() => import("@weatherio/ui/map"), { ssr: false });
 
@@ -124,22 +129,34 @@ function convertWindSpeed(
 }
 
 const InternalHome = observer(() => {
+  const locale = useCurrentLocale();
   const [isMoreInfoCollapsibleOpen, setIsMoreInfoCollapsibleOpen] =
     useState(false);
   const [isMoreWarningsCollapsibleOpen, setIsMoreWarningsCollapsibleOpen] =
     useState(false);
-  const { locale, query, replace, isReady } = useRouter();
+  const { query, replace, isReady } = useRouter();
 
   const cityById = useQuery(
     convexApi.getCity.findCityById,
-    typeof query.cityId === "string" ? { id: parseInt(query.cityId) } : "skip",
+    typeof query.cityId === "string" ? { id: query.cityId } : "skip",
   );
 
   useEffect(() => {
+    // This is just for a migration of the types. This can be modified or removed in the future
+    if (typeof activeCity$.id.get() !== "string") {
+      activeCity$.delete();
+    }
+    addedCities$.get().map((city) => {
+      if (typeof city.id !== "string") {
+        addedCities$.delete();
+        activeCity$.delete();
+      }
+    });
+
     const cityByIdIsLoading =
       cityById === undefined && typeof query.cityId === "string";
     if (!cityByIdIsLoading && !cityById && isReady) {
-      if (activeCity$.id.get() !== 0 && activeCity$.name.get() !== "") {
+      if (activeCity$.id.get() !== "" && activeCity$.name.get() !== "") {
         void replace("/home?cityId=" + activeCity$.id.get());
         return;
       } else {
@@ -152,7 +169,7 @@ const InternalHome = observer(() => {
   const weatherData = api.weather.getWeather.useQuery(
     cityById
       ? {
-          coordinates: cityById.coord,
+          coordinates: { lat: cityById.lat, lon: cityById.lon },
           timezone: dayjs.tz.guess(),
           lang: locale,
         }
@@ -319,7 +336,7 @@ const InternalHome = observer(() => {
   };
 
   const mapPosition: [number, number] | undefined = cityById
-    ? [cityById.coord.lat, cityById.coord.lon]
+    ? [cityById.lat, cityById.lon]
     : undefined;
 
   const [isSafari, setIsSafari] = useState<boolean>(false);
@@ -346,11 +363,25 @@ const InternalHome = observer(() => {
     <Layout
       classNameShareButton="mt-44"
       page="home"
-      title={cityById ? cityById.name : undefined}
+      title={
+        cityById
+          ? locale === "de" && cityById.germanName
+            ? cityById.germanName
+            : cityById.name
+          : undefined
+      }
     >
       <div className="mt-24 flex flex-col items-center">
         <h1 className="text-center text-4xl sm:text-5xl md:text-7xl">
-          {cityById ? cityById.name : <Skeleton className="h-20 w-80" />}
+          {cityById ? (
+            locale === "de" && cityById.germanName ? (
+              cityById.germanName
+            ) : (
+              cityById.name
+            )
+          ) : (
+            <Skeleton className="h-20 w-80" />
+          )}
         </h1>
         <h1 className="mt-3 text-6xl text-gray-500 md:text-7xl">
           {temperature ? temperature : <Skeleton className="h-20 w-36" />}

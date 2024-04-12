@@ -2,7 +2,7 @@ import { log } from "next-axiom";
 import { Resend } from "resend";
 import { z } from "zod";
 
-import { env } from "../../env.mjs";
+import { env } from "../../env";
 import { FormEmail } from "../emails/form-email";
 import { createTRPCRouter, rateLimitedProcedure } from "../trpc";
 

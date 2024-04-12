@@ -3,6 +3,6 @@
   "compilerOptions": {
     "tsBuildInfoFile": "node_modules/.cache/tsbuildinfo.json"
   },
-  "include": ["src", "../../reset.d.ts", "src/**/*.mjs", ".", "convex"],
+  "include": ["src", "../../reset.d.ts", "src/**/*.mjs", "."],
   "exclude": ["node_modules"]
 }

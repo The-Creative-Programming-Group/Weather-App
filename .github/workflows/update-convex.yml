@@ -13,16 +13,16 @@ env:
   TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
 
 jobs:
-    update-city-data:
-        runs-on: ubuntu-latest
-        steps:
-          - uses: actions/checkout@v4
+  update-city-data:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
 
-          - name: Setup
-            uses: ./tooling/github/setup
+      - name: Setup
+        uses: ./tooling/github/setup
 
-          - name: Deploy to convex
-            run: pnpm convex:deploy
-            env:
-              CONVEX_URL: ${{ secrets.CONVEX_URL }}
-              CONVEX_DEPLOY_KEY: ${{ secrets.CONVEX_DEPLOY_KEY }}
+      - name: Deploy to convex
+        run: pnpm convex:deploy
+        env:
+          CONVEX_URL: ${{ secrets.CONVEX_URL }}
+          CONVEX_DEPLOY_KEY: ${{ secrets.CONVEX_DEPLOY_KEY }}

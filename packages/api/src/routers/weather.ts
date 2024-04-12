@@ -6,7 +6,7 @@ import { z } from "zod";
 
 import type { IDailyForecast, IHourlyForecast } from "@weatherio/types";
 
-import { env } from "../../env.mjs";
+import { env } from "../../env";
 import { createTRPCRouter, rateLimitedProcedure } from "../trpc";
 
 dayjs.extend(utc);
