@@ -112,8 +112,10 @@ const updatedCities: z.infer<typeof newCitiesSchema> = parsedCities.map(
       germanNameEntry?.isolanguage === "de" &&
       germanNameEntry?.isPreferredName === "1";
 
+    const { lng: _lng, ...newCity } = city;
+
     return addRegionToCity({
-      ...city,
+      ...newCity,
       germanName: isGermanPreferredName
         ? germanNameEntry.alternateName
         : undefined,
