@@ -64,7 +64,12 @@ const Layout: React.FC<LayoutProps> = ({
     <>
       <Head>
         <title>{title ? title + " - Weather.io" : "Weather.io"}</title>
-        <meta name="description" content="An faboulus weather website" />
+        <meta
+          name="description"
+          content={
+            title ? title + " - Weather.io" : "An faboulus weather website"
+          }
+        />
         <meta
           property="og:image"
           content="/_next/image?url=%2Fog-image.png&w=640&q=75"
