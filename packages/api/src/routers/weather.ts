@@ -267,8 +267,9 @@ export const weatherRouter = createTRPCRouter({
           } catch (error) {
             if (error instanceof z.ZodError) {
               console.error(`Zod Errors in the ${errorMessage}`, {
-                error: error.issues,
-                result,
+                errorIssues: error.issues,
+                resultStatus: result.status,
+                resultValue: result.value,
               });
             } else {
               console.error(`Else Error in the ${errorMessage}`, {
