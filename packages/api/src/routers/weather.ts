@@ -266,20 +266,20 @@ export const weatherRouter = createTRPCRouter({
             }
           } catch (error) {
             if (error instanceof z.ZodError) {
-              console.error(`Zod Errors in the ${errorMessage}`, {
+              log.error(`Zod Errors in the ${errorMessage}`, {
                 errorIssues: error.issues,
                 resultStatus: result.status,
                 resultValue: result.value,
               });
             } else {
-              console.error(`Else Error in the ${errorMessage}`, {
+              log.error(`Else Error in the ${errorMessage}`, {
                 error,
                 result,
               });
             }
           }
         } else {
-          console.log("result", result);
+          log.debug("result", result);
           log.error(`${errorMessage} request failed`, {
             status: result.status,
             reason:
@@ -408,7 +408,7 @@ export const weatherRouter = createTRPCRouter({
                 // console.log("temperatureSumNight", temperatureSumNight);
               }
             } else {
-              console.log("undefined value temperature: ", j);
+              log.debug("undefined value temperature: ", { j });
             }
 
             if (hourlyAndDailyData.hourly.rain[j] !== undefined) {
@@ -417,7 +417,7 @@ export const weatherRouter = createTRPCRouter({
               // console.log(hourlyAndDailyData.hourly.rain[j]!);
               // console.log("rainSum", rainSum);
             } else {
-              console.log("undefined value rain: ", j);
+              log.debug("undefined value rain: ", { j });
             }
 
             if (hourlyAndDailyData.hourly.showers[j] !== undefined) {
@@ -426,7 +426,7 @@ export const weatherRouter = createTRPCRouter({
               // console.log(hourlyAndDailyData.hourly.showers[j]!);
               // console.log("showersSum", showersSum);
             } else {
-              console.log("undefined value showers: ", j);
+              log.debug("undefined value showers: ", { j });
             }
 
             if (hourlyAndDailyData.hourly.snowfall[j] !== undefined) {
@@ -435,7 +435,7 @@ export const weatherRouter = createTRPCRouter({
               // console.log(hourlyAndDailyData.hourly.snowfall[j]!);
               // console.log("snowfallSum", snowfallSum);
             } else {
-              console.log("undefined value snowfall: ", j);
+              log.debug("undefined value snowfall: ", { j });
             }
 
             if (hourlyAndDailyData.hourly.cloudcover[j] !== undefined) {
