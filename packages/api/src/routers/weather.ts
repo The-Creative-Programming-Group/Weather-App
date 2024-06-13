@@ -269,6 +269,8 @@ export const weatherRouter = createTRPCRouter({
                 errorIssues: error.issues,
                 resultStatus: result.status,
                 resultValue: result.value,
+                status: result.value.status,
+                statusText: result.value.statusText,
               });
             } else {
               ctx.log.error(`Else Error in the ${errorMessage}`, {
