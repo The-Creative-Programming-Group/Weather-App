@@ -8,9 +8,11 @@
  */
 
 import type { FetchCreateContextFnOptions } from "@trpc/server/adapters/fetch";
+import type { AxiomRequest } from "next-axiom";
+import type { NextRequest } from "next/server";
 import { initTRPC, TRPCError } from "@trpc/server";
 import { Ratelimit } from "@upstash/ratelimit";
-import { log } from "next-axiom";
+import { log, Logger } from "next-axiom";
 import superjson from "superjson";
 import { ZodError } from "zod";
 
@@ -54,6 +56,10 @@ const UPSTASH_RATELIMITER_TIME_INTERVAL: Duration = validateDuration(
   ? env.UPSTASH_RATELIMITER_TIME_INTERVAL
   : "1d";
 
+function isAxiomRequest(req: unknown): req is AxiomRequest {
+  return (req as NextRequest & { log: Logger }).log instanceof Logger;
+}
+
 /**
  * This is the actual context you will use in your router. It will be used to process every request
  * that goes through your tRPC endpoint.
@@ -65,11 +71,13 @@ export const createTRPCContext = ({
   resHeaders,
 }: FetchCreateContextFnOptions) => {
   const ip = req.headers.get("x-forwarded-for") ?? "";
+
   return {
     ...createInnerTRPCContext({}),
     req,
     resHeaders,
     ip,
+    axiomTRPCMeta: {},
   };
 };
 
@@ -155,6 +163,22 @@ const rateLimitMiddleware = t.middleware(async ({ ctx, path, next }) => {
   return next();
 });
 
+const axiomMiddleware = t.middleware(async ({ ctx, next }) => {
+  const req = ctx.req;
+
+  if (!isAxiomRequest(req)) {
+    throw new Error(
+      "`nextAxiomTRPCMiddleware` could not find logger. Did you forget to wrap your route handler in `withAxiom`? See: TODO: link to docs",
+    );
+  }
+
+  const log = req.log.with({ axiomTRPCMeta: ctx.axiomTRPCMeta });
+
+  return next({
+    ctx: { log },
+  });
+});
+
 export const createTRPCRouter = t.router;
 
 /**
@@ -164,5 +188,6 @@ export const createTRPCRouter = t.router;
  * It does not guarantee that a user querying is authorized, but you can still access user session data if they
  * are logged in.
  */
-export const publicProcedure = t.procedure;
-export const rateLimitedProcedure = t.procedure.use(rateLimitMiddleware);
+export const axiomPublicProcedure = t.procedure.use(axiomMiddleware);
+export const rateLimitedProcedure =
+  axiomPublicProcedure.use(rateLimitMiddleware);

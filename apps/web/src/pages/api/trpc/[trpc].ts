@@ -1,5 +1,6 @@
 import type { NextRequest } from "next/server";
 import { fetchRequestHandler } from "@trpc/server/adapters/fetch";
+import { withAxiomRouteHandler } from "next-axiom";
 
 import { appRouter, createTRPCContext } from "@weatherio/api";
 
@@ -8,7 +9,7 @@ import { env } from "~/env";
 export const config = { runtime: "edge" };
 
 // export API handler
-export default async function handler(req: NextRequest) {
+const handler = withAxiomRouteHandler((req: NextRequest) => {
   return fetchRequestHandler({
     endpoint: "/api/trpc",
     router: appRouter,
@@ -23,4 +24,6 @@ export default async function handler(req: NextRequest) {
           }
         : undefined,
   });
-}
+});
+
+export default handler;

@@ -4,7 +4,7 @@
   "engines": {
     "node": ">=20.11.1"
   },
-  "packageManager": "pnpm@9.1.2",
+  "packageManager": "pnpm@9.3.0",
   "scripts": {
     "build": "turbo build",
     "clean": "git clean -xdf node_modules",
@@ -29,7 +29,7 @@
     "@turbo/gen": "^1.12.5",
     "@weatherio/prettier-config": "workspace:^0.1.0",
     "prettier": "^3.2.5",
-    "turbo": "^1.13.2",
+    "turbo": "^2.0.3",
     "typescript": "^5.4.2"
   },
   "prettier": "@weatherio/prettier-config"

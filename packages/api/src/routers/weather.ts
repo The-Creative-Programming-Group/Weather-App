@@ -1,7 +1,6 @@
 import dayjs from "dayjs";
 import timezone from "dayjs/plugin/timezone";
 import utc from "dayjs/plugin/utc";
-import { log } from "next-axiom";
 import { z } from "zod";
 
 import type { IDailyForecast, IHourlyForecast } from "@weatherio/types";
@@ -166,7 +165,7 @@ function calculateAirQualityIndex(
   pm25: number,
   nitrogenDioxide: number,
 ): number {
-  // log.debug("start running calculateAirQualityIndex");
+  // ctx.log.debug("start running calculateAirQualityIndex");
   const maxPm10Value = 100;
   const maxPm25Value = 71;
   const maxNitrogenDioxideValue = 601;
@@ -180,9 +179,9 @@ function calculateAirQualityIndex(
       ? (nitrogenDioxide / maxNitrogenDioxideValue) * 100
       : 100;
 
-  // log.debug("aqiPm10", { aqiPm10 });
-  // log.debug("aqiPm25", { aqiPm25 });
-  // log.debug("aqiNitrogenDioxide", { aqiNitrogenDioxide });
+  // ctx.log.debug("aqiPm10", { aqiPm10 });
+  // ctx.log.debug("aqiPm25", { aqiPm25 });
+  // ctx.log.debug("aqiNitrogenDioxide", { aqiNitrogenDioxide });
   return Math.max(aqiPm10, aqiPm25, aqiNitrogenDioxide);
 }
 
@@ -199,7 +198,7 @@ export const weatherRouter = createTRPCRouter({
       }),
     )
     .query(async ({ input, ctx }) => {
-      log.info("User requested weather data for coordinates", {
+      ctx.log.info("User requested weather data for coordinates", {
         coordinates: input.coordinates,
         timezone: input.timezone,
         user: ctx.ip,
@@ -266,21 +265,21 @@ export const weatherRouter = createTRPCRouter({
             }
           } catch (error) {
             if (error instanceof z.ZodError) {
-              log.error(`Zod Errors in the ${errorMessage}`, {
+              ctx.log.error(`Zod Errors in the ${errorMessage}`, {
                 errorIssues: error.issues,
                 resultStatus: result.status,
                 resultValue: result.value,
               });
             } else {
-              log.error(`Else Error in the ${errorMessage}`, {
+              ctx.log.error(`Else Error in the ${errorMessage}`, {
                 error,
                 result,
               });
             }
           }
         } else {
-          log.debug("result", result);
-          log.error(`${errorMessage} request failed`, {
+          ctx.log.debug("result", result);
+          ctx.log.error(`${errorMessage} request failed`, {
             status: result.status,
             reason:
               typeof result.reason === "string"
@@ -336,7 +335,7 @@ export const weatherRouter = createTRPCRouter({
         );
       }
 
-      // log.debug("presentAirQualityIndex", { presentAirQualityIndex });
+      // ctx.log.debug("presentAirQualityIndex", { presentAirQualityIndex });
 
       const hourlyForecast: IHourlyForecast[] = [];
 
@@ -408,7 +407,7 @@ export const weatherRouter = createTRPCRouter({
                 // console.log("temperatureSumNight", temperatureSumNight);
               }
             } else {
-              log.debug("undefined value temperature: ", { j });
+              ctx.log.debug("undefined value temperature: ", { j });
             }
 
             if (hourlyAndDailyData.hourly.rain[j] !== undefined) {
@@ -417,7 +416,7 @@ export const weatherRouter = createTRPCRouter({
               // console.log(hourlyAndDailyData.hourly.rain[j]!);
               // console.log("rainSum", rainSum);
             } else {
-              log.debug("undefined value rain: ", { j });
+              ctx.log.debug("undefined value rain: ", { j });
             }
 
             if (hourlyAndDailyData.hourly.showers[j] !== undefined) {
@@ -426,7 +425,7 @@ export const weatherRouter = createTRPCRouter({
               // console.log(hourlyAndDailyData.hourly.showers[j]!);
               // console.log("showersSum", showersSum);
             } else {
-              log.debug("undefined value showers: ", { j });
+              ctx.log.debug("undefined value showers: ", { j });
             }
 
             if (hourlyAndDailyData.hourly.snowfall[j] !== undefined) {
@@ -435,7 +434,7 @@ export const weatherRouter = createTRPCRouter({
               // console.log(hourlyAndDailyData.hourly.snowfall[j]!);
               // console.log("snowfallSum", snowfallSum);
             } else {
-              log.debug("undefined value snowfall: ", { j });
+              ctx.log.debug("undefined value snowfall: ", { j });
             }
 
             if (hourlyAndDailyData.hourly.cloudcover[j] !== undefined) {
@@ -545,7 +544,7 @@ export const weatherRouter = createTRPCRouter({
           return (probabilities[startIndex]! + probabilities[endIndex]!) / 2;
         }
 
-        /* log.debug("getTimeSlotAverage", {
+        /* ctx.log.debug("getTimeSlotAverage", {
           startIndex,
           endIndex,
           probabilities,

@@ -1,4 +1,3 @@
-import { log } from "next-axiom";
 import { Resend } from "resend";
 import { z } from "zod";
 
@@ -19,7 +18,7 @@ export const emailRouter = createTRPCRouter({
       }),
     )
     .mutation(async ({ input, ctx }) => {
-      log.info("User sent email", {
+      ctx.log.info("User sent email", {
         firstName: input.firstName,
         lastName: input.lastName,
         email: input.email,

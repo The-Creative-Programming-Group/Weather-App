@@ -1,8 +1,8 @@
 import createJiti from 'jiti'
-import { fileURLToPath } from 'node:url'
+import {fileURLToPath} from 'node:url'
 import withBundleAnalyzer from '@next/bundle-analyzer'
 import withPWAInit from '@ducanh2912/next-pwa'
-import { withAxiom } from 'next-axiom'
+import {withAxiomNextConfig} from 'next-axiom'
 
 const withPWA = withPWAInit({
   dest: 'public',
@@ -28,7 +28,7 @@ jiti('@weatherio/api/env')
 
 /** @type {import("next").NextConfig} */
 const config = withMyBundleAnalyzer(withPWA(
-  withAxiom({
+  withAxiomNextConfig({
     reactStrictMode: true,
 
     /** Enables hot reloading for local packages without a build step */
