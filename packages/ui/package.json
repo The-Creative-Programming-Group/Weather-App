@@ -37,7 +37,7 @@
     "tailwindcss-animate": "^1.0.7"
   },
   "devDependencies": {
-    "@types/leaflet": "^1.9.8",
+    "@types/leaflet": "^1.9.12",
     "@types/node": "^20.11.28",
     "@types/react": "^18.2.66",
     "@weatherio/eslint-config": "workspace:^0.2.0",
