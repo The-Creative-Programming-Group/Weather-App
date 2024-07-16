@@ -37,6 +37,7 @@ export default {
   "settings.english": "Englisch",
   "settings.german": "Deutsch",
   "settings.indonesian": "Indonesisch",
+  "settings.french": "Französisch",
 
   // locationsettings page translations
   "locationsettings.add new location": "Füge einen Ort hinzu",
