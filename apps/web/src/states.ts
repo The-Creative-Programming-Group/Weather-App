@@ -6,6 +6,7 @@ import type { ICity } from "@weatherio/types";
 
 // See Legend Documentation for more information about the state management
 // If you want more information stored in the state, you can change the input into an object
+// In the future: https://claude.ai/chat/ea9caa2d-1857-4b22-8316-fc8797038009
 export const activeCity$ = observable<ICity>({
   id: "",
   name: "",
