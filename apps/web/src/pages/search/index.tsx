@@ -169,7 +169,7 @@ const Search = () => {
     <>
       <Head>
         <title>{translationCommon("search page title")}</title>
-        <meta name="description" content="An faboulus weather website" />
+        <meta name="description" content="A fabulous weather website" />
       </Head>
       <Image
         src={background as StaticImport}
