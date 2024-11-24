@@ -33,7 +33,7 @@
     "react": "18.2.0",
     "react-leaflet": "^4.2.1",
     "sonner": "^1.4.3",
-    "tailwind-merge": "^2.2.1",
+    "tailwind-merge": "^2.5.5",
     "tailwindcss-animate": "^1.0.7"
   },
   "devDependencies": {
