@@ -37,7 +37,7 @@ importers:
         version: 10.2.5(next@14.1.3(@babel/core@7.23.7)(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(webpack@5.89.0)
       '@hookform/resolvers':
         specifier: ^3.3.4
-        version: 3.3.4(react-hook-form@7.51.0(react@18.2.0))
+        version: 3.3.4(react-hook-form@7.54.0(react@18.2.0))
       '@legendapp/state':
         specifier: ^2.1.8
         version: 2.1.8(react@18.2.0)
@@ -111,8 +111,8 @@ importers:
         specifier: 18.2.0
         version: 18.2.0(react@18.2.0)
       react-hook-form:
-        specifier: ^7.51.0
-        version: 7.51.0(react@18.2.0)
+        specifier: ^7.54.0
+        version: 7.54.0(react@18.2.0)
       react-html-parser:
         specifier: ^2.0.2
         version: 2.0.2(react@18.2.0)
@@ -2595,6 +2595,7 @@ packages:
 
   acorn-import-assertions@1.9.0:
     resolution: {integrity: sha512-cmMwop9x+8KFhxvKrKfPYmN6/pKTYYHBqLa0DfvVZcKMJWNyWLnaqND7dx/qn66R7ewM1UX5XMaDVP5wlVTaVA==}
+    deprecated: package has been renamed to acorn-import-attributes
     peerDependencies:
       acorn: ^8
 
@@ -3409,6 +3410,7 @@ packages:
   eslint@8.57.0:
     resolution: {integrity: sha512-dZ6+mexnaTIbSBZWgou51U6OmzIhYM2VcNdtiTtI7qPNZm35Akpr0f6vtw3w1Kmn5PYo+tZVfh13WrhpS6oLqQ==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
+    deprecated: This version is no longer supported. Please see https://eslint.org/version-support for other options.
     hasBin: true
 
   espree@9.6.1:
@@ -4683,11 +4685,11 @@ packages:
     peerDependencies:
       react: ^18.2.0
 
-  react-hook-form@7.51.0:
-    resolution: {integrity: sha512-BggOy5j58RdhdMzzRUHGOYhSz1oeylFAv6jUSG86OvCIvlAvS7KvnRY7yoAf2pfEiPN7BesnR0xx73nEk3qIiw==}
-    engines: {node: '>=12.22.0'}
+  react-hook-form@7.54.0:
+    resolution: {integrity: sha512-PS05+UQy/IdSbJNojBypxAo9wllhHgGmyr8/dyGQcPoiMf3e7Dfb9PWYVRco55bLbxH9S+1yDDJeTdlYCSxO3A==}
+    engines: {node: '>=18.0.0'}
     peerDependencies:
-      react: ^16.8.0 || ^17 || ^18
+      react: ^16.8.0 || ^17 || ^18 || ^19
 
   react-html-parser@2.0.2:
     resolution: {integrity: sha512-XeerLwCVjTs3njZcgCOeDUqLgNIt/t+6Jgi5/qPsO/krUWl76kWKXMeVs2LhY2gwM6X378DkhLjur0zUQdpz0g==}
@@ -6736,9 +6738,9 @@ snapshots:
     dependencies:
       '@hapi/hoek': 9.3.0
 
-  '@hookform/resolvers@3.3.4(react-hook-form@7.51.0(react@18.2.0))':
+  '@hookform/resolvers@3.3.4(react-hook-form@7.54.0(react@18.2.0))':
     dependencies:
-      react-hook-form: 7.51.0(react@18.2.0)
+      react-hook-form: 7.54.0(react@18.2.0)
 
   '@humanwhocodes/config-array@0.11.14':
     dependencies:
@@ -10050,7 +10052,7 @@ snapshots:
       react: 18.2.0
       scheduler: 0.23.0
 
-  react-hook-form@7.51.0(react@18.2.0):
+  react-hook-form@7.54.0(react@18.2.0):
     dependencies:
       react: 18.2.0
 
