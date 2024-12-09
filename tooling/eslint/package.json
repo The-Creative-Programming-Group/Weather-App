@@ -29,7 +29,7 @@
     "@types/eslint": "^8.56.5",
     "@weatherio/prettier-config": "workspace:^0.1.0",
     "@weatherio/tsconfig": "workspace:^0.1.0",
-    "eslint": "^8.57.0",
+    "eslint": "^8.57.1",
     "prettier": "^3.2.5",
     "typescript": "^5.4.2"
   },
