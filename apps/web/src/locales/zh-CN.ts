@@ -35,9 +35,9 @@ export default {
   "settings.language": "语言",
 
   "settings.english": "English",
-  "settings.german": "German",
-  "settings.indonesian": "Indonesian",
-  "settings.chinese": "Chinese",
+  "settings.german": "Deutsch",
+  "settings.indonesian": "Bahasa Indonesia",
+  "settings.chinese": "中文",
 
   // locationsettings page translations
   "locationsettings.add new location": "添加新位置",
