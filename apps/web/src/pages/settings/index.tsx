@@ -188,7 +188,7 @@ const Settings = observer(() => {
             >
               <Image
                 src={indonesianFlag}
-                alt="Flag of the Netherladns"
+                alt="Flag of the Republic of Indonesia"
                 width={20}
                 height={20}
               />
@@ -196,6 +196,25 @@ const Settings = observer(() => {
                 {translationSettings("indonesian")}
               </p>
               {locale === "id" && (
+                <RxCheck width={20} height={20} className="h-9 w-9" />
+              )}
+            </button>
+            <button
+              className={`${normalButtonClass} ${
+                locale === "zh-CN" ? "border-2" : ""
+              }`}
+              onClick={() => changeLocale("zh-CN")}
+            >
+              <Image
+                src={chineseFlag}
+                alt="Flag of PRC"
+                width={20}
+                height={20}
+              />
+              <p className={`${styles.buttontext} ml-2`}>
+                {translationSettings("简体中文")}
+              </p>
+              {locale === "zh-CN" && (
                 <RxCheck width={20} height={20} className="h-9 w-9" />
               )}
             </button>
