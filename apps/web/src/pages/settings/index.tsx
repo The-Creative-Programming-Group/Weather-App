@@ -213,7 +213,7 @@ const Settings = observer(() => {
                 height={20}
               />
               <p className={`${styles.buttontext} ml-2`}>
-                {translationSettings("简体中文")}
+                {translationSettings("chinese")}
               </p>
               {locale === "zh-CN" && (
                 <RxCheck width={20} height={20} className="h-9 w-9" />
