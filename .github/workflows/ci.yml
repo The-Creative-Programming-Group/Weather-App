@@ -50,10 +50,7 @@ jobs:
         uses: ./tooling/github/setup
 
       - name: Add city data
-        run: pnpm update:city-data-dev
-        env:
-          CONVEX_URL: ${{ secrets.CONVEX_URL }}
-          CONVEX_DEPLOY_KEY: ${{ secrets.CONVEX_DEPLOY_KEY }}
+        run: pnpm update:city-data-ci
 
       - name: Typecheck
         run: pnpm typecheck

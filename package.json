@@ -20,6 +20,7 @@
     "typecheck": "turbo typecheck",
     "update:city-data-prod": "cd packages/city-data && pnpm update:city-data-prod",
     "update:city-data-dev": "cd packages/city-data && pnpm update:city-data-dev",
+    "update:city-data-ci": "cd packages/city-data && pnpm update:city-data-ci",
     "convex:deploy": "cd packages/city-data && pnpm convex:deploy",
     "e2e:test": "turbo e2e:test"
   },
