@@ -64,7 +64,7 @@ export default {
 
   // legal page translations
   "legal.main text":"本网站的内容已经过仔细审核和制作。然而，我们无法保证所提供信息的准确性、完整性和时效性。我们不对因使用本网站而造成的任何损害或损失承担责任。链接页面的运营者对其内容负有完全责任。对于外部内容，我们明确排除任何责任。",
-  "legal.germany": "德文",
+  "legal.germany": "Germany",
   "legal.information disclaimer": "根据《德国电信和信息服务法》第5条的规定",
 
   // home page translations
