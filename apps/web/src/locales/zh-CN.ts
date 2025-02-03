@@ -11,7 +11,7 @@ export default {
   "common.menu home": "主页",
   "common.menu locations": "地点",
   "common.menu settings": "设置",
-  "common.menu contact": "联系方式",
+  "common.menu contact": "联系我们",
   "common.footer legal": "法律声明",
   "common.footer contributors": "贡献者",
 
