@@ -35,7 +35,7 @@ const config = withMyBundleAnalyzer(withPWA(
     transpilePackages: ['@weatherio/api', '@weatherio/ui', '@weatherio/types', '@weatherio/city-data'],
     i18n: {
       defaultLocale: 'en',
-      locales: ['en', 'de', 'id']
+      locales: ['en', 'de', 'id', 'zh-CN'],
     }
   }))
 )

@@ -4,7 +4,7 @@ export default {
 
   // common translations
   "common.title": "Weather.io",
-  "common.location": "全球",
+  "common.location": "中文",
 
   "common.start button": "查找您的位置",
   "common.share button": "分享",

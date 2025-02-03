@@ -7,6 +7,7 @@ import type { TemperatureUnitType, WindSpeedUnitType } from "~/states";
 import germanFlag from "~/assets/german-flag.png";
 import indonesianFlag from "~/assets/indonesian-flag.png";
 import usaFlag from "~/assets/usa-flag.png";
+import chineseFlag from "~/assets/chinese-flag.png";
 import Layout from "~/components/Layout";
 import {
   getLocaleProps,
