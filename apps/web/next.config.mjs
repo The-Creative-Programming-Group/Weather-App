@@ -32,13 +32,19 @@ const config = withMyBundleAnalyzer(
     withAxiomNextConfig({
       reactStrictMode: true,
 
-    /** Enables hot reloading for local packages without a build step */
-    transpilePackages: ['@weatherio/api', '@weatherio/ui', '@weatherio/types', '@weatherio/city-data'],
-    i18n: {
-      defaultLocale: 'en',
-      locales: ['en', 'de', 'id', 'zh-CN'],
-    }
-  }))
-)
+      /** Enables hot reloading for local packages without a build step */
+      transpilePackages: [
+        "@weatherio/api",
+        "@weatherio/ui",
+        "@weatherio/types",
+        "@weatherio/city-data",
+      ],
+      i18n: {
+        defaultLocale: "en",
+        locales: ["en", "de", "id", "zh-CN"],
+      },
+    }),
+  ),
+);
 
 export default config;
