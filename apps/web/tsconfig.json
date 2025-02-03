@@ -3,12 +3,8 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "~/*": [
-        "./src/*"
-      ],
-      "@weatherio/api": [
-        "node_modules/@weatherio/api/*"
-      ],
+      "~/*": ["./src/*"],
+      "@weatherio/api": ["node_modules/@weatherio/api/*"]
     },
     "plugins": [
       {
@@ -16,17 +12,9 @@
       }
     ],
     "tsBuildInfoFile": "node_modules/.cache/tsbuildinfo.json",
-    "types": [
-      "@ducanh2912/next-pwa/workbox"
-    ],
+    "types": ["@ducanh2912/next-pwa/workbox"],
     "strictNullChecks": true
   },
-  "include": [
-    ".",
-    ".next/types/**/*.ts",
-    "../../reset.d.ts"
-  ],
-  "exclude": [
-    "node_modules"
-  ]
+  "include": [".", ".next/types/**/*.ts", "../../reset.d.ts"],
+  "exclude": ["node_modules"]
 }

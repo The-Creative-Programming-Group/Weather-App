@@ -12,7 +12,7 @@
   "scripts": {
     "dev": "convex dev",
     "clean": "rm -rf .turbo node_modules",
-    "format": "prettier --check . --ignore-path ../../.gitignore",
+    "format": "prettier --check . --ignore-path ../../.gitignore --ignore-path ./.gitignore --ignore-path ./.prettierignore --ignore-path ./src/.gitignore",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
     "update:city-data-dev": "cd src && cross-env DEV_MODE=true tsx download.ts && cross-env DEV_MODE=true tsx convert.ts && cross-env DEV_MODE=true tsx optimize-json.ts && cd .. && convex import --table search src/cities.jsonl --replace",

@@ -7,6 +7,13 @@
       "@weatherio/*": ["node_modules/@weatherio/*"]
     }
   },
-  "include": ["tests", "**/*.mjs",  "../../reset.d.ts", "**/*.ts", "**/*.tsx", "playwright.config.ts"],
+  "include": [
+    "tests",
+    "**/*.mjs",
+    "../../reset.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "playwright.config.ts"
+  ],
   "exclude": ["node_modules"]
 }
