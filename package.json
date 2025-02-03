@@ -26,10 +26,10 @@
   "devDependencies": {
     "@playwright/test": "^1.42.1",
     "@total-typescript/ts-reset": "^0.5.1",
-    "@turbo/gen": "^1.12.5",
+    "@turbo/gen": "^2.4.0",
     "@weatherio/prettier-config": "workspace:^0.1.0",
     "prettier": "^3.2.5",
-    "turbo": "^2.0.3",
+    "turbo": "^2.4.0",
     "typescript": "^5.4.2"
   },
   "prettier": "@weatherio/prettier-config"
