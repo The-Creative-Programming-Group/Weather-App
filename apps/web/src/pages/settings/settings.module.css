@@ -1,5 +1,5 @@
 .normalbutton {
-  @apply mt-3 flex h-10 w-64 md:w-96 items-center border-gray-700 bg-[#d8d5db] md:text-base text-sm whitespace-nowrap pr-2 pl-2;
+  @apply mt-3 flex h-10 w-64 items-center whitespace-nowrap border-gray-700 bg-[#d8d5db] pl-2 pr-2 text-sm md:w-96 md:text-base;
 }
 
 .buttontext {

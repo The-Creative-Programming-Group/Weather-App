@@ -49,5 +49,8 @@ jobs:
       - name: Setup
         uses: ./tooling/github/setup
 
+      - name: Add city data
+        run: pnpm update:city-data-ci
+
       - name: Typecheck
         run: pnpm typecheck
