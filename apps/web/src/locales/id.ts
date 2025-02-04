@@ -37,6 +37,7 @@ export default {
   "settings.english": "Inggris",
   "settings.german": "Jerman",
   "settings.indonesian": "Indonesia",
+  "settings.chinese": "中文",
 
   // locationsettings page translations
   "locationsettings.add new location": "Tambah lokasi baru",
