@@ -4,6 +4,7 @@ import { observer } from "@legendapp/state/react";
 import { RxCheck } from "react-icons/rx";
 
 import type { TemperatureUnitType, WindSpeedUnitType } from "~/states";
+import chineseFlag from "~/assets/chinese-flag.png";
 import germanFlag from "~/assets/german-flag.png";
 import indonesianFlag from "~/assets/indonesian-flag.png";
 import usaFlag from "~/assets/usa-flag.png";
@@ -188,7 +189,7 @@ const Settings = observer(() => {
             >
               <Image
                 src={indonesianFlag}
-                alt="Flag of the Netherladns"
+                alt="Flag of the Republic of Indonesia"
                 width={20}
                 height={20}
               />
@@ -196,6 +197,25 @@ const Settings = observer(() => {
                 {translationSettings("indonesian")}
               </p>
               {locale === "id" && (
+                <RxCheck width={20} height={20} className="h-9 w-9" />
+              )}
+            </button>
+            <button
+              className={`${normalButtonClass} ${
+                locale === "zh-CN" ? "border-2" : ""
+              }`}
+              onClick={() => changeLocale("zh-CN")}
+            >
+              <Image
+                src={chineseFlag}
+                alt="Flag of the People's Republic of China"
+                width={20}
+                height={20}
+              />
+              <p className={`${styles.buttontext} ml-2`}>
+                {translationSettings("chinese")}
+              </p>
+              {locale === "zh-CN" && (
                 <RxCheck width={20} height={20} className="h-9 w-9" />
               )}
             </button>
