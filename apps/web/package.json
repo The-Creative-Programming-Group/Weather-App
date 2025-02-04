@@ -58,7 +58,7 @@
     "@weatherio/tailwind-config": "workspace:^0.1.0",
     "@weatherio/tsconfig": "workspace:^0.1.0",
     "dotenv-cli": "^7.4.1",
-    "eslint": "^8.57.0",
+    "eslint": "^8.57.1",
     "prettier": "^3.2.5",
     "tailwindcss": "^3.4.1",
     "typescript": "^5.4.2"
