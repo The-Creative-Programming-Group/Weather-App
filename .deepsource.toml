@@ -11,9 +11,3 @@ name = "secrets"
 
 [[analyzers]]
 name = "test-coverage"
-
-[[transformers]]
-name = "prettier"
-
-[[transformers]]
-name = "standardjs"
