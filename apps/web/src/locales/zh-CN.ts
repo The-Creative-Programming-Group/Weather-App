@@ -63,7 +63,8 @@ export default {
   "search.my location button": "设定我的位置",
 
   // legal page translations
-  "legal.main text":"本网站的内容已经过仔细审核和制作。然而，我们无法保证所提供信息的准确性、完整性和时效性。我们不对因使用本网站而造成的任何损害或损失承担责任。链接页面的运营者对其内容负有完全责任。对于外部内容，我们明确排除任何责任。",
+  "legal.main text":
+    "本网站的内容已经过仔细审核和制作。然而，我们无法保证所提供信息的准确性、完整性和时效性。我们不对因使用本网站而造成的任何损害或损失承担责任。链接页面的运营者对其内容负有完全责任。对于外部内容，我们明确排除任何责任。",
   "legal.germany": "Germany",
   "legal.information disclaimer": "根据《德国电信和信息服务法》第5条的规定",
 
@@ -90,16 +91,12 @@ export default {
   "home.feels like phrase warm": "连冰淇淋都觉得太热了！",
   "home.feels like phrase slightly more warm": "今天真是个暖洋洋的日子！",
   "home.feels like phrase slightly warm": "是去野餐的好天气！",
-  "home.feels like phrase neutral":
-    "温度刚刚好，既不热也不冷。",
+  "home.feels like phrase neutral": "温度刚刚好，既不热也不冷。",
   "home.feels like phrase slightly cold": "可能需要穿件薄外套。",
   "home.feels like phrase slightly more cold": "今天是个寒冷的日子！",
-  "home.feels like phrase cold":
-    "企鹅们都因为寒冷去喝热巧克力了！",
-  "home.feels like phrase very cold":
-    "今天的寒冷天气连雪人都冻得发抖！",
-  "home.feels like phrase extremely cold":
-    "冷得连北极熊都懒得出门了！",
+  "home.feels like phrase cold": "企鹅们都因为寒冷去喝热巧克力了！",
+  "home.feels like phrase very cold": "今天的寒冷天气连雪人都冻得发抖！",
+  "home.feels like phrase extremely cold": "冷得连北极熊都懒得出门了！",
 
   "home.air quality text very poor": "非常差",
   "home.air quality text poor": "差",
@@ -128,19 +125,18 @@ export default {
   "home.late hour time ending": "下午",
 
   "home.9 day forecast card content":
-    "未来9天的天气预报。<br /> <span class=\"font-semibold\">温度</span> 为每日的平均温度，分别代表白天和夜晚的温度。",
+    '未来9天的天气预报。<br /> <span class="font-semibold">温度</span> 为每日的平均温度，分别代表白天和夜晚的温度。',
 
   "home.precipitation card title": "当前降水",
 
-  "home.feels like card content":
-    "这个温度参数考虑了人类对天气的感知。",
+  "home.feels like card content": "这个温度参数考虑了人类对天气的感知。",
 
   "home.visibility card title": "当前能见度",
 
   "home.wind pressure card title": "当前风力与气压",
-  "home.wind pressure card content": 
-      "<b>海平面气压。</b> <br /> 在海平面，气压是由上方空气的重量所施加的力，平均值约为1013.25 hPa。",
-  
+  "home.wind pressure card content":
+    "<b>海平面气压。</b> <br /> 在海平面，气压是由上方空气的重量所施加的力，平均值约为1013.25 hPa。",
+
   "home.not available": "不可用",
 
   "home.moon phase card title": "当前月相",
@@ -181,8 +177,8 @@ export default {
   // contributors page translations
   "contributors.made with love text":
     '由以下人员<span class="text-4xl" style="color: rgb(239 68 68)">♥\uFE0F</span> 精心制作： ',
-    "contributors.founder": "创始人",
-    "contributors.engineer": "工程师",
-    "contributors.designer": "设计师",
-    "contributors.translator": "翻译员",
+  "contributors.founder": "创始人",
+  "contributors.engineer": "工程师",
+  "contributors.designer": "设计师",
+  "contributors.translator": "翻译员",
 } as const;
