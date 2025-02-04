@@ -52,7 +52,9 @@ const Settings = observer(() => {
               }`}
               onClick={() => handleTemperatureUnitClick("Celsius")}
             >
-              <p className={styles.buttontext}>Celsius (°C)</p>
+              <p className={styles.buttontext}>
+                {translationSettings("celsius")} (°C)
+              </p>
               {temperatureUnit$.get() === "Celsius" && (
                 <RxCheck width={20} height={20} className="h-9 w-9" />
               )}
@@ -63,7 +65,9 @@ const Settings = observer(() => {
               }`}
               onClick={() => handleTemperatureUnitClick("Fahrenheit")}
             >
-              <p className={styles.buttontext}>Fahrenheit (°F)</p>
+              <p className={styles.buttontext}>
+                {translationSettings("fahrenheit")} (°F)
+              </p>
               {temperatureUnit$.get() === "Fahrenheit" && (
                 <RxCheck width={20} height={20} className="h-9 w-9" />
               )}
