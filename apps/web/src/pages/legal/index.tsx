@@ -1,4 +1,5 @@
 import React from "react";
+import Link from "next/link";
 
 import Layout from "~/components/Layout";
 import { getLocaleProps, useScopedI18n } from "~/locales";
@@ -26,6 +27,13 @@ const Legal = () => {
           <p className="mb-4 mt-14 w-7/12 md:w-4/12 xl:ml-7">
             {translationLegal("main text")}
           </p>
+          <Link
+            href="https://www.flaticon.com/free-icons/flags"
+            title="flags icons"
+            className="mt-4"
+          >
+            Flags icons created by Freepik - Flaticon
+          </Link>
         </div>
       </Layout>
     </>

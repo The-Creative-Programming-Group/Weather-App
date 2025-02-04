@@ -208,7 +208,7 @@ const Settings = observer(() => {
             >
               <Image
                 src={chineseFlag}
-                alt="Flag of PRC"
+                alt="Flag of the People's Republic of China"
                 width={20}
                 height={20}
               />
