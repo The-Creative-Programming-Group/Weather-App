@@ -36,8 +36,8 @@ importers:
         specifier: ^10.2.9
         version: 10.2.9(next@14.2.21(@babel/core@7.26.7)(@playwright/test@1.42.1)(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(webpack@5.89.0)
       '@hookform/resolvers':
-        specifier: ^3.3.4
-        version: 3.3.4(react-hook-form@7.51.0(react@18.2.0))
+        specifier: ^3.10.0
+        version: 3.10.0(react-hook-form@7.51.0(react@18.2.0))
       '@legendapp/state':
         specifier: ^2.1.15
         version: 2.1.15(react@18.2.0)
@@ -1656,8 +1656,8 @@ packages:
   '@hapi/topo@5.1.0':
     resolution: {integrity: sha512-foQZKJig7Ob0BMAYBfcJk8d77QtOe7Wo4ox7ff1lQYoNNAb6jwcY1ncdoy2e9wQZzvNy7ODZCYJkK8kzmcAnAg==}
 
-  '@hookform/resolvers@3.3.4':
-    resolution: {integrity: sha512-o5cgpGOuJYrd+iMKvkttOclgwRW86EsWJZZRC23prf0uU2i48Htq4PuT73AVb9ionFyZrwYEITuOFGF+BydEtQ==}
+  '@hookform/resolvers@3.10.0':
+    resolution: {integrity: sha512-79Dv+3mDF7i+2ajj7SkypSKHhl1cbln1OGavqrsF7p6mbUv11xpqpacPsGDCTRvCSjEEIez2ef1NveSVL3b0Ag==}
     peerDependencies:
       react-hook-form: ^7.0.0
 
@@ -6891,7 +6891,7 @@ snapshots:
     dependencies:
       '@hapi/hoek': 9.3.0
 
-  '@hookform/resolvers@3.3.4(react-hook-form@7.51.0(react@18.2.0))':
+  '@hookform/resolvers@3.10.0(react-hook-form@7.51.0(react@18.2.0))':
     dependencies:
       react-hook-form: 7.51.0(react@18.2.0)
 
