@@ -12,8 +12,8 @@ importers:
         specifier: ^1.42.1
         version: 1.42.1
       '@total-typescript/ts-reset':
-        specifier: ^0.5.1
-        version: 0.5.1
+        specifier: ^0.6.1
+        version: 0.6.1
       '@turbo/gen':
         specifier: ^2.4.0
         version: 2.4.0(@types/node@20.17.17)(typescript@5.4.2)
@@ -2364,8 +2364,8 @@ packages:
   '@tootallnate/quickjs-emscripten@0.23.0':
     resolution: {integrity: sha512-C5Mc6rdnsaJDjO3UpGW/CQTHtCKaYlScZTly4JIu97Jxo/odCiH0ITnDXSJPTOrEKk/ycSZ0AOgTmkDtkOsvIA==}
 
-  '@total-typescript/ts-reset@0.5.1':
-    resolution: {integrity: sha512-AqlrT8YA1o7Ff5wPfMOL0pvL+1X+sw60NN6CcOCqs658emD6RfiXhF7Gu9QcfKBH7ELY2nInLhKSCWVoNL70MQ==}
+  '@total-typescript/ts-reset@0.6.1':
+    resolution: {integrity: sha512-cka47fVSo6lfQDIATYqb/vO1nvFfbPw7uWLayIXIhGETj0wcOOlrlkobOMDNQOFr9QOafegUPq13V2+6vtD7yg==}
 
   '@trpc/client@11.0.0-rc.403':
     resolution: {integrity: sha512-4Elc4/PQI1H2Mpt3VWVINtYI8HhuPkvu/xowGDlHhYemmuvR3OqnE4H3I1XiPS9EXDOT397VadTJ5eGhQIZxPA==}
@@ -7508,7 +7508,7 @@ snapshots:
 
   '@tootallnate/quickjs-emscripten@0.23.0': {}
 
-  '@total-typescript/ts-reset@0.5.1': {}
+  '@total-typescript/ts-reset@0.6.1': {}
 
   '@trpc/client@11.0.0-rc.403(@trpc/server@11.0.0-rc.403)':
     dependencies:
