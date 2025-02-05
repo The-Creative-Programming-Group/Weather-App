@@ -34,10 +34,8 @@ export default {
   "settings.wind speed units": "Windgeschwindigkeitseinheit",
   "settings.language": "Sprache",
 
-  "settings.english": "Englisch",
-  "settings.german": "Deutsch",
-  "settings.indonesian": "Indonesisch",
-  "settings.chinese": "中文",
+  "settings.celsius": "Celsius",
+  "settings.fahrenheit": "Fahrenheit",
 
   // locationsettings page translations
   "locationsettings.add new location": "Füge einen Ort hinzu",
