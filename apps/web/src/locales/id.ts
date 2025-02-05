@@ -34,13 +34,8 @@ export default {
   "settings.wind speed units": "Satuan kecepatan angin",
   "settings.language": "Bahasa",
 
-  "settings.celsius": "Celcius",
+  "settings.celsius": "Celsius",
   "settings.fahrenheit": "Fahrenheit",
-
-  "settings.english": "English",
-  "settings.german": "Deutsch",
-  "settings.indonesian": "Bahasa Indonesia",
-  "settings.chinese": "中文",
 
   // locationsettings page translations
   "locationsettings.add new location": "Tambah lokasi baru",

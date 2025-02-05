@@ -37,11 +37,6 @@ export default {
   "settings.celsius": "摄氏度",
   "settings.fahrenheit": "华氏度",
 
-  "settings.english": "English",
-  "settings.german": "Deutsch",
-  "settings.indonesian": "Bahasa Indonesia",
-  "settings.chinese": "中文",
-
   // locationsettings page translations
   "locationsettings.add new location": "添加新位置",
   "locationsettings.add new location button": "添加新位置",

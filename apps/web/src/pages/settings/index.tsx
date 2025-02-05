@@ -159,9 +159,7 @@ const Settings = observer(() => {
                 width={20}
                 height={20}
               />
-              <p className={`${styles.buttontext} ml-2`}>
-                {translationSettings("english")}
-              </p>
+              <p className={`${styles.buttontext} ml-2`}>English</p>
               {locale === "en" && (
                 <RxCheck width={20} height={20} className="h-9 w-9" />
               )}
@@ -178,9 +176,7 @@ const Settings = observer(() => {
                 width={20}
                 height={20}
               />
-              <p className={`${styles.buttontext} ml-2`}>
-                {translationSettings("german")}
-              </p>
+              <p className={`${styles.buttontext} ml-2`}>Deutsch</p>
               {locale === "de" && (
                 <RxCheck width={20} height={20} className="h-9 w-9" />
               )}
@@ -197,9 +193,7 @@ const Settings = observer(() => {
                 width={20}
                 height={20}
               />
-              <p className={`${styles.buttontext} ml-2`}>
-                {translationSettings("indonesian")}
-              </p>
+              <p className={`${styles.buttontext} ml-2`}>Bahasa Indonesia</p>
               {locale === "id" && (
                 <RxCheck width={20} height={20} className="h-9 w-9" />
               )}
@@ -216,9 +210,7 @@ const Settings = observer(() => {
                 width={20}
                 height={20}
               />
-              <p className={`${styles.buttontext} ml-2`}>
-                {translationSettings("chinese")}
-              </p>
+              <p className={`${styles.buttontext} ml-2`}>中文</p>
               {locale === "zh-CN" && (
                 <RxCheck width={20} height={20} className="h-9 w-9" />
               )}
