@@ -16,7 +16,7 @@ importers:
         version: 0.5.1
       '@turbo/gen':
         specifier: ^2.4.0
-        version: 2.4.0(@types/node@20.11.28)(typescript@5.4.2)
+        version: 2.4.0(@types/node@20.17.17)(typescript@5.4.2)
       '@weatherio/prettier-config':
         specifier: workspace:^0.1.0
         version: link:tooling/prettier
@@ -100,7 +100,7 @@ importers:
         version: 14.2.21(@babel/core@7.26.7)(@playwright/test@1.42.1)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       next-axiom:
         specifier: ^1.3.0
-        version: 1.3.0(@types/node@20.11.28)(next@14.2.21(@playwright/test@1.42.1)(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(react@18.2.0)(terser@5.37.0)
+        version: 1.3.0(@types/node@20.17.17)(next@14.2.21(@playwright/test@1.42.1)(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(react@18.2.0)(terser@5.37.0)
       next-international:
         specifier: ^1.2.4
         version: 1.2.4
@@ -136,8 +136,8 @@ importers:
         version: 3.22.4
     devDependencies:
       '@types/node':
-        specifier: ^20.11.28
-        version: 20.11.28
+        specifier: ^20.17.17
+        version: 20.17.17
       '@types/react':
         specifier: ^18.2.66
         version: 18.2.66
@@ -170,7 +170,7 @@ importers:
         version: 3.2.5
       tailwindcss:
         specifier: ^3.4.1
-        version: 3.4.1(ts-node@10.9.2(@types/node@20.11.28)(typescript@5.4.2))
+        version: 3.4.1(ts-node@10.9.2(@types/node@20.17.17)(typescript@5.4.2))
       typescript:
         specifier: ^5.4.2
         version: 5.4.2
@@ -203,7 +203,7 @@ importers:
         version: 14.2.21(@babel/core@7.26.7)(@playwright/test@1.42.1)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       next-axiom:
         specifier: ^1.3.0
-        version: 1.3.0(@types/node@20.11.28)(next@14.2.21(@playwright/test@1.42.1)(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(react@18.2.0)(terser@5.37.0)
+        version: 1.3.0(@types/node@20.17.17)(next@14.2.21(@playwright/test@1.42.1)(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(react@18.2.0)(terser@5.37.0)
       resend:
         specifier: ^3.2.0
         version: 3.2.0
@@ -292,8 +292,8 @@ importers:
         version: 2.0.3
     devDependencies:
       '@types/node':
-        specifier: ^20.11.28
-        version: 20.11.28
+        specifier: ^20.17.17
+        version: 20.17.17
       '@weatherio/eslint-config':
         specifier: workspace:^0.2.0
         version: link:../../tooling/eslint
@@ -377,14 +377,14 @@ importers:
         version: 2.2.1
       tailwindcss-animate:
         specifier: ^1.0.7
-        version: 1.0.7(tailwindcss@3.4.1(ts-node@10.9.2(@types/node@20.11.28)(typescript@5.4.2)))
+        version: 1.0.7(tailwindcss@3.4.1(ts-node@10.9.2(@types/node@20.17.17)(typescript@5.4.2)))
     devDependencies:
       '@types/leaflet':
         specifier: ^1.9.12
         version: 1.9.12
       '@types/node':
-        specifier: ^20.11.28
-        version: 20.11.28
+        specifier: ^20.17.17
+        version: 20.17.17
       '@types/react':
         specifier: ^18.2.66
         version: 18.2.66
@@ -408,7 +408,7 @@ importers:
         version: 3.2.5
       tailwindcss:
         specifier: ^3.4.1
-        version: 3.4.1(ts-node@10.9.2(@types/node@20.11.28)(typescript@5.4.2))
+        version: 3.4.1(ts-node@10.9.2(@types/node@20.17.17)(typescript@5.4.2))
       typescript:
         specifier: ^5.4.2
         version: 5.4.2
@@ -493,14 +493,14 @@ importers:
         version: 8.4.35
       tailwindcss:
         specifier: ^3.4.1
-        version: 3.4.1(ts-node@10.9.2(@types/node@20.11.28)(typescript@5.4.2))
+        version: 3.4.1(ts-node@10.9.2(@types/node@20.17.17)(typescript@5.4.2))
       tailwindcss-animate:
         specifier: ^1.0.7
-        version: 1.0.7(tailwindcss@3.4.1(ts-node@10.9.2(@types/node@20.11.28)(typescript@5.4.2)))
+        version: 1.0.7(tailwindcss@3.4.1(ts-node@10.9.2(@types/node@20.17.17)(typescript@5.4.2)))
     devDependencies:
       '@types/node':
-        specifier: ^20.11.28
-        version: 20.11.28
+        specifier: ^20.17.17
+        version: 20.17.17
       '@weatherio/eslint-config':
         specifier: workspace:^0.2.0
         version: link:../eslint
@@ -1939,6 +1939,7 @@ packages:
   '@playwright/test@1.42.1':
     resolution: {integrity: sha512-Gq9rmS54mjBL/7/MvBaNOBwbfnh7beHvS6oS4srqXFcQHpQCV1+c8JXWE8VLPyRDhgS3H8x8A7hztqI9VnwrAQ==}
     engines: {node: '>=16'}
+    deprecated: Please update to the latest version of Playwright to test up-to-date browsers.
     hasBin: true
 
   '@polka/url@1.0.0-next.24':
@@ -2481,8 +2482,8 @@ packages:
   '@types/minimatch@5.1.2':
     resolution: {integrity: sha512-K0VQKziLUWkVKiRVrx4a40iPaxTUefQmjtkQofBkYRcoaaL/8rhwDWww9qWbrgicNOgnpIsMxyNIUM4+n6dUIA==}
 
-  '@types/node@20.11.28':
-    resolution: {integrity: sha512-M/GPWVS2wLkSkNHVeLkrF2fD5Lx5UC4PxA0uZcKc6QqbIQUJyW1jVjueJYi1z8n0I5PxYrtpnPnWglE+y9A0KA==}
+  '@types/node@20.17.17':
+    resolution: {integrity: sha512-/WndGO4kIfMicEQLTi/mDANUu/iVUhT7KboZPdEqqHQ4aTS+3qT3U5gIqWDFV+XouorjfgGqvKILJeHhuQgFYg==}
 
   '@types/prop-types@15.7.5':
     resolution: {integrity: sha512-JCB8C6SnDoQf0cNycqd/35A7MjcnK+ZTqE7judS6o7utxUCg6imJg3QK2qzHKszlTjcj2cn+NwMB2i96ubpj7w==}
@@ -5444,8 +5445,8 @@ packages:
   unbox-primitive@1.0.2:
     resolution: {integrity: sha512-61pPlCD9h51VoreyJ0BReideM3MDKMKnh6+V9L08331ipq6Q8OFXZYiqP6n/tbHx4s5I9uRhcye6BrbkizkBDw==}
 
-  undici-types@5.26.5:
-    resolution: {integrity: sha512-JlCMO+ehdEIKqlFxk6IfVoAUVmgz7cU7zD/h9XZ0qzeosSHmUJVOzSQvvYSYWXkFXC+IfLKSIffhv0sVZup6pA==}
+  undici-types@6.19.8:
+    resolution: {integrity: sha512-ve2KP6f/JnbPBFyobGHuerC9g1FYGn/F8n1LWTwNxCEzd6IfqTwUQcNXgEtmmQ6DlRrC1hrSrBnCZPokRrDHjw==}
 
   unicode-canonical-property-names-ecmascript@2.0.0:
     resolution: {integrity: sha512-yY5PpDlfVIU5+y/BSCxAJRBIS1Zc2dDG3Ujq+sR0U+JjUevW2JhocOF+soROYDSaAezOzOKuyyixhD6mBknSmQ==}
@@ -7547,7 +7548,7 @@ snapshots:
 
   '@tsconfig/node16@1.0.4': {}
 
-  '@turbo/gen@2.4.0(@types/node@20.11.28)(typescript@5.4.2)':
+  '@turbo/gen@2.4.0(@types/node@20.17.17)(typescript@5.4.2)':
     dependencies:
       '@turbo/workspaces': 2.4.0
       commander: 10.0.1
@@ -7557,7 +7558,7 @@ snapshots:
       node-plop: 0.26.3
       picocolors: 1.0.1
       proxy-agent: 6.3.0
-      ts-node: 10.9.2(@types/node@20.11.28)(typescript@5.4.2)
+      ts-node: 10.9.2(@types/node@20.17.17)(typescript@5.4.2)
       update-check: 1.5.4
       validate-npm-package-name: 5.0.0
     transitivePeerDependencies:
@@ -7610,13 +7611,13 @@ snapshots:
   '@types/glob@7.2.0':
     dependencies:
       '@types/minimatch': 5.1.2
-      '@types/node': 20.11.28
+      '@types/node': 20.17.17
 
   '@types/htmlparser2@3.10.7':
     dependencies:
       '@types/domhandler': 2.4.5
       '@types/domutils': 1.7.8
-      '@types/node': 20.11.28
+      '@types/node': 20.17.17
       domhandler: 2.4.2
 
   '@types/inquirer@6.5.0':
@@ -7632,7 +7633,7 @@ snapshots:
 
   '@types/jsonfile@6.1.4':
     dependencies:
-      '@types/node': 20.11.28
+      '@types/node': 20.17.17
 
   '@types/leaflet@1.9.12':
     dependencies:
@@ -7640,9 +7641,9 @@ snapshots:
 
   '@types/minimatch@5.1.2': {}
 
-  '@types/node@20.11.28':
+  '@types/node@20.17.17':
     dependencies:
-      undici-types: 5.26.5
+      undici-types: 6.19.8
 
   '@types/prop-types@15.7.5': {}
 
@@ -7669,7 +7670,7 @@ snapshots:
 
   '@types/through@0.0.30':
     dependencies:
-      '@types/node': 20.11.28
+      '@types/node': 20.17.17
 
   '@types/tinycolor2@1.4.3': {}
 
@@ -7677,7 +7678,7 @@ snapshots:
 
   '@types/yauzl@2.10.3':
     dependencies:
-      '@types/node': 20.11.28
+      '@types/node': 20.17.17
 
   '@typescript-eslint/eslint-plugin@7.2.0(@typescript-eslint/parser@7.2.0(eslint@8.57.0)(typescript@5.4.2))(eslint@8.57.0)(typescript@5.4.2)':
     dependencies:
@@ -9544,7 +9545,7 @@ snapshots:
 
   jest-worker@27.5.1:
     dependencies:
-      '@types/node': 20.11.28
+      '@types/node': 20.17.17
       merge-stream: 2.0.0
       supports-color: 8.1.1
 
@@ -9787,12 +9788,12 @@ snapshots:
 
   netmask@2.0.2: {}
 
-  next-axiom@1.3.0(@types/node@20.11.28)(next@14.2.21(@playwright/test@1.42.1)(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(react@18.2.0)(terser@5.37.0):
+  next-axiom@1.3.0(@types/node@20.17.17)(next@14.2.21(@playwright/test@1.42.1)(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(react@18.2.0)(terser@5.37.0):
     dependencies:
       next: 14.2.21(@babel/core@7.26.7)(@playwright/test@1.42.1)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       react: 18.2.0
       remeda: 1.33.0
-      vitest: 1.6.0(@types/node@20.11.28)(terser@5.37.0)
+      vitest: 1.6.0(@types/node@20.17.17)(terser@5.37.0)
       whatwg-fetch: 3.6.20
     transitivePeerDependencies:
       - '@edge-runtime/vm'
@@ -10109,13 +10110,13 @@ snapshots:
       camelcase-css: 2.0.1
       postcss: 8.4.32
 
-  postcss-load-config@4.0.1(postcss@8.4.32)(ts-node@10.9.2(@types/node@20.11.28)(typescript@5.4.2)):
+  postcss-load-config@4.0.1(postcss@8.4.32)(ts-node@10.9.2(@types/node@20.17.17)(typescript@5.4.2)):
     dependencies:
       lilconfig: 2.1.0
       yaml: 2.2.2
     optionalDependencies:
       postcss: 8.4.32
-      ts-node: 10.9.2(@types/node@20.11.28)(typescript@5.4.2)
+      ts-node: 10.9.2(@types/node@20.17.17)(typescript@5.4.2)
 
   postcss-nested@6.0.1(postcss@8.4.32):
     dependencies:
@@ -10713,11 +10714,11 @@ snapshots:
     dependencies:
       '@babel/runtime': 7.23.7
 
-  tailwindcss-animate@1.0.7(tailwindcss@3.4.1(ts-node@10.9.2(@types/node@20.11.28)(typescript@5.4.2))):
+  tailwindcss-animate@1.0.7(tailwindcss@3.4.1(ts-node@10.9.2(@types/node@20.17.17)(typescript@5.4.2))):
     dependencies:
-      tailwindcss: 3.4.1(ts-node@10.9.2(@types/node@20.11.28)(typescript@5.4.2))
+      tailwindcss: 3.4.1(ts-node@10.9.2(@types/node@20.17.17)(typescript@5.4.2))
 
-  tailwindcss@3.4.1(ts-node@10.9.2(@types/node@20.11.28)(typescript@5.4.2)):
+  tailwindcss@3.4.1(ts-node@10.9.2(@types/node@20.17.17)(typescript@5.4.2)):
     dependencies:
       '@alloc/quick-lru': 5.2.0
       arg: 5.0.2
@@ -10736,7 +10737,7 @@ snapshots:
       postcss: 8.4.32
       postcss-import: 15.1.0(postcss@8.4.32)
       postcss-js: 4.0.1(postcss@8.4.32)
-      postcss-load-config: 4.0.1(postcss@8.4.32)(ts-node@10.9.2(@types/node@20.11.28)(typescript@5.4.2))
+      postcss-load-config: 4.0.1(postcss@8.4.32)(ts-node@10.9.2(@types/node@20.17.17)(typescript@5.4.2))
       postcss-nested: 6.0.1(postcss@8.4.32)
       postcss-selector-parser: 6.0.12
       resolve: 1.22.4
@@ -10834,14 +10835,14 @@ snapshots:
 
   ts-interface-checker@0.1.13: {}
 
-  ts-node@10.9.2(@types/node@20.11.28)(typescript@5.4.2):
+  ts-node@10.9.2(@types/node@20.17.17)(typescript@5.4.2):
     dependencies:
       '@cspotcode/source-map-support': 0.8.1
       '@tsconfig/node10': 1.0.9
       '@tsconfig/node12': 1.0.11
       '@tsconfig/node14': 1.0.3
       '@tsconfig/node16': 1.0.4
-      '@types/node': 20.11.28
+      '@types/node': 20.17.17
       acorn: 8.11.3
       acorn-walk: 8.3.2
       arg: 4.1.0
@@ -10959,7 +10960,7 @@ snapshots:
       has-symbols: 1.0.3
       which-boxed-primitive: 1.0.2
 
-  undici-types@5.26.5: {}
+  undici-types@6.19.8: {}
 
   unicode-canonical-property-names-ecmascript@2.0.0: {}
 
@@ -11025,13 +11026,13 @@ snapshots:
     dependencies:
       builtins: 5.0.1
 
-  vite-node@1.6.0(@types/node@20.11.28)(terser@5.37.0):
+  vite-node@1.6.0(@types/node@20.17.17)(terser@5.37.0):
     dependencies:
       cac: 6.7.14
       debug: 4.3.4
       pathe: 1.1.2
       picocolors: 1.0.0
-      vite: 5.2.13(@types/node@20.11.28)(terser@5.37.0)
+      vite: 5.2.13(@types/node@20.17.17)(terser@5.37.0)
     transitivePeerDependencies:
       - '@types/node'
       - less
@@ -11042,17 +11043,17 @@ snapshots:
       - supports-color
       - terser
 
-  vite@5.2.13(@types/node@20.11.28)(terser@5.37.0):
+  vite@5.2.13(@types/node@20.17.17)(terser@5.37.0):
     dependencies:
       esbuild: 0.20.2
       postcss: 8.5.1
       rollup: 4.18.0
     optionalDependencies:
-      '@types/node': 20.11.28
+      '@types/node': 20.17.17
       fsevents: 2.3.3
       terser: 5.37.0
 
-  vitest@1.6.0(@types/node@20.11.28)(terser@5.37.0):
+  vitest@1.6.0(@types/node@20.17.17)(terser@5.37.0):
     dependencies:
       '@vitest/expect': 1.6.0
       '@vitest/runner': 1.6.0
@@ -11071,11 +11072,11 @@ snapshots:
       strip-literal: 2.1.0
       tinybench: 2.8.0
       tinypool: 0.8.4
-      vite: 5.2.13(@types/node@20.11.28)(terser@5.37.0)
-      vite-node: 1.6.0(@types/node@20.11.28)(terser@5.37.0)
+      vite: 5.2.13(@types/node@20.17.17)(terser@5.37.0)
+      vite-node: 1.6.0(@types/node@20.17.17)(terser@5.37.0)
       why-is-node-running: 2.2.2
     optionalDependencies:
-      '@types/node': 20.11.28
+      '@types/node': 20.17.17
     transitivePeerDependencies:
       - less
       - lightningcss
